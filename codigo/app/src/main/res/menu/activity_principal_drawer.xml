@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_agenda_do_dia"
+            android:icon="@drawable/ic_calendar_clock_grey600_24dp"
+            android:title="Agenda do dia" />
+
+        <item
+            android:id="@+id/nav_agenda_da_semana"
+            android:icon="@drawable/ic_calendar_multiple_grey600_24dp"
+            android:title="Agenda" />
+        <item
+            android:id="@+id/nav_agenda"
+            android:icon="@drawable/ic_calendar_blank_grey600_24dp"
+            android:title="Agendar consulta" />
+        <item
+            android:id="@+id/nav_atendente"
+            android:icon="@drawable/ic_account_settings_variant_grey600_24dp"
+            android:title="Médicos" />
+        <item
+            android:id="@+id/nav_configuracao"
+            android:icon="@drawable/ic_settings_grey600_24dp"
+            android:title="Configuracoes" />
+    </group>
+
+    <item android:title="Comunicação">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Compartilhar" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Enviar por e-mail" />
+        </menu>
+    </item>
+
+</menu>

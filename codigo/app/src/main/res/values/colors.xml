@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3b8bdc</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#40efff</color>
+
+
+    <color name="cor_preta">#000</color>
+    <color name="cor_azul_claro2">#51bad7</color>
+    <color name="cor_azul_claro">#569EF9</color>
+    <color name="cor_azul">#347CD7</color>
+    <color name="cor_azul_escuro">#296894</color>
+    <color name="cor_azul_expressivo">#304fff</color>
+    <color name="cor_roxo_expressivo">#9c27b0</color>
+    <color name="cor_verde">#21D200</color>
+    <color name="cor_verde_material">#4CAF50</color>
+    <color name="cor_verde_escuro">#2E7D32</color>
+    <color name="cor_amarelo">#FEF700</color>
+    <color name="cor_amarelo_escuro">#EDE600</color>
+    <color name="cor_vermelho">#F9322D</color>
+    <color name="cor_vermelho_escuro">#CA0800</color>
+
+</resources>

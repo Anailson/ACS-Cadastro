@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AvisaSMS</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="titulo_lista_pacientes">Foram avisados %d pacientes, faltam paciente.</string>
+    <string name="moved">\\\'%1$s\\\' moved to position %2$s</string>
+</resources>
