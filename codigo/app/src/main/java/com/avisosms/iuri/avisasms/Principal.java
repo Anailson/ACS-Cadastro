@@ -1,6 +1,7 @@
 package com.avisosms.iuri.avisasms;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -105,9 +106,11 @@ public class Principal extends AppCompatActivity
 
         } else if (id == R.id.nav_agenda_da_semana) {
 
-            viewFlipper.setDisplayedChild(1);
+                viewFlipper.setDisplayedChild(1);
 
         } else if (id == R.id.nav_agenda) {
+
+            startActivity(new Intent(this, Calendario.class));
 
         } else if (id == R.id.nav_atendente) {
 
@@ -152,8 +155,8 @@ public class Principal extends AppCompatActivity
         mDynamicListView.setOnItemMovedListener(new MyOnItemMovedListener(adapter, this));
         mDynamicListView.setOnItemLongClickListener(new MyOnItemLongClickListener(mDynamicListView));
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView));*/
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView));
 
         /*mDynamicListView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
@@ -205,8 +208,8 @@ public class Principal extends AppCompatActivity
             mListView.insert(mListView.getCount()-1, new Paciente("Item adicionado", "telefone"));
 
             Toast.makeText(v.getContext(), "Adicionar Joption para add Paciente", Toast.LENGTH_SHORT).show();
-            /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();*/
+            Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         }
     }
 

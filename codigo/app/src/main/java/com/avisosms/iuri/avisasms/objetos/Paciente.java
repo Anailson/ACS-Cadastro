@@ -53,4 +53,5 @@ public class Paciente extends RealmObject{
     public void setAtendido(boolean atendido) {
         this.atendido = atendido;
     }
+
 }

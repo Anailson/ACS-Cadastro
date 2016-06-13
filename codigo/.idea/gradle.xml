@@ -8,13 +8,23 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/calendar" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/colorpicker" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/datetimepicker" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/timezonepicker" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/external" />
           </set>
         </option>
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/calendar" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/colorpicker" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/datetimepicker" />
+            <option value="$PROJECT_DIR$/Etar-Calendar-master/external/timezonepicker" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/external" />
           </set>
         </option>
       </GradleProjectSettings>

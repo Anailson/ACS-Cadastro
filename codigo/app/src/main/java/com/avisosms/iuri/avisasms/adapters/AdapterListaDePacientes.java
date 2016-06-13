@@ -16,6 +16,7 @@ import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
 import com.nhaarman.listviewanimations.ArrayAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,41 +64,17 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
                     /*if (row == null) {*/ //Checkbox precisa ter uma lista exclusiva, http://webcache.googleusercontent.com/search?q=cache:http://stackoverflow.com/questions/16350670/listview-viewholder-checkbox-state&gws_rd=cr&ei=5sFXV_G6M4f4wASc5LjIDg
             // row = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview, parent, false);
             /*LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.list_row_dynamiclistview, null);*/
+            row = inflater.inflate(R.layout.list_row_dynamiclistview, null/*, parent, false);*/
 
             holder = new ViewHolder();
             row = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview, parent, false);
-
 
             holder.textDescricao = (TextView) row.findViewById(R.id.list_row_draganddrop_textview_titulo);
             holder.textSubDescricao = (TextView) row.findViewById(R.id.list_row_draganddrop_textview_subtitulo);
             holder.checkBox = (CheckBox) row.findViewById(R.id.list_row_draganddrop_checkbox);
             holder.view = (View) row.findViewById(R.id.list_row_draganddrop_cor);
+
             row.setTag(holder);
-
-            final ViewHolder finalHolder = holder;
-            final View finalRow = row;
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    if (isChecked) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            finalHolder.view.setBackground(finalRow.getResources().getDrawable(R.drawable.icon_retangulo_azul));
-                            finalHolder.textDescricao.setPaintFlags(finalHolder.textDescricao.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                            finalHolder.textSubDescricao.setPaintFlags(finalHolder.textSubDescricao.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                        }
-                        getItem(position).setAtendido(true);
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        finalHolder.view.setBackground(finalRow.getResources().getDrawable(R.drawable.icon_retangulo_amarelo));
-                        finalHolder.textDescricao.setPaintFlags(finalHolder.textDescricao.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                        finalHolder.textSubDescricao.setPaintFlags(finalHolder.textSubDescricao.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                        getItem(position).setAtendido(false);
-                    }
-                }
-
-            });
-
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -105,8 +82,35 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
         holder.textDescricao.setText("Paciente:" + p.getNome());
         holder.textSubDescricao.setText(p.getTelefone());
 
+        final ViewHolder finalHolder = holder;
+        final View finalRow = row;
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-        if ( p.isAtendido()) {//o paciente ja foi atendido
+                if (isChecked) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        finalHolder.view.setBackground(finalRow.getResources().getDrawable(R.drawable.icon_retangulo_azul));
+                        finalHolder.textDescricao.setPaintFlags(finalHolder.textDescricao.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        finalHolder.textSubDescricao.setPaintFlags(finalHolder.textSubDescricao.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    }
+                    getItem(position).setAtendido(true);
+
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        finalHolder.view.setBackground(finalRow.getResources().getDrawable(R.drawable.icon_retangulo_amarelo));
+                        finalHolder.textDescricao.setPaintFlags(finalHolder.textDescricao.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                        finalHolder.textSubDescricao.setPaintFlags(finalHolder.textSubDescricao.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    }
+                    getItem(position).setAtendido(false);
+                }
+
+                // Toast.makeText(buttonView.getContext(), getItemId(position) + " " + marcados.size(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        if (p.isAtendido()) {//o paciente ja foi atendido
             holder.checkBox.setChecked(true);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 holder.view.setBackground(row.getResources().getDrawable(R.drawable.icon_retangulo_azul));
@@ -127,7 +131,6 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
             holder.textDescricao.setPaintFlags(holder.textDescricao.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             holder.textSubDescricao.setPaintFlags(holder.textSubDescricao.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
-
         //set on click
 
         /*((TextView) view.findViewById(R.id.list_row_draganddrop_textview_titulo)).setText("Paciente:" + getItem(position));
