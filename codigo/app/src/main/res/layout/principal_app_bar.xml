@@ -40,6 +40,10 @@
             android:id="@+id/include2"
             layout="@layout/principal_content2" />
 
+        <include
+            android:id="@+id/fragment_tab"
+            layout="@layout/fragment_tab" />
+
     </ViewFlipper>
 
     <!--android.support.design.widget.FloatingActionButton

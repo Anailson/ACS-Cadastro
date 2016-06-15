@@ -9,7 +9,7 @@ public class Paciente extends RealmObject{
 
     private long id;
     private String nome;
-    private String telefone;
+    private String telefone;//se
 
     private boolean atendido;
 

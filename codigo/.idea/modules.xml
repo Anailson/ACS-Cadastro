@@ -3,12 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Etar-Calendar-master/external/calendar/calendar.iml" filepath="$PROJECT_DIR$/Etar-Calendar-master/external/calendar/calendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/codigo.iml" filepath="$PROJECT_DIR$/codigo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Etar-Calendar-master/external/colorpicker/colorpicker.iml" filepath="$PROJECT_DIR$/Etar-Calendar-master/external/colorpicker/colorpicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Etar-Calendar-master/external/datetimepicker/datetimepicker.iml" filepath="$PROJECT_DIR$/Etar-Calendar-master/external/datetimepicker/datetimepicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/external/external.iml" filepath="$PROJECT_DIR$/external/external.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Etar-Calendar-master/external/timezonepicker/timezonepicker.iml" filepath="$PROJECT_DIR$/Etar-Calendar-master/external/timezonepicker/timezonepicker.iml" />
     </modules>
   </component>
 </project>

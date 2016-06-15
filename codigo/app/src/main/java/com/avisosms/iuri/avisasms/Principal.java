@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.adapters.AdapterListaDePacientes;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
-import com.avisosms.iuri.avisasms.suporte.ViewFlipperPaginas;
 import com.nhaarman.listviewanimations.ArrayAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
@@ -102,17 +101,21 @@ public class Principal extends AppCompatActivity
 
             viewFlipper.setDisplayedChild(0);
 
-           ListaDePacientes();
+         //  ListaDePacientes();
 
         } else if (id == R.id.nav_agenda_da_semana) {
 
-                viewFlipper.setDisplayedChild(1);
-
-        } else if (id == R.id.nav_agenda) {
+            //    viewFlipper.setDisplayedChild(1);
 
             startActivity(new Intent(this, Calendario.class));
 
+        } else if (id == R.id.nav_agenda) {
+            viewFlipper.setDisplayedChild(1);
+            //startActivity(new Intent(this, CalendarioGoogleAPi.class));
+
         } else if (id == R.id.nav_atendente) {
+
+            startActivity(new Intent(this, Fragmento_tab.class));
 
         } else if (id == R.id.nav_configuracao) {
 
@@ -138,7 +141,7 @@ public class Principal extends AppCompatActivity
         mDynamicListView.addHeaderView(view);
 
         /* Setup the adapter */
-        ArrayAdapter<Paciente> adapter = new AdapterListaDePacientes(this , null);
+        ArrayAdapter<Paciente> adapter = new AdapterListaDePacientes(this , null, mDynamicListView);
            /*SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapter, this, new MyOnDismissCallback(adapter));
             AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
             animAdapter.setAbsListView(mDynamicListView);
@@ -156,7 +159,7 @@ public class Principal extends AppCompatActivity
         mDynamicListView.setOnItemLongClickListener(new MyOnItemLongClickListener(mDynamicListView));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView));
+        fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapter));
 
         /*mDynamicListView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
@@ -198,9 +201,11 @@ public class Principal extends AppCompatActivity
     private class MyOnItemClickListener implements AdapterView.OnClickListener {
 
         private final DynamicListView mListView;
+        ArrayAdapter adapter;
 
-        MyOnItemClickListener(final DynamicListView listView) {
+        MyOnItemClickListener(final DynamicListView listView, ArrayAdapter adapter) {
             mListView = listView;
+            this.adapter = adapter;
         }
 
         @Override
@@ -210,6 +215,14 @@ public class Principal extends AppCompatActivity
             Toast.makeText(v.getContext(), "Adicionar Joption para add Paciente", Toast.LENGTH_SHORT).show();
             Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
+
+            mListView.post(new Runnable() {
+                @Override
+                public void run() {
+                    // Select the last row so it will scroll into view...
+                    mListView.setSelection(adapter.getCount() -1);
+                }
+            });
         }
     }
 
@@ -225,7 +238,10 @@ public class Principal extends AppCompatActivity
         public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             if (mListView != null) {
                 mListView.startDragging(position - mListView.getHeaderViewsCount());
+
             }
+
+
             return true;
         }
     }
@@ -250,6 +266,7 @@ public class Principal extends AppCompatActivity
 
             mToast = Toast.makeText(mActivity, mActivity.getString(R.string.moved, mAdapter.getItem(newPosition).getNome(), newPosition), Toast.LENGTH_SHORT);
             mToast.show();
+
 
 //            mToast = Toast.makeText(mActivity, originalPosition+ " to " + newPosition, Toast.LENGTH_SHORT);
 //            mToast.show();

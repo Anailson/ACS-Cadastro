@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
 import com.nhaarman.listviewanimations.ArrayAdapter;
+import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,11 @@ import java.util.List;
 public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
 
     Context mContext;
+    DynamicListView mListView;
 
-    public AdapterListaDePacientes(Context context, List<Paciente> objects) {
+    public AdapterListaDePacientes(Context context, List<Paciente> objects, DynamicListView mListView) {
 
+        this.mListView = mListView;
         for (int i = 0; i < 20; i++) {
             add(new Paciente(" Iúri Batista Teles " + i, "(79) 9 9670-2237"));
         }

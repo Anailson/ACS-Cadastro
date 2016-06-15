@@ -1,5 +1,1 @@
-include ':app', ':external:calendar', ':external:datetimepicker', ':external:colorpicker', ':external:timezonepicker'
-project(':external:calendar').projectDir = new File('Etar-Calendar-master/external/calendar')
-project(':external:datetimepicker').projectDir = new File('Etar-Calendar-master/external/datetimepicker')
-project(':external:colorpicker').projectDir = new File('Etar-Calendar-master/external/colorpicker')
-project(':external:timezonepicker').projectDir = new File('Etar-Calendar-master/external/timezonepicker')
+include ':app'
