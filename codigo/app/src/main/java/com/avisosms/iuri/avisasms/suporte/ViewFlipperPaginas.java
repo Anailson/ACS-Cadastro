@@ -29,6 +29,4 @@ import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.Simple
 public class ViewFlipperPaginas {
 
 
-
-
 }

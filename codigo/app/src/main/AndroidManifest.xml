@@ -37,6 +37,11 @@
             android:label="Google Calendar API Android Quickstart" >
         </activity>
 
+        <activity
+            android:name=".Fragmento_tab"
+            android:label="Google Calendar API Android Quickstart" >
+        </activity>
+
         <!--meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /-->

@@ -28,17 +28,12 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
     Context mContext;
     DynamicListView mListView;
 
-    public AdapterListaDePacientes(Context context, List<Paciente> objects, DynamicListView mListView) {
+    public AdapterListaDePacientes(Context context, List<Paciente> objects, DynamicListView mListView ) {
 
         this.mListView = mListView;
-        for (int i = 0; i < 20; i++) {
-            add(new Paciente(" Iúri Batista Teles " + i, "(79) 9 9670-2237"));
-        }
-
-        //addAll(objects);
+        addAll(objects);
         this.mContext = context;
     }
-
 
     @Override
     public long getItemId(final int position) {
@@ -82,7 +77,7 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.textDescricao.setText("Paciente:" + p.getNome());
+        holder.textDescricao.setText(p.getNome());
         holder.textSubDescricao.setText(p.getTelefone());
 
         final ViewHolder finalHolder = holder;

@@ -32,17 +32,19 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
+
+        <include
+            layout="@layout/fragment_tab" /><!--Lista de pacientes-->
+
+        <include
+            layout="@layout/principal_agenda" />
+
         <include
             android:id="@+id/include1"
-            layout="@layout/principal_content" />
+            layout="@layout/principal_lista_pacientes" />
 
-        <include
-            android:id="@+id/include2"
-            layout="@layout/principal_content2" />
 
-        <include
-            android:id="@+id/fragment_tab"
-            layout="@layout/fragment_tab" />
+
 
     </ViewFlipper>
 

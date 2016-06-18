@@ -1,17 +1,17 @@
 package com.avisosms.iuri.avisasms;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +26,9 @@ import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.OnItemMovedListener;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,7 +38,6 @@ public class Principal extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.principal_activity);
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -57,6 +59,8 @@ public class Principal extends AppCompatActivity
         viewFlipper = (android.widget.ViewFlipper) findViewById(R.id.viewFlipper);
         viewFlipper.setDisplayedChild(0);
         ListaDePacientes();
+        listarPacientesDoDia(3);
+
     }
 
     @Override
@@ -97,32 +101,42 @@ public class Principal extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_agenda_do_dia) {
-
+        if (id == R.id.nav_consulta_do_dia) {
+            setTitle(getString(R.string.consultas_do_dia));
             viewFlipper.setDisplayedChild(0);
 
-         //  ListaDePacientes();
-
-        } else if (id == R.id.nav_agenda_da_semana) {
-
-            //    viewFlipper.setDisplayedChild(1);
-
-            startActivity(new Intent(this, Calendario.class));
+            //ListaDePacientes();
 
         } else if (id == R.id.nav_agenda) {
+
+            setTitle(getString(R.string.agenda));
             viewFlipper.setDisplayedChild(1);
+
+            //listarPacientesDoDia(6);
+            //startActivity(new Intent(this, Calendario.class));
+
+        } else if (id == R.id.nav_lembretes) {
+
+            setTitle(getString(R.string.lembretes));
+            viewFlipper.setDisplayedChild(2);
             //startActivity(new Intent(this, CalendarioGoogleAPi.class));
 
         } else if (id == R.id.nav_atendente) {
 
-            startActivity(new Intent(this, Fragmento_tab.class));
+            setTitle(getString(R.string.medicos));
+            // startActivity(new Intent(this, Fragmento_tab.class));
 
         } else if (id == R.id.nav_configuracao) {
 
+            setTitle(getString(R.string.configuracoes));
+
         } else if (id == R.id.nav_share) {
+
+            setTitle(getString(R.string.compartilhar));
 
         } else if (id == R.id.nav_send) {
 
+            setTitle(getString(R.string.enviar_por_email));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -130,18 +144,56 @@ public class Principal extends AppCompatActivity
         return true;
     }
 
-    public  void ListaDePacientes() {
+
+    /**
+     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * fragments for each of the sections. We use a
+     * {@link FragmentPagerAdapter} derivative, which will keep every
+     * loaded fragment in memory. If this becomes too memory intensive, it
+     * may be best to switch to a
+     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     */
+    public void listarPacientesDoDia(int tabQuantidade) {
+
+      /*  LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = vi.inflate(R.layout.fragment_tab, null);*/
+
+        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        ListaDePacientesFragmento mListaDePacientesFragmento;
+        ViewPager mViewPager;
+        mListaDePacientesFragmento = new ListaDePacientesFragmento(getSupportFragmentManager(), tabQuantidade);
+
+        // Set up the ViewPager with the sections adapter.
+        //setContentView(R.layout.fragment_tab);
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mListaDePacientesFragmento);
+
+    }
+
+
+    public void ListaDePacientes() {
         final DynamicListView mDynamicListView = (DynamicListView) findViewById(R.id.DynamicListView);
 
-        android.view.View view = LayoutInflater.from(this).inflate(R.layout.activity_dynamiclistview_header, mDynamicListView, false);
+        /*android.view.View view = LayoutInflater.from(this).inflate(R.layout.activity_dynamiclistview_header, mDynamicListView, false);
         /*O titulo esta dublicando a cada chamada
         TextView titulo_lista_pacientes = (TextView) view.findViewById(R.id.titulo_lista_paciente);
-        titulo_lista_pacientes.setText(activity.getResources().getString(R.string.titulo_lista_pacientes, 5));*/
+        titulo_lista_pacientes.setText(activity.getResources().getString(R.string.titulo_lista_pacientes, 5));
 
-        mDynamicListView.addHeaderView(view);
+        mDynamicListView.addHeaderView(view);*/
+
+        Toast.makeText(this, "Atualizado", Toast.LENGTH_SHORT).show();
+
+        List<Paciente> objects = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            objects.add(new Paciente(" Lembrete:", i + ":" + i * 0.3 + "  " + 1 + "/06/2016"));
+        }
+
 
         /* Setup the adapter */
-        ArrayAdapter<Paciente> adapter = new AdapterListaDePacientes(this , null, mDynamicListView);
+        ArrayAdapter<Paciente> adapter = new AdapterListaDePacientes(this, objects, mDynamicListView);
            /*SimpleSwipeUndoAdapter simpleSwipeUndoAdapter = new SimpleSwipeUndoAdapter(adapter, this, new MyOnDismissCallback(adapter));
             AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(simpleSwipeUndoAdapter);
             animAdapter.setAbsListView(mDynamicListView);
@@ -158,7 +210,7 @@ public class Principal extends AppCompatActivity
         mDynamicListView.setOnItemMovedListener(new MyOnItemMovedListener(adapter, this));
         mDynamicListView.setOnItemLongClickListener(new MyOnItemLongClickListener(mDynamicListView));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.principal_content_fab);
         fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapter));
 
         /*mDynamicListView.setOnItemLongClickListener(
@@ -210,7 +262,7 @@ public class Principal extends AppCompatActivity
 
         @Override
         public void onClick(View v) {
-            mListView.insert(mListView.getCount()-1, new Paciente("Item adicionado", "telefone"));
+            mListView.insert(mListView.getCount(), new Paciente("Item adicionado", "telefone"));
 
             Toast.makeText(v.getContext(), "Adicionar Joption para add Paciente", Toast.LENGTH_SHORT).show();
             Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -220,7 +272,7 @@ public class Principal extends AppCompatActivity
                 @Override
                 public void run() {
                     // Select the last row so it will scroll into view...
-                    mListView.setSelection(adapter.getCount() -1);
+                    mListView.setSelection(adapter.getCount() - 1);
                 }
             });
         }
@@ -240,7 +292,6 @@ public class Principal extends AppCompatActivity
                 mListView.startDragging(position - mListView.getHeaderViewsCount());
 
             }
-
 
             return true;
         }
