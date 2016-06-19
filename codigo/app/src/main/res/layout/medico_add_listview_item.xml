@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grey_50"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp">
+
+        <View
+            android:id="@+id/list_row_draganddrop_cor"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/icon_retangulo_vermelho" />
+
+        <ImageView
+            android:id="@+id/imageView_medico"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="#00c2ff"
+            android:src="@drawable/medico_2" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:background="#00c2ff"
+            android:orientation="vertical">
+
+            <!--            android:fontFamily="sans-serif-light"-->
+            <TextView
+                android:id="@+id/list_add_medico_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Médico: Iuri batista Teles "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tools:ignore="UnusedAttribute" />
+
+            <TextView
+                android:id="@+id/list_add_medico_especialidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:text="Especialidade: Pediatra"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white"
+                tools:ignore="UnusedAttribute" />
+
+            <TextView
+                android:id="@+id/list_add_medico_telefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="Telefone: (79) 9 9670-2237"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                tools:ignore="UnusedAttribute" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

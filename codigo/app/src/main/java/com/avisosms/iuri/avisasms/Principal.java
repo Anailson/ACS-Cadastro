@@ -124,6 +124,7 @@ public class Principal extends AppCompatActivity
         } else if (id == R.id.nav_atendente) {
 
             setTitle(getString(R.string.medicos));
+            viewFlipper.setDisplayedChild(3);
             // startActivity(new Intent(this, Fragmento_tab.class));
 
         } else if (id == R.id.nav_configuracao) {

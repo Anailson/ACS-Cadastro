@@ -34,17 +34,15 @@
 
 
         <include
-            layout="@layout/fragment_tab" /><!--Lista de pacientes-->
+            layout="@layout/fragment_tab" /><!-- 0 Lista de pacientes-->
 
         <include
-            layout="@layout/principal_agenda" />
+            layout="@layout/principal_agenda" /><!--1-->
 
         <include
-            android:id="@+id/include1"
-            layout="@layout/principal_lista_pacientes" />
-
-
-
+            layout="@layout/principal_lista_pacientes" /><!--2-->
+        <include
+            layout="@layout/medico_adicionar_layout" /><!--3-->
 
     </ViewFlipper>
 
