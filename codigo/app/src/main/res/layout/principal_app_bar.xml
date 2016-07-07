@@ -22,29 +22,38 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    <!--ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/viewFlipper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
+        <include
+            layout="@layout/fragment_tab" /><!- 0 Lista de pacientes-
 
         <include
-            layout="@layout/fragment_tab" /><!-- 0 Lista de pacientes-->
+            layout="@layout/principal_agenda" /><!-1-
 
         <include
-            layout="@layout/principal_agenda" /><!--1-->
+            layout="@layout/principal_lista_pacientes" /><!-2-
 
         <include
-            layout="@layout/principal_lista_pacientes" /><!--2-->
-        <include
-            layout="@layout/medico_adicionar_layout" /><!--3-->
+            layout="@layout/medico_layout" /><!-3-
 
-    </ViewFlipper>
+    </ViewFlipper-->
+
+    <include layout="@layout/principal_content" />
+
+
+    <!--FrameLayout
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize" /-->
 
     <!--android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

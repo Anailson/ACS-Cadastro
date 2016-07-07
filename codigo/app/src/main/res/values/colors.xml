@@ -6,13 +6,33 @@
     <color name="colorAccent">#40efff</color>
 
 
+    <array name="cores">
+        <item>@color/cor_azul_claro</item>
+        <item>@color/cor_azul</item>
+        <item>@color/cor_azul_escuro</item>
+        <item>@color/cor_azul_esverdeado</item>
+        <item>@color/cor_roxo_escuro</item>
+        <item>@color/cor_roxo</item>
+        <item>@color/cor_roxo_claro</item>
+        <item>@color/cor_verde</item>
+        <item>@color/cor_verde_escuro</item>
+        <item>@color/cor_amarelo</item>
+        <item>@color/cor_amarelo_escuro</item>
+        <item>@color/cor_vermelho</item>
+        <item>@color/cor_vermelho_escuro</item>
+
+    </array>
+
+    <color name="cor_azul_esverdeado">#ff0097a7</color>
     <color name="cor_preta">#000</color>
     <color name="cor_azul_claro2">#51bad7</color>
     <color name="cor_azul_claro">#569EF9</color>
-    <color name="cor_azul">#347CD7</color>
-    <color name="cor_azul_escuro">#296894</color>
+    <color name="cor_azul">#2c6cbe</color>
+    <color name="cor_azul_escuro">#0729a3</color>
     <color name="cor_azul_expressivo">#304fff</color>
-    <color name="cor_roxo_expressivo">#9c27b0</color>
+    <color name="cor_roxo_escuro">#700683</color>
+    <color name="cor_roxo">#9c27b0</color>
+    <color name="cor_roxo_claro">#ea80fc</color>
     <color name="cor_verde">#21D200</color>
     <color name="cor_verde_material">#4CAF50</color>
     <color name="cor_verde_escuro">#2E7D32</color>
@@ -44,6 +64,7 @@
     <color name="sticky_item_text">#fff</color>
 
     <integer-array name="androidcolors">
+
         <item>@color/blue</item>
         <item>@color/purple</item>
         <item>@color/green</item>
@@ -425,6 +446,7 @@
     <color name="material_teal_700">#ff0097a7</color>
     <color name="material_teal_A200">#ff18ffff</color>
     <color name="material_teal_A400">#ff00e5ff</color>
+
 
     <!-- Accent color used by Settings -->
     <color name="material_dark_teal_A400">#ff009688</color>

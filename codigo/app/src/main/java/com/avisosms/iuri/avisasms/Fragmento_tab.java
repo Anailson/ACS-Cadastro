@@ -110,7 +110,7 @@
 //        @Override
 //        public View onCreateView(LayoutInflater inflater, ViewGroup container,
 //                                 Bundle savedInstanceState) {
-//            View rootView = inflater.inflate(R.layout.fragment_lista, container, false);
+//            View rootView = inflater.inflate(R.layout.consultas_do_dia, container, false);
 //            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 //            textView.setText("secao " + getArguments().getInt(ARG_SECTION_NUMBER));
 //            return rootView;

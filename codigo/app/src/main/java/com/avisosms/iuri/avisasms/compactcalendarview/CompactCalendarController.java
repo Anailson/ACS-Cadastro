@@ -755,6 +755,8 @@ class CompactCalendarController {
                 if (!isSameDayAsCurrentDay && !isCurrentSelectedDay || animationStatus == EXPOSE_CALENDAR_ANIMATION) {
                     if (eventsList.size() >= 4) {
                         drawEventsWithPlus(canvas, xPosition, yPosition, eventsList);
+                   /* } else if (eventsList.size() == 4) {
+                        drawFourEvents(canvas, xPosition, yPosition, eventsList);*/
                     } else if (eventsList.size() == 3) {
                         drawTreeEvents(canvas, xPosition, yPosition, eventsList);
                     } else if (eventsList.size() == 2) {
@@ -788,6 +790,19 @@ class CompactCalendarController {
 
         drawSmallIndicatorCircle(canvas, xPosition + (xIndicatorOffset * 3), yPosition + yIndicatorOffset, eventsList.get(2).getColor());
     }
+
+   /* //TODO CRIADO por Iúri
+    private void drawFourEvents(Canvas canvas, float xPosition, float yPosition, List<Event> eventsList) {
+        //draw fist event just left of center
+        drawSmallIndicatorCircle(canvas, xPosition + (xIndicatorOffset * -1), yPosition + yIndicatorOffset, eventsList.get(0).getColor());
+        //draw second event just right of center
+        drawSmallIndicatorCircle(canvas, xPosition + (xIndicatorOffset * 1), yPosition + yIndicatorOffset, eventsList.get(1).getColor());
+
+        drawSmallIndicatorCircle(canvas, xPosition + (xIndicatorOffset * 3), yPosition + yIndicatorOffset, eventsList.get(2).getColor());
+
+        drawSmallIndicatorCircle(canvas, xPosition + (xIndicatorOffset * 4), yPosition + yIndicatorOffset, eventsList.get(3).getColor());
+    }*/
+
 
     //draw 2 eventsByMonthAndYearMap followed by plus indicator to show there are more than 2 eventsByMonthAndYearMap
     private void drawEventsWithPlus(Canvas canvas, float xPosition, float yPosition, List<Event> eventsList) {
@@ -870,7 +885,9 @@ class CompactCalendarController {
                 }
                 if (day <= monthToDrawCalender.getActualMaximum(Calendar.DAY_OF_MONTH) && day > 0) {
                     canvas.drawText(String.valueOf(day), xPosition, yPosition, dayPaint);
-                }/*else if(day <= monthToDrawCalender.getActualMaximum(Calendar.DAY_OF_MONTH) && day <= 0){
+                }
+                //TODO criado por Iúri
+                /*else if(day <= monthToDrawCalender.getActualMaximum(Calendar.DAY_OF_MONTH) && day <= 0){
                    // dayPaint.setColor(Color.GRAY);
                     monthToDrawCalender.add(Calendar.MONTH, -1);
                     day = (monthToDrawCalender.getActualMaximum(Calendar.DAY_OF_MONTH) + day);
@@ -893,12 +910,9 @@ class CompactCalendarController {
     // Draw Circle on certain days to highlight them
     private void drawCircle(Canvas canvas, float x, float y, int color) {
         dayPaint.setColor(color);
-        if (animationStatus == ANIMATE_INDICATORS) {
-            float maxRadius = bigCircleIndicatorRadius * 1.4f;
-            drawCircle(canvas, growfactorIndicator > maxRadius ? maxRadius: growfactorIndicator, x, y - (textHeight / 6));
-        } else {
+
             drawCircle(canvas, bigCircleIndicatorRadius, x, y - (textHeight / 6));
-        }
+
     }
 
     private void drawSmallIndicatorCircle(Canvas canvas, float x, float y, int color) {

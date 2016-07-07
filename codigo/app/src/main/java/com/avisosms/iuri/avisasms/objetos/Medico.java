@@ -16,9 +16,10 @@ public class Medico extends RealmObject {
 
     public Medico() {}
 
-    public Medico(String nome, String telefone) {
+    public Medico(String nome, String especialidade, String telefone) {
         this.nome = nome;
         this.telefone = telefone;
+        this.especialidade = especialidade;
 
     }
 

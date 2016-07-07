@@ -15,4 +15,5 @@
     <string name="compartilhar">Compartilhar</string>
     <string name="enviar_por_email">Enviar por e-mail</string>
     <string name="lembretes">Lembretes</string>
+    <string name="sinalMenor"><![CDATA[<]]></string>
 </resources>

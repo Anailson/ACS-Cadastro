@@ -13,6 +13,13 @@ public class Agendamento extends RealmObject{
     private Medico medico;
     private RealmList<Paciente> pacientes;
 
+    public Agendamento(long dataDoAtendimentoEmMilissegundo, Medico medico){
+
+        this.setDataDoAtendimentoEmMilissegundo(dataDoAtendimentoEmMilissegundo);
+        this.setMedico(medico);
+
+    }
+
     public Agendamento(){}
 
     public long getId() {

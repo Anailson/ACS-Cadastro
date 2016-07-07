@@ -12,9 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp">
 
         <View
             android:id="@+id/list_row_draganddrop_cor"
@@ -41,7 +40,7 @@
 
             <!--            android:fontFamily="sans-serif-light"-->
             <TextView
-                android:id="@+id/list_add_medico_nome"
+                android:id="@+id/list_medico_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -52,7 +51,7 @@
                 tools:ignore="UnusedAttribute" />
 
             <TextView
-                android:id="@+id/list_add_medico_especialidade"
+                android:id="@+id/list_medico_especialidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -63,7 +62,7 @@
                 tools:ignore="UnusedAttribute" />
 
             <TextView
-                android:id="@+id/list_add_medico_telefone"
+                android:id="@+id/list_medico_telefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"

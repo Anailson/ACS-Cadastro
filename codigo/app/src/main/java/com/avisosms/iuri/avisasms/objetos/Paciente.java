@@ -5,21 +5,23 @@ import io.realm.RealmObject;
 /**
  * Created by iuri on 6/5/2016.
  */
-public class Paciente extends RealmObject{
+public class Paciente extends RealmObject {
 
     private long id;
     private String nome;
     private String telefone;//se
 
     private boolean atendido;
+    private int ordem;
 
     public Paciente() {
     }
 
-    public Paciente(String nome, String telefone) {
+    public Paciente(String nome, String telefone, int ordem) {
 
         this.nome = nome;
         this.telefone = telefone;
+        this.ordem = ordem;
     }
 
     public long getId() {
@@ -54,4 +56,11 @@ public class Paciente extends RealmObject{
         this.atendido = atendido;
     }
 
+    public int getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(int ordem) {
+        this.ordem = ordem;
+    }
 }
