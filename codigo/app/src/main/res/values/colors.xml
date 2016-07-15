@@ -3,7 +3,8 @@
     <color name="colorPrimary">#3b8bdc</color>
     <color name="colorPrimaryDark">#375acc</color>
     <color name="colorPrimaryLight">#58a2ed</color>
-    <color name="colorAccent">#40efff</color>
+    <color name="colorAccent">#375acc</color>
+    <!--color name="colorAccent">#40efff</color-->
 
 
     <array name="cores">
@@ -14,6 +15,7 @@
         <item>@color/cor_roxo_escuro</item>
         <item>@color/cor_roxo</item>
         <item>@color/cor_roxo_claro</item>
+        <item>@color/cor_rosa</item>
         <item>@color/cor_verde</item>
         <item>@color/cor_verde_escuro</item>
         <item>@color/cor_amarelo</item>
@@ -25,6 +27,7 @@
 
     <color name="cor_azul_esverdeado">#ff0097a7</color>
     <color name="cor_preta">#000</color>
+    <color name="cor_branca">#fff</color>
     <color name="cor_azul_claro2">#51bad7</color>
     <color name="cor_azul_claro">#569EF9</color>
     <color name="cor_azul">#2c6cbe</color>
@@ -33,6 +36,7 @@
     <color name="cor_roxo_escuro">#700683</color>
     <color name="cor_roxo">#9c27b0</color>
     <color name="cor_roxo_claro">#ea80fc</color>
+    <color name="cor_rosa">#e91e63</color>
     <color name="cor_verde">#21D200</color>
     <color name="cor_verde_material">#4CAF50</color>
     <color name="cor_verde_escuro">#2E7D32</color>
@@ -40,6 +44,7 @@
     <color name="cor_amarelo_escuro">#EDE600</color>
     <color name="cor_vermelho">#F9322D</color>
     <color name="cor_vermelho_escuro">#CA0800</color>
+
 
     <!--cores-->
     <color name="app_primary">#008080</color>

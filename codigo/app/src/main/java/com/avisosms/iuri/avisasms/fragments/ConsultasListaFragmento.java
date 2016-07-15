@@ -1,7 +1,8 @@
-package com.avisosms.iuri.avisasms;
+package com.avisosms.iuri.avisasms.fragments;
 
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -11,17 +12,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.adapters.AdapterListaDePacientes;
-import com.avisosms.iuri.avisasms.adapters.AdapterListaDePacientes2;
-import com.avisosms.iuri.avisasms.objetos.Agendamento;
+import com.avisosms.iuri.avisasms.objetos.Consulta;
+import com.avisosms.iuri.avisasms.objetos.Paciente;
 import com.avisosms.iuri.avisasms.suporte.Funcoes;
+import com.nhaarman.listviewanimations.ArrayAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
+import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.OnItemMovedListener;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
-import com.thebluealliance.spectrum.SpectrumDialog;
 
 import java.util.Calendar;
 
@@ -36,28 +41,28 @@ import io.realm.RealmResults;
  * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class ListaDePacientesFragmento extends FragmentPagerAdapter {
+public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
     int tabQuantidade;
 
-    public ListaDePacientesFragmento(FragmentManager fm, int tabQuantidade) {
+    public ConsultasListaFragmento(FragmentManager fm, int tabQuantidade) {
         super(fm);
-        Realm realm = Realm.getDefaultInstance();
+//        Realm realm = Realm.getDefaultInstance();
+//
+//        Calendar calendar = Funcoes.dataHoje();
+//
+//        RealmResults<Consulta> consultas = realm.where(Consulta.class)
+//                .equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis())
+//                .findAll();
+//
+//
+//        for (Consulta consulta : consultas) {
+//            Log.i("Consulta", consulta.getDataDoAtendimentoEmMilissegundo() + " <> " + calendar.getTimeInMillis());
+//        }
 
-        Calendar calendar = Funcoes.dataHoje();
+        this.tabQuantidade = tabQuantidade;
 
-        RealmResults<Agendamento> agendamentos = realm.where(Agendamento.class)
-                .equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis())
-                .findAll();
-
-
-        for (Agendamento agendamento : agendamentos) {
-            Log.i("Agendamento", agendamento.getDataDoAtendimentoEmMilissegundo() + " <> " + calendar.getTimeInMillis());
-        }
-
-        this.tabQuantidade = agendamentos.size() - 1;
-
-        realm.close();
+//        realm.close();
 
     }
 
@@ -74,6 +79,7 @@ public class ListaDePacientesFragmento extends FragmentPagerAdapter {
         // Show 3 total pages.
         return tabQuantidade;//3;
     }
+
 
     @Override
     public CharSequence getPageTitle(int position) {
@@ -110,8 +116,8 @@ public class ListaDePacientesFragmento extends FragmentPagerAdapter {
         public PlaceholderFragment() {
         }
 
-        AdapterListaDePacientes2 adapter;
-        DynamicListView mDynamicListView;
+
+
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -138,20 +144,19 @@ public class ListaDePacientesFragmento extends FragmentPagerAdapter {
 
             Calendar calendar = Funcoes.dataHoje();
 
-            RealmResults<Agendamento> agendamentos = realm.where(Agendamento.class).equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis()).findAll();
+            RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis()).findAll();
 
-            Agendamento agendamento = agendamentos.get(numeroSecao - 1);
+            Consulta consulta = consultas.get(numeroSecao - 1);
 
-            View rootView = inflater.inflate(R.layout.consultas_do_dia, container, false);
+            View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(agendamento.getMedico().getNome() + " numSecao " + numeroSecao);
+            textView.setText(consulta.getMedico().getNome() + " numSecao " + numeroSecao);
 
 
             FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fragment_list_fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    showDialog1();
                     Snackbar.make(view, "Add <> paciente, para o médico " + getArguments().getInt(ARG_SECTION_NUMBER), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
@@ -160,7 +165,7 @@ public class ListaDePacientesFragmento extends FragmentPagerAdapter {
             ///////List
             DynamicListView mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
 
-            AdapterListaDePacientes adapter = new AdapterListaDePacientes(rootView.getContext(), agendamento.getPacientes().sort("ordem"));
+            AdapterListaDePacientes adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
 
             AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(adapter);
             animAdapter.setAbsListView(mDynamicListView);
@@ -176,7 +181,7 @@ public class ListaDePacientesFragmento extends FragmentPagerAdapter {
             // fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapter));
 
             //adapter.notifyDataSetInvalidated();
-
+            Toast.makeText(getContext(), " " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();
 
             return rootView;
         }
@@ -188,24 +193,85 @@ public class ListaDePacientesFragmento extends FragmentPagerAdapter {
                 realm.close();
         }
 
-        private void showDialog1() {
-            new SpectrumDialog.Builder(getContext())
-                    .setColors(R.array.cores)
-                    .setSelectedColorRes(R.color.orange)
-                    .setDismissOnColorSelected(false)
-                    // .setOutlineWidth(8)
-                    .setOnColorSelectedListener(new SpectrumDialog.OnColorSelectedListener() {
-                        @Override
-                        public void onColorSelected(boolean positiveResult, @ColorInt int color) {
-                            if (positiveResult) {
-                                Toast.makeText(getContext(), "Color selected: #" + Integer.toHexString(color).toUpperCase(), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getContext(), "Dialog cancelled", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }).build().show(getFragmentManager(), "dialog_demo_1");
 
+        private class MyOnItemClickListener implements AdapterView.OnClickListener {
+
+            private final DynamicListView mListView;
+            ArrayAdapter adapter;
+
+            MyOnItemClickListener(final DynamicListView listView, ArrayAdapter adapter) {
+                mListView = listView;
+                this.adapter = adapter;
+            }
+
+            @Override
+            public void onClick(View v) {
+                mListView.insert(mListView.getCount(), new Paciente("Item adicionado", "telefone", 1));
+
+                Toast.makeText(v.getContext(), "Adicionar Joption para add Paciente", Toast.LENGTH_SHORT).show();
+                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                mListView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Select the last row so it will scroll into view...
+                        mListView.setSelection(adapter.getCount() - 1);
+                    }
+                });
+            }
         }
+
+        private class MyOnItemLongClickListener implements AdapterView.OnItemLongClickListener {
+
+            private final DynamicListView mListView;
+
+            MyOnItemLongClickListener(final DynamicListView listView) {
+                mListView = listView;
+            }
+
+            @Override
+            public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+                if (mListView != null) {
+                    mListView.startDragging(position - mListView.getHeaderViewsCount());
+
+                }
+
+                return true;
+            }
+        }
+
+        private class MyOnItemMovedListener implements OnItemMovedListener {
+
+            private final ArrayAdapter<Paciente> mAdapter;
+
+            private Toast mToast;
+            private Activity mActivity;
+
+            MyOnItemMovedListener(final ArrayAdapter<Paciente> adapter, Activity activity) {
+                mAdapter = adapter;
+                mActivity = activity;
+            }
+
+            @Override
+            public void onItemMoved(final int originalPosition, final int newPosition) {
+                if (mToast != null) {
+                    mToast.cancel();
+                }
+
+                mToast = Toast.makeText(mActivity, mActivity.getString(R.string.moved, mAdapter.getItem(newPosition).getNome(), newPosition), Toast.LENGTH_SHORT);
+                mToast.show();
+
+
+//            mToast = Toast.makeText(mActivity, originalPosition+ " to " + newPosition, Toast.LENGTH_SHORT);
+//            mToast.show();
+//
+//            mToast = Toast.makeText(mActivity, mAdapter.getItem(newPosition).getNome() + " new Position ", Toast.LENGTH_SHORT);
+//            mToast.show();
+
+            }
+        }
+
 
     }
 }

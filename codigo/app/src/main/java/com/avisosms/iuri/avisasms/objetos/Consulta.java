@@ -6,21 +6,21 @@ import io.realm.RealmObject;
 /**
  * Created by iuri on 6/15/2016.
  */
-public class Agendamento extends RealmObject{
+public class Consulta extends RealmObject{
 
     private long id;
     private long dataDoAtendimentoEmMilissegundo;
     private Medico medico;
     private RealmList<Paciente> pacientes;
 
-    public Agendamento(long dataDoAtendimentoEmMilissegundo, Medico medico){
+    public Consulta(long dataDoAtendimentoEmMilissegundo, Medico medico){
 
         this.setDataDoAtendimentoEmMilissegundo(dataDoAtendimentoEmMilissegundo);
         this.setMedico(medico);
 
     }
 
-    public Agendamento(){}
+    public Consulta(){}
 
     public long getId() {
         return id;

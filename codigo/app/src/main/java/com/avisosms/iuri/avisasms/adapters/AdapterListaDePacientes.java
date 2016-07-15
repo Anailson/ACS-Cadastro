@@ -15,13 +15,8 @@ import android.widget.Toast;
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
 import com.nhaarman.listviewanimations.ArrayAdapter;
-import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 import io.realm.Realm;
 
@@ -64,12 +59,12 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
 
         if (row == null) {
                     /*if (row == null) {*/ //Checkbox precisa ter uma lista exclusiva, http://webcache.googleusercontent.com/search?q=cache:http://stackoverflow.com/questions/16350670/listview-viewholder-checkbox-state&gws_rd=cr&ei=5sFXV_G6M4f4wASc5LjIDg
-            // row = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview, parent, false);
+            // row = LayoutInflater.from(mContext).inflate(R.layout.dynamiclistview_list_row, parent, false);
             /*LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.list_row_dynamiclistview, null/*, parent, false);*/
+            row = inflater.inflate(R.layout.dynamiclistview_list_row, null/*, parent, false);*/
 
             holder = new ViewHolder();
-            row = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview, parent, false);
+            row = LayoutInflater.from(mContext).inflate(R.layout.dynamiclistview_list_row, parent, false);
 
             holder.textDescricao = (TextView) row.findViewById(R.id.list_row_draganddrop_textview_titulo);
             holder.textSubDescricao = (TextView) row.findViewById(R.id.list_row_draganddrop_textview_subtitulo);
@@ -168,7 +163,7 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
     public View getUndoView(final int position, final View convertView, @NonNull final ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = LayoutInflater.from(mContext).inflate(R.layout.undo_row, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.dynamiclistview_undo_row, parent, false);
         }
         return view;
     }

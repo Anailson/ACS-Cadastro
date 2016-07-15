@@ -1,13 +1,11 @@
 package com.avisosms.iuri.avisasms.suporte;
 
 import android.content.Context;
-import android.os.SystemClock;
 
-import com.avisosms.iuri.avisasms.objetos.Agendamento;
+import com.avisosms.iuri.avisasms.objetos.Consulta;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
 
-import java.sql.Date;
 import java.util.Calendar;
 
 import io.realm.Realm;
@@ -75,18 +73,18 @@ public class BancoDeDados {
 
             Calendar calendar = Funcoes.dataHoje();
 
-            //Adicionar Agendamento
-            Agendamento agendamento = new Agendamento(calendar.getTimeInMillis(), medico);
+            //Adicionar Consulta
+            Consulta consulta = new Consulta(calendar.getTimeInMillis(), medico);
 
-            if (realm.where(Agendamento.class).max("id") != null)
-                nextkey = realm.where(Agendamento.class).max("id").intValue() + 1;
+            if (realm.where(Consulta.class).max("id") != null)
+                nextkey = realm.where(Consulta.class).max("id").intValue() + 1;
 
-            agendamento.setId(nextkey);
+            consulta.setId(nextkey);
             RealmList<Paciente> list = new RealmList();
             list.addAll(pacientes);
-            agendamento.setPacientes(list);
+            consulta.setPacientes(list);
 
-            realm.copyToRealm(agendamento);
+            realm.copyToRealm(consulta);
 
             realm.commitTransaction();
         }

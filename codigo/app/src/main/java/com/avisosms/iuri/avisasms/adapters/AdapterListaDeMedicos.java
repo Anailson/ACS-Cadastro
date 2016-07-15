@@ -1,6 +1,7 @@
 package com.avisosms.iuri.avisasms.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +50,9 @@ public class AdapterListaDeMedicos extends ArrayAdapter<Medico> {
 
         if (row == null) {
                     /*if (row == null) {*/ //Checkbox precisa ter uma lista exclusiva, http://webcache.googleusercontent.com/search?q=cache:http://stackoverflow.com/questions/16350670/listview-viewholder-checkbox-state&gws_rd=cr&ei=5sFXV_G6M4f4wASc5LjIDg
-            // row = LayoutInflater.from(mContext).inflate(R.layout.list_row_dynamiclistview, parent, false);
+            // row = LayoutInflater.from(mContext).inflate(R.layout.dynamiclistview_list_row, parent, false);
             /*LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.list_row_dynamiclistview, null/*, parent, false);*/
+            row = inflater.inflate(R.layout.dynamiclistview_list_row, null/*, parent, false);*/
 
             holder = new ViewHolder();
             row = LayoutInflater.from(mContext).inflate(R.layout.medico_listview_item, parent, false);
@@ -59,7 +60,7 @@ public class AdapterListaDeMedicos extends ArrayAdapter<Medico> {
             holder.textNome = (TextView) row.findViewById(R.id.list_medico_nome);
             holder.textEspecialidade = (TextView) row.findViewById(R.id.list_medico_especialidade);
             holder.textTelefone = (TextView) row.findViewById(R.id.list_medico_telefone);
-            holder.view = (View) row.findViewById(R.id.list_row_draganddrop_cor);
+            holder.view = (View) row.findViewById(R.id.list_medico_cor);
 
             row.setTag(holder);
         } else {
@@ -69,6 +70,17 @@ public class AdapterListaDeMedicos extends ArrayAdapter<Medico> {
         holder.textNome.setText(m.getNome());
         holder.textEspecialidade.setText(m.getEspecialidade());
         holder.textTelefone.setText(m.getTelefone());
+
+        if (position == 4)
+            holder.view.setBackgroundColor(row.getResources().getColor(R.color.cor_verde));
+        else if (position == 2)
+            holder.view.setBackgroundColor(row.getResources().getColor(R.color.cor_vermelho_escuro));
+        else if (position == 3)
+            holder.view.setBackgroundColor(row.getResources().getColor(R.color.cor_roxo_claro));
+        else if (position == 1)
+            holder.view.setBackgroundColor(row.getResources().getColor(R.color.cor_amarelo));
+        else if (position == 5)
+            holder.view.setBackgroundColor(row.getResources().getColor(R.color.cor_azul));
 
         //set on click
 

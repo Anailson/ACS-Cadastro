@@ -1,18 +1,19 @@
-package com.avisosms.iuri.avisasms;
+package com.avisosms.iuri.avisasms.fragments;
 
-/**
- * Created by iuri on 6/14/2016.
- */
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView;
 import com.avisosms.iuri.avisasms.compactcalendarview.Event;
 
@@ -24,38 +25,44 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Created by iuri on 7/5/2016.
+ */
+public class Calendario extends Fragment {
 
-public class Calendario extends ActionBarActivity {
 
-    private static final String TAG = "MainActivity";
+    View view;
+    //TODO Agenda
+    private static final String TAG = "Calendario";
     private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
     private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MM(MMMM) - yyyy", Locale.getDefault());
     private boolean shouldShow = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.principal_agenda);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        final ActionBar actionBar = getSupportActionBar();
+        view = inflater.inflate(R.layout.calendario, container, false);
+        view.refreshDrawableState();
+
+
         final List<String> mutableBookings = new ArrayList<>();
 
-        final ListView bookingsListView = (ListView) findViewById(R.id.bookings_listview);
-        final Button showPreviousMonthBut = (Button) findViewById(R.id.prev_button);
-        final Button showNextMonthBut = (Button) findViewById(R.id.next_button);
-        final Button slideCalendarBut = (Button) findViewById(R.id.slide_calendar);
-        final Button showCalendarWithAnimationBut = (Button) findViewById(R.id.show_with_animation_calendar);
+        final ListView bookingsListView = (ListView) view.findViewById(R.id.bookings_listview);
+        final Button showPreviousMonthBut = (Button) view.findViewById(R.id.prev_button);
+        final Button showNextMonthBut = (Button) view.findViewById(R.id.next_button);
+        final Button slideCalendarBut = (Button) view.findViewById(R.id.slide_calendar);
+        final Button showCalendarWithAnimationBut = (Button) view.findViewById(R.id.show_with_animation_calendar);
 
-        final ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mutableBookings);
+        final ArrayAdapter adapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, mutableBookings);
         bookingsListView.setAdapter(adapter);
-        final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
+        final CompactCalendarView compactCalendarView = (CompactCalendarView) view.findViewById(R.id.compactcalendar_view);
 
-        compactCalendarView.setDayColumnNames(new String[]{"dom","seg","ter", "qua","qui", "sex", "sab"});
+        compactCalendarView.setDayColumnNames(new String[]{"dom", "seg", "ter", "qua", "qui", "sex", "sab"});
 
         // below allows you to configure color for the current day in the month
-      //  compactCalendarView.setCurrentDayBackgroundColor(getResources().getColor(R.color.cor_preta));
+        //  compactCalendarView.setCurrentDayBackgroundColor(getResources().getColor(R.color.cor_preta));
         // below allows you to configure colors for the current day the user has selected
-       // compactCalendarView.setCurrentSelectedDayBackgroundColor(getResources().getColor(R.color.cor_vermelho_escuro));
+        // compactCalendarView.setCurrentSelectedDayBackgroundColor(getResources().getColor(R.color.cor_vermelho_escuro));
 
         addEvents(compactCalendarView, -1);
         addEvents(compactCalendarView, Calendar.DECEMBER);
@@ -75,7 +82,9 @@ public class Calendario extends ActionBarActivity {
         // compactCalendarView.setShouldShowMondayAsFirstDay(false);
 
         //set initial title
-        actionBar.setTitle(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+        // actionBar.setTitle(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+
+        ((TextView) view.findViewById(R.id.agenda_meses)).setText(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
 
         //set title on calendar scroll
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
@@ -83,11 +92,11 @@ public class Calendario extends ActionBarActivity {
             public void onDayClick(Date dateClicked) {
                 List<Event> bookingsFromMap = compactCalendarView.getEvents(dateClicked);
                 Log.d(TAG, "inside onclick " + dateClicked);
-                if(bookingsFromMap != null){
+                if (bookingsFromMap != null) {
                     Log.d(TAG, bookingsFromMap.toString());
                     mutableBookings.clear();
-                    for(Event booking : bookingsFromMap){
-                        mutableBookings.add((String)booking.getData());
+                    for (Event booking : bookingsFromMap) {
+                        mutableBookings.add((String) booking.getData());
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -96,7 +105,9 @@ public class Calendario extends ActionBarActivity {
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-                actionBar.setTitle(dateFormatForMonth.format(firstDayOfNewMonth));
+
+                ((TextView) view.findViewById(R.id.agenda_meses)).setText(dateFormatForMonth.format(firstDayOfNewMonth));
+                //actionBar.setTitle(dateFormatForMonth.format(firstDayOfNewMonth));
             }
         });
 
@@ -138,7 +149,9 @@ public class Calendario extends ActionBarActivity {
             }
         });
 
+        return view;
     }
+
 
     private void addEvents(CompactCalendarView compactCalendarView, int month) {
         currentCalender.setTime(new Date());
@@ -161,17 +174,23 @@ public class Calendario extends ActionBarActivity {
 
     private List<Event> getEvents(long timeInMillis, int day) {
         if (day < 2) {
-            return Arrays.asList(new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Event at " + new Date(timeInMillis)));
-        } else if ( day > 2 && day <= 4) {
+            return Arrays.asList(new Event(Color.argb(255, 169, 68, 255), timeInMillis, "Event at " + new Date(timeInMillis)));
+        } else if (day > 2 && day <= 4) {
             return Arrays.asList(
                     new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Event at " + new Date(timeInMillis)),
                     new Event(Color.argb(255, 100, 68, 65), timeInMillis, "Event 2 at " + new Date(timeInMillis)));
+        } else if (day > 5 && day <= 10) {
+            return Arrays.asList(
+                    new Event(Color.argb(255, 10, 68, 56), timeInMillis, "Event at " + new Date(timeInMillis)),
+                    new Event(Color.argb(50, 100, 68, 65), timeInMillis, "Event 2 at " + new Date(timeInMillis)),
+                    new Event(Color.argb(100, 70, 5, 56), timeInMillis, "Event 3 at " + new Date(timeInMillis)),
+                    new Event(Color.argb(6, 80, 68, 65), timeInMillis, "Event 3 at " + new Date(timeInMillis)));
         } else {
             return Arrays.asList(
-                    new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Event at " + new Date(timeInMillis) ),
-                    new Event(Color.argb(255, 100, 68, 65), timeInMillis, "Event 2 at " + new Date(timeInMillis)),
-                    new Event(Color.argb(255, 70, 68, 65), timeInMillis, "Event 3 at " + new Date(timeInMillis)),
-            new Event(Color.argb(255, 70, 68, 65), timeInMillis, "Event 3 at " + new Date(timeInMillis)));
+                    new Event(Color.argb(255, 255, 0, 65), timeInMillis, "Event at " + new Date(timeInMillis)),
+                    new Event(Color.argb(255, 255, 255, 65), timeInMillis, "Event 3 at " + new Date(timeInMillis)),
+                    new Event(Color.argb(100, 0, 100, 65), timeInMillis, "Event 3 at " + new Date(timeInMillis)));
+
         }
     }
 
@@ -181,5 +200,4 @@ public class Calendario extends ActionBarActivity {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
     }
-
 }

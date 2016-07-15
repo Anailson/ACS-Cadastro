@@ -29,7 +29,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
 
-    compile 'com.thebluealliance:spectrum:0.5.0'
+    compile 'com.thebluealliance:spectrum:0.5.0'//color selection
+
+    //compile 'com.github.pinball83:masked-edittext:1.0.3'//mask edit text
 
     //Google calender
     /*compile 'com.google.android.gms:play-services-identity:8.4.0'

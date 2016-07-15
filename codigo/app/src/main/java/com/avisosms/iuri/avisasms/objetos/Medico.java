@@ -11,7 +11,7 @@ public class Medico extends RealmObject {
     private String nome;
     private String telefone;
     private String especialidade;
-    private int corIndicativa;
+    private String corIndicativa;
     private String observacao;
 
     public Medico() {}
@@ -63,11 +63,11 @@ public class Medico extends RealmObject {
         this.observacao = observacao;
     }
 
-    public int getCorIndicativa() {
+    public String getCorIndicativa() {
         return corIndicativa;
     }
 
-    public void setCorIndicativa(int corIndicativa) {
+    public void setCorIndicativa(String corIndicativa) {
         this.corIndicativa = corIndicativa;
     }
 }

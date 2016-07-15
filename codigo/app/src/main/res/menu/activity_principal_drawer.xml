@@ -12,10 +12,10 @@
             android:id="@+id/nav_agenda"
             android:icon="@drawable/ic_calendar_multiple_grey600_24dp"
             android:title="@string/agenda" />
-        <item
-            android:id="@+id/nav_lembretes"
-            android:icon="@drawable/ic_calendar_blank_grey600_24dp"
-            android:title="@string/lembretes" />
+        <!--<item-->
+            <!--android:id="@+id/nav_lembretes"-->
+            <!--android:icon="@drawable/ic_calendar_blank_grey600_24dp"-->
+            <!--android:title="@string/lembretes" />-->
         <item
             android:id="@+id/nav_atendente"
             android:icon="@drawable/ic_account_settings_variant_grey600_24dp"
