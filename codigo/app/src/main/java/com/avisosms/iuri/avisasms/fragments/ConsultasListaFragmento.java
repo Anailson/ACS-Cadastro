@@ -9,11 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,7 @@ import io.realm.RealmResults;
  */
 public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
-    int tabQuantidade;
+    static int tabQuantidade;
 
     public ConsultasListaFragmento(FragmentManager fm, int tabQuantidade) {
         super(fm);
@@ -71,7 +73,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        return PlaceholderFragment.newInstance(position);
     }
 
     @Override
@@ -146,18 +148,40 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
             RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis()).findAll();
 
-            Consulta consulta = consultas.get(numeroSecao - 1);
+            final Consulta consulta = consultas.get(numeroSecao);
 
             View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(consulta.getMedico().getNome() + " numSecao " + numeroSecao);
 
 
+            LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.fragment_tab_layout_indicadores);
+            float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+        /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+        params.height = (int) pixels;
+        params.weight = (int) pixels;*/
+
+            //static  int id = 1;// getResources().getIdentifier("gameover", "drawable", getPackageName());
+            for (  int i = 0; i < tabQuantidade; i++) {
+                ImageView imgView = new ImageView(getContext());
+                //imgView.setId(0x7f0d0079);
+                imgView.setImageResource(R.drawable.icon_clipboard);
+                imgView.setLayoutParams(new LinearLayout.LayoutParams((int)pixels,(int) pixels));//new LinearLayout.LayoutParams(30, 30));
+
+                if(i == numeroSecao){
+                    int color = getResources().getColor(R.color.colorAccent); //The color u want
+                    imgView.setColorFilter(color);
+                }
+
+                linearLayout.addView(imgView);
+
+            }
+
             FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fragment_list_fab);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Add <> paciente, para o médico " + getArguments().getInt(ARG_SECTION_NUMBER), Snackbar.LENGTH_LONG)
+                    Snackbar.make(view, "Add <> paciente, para o médico " + consulta.getMedico().getId(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             });

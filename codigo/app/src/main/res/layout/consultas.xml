@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <HorizontalScrollView
+    <!--HorizontalScrollView
         android:id="@+id/fragment_tab_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -16,7 +16,7 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:gravity="center_vertical">
 
-            <!--View
+            <View
                 android:layout_width="30dp"
                 android:layout_height="10dp"
                 android:background="@drawable/icon_retangulo_amarelo"
@@ -34,7 +34,7 @@
                 android:layout_height="10.0dip"
                 android:layout_marginLeft="10.0dip"
                 android:background="@drawable/icon_retangulo_azul"
-                android:padding="10.0dip" /-->
+                android:padding="10.0dip" />
 
             <ImageView
                 android:id="@+id/icon_clipboard"
@@ -43,58 +43,9 @@
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/icon_clipboard" />
 
-            <!--<ImageView-->
-                <!--android:id="@+id/icon_clipboard2"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/icon_clipboard" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/icon_clipboard3"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/icon_clipboard" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/icon_clipboard4"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/icon_clipboard_indicator" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/icon_clipboard5"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/icon_clipboard" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/icon_clipboard6"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/icon_clipboard" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/icon_clipboard7"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/icon_clipboard" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/icon_clipboard8"-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:src="@drawable/icon_clipboard" />-->
-
 
         </LinearLayout>
-    </HorizontalScrollView>
+    </HorizontalScrollView-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"

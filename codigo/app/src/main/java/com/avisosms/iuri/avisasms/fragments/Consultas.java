@@ -49,20 +49,20 @@ public class Consultas extends Fragment {
 //        android:
 //        src = "@drawable/icon_clipboard" / >
 
-        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.fragment_tab_layout_indicadores);
-        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
-        /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.height = (int) pixels;
-        params.weight = (int) pixels;*/
-
-        //static  int id = 1;// getResources().getIdentifier("gameover", "drawable", getPackageName());
-        for (  int i = 0; i < 5; i++) {
-            ImageView imgView = new ImageView(getContext());
-            //imgView.setId(0x7f0d0079);
-            imgView.setImageResource(R.drawable.icon_clipboard);
-            imgView.setLayoutParams(new LinearLayout.LayoutParams((int)pixels,(int) pixels));//new LinearLayout.LayoutParams(30, 30));
-            linearLayout.addView(imgView);
-        }
+//        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.fragment_tab_layout_indicadores);
+//        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+//        /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+//        params.height = (int) pixels;
+//        params.weight = (int) pixels;*/
+//
+//        //static  int id = 1;// getResources().getIdentifier("gameover", "drawable", getPackageName());
+//        for (  int i = 0; i < 5; i++) {
+//            ImageView imgView = new ImageView(getContext());
+//            //imgView.setId(0x7f0d0079);
+//            imgView.setImageResource(R.drawable.icon_clipboard);
+//            imgView.setLayoutParams(new LinearLayout.LayoutParams((int)pixels,(int) pixels));//new LinearLayout.LayoutParams(30, 30));
+//            linearLayout.addView(imgView);
+//        }
         /////////////
         Realm realm = Realm.getDefaultInstance();
 
@@ -81,7 +81,7 @@ public class Consultas extends Fragment {
 
         ConsultasListaFragmento mConsultasListaFragmento;
         ViewPager mViewPager;
-        mConsultasListaFragmento = new ConsultasListaFragmento(getChildFragmentManager(), consultas.size() - 1);
+        mConsultasListaFragmento = new ConsultasListaFragmento(getChildFragmentManager(), consultas.size());
 
 
 
@@ -101,7 +101,7 @@ public class Consultas extends Fragment {
             @Override
             public void onPageSelected(int position) {
 
-              //  Toast.makeText(getContext(), imgView.getId() + "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), position + "", Toast.LENGTH_SHORT).show();
 
 //                ImageView lineColorCode = (ImageView) view.findViewById(R.id.icon_clipboard4);
 

@@ -34,7 +34,7 @@ public class BancoDeDados {
         realm.commitTransaction();
 
         //Pacientes
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 600; i++) {
 
             realm.beginTransaction();
 
@@ -45,7 +45,7 @@ public class BancoDeDados {
                 nextkey = realm.where(Paciente.class).max("id").intValue() + 1;
 
             Paciente paciente = new Paciente("Paciente ordem> " + i + " key> " + nextkey, " Telefone " + i, i);
-            if(i%2 == 0)
+            if(i>10 && i<60)
                 paciente.setAtendido(true);
 
             paciente.setId(nextkey);
@@ -60,11 +60,14 @@ public class BancoDeDados {
         for (int i = 0; i < 5; i++) {
             realm.beginTransaction();
 
-            Medico medico = new Medico("Médico " + i, "Cirurgião", "Telefone " + i);
+
             int nextkey = 1;
+
 
             if (realm.where(Medico.class).max("id") != null)
                 nextkey = realm.where(Medico.class).max("id").intValue() + 1;
+
+            Medico medico = new Medico("Médico " + nextkey  , "Cirurgião", "Telefone " + i);
 
             medico.setId(nextkey);
             realm.copyToRealm(medico);
