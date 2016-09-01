@@ -95,6 +95,10 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
                     p.setAtendido(false);
                 }
 
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(p.getTelefone().split("/")[0].replaceAll("\\(","").replaceAll("\\)","").replaceAll(" ","").replaceAll("/","").replaceAll("-",""), null, "sms message", null, null);
+
+                Toast.makeText(v.getContext(), p.getId() + " " + p.getNome(), Toast.LENGTH_SHORT).show();
                 /*SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(p.getTelefone().split("/")[0].replaceAll("\\(","").replaceAll("\\)","").replaceAll(" ","").replaceAll("/","").replaceAll("-",""), null, "sms message", null, null);
 
