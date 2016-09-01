@@ -1,53 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3b8bdc</color>
-    <color name="colorPrimaryDark">#375acc</color>
-    <color name="colorPrimaryLight">#58a2ed</color>
-    <color name="colorAccent">#375acc</color>
-    <!--color name="colorAccent">#40efff</color-->
-
-
-    <array name="cores">
-        <item>@color/cor_azul_claro</item>
-        <item>@color/cor_azul</item>
-        <item>@color/cor_azul_escuro</item>
-        <item>@color/cor_azul_esverdeado</item>
-        <item>@color/cor_roxo_escuro</item>
-        <item>@color/cor_roxo</item>
-        <item>@color/cor_roxo_claro</item>
-        <item>@color/cor_rosa</item>
-        <item>@color/cor_verde</item>
-        <item>@color/cor_verde_escuro</item>
-        <item>@color/cor_amarelo</item>
-        <item>@color/cor_amarelo_escuro</item>
-        <item>@color/cor_vermelho</item>
-        <item>@color/cor_vermelho_escuro</item>
-
-    </array>
-
-    <color name="cor_azul_esverdeado">#ff0097a7</color>
-    <color name="cor_preta">#000</color>
-    <color name="cor_branca">#fff</color>
-    <color name="cor_azul_claro2">#51bad7</color>
-    <color name="cor_azul_claro">#569EF9</color>
-    <color name="cor_azul">#2c6cbe</color>
-    <color name="cor_azul2">#2d68b4</color>
-    <color name="cor_azul_escuro">#0729a3</color>
-    <color name="cor_azul_expressivo">#304fff</color>
-    <color name="cor_roxo_escuro">#700683</color>
-    <color name="cor_roxo">#9c27b0</color>
-    <color name="cor_roxo_claro">#ea80fc</color>
-    <color name="cor_rosa">#e91e63</color>
-    <color name="cor_verde">#21D200</color>
-    <color name="cor_verde_material">#4CAF50</color>
-    <color name="cor_verde_escuro">#2E7D32</color>
-    <color name="cor_amarelo">#FEF700</color>
-    <color name="cor_amarelo_escuro">#EDE600</color>
-    <color name="cor_vermelho">#F9322D</color>
-    <color name="cor_vermelho_escuro">#CA0800</color>
-
-
-    <!--cores-->
     <color name="app_primary">#008080</color>
     <color name="app_primary_dark">#45645C</color>
 
@@ -70,7 +22,6 @@
     <color name="sticky_item_text">#fff</color>
 
     <integer-array name="androidcolors">
-
         <item>@color/blue</item>
         <item>@color/purple</item>
         <item>@color/green</item>
@@ -381,6 +332,9 @@
     <color name="blue_grey_900">#263238</color>
 
 
+
+
+
     <color name="background_material_dark">#ff212121</color>
     <color name="background_material_light">#fffafafa</color>
 
@@ -401,10 +355,8 @@
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
 
-    <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark
-    </color>
-    <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light
-    </color>
+    <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
+    <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
     <!-- TODO: This is 40% alpha on the default accent color. -->
     <color name="highlighted_text_material_dark">#6640c4ff</color>
     <!-- TODO: This is 40% alpha on the default accent color. -->
@@ -452,7 +404,6 @@
     <color name="material_teal_700">#ff0097a7</color>
     <color name="material_teal_A200">#ff18ffff</color>
     <color name="material_teal_A400">#ff00e5ff</color>
-
 
     <!-- Accent color used by Settings -->
     <color name="material_dark_teal_A400">#ff009688</color>
@@ -524,15 +475,9 @@
     <!-- Time picker defaults when no theme is set -->
     <eat-comment />
 
-    <color name="timepicker_default_background_material">
-        @color/primary_text_default_material_light
-    </color>
-    <color name="timepicker_default_disabled_color_material">
-        @color/bright_foreground_disabled_material_dark
-    </color>
-    <color name="timepicker_default_ampm_selected_background_color_material">
-        @color/material_light_blue_A200
-    </color>
+    <color name="timepicker_default_background_material">@color/primary_text_default_material_light</color>
+    <color name="timepicker_default_disabled_color_material">@color/bright_foreground_disabled_material_dark</color>
+    <color name="timepicker_default_ampm_selected_background_color_material">@color/material_light_blue_A200</color>
     <color name="timepicker_default_selector_color_material">@color/material_light_blue_A200</color>
 
     <color name="list_item_title">#ffffffff</color>
@@ -543,4 +488,3 @@
     <color name="counter_text_bg">#626262</color>
     <color name="counter_text_color">#c5c4c4</color>
 </resources>
-
