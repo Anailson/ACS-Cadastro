@@ -1,4 +1,4 @@
-package com.avisosms.iuri.avisasms;
+package com.avisosms.iuri.avisasms.activity;
 
 /**
  * Created by iuri on 6/14/2016.
@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView;
 import com.avisosms.iuri.avisasms.compactcalendarview.Event;
 

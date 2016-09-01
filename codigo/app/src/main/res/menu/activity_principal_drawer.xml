@@ -18,7 +18,7 @@
             <!--android:title="@string/lembretes" />-->
         <item
             android:id="@+id/nav_atendente"
-            android:icon="@drawable/ic_account_settings_variant_grey600_24dp"
+            android:icon="@drawable/ic_account_card_details_grey600_24dp"
             android:title="@string/medicos" />
         <item
             android:id="@+id/nav_configuracao"

@@ -6,10 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
+    <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
         android:allowBackup="true"
+        android:name=".App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -17,7 +18,7 @@
         <!--android:configChanges="keyboardHidden|orientation"
         android:screenOrientation="sensorPortrait"-->
         <activity
-            android:name=".Principal"
+            android:name=".activity.Principal"
             android:label="@string/app_name"
 
             android:theme="@style/AppTheme.NoActionBar">
@@ -33,12 +34,12 @@
         </activity-->
 
         <activity
-            android:name=".Calendario_"
+            android:name=".activity.Calendario_"
             android:label="Google Calendar API Android Quickstart" >
         </activity>
 
         <activity
-            android:name=".fragments.MedicoAdicionar"
+            android:name=".fragments.MedicoAdicionarEditar"
             android:label="Adicionar Médico(a)" >
         </activity>
 

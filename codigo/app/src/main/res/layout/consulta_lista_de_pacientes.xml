@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
         <!--
            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-          tools:context="com.avisosms.iuri.avisasms.Principal"-->
+          tools:context="com.avisosms.iuri.avisasms.activity.Principal"-->
 
         <HorizontalScrollView
             android:id="@+id/fragment_tab_scroll"

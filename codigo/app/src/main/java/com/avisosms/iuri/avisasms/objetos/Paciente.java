@@ -1,27 +1,55 @@
 package com.avisosms.iuri.avisasms.objetos;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by iuri on 6/5/2016.
  */
 public class Paciente extends RealmObject {
 
+    @PrimaryKey
     private long id;
+    @NonNull
     private String nome;
-    private String telefone;//se
-
+    @Nullable
+    private String telefone;
+    @Nullable
     private boolean atendido;
     private int ordem;
+    @Nullable
+    private boolean pago;
+
+
+    private long idConsulta;
 
     public Paciente() {
     }
 
-    public Paciente(String nome, String telefone, int ordem) {
+    public Paciente(String nome, String telefone, int ordem, long idConsulta) {
 
         this.nome = nome;
         this.telefone = telefone;
         this.ordem = ordem;
+        this.idConsulta = idConsulta;
+    }
+
+    public Paciente(String nome, String telefone) {
+
+        this.nome = nome;
+        this.telefone = telefone;
+
+    }
+
+    public Paciente(Paciente p, int ordem, long idConsulta) {
+
+        this.nome = p.nome;
+        this.telefone = p.telefone;
+        this.ordem = ordem;
+        this.idConsulta = idConsulta;
     }
 
     public long getId() {
@@ -62,5 +90,21 @@ public class Paciente extends RealmObject {
 
     public void setOrdem(int ordem) {
         this.ordem = ordem;
+    }
+
+    public boolean isPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
+    }
+
+    public long getIdConsulta() {
+        return idConsulta;
+    }
+
+    public void setIdConsulta(long idConsulta) {
+        this.idConsulta = idConsulta;
     }
 }

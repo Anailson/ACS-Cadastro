@@ -35,8 +35,6 @@ public class Consultas extends Fragment {
         view = inflater.inflate(R.layout.consultas, container, false);
         view.refreshDrawableState();
 
-
-//
 //        <ImageView
 //        android:
 //        id = "@+id/icon_clipboard"
@@ -72,7 +70,6 @@ public class Consultas extends Fragment {
                 .equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis())
                 .findAll();
 
-
         for (Consulta consulta : consultas) {
             Log.i("Consulta", consulta.getDataDoAtendimentoEmMilissegundo() + " <> " + calendar.getTimeInMillis());
         }
@@ -84,9 +81,7 @@ public class Consultas extends Fragment {
         mConsultasListaFragmento = new ConsultasListaFragmento(getChildFragmentManager(), consultas.size());
 
 
-
         realm.close();
-
 
         // Set up the ViewPager with the sections adapter.
         //setContentView(R.layout.fragment_tab);
@@ -104,7 +99,6 @@ public class Consultas extends Fragment {
                 Toast.makeText(getContext(), position + "", Toast.LENGTH_SHORT).show();
 
 //                ImageView lineColorCode = (ImageView) view.findViewById(R.id.icon_clipboard4);
-
 
                 switch (position) {
                     case 1:

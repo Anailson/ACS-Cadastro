@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.adapters.AdapterListaDePacientes;
+import com.avisosms.iuri.avisasms.dataHandler.PacienteHandler;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
+import com.avisosms.iuri.avisasms.objetos.Medico;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
 import com.avisosms.iuri.avisasms.suporte.Funcoes;
 import com.nhaarman.listviewanimations.ArrayAdapter;
@@ -134,7 +136,9 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
         }
 
         Realm realm;
-
+        AdapterListaDePacientes adapter;
+        AlphaInAnimationAdapter animAdapter;
+        DynamicListView mDynamicListView;
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -142,17 +146,17 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             realm = Realm.getDefaultInstance();
 
 
-            int numeroSecao = getArguments().getInt(ARG_SECTION_NUMBER);
+            final int numeroSecao = getArguments().getInt(ARG_SECTION_NUMBER);
 
-            Calendar calendar = Funcoes.dataHoje();
+            final Calendar calendar = Funcoes.dataHoje();
 
             RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis()).findAll();
 
             final Consulta consulta = consultas.get(numeroSecao);
 
-            View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
+            final View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(consulta.getMedico().getNome() + " numSecao " + numeroSecao);
+            textView.setText(consulta.getMedico().getCorIndicativa() +"  " +consulta.getMedico().getNome() + " numSecao " + numeroSecao);
 
 
             LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.fragment_tab_layout_indicadores);
@@ -181,19 +185,48 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+
+                    RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis()).findAll();
+
+                    final Consulta consulta = consultas.get(numeroSecao);
+
+                    Paciente paciente = new PacienteHandler().newPaciente(realm, new Paciente("Novo paciente","(79) 999652-5874", animAdapter.getCount(), consulta.getId()));
+
+                    realm.beginTransaction();
+                    consulta.getPacientes().add(paciente);
+
+                    realm.commitTransaction();
+                    adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
+/*
+                    adapter.notifyDataSetInvalidated();
+
+                    animAdapter.notifyDataSetChanged();*/
+                    animAdapter.notifyDataSetInvalidated();
+
+
+                    mDynamicListView.setAdapter(adapter);
+                    mDynamicListView.invalidate();
+                    mDynamicListView.setSelection(mDynamicListView.getCount());
+                    //mDynamicListView.invalidateViews();
+                    //mDynamicListView.refreshDrawableState();
+
                     Snackbar.make(view, "Add <> paciente, para o médico " + consulta.getMedico().getId(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
             });
 
             ///////List
-            DynamicListView mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
+            mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
 
-            AdapterListaDePacientes adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
+             adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
 
-            AlphaInAnimationAdapter animAdapter = new AlphaInAnimationAdapter(adapter);
+            animAdapter = new AlphaInAnimationAdapter(adapter);
             animAdapter.setAbsListView(mDynamicListView);
             mDynamicListView.setAdapter(animAdapter);
+
+            adapter.notifyDataSetInvalidated();
+
 
 
             mDynamicListView.enableDragAndDrop();
@@ -205,7 +238,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             // fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapter));
 
             //adapter.notifyDataSetInvalidated();
-            Toast.makeText(getContext(), " " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();
+          /*  Toast.makeText(getContext(), " " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();*/
 
             return rootView;
         }
@@ -230,7 +263,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
             @Override
             public void onClick(View v) {
-                mListView.insert(mListView.getCount(), new Paciente("Item adicionado", "telefone", 1));
+                mListView.insert(mListView.getCount(), new Paciente("Item adicionado", "telefone", 1, 0));
 
                 Toast.makeText(v.getContext(), "Adicionar Joption para add Paciente", Toast.LENGTH_SHORT).show();
                 Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -283,9 +316,9 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                     mToast.cancel();
                 }
 
-                mToast = Toast.makeText(mActivity, mActivity.getString(R.string.moved, mAdapter.getItem(newPosition).getNome(), newPosition), Toast.LENGTH_SHORT);
+               /* mToast = Toast.makeText(mActivity, mActivity.getString(R.string.moved, mAdapter.getItem(newPosition).getNome(), newPosition), Toast.LENGTH_SHORT);
                 mToast.show();
-
+*/
 
 //            mToast = Toast.makeText(mActivity, originalPosition+ " to " + newPosition, Toast.LENGTH_SHORT);
 //            mToast.show();
