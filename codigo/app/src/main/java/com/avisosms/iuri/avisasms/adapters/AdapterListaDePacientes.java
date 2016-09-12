@@ -29,9 +29,9 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
     Context mContext;
 
     public AdapterListaDePacientes(Context context, List<Paciente> objects) {
-
-        addAll(objects);
         this.mContext = context;
+        addAll(objects);
+
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
                     p.setAtendido(false);
                 }
 
-                SmsManager smsManager = SmsManager.getDefault();
+               /* SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(p.getTelefone().split("/")[0].replaceAll("\\(","").replaceAll("\\)","").replaceAll(" ","").replaceAll("/","").replaceAll("-",""), null, "sms message", null, null);
 
                 Toast.makeText(v.getContext(), p.getId() + " " + p.getNome(), Toast.LENGTH_SHORT).show();

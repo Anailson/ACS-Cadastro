@@ -36,12 +36,12 @@ public class Calendario_ extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.calendario);
+        setContentView(R.layout.agenda);
 
         final ActionBar actionBar = getSupportActionBar();
         final List<String> mutableBookings = new ArrayList<>();
 
-        final ListView bookingsListView = (ListView) findViewById(R.id.bookings_listview);
+        final ListView bookingsListView = (ListView) findViewById(R.id.list_agendamento_medicos);
         final Button showPreviousMonthBut = (Button) findViewById(R.id.prev_button);
         final Button showNextMonthBut = (Button) findViewById(R.id.next_button);
         final Button slideCalendarBut = (Button) findViewById(R.id.slide_calendar);

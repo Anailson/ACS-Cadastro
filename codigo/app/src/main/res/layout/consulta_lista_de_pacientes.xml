@@ -22,6 +22,7 @@
             <LinearLayout
                 android:id="@+id/fragment_tab_layout_indicadores"
                 android:layout_width="fill_parent"
+                android:orientation="horizontal"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:gravity="center_vertical">

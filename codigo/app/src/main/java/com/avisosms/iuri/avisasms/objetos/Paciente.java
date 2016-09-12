@@ -23,7 +23,6 @@ public class Paciente extends RealmObject {
     @Nullable
     private boolean pago;
 
-
     private long idConsulta;
 
     public Paciente() {

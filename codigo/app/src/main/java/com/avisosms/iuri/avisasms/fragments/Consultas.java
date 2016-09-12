@@ -61,7 +61,8 @@ public class Consultas extends Fragment {
 //            imgView.setLayoutParams(new LinearLayout.LayoutParams((int)pixels,(int) pixels));//new LinearLayout.LayoutParams(30, 30));
 //            linearLayout.addView(imgView);
 //        }
-        /////////////
+
+        ///////////
         Realm realm = Realm.getDefaultInstance();
 
         Calendar calendar = Funcoes.dataHoje();
@@ -74,7 +75,7 @@ public class Consultas extends Fragment {
             Log.i("Consulta", consulta.getDataDoAtendimentoEmMilissegundo() + " <> " + calendar.getTimeInMillis());
         }
 
-        /////////////
+        ///////////
 
         ConsultasListaFragmento mConsultasListaFragmento;
         ViewPager mViewPager;
@@ -132,6 +133,7 @@ public class Consultas extends Fragment {
             }
 
         });
+
         return view;
     }
 

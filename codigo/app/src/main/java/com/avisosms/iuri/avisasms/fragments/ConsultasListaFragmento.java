@@ -191,12 +191,13 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
                     final Consulta consulta = consultas.get(numeroSecao);
 
-                    Paciente paciente = new PacienteHandler().newPaciente(realm, new Paciente("Novo paciente","(79) 999652-5874", animAdapter.getCount(), consulta.getId()));
+                   /* Paciente paciente = new PacienteHandler().newPaciente(realm, new Paciente("Novo paciente","(79) 999652-5874", animAdapter.getCount(), consulta.getId()));
 
                     realm.beginTransaction();
                     consulta.getPacientes().add(paciente);
 
-                    realm.commitTransaction();
+                    realm.commitTransaction();*/
+
                     adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
 /*
                     adapter.notifyDataSetInvalidated();

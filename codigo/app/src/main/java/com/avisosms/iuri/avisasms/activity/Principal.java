@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
-import com.avisosms.iuri.avisasms.fragments.Calendario;
+import com.avisosms.iuri.avisasms.fragments.Agenda;
 import com.avisosms.iuri.avisasms.fragments.Consultas;
 import com.avisosms.iuri.avisasms.fragments.Medicos;
 import com.avisosms.iuri.avisasms.suporte.BancoDeDados;
@@ -34,19 +34,18 @@ public class Principal extends AppCompatActivity
         boolean valoresDefault = Funcoes.getPreferences(this).getBoolean("valoresDefault", false);
 
 
-        /** Pedir permssão para enviar SMS
-         if (!(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)))
-         {
-         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
-         }*/
+        //Pedir permssão para enviar SMS
+        if (!(PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS))) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
+        }
 
         //BancoDeDados.ConfigurarBanco(this);
-        //if (!valoresDefault) {
+      //  if (!valoresDefault) {
 
-        BancoDeDados.AdicionarTesteDados();
-        Funcoes.setPreference(this, "valoresDefault", true);
+            BancoDeDados.AdicionarTesteDados();
+            Funcoes.setPreference(this, "valoresDefault", true);
 
-        //  }
+      //  }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -109,7 +108,7 @@ public class Principal extends AppCompatActivity
             case R.id.nav_agenda:
 
                 setTitle(getString(R.string.agenda));
-                fragmentManager.beginTransaction().replace(R.id.content_frame, new Calendario()).commit();
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new Agenda()).commit();
                 Toast.makeText(Principal.this, "Atualizar agenda", Toast.LENGTH_SHORT).show();
 
                 break;
