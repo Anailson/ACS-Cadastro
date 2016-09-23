@@ -40,12 +40,12 @@ public class Principal extends AppCompatActivity
         }
 
         //BancoDeDados.ConfigurarBanco(this);
-      //  if (!valoresDefault) {
+        //  if (!valoresDefault) {
 
-            BancoDeDados.AdicionarTesteDados();
-            Funcoes.setPreference(this, "valoresDefault", true);
+//        BancoDeDados.AdicionarTesteDados();
+//        Funcoes.setPreference(this, "valoresDefault", true);
 
-      //  }
+        //  }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

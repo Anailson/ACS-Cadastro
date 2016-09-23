@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import java.util.Calendar;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by iuri on 6/18/2016.
@@ -180,6 +182,20 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                 linearLayout.addView(imgView);
 
             }
+
+            Button btn_ordenar = (Button)  rootView.findViewById(R.id.btn_ordenar);
+            btn_ordenar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("atendido", Sort.DESCENDING));
+
+                    mDynamicListView.setAdapter(adapter);
+                    mDynamicListView.invalidate();
+                    mDynamicListView.setSelection(mDynamicListView.getCount());
+                    Toast.makeText(v.getContext(), "Color selected: #", Toast.LENGTH_SHORT).show();
+
+                }
+            });
 
             FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fragment_list_fab);
             fab.setOnClickListener(new View.OnClickListener() {

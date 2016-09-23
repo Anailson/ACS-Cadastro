@@ -42,6 +42,7 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
     int corIndicativa = -16307805;
     private boolean editar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,12 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setTitle("Adicionar Médico(a)");
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         medico_nome = (EditText) findViewById(R.id.medico_nome);
         medico_especialidade = (EditText) findViewById(R.id.medico_especialidade);
@@ -124,8 +131,8 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
                     colorPicker(14560768);
             }
         });
-
     }
+
 
     @Override
     public void onDestroy() {
@@ -169,15 +176,16 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
                     @Override
                     public void onColorSelected(boolean positiveResult, @ColorInt int color) {
 
-                        if (positiveResult) {
+                       // if (positiveResult) {
                             Toast.makeText(getApplication(), "Color selected: #" + Integer.toHexString(color).toUpperCase() + " " + color, Toast.LENGTH_SHORT).show();
-                            View medico_cor = (View) findViewById(R.id.medico_cor);
-                            medico_cor.setBackgroundColor(color);
+                            View view_medico_cor = (View) findViewById(R.id.medico_cor);
+                            view_medico_cor.setBackgroundColor(color);
                             corIndicativa = color;
-                        }
+                        //}
 
                     }
-                }).build().show(getSupportFragmentManager(), "Cor");
+                })
+                .build().show(getSupportFragmentManager(), "Cor");
     }
 
     @Override

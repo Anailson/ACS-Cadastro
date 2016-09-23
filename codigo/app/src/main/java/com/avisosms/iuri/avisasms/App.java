@@ -2,6 +2,8 @@ package com.avisosms.iuri.avisasms;
 
 import android.app.Application;
 
+import com.avisosms.iuri.avisasms.suporte.BancoDeDados;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -17,7 +19,8 @@ public class App extends Application{
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
-        Realm.deleteRealm(config);
+        //Realm.deleteRealm(config);
+        BancoDeDados.AdicionarTesteDados();
 
     }
 
