@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:text="Ordenar"
             android:id="@+id/btn_ordenar"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />

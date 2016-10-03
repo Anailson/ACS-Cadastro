@@ -5,12 +5,14 @@ package com.avisosms.iuri.avisasms.activity;
  */
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.avisosms.iuri.avisasms.R;
@@ -41,14 +43,15 @@ public class Calendario_ extends ActionBarActivity {
         final ActionBar actionBar = getSupportActionBar();
         final List<String> mutableBookings = new ArrayList<>();
 
-        final ListView bookingsListView = (ListView) findViewById(R.id.list_agendamento_medicos);
-        final Button showPreviousMonthBut = (Button) findViewById(R.id.prev_button);
-        final Button showNextMonthBut = (Button) findViewById(R.id.next_button);
-        final Button slideCalendarBut = (Button) findViewById(R.id.slide_calendar);
-        final Button showCalendarWithAnimationBut = (Button) findViewById(R.id.show_with_animation_calendar);
+        ListView listMedicos = (ListView) findViewById(R.id.agenda_list_agendamento_medicos);
+        Button btnMesAnterior = (Button) findViewById(R.id.prev_button);
+        Button btnProximoMes = (Button) findViewById(R.id.next_button);
+
+        ImageButton btnAddMedico = (ImageButton) findViewById(R.id.agenda_floating_add_medico);
+        FloatingActionButton btnFloatAddMedico = (FloatingActionButton) findViewById(R.id.agenda_floating_add_medico);
 
         final ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, mutableBookings);
-        bookingsListView.setAdapter(adapter);
+        listMedicos.setAdapter(adapter);
         final CompactCalendarView compactCalendarView = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
 
         compactCalendarView.setDayColumnNames(new String[]{"dom","seg","ter", "qua","qui", "sex", "sab"});
@@ -101,21 +104,21 @@ public class Calendario_ extends ActionBarActivity {
             }
         });
 
-        showPreviousMonthBut.setOnClickListener(new View.OnClickListener() {
+        btnMesAnterior.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 compactCalendarView.showPreviousMonth();
             }
         });
 
-        showNextMonthBut.setOnClickListener(new View.OnClickListener() {
+        btnProximoMes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 compactCalendarView.showNextMonth();
             }
         });
 
-        slideCalendarBut.setOnClickListener(new View.OnClickListener() {
+        btnAddMedico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (shouldShow) {
@@ -127,7 +130,7 @@ public class Calendario_ extends ActionBarActivity {
             }
         });
 
-        showCalendarWithAnimationBut.setOnClickListener(new View.OnClickListener() {
+        btnFloatAddMedico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (shouldShow) {

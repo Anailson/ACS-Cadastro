@@ -20,7 +20,7 @@ public class App extends Application{
                 .build();
         Realm.setDefaultConfiguration(config);
         //Realm.deleteRealm(config);
-        BancoDeDados.AdicionarTesteDados();
+        //BancoDeDados.AdicionarTesteDados();
 
     }
 

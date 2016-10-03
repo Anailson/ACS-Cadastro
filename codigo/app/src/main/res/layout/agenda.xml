@@ -9,7 +9,7 @@
     tools:context=".activity.Principal">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -23,12 +23,12 @@
 
             <Button
                 android:id="@+id/prev_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/sinalMenor"
                 android:textColor="@color/cor_branca"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:textSize="30sp"
-                android:text="@string/sinalMenor" />
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/agenda_meses"
@@ -42,22 +42,24 @@
 
             <Button
                 android:id="@+id/next_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text=">"
                 android:textColor="@color/cor_branca"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:textSize="30sp"
-                android:text=">" />
+                android:textSize="30sp" />
 
 
         </LinearLayout>
 
 
-        <com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/compactcalendar_view"
             android:layout_width="fill_parent"
             android:layout_height="300dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/agenda_layout_btn"
             android:padding="20dp"
             android:paddingRight="20dp"
             app:compactCalendarBackgroundColor="@color/cor_azul2"
@@ -69,42 +71,22 @@
             app:compactCalendarTextSize="20sp" />
 
 
-        <LinearLayout
-            android:id="@+id/calendar_control_buttons"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/test_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/compactcalendar_view"
-                android:text="Test" />
-
-            <Button
-                android:id="@+id/slide_calendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Slide animation" />
-
-            <Button
-                android:id="@+id/show_with_animation_calendar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Show animation" />
-
-        </LinearLayout>
-
-
         <com.avisosms.iuri.avisasms.componentes.ExpandableHeightListView
-            android:background="@color/cor_branca"
-            android:id="@+id/list_agendamento_medicos"
+            android:id="@+id/agenda_list_agendamento_medicos"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
-            android:layout_below="@+id/calendar_control_buttons" />
+            android:layout_below="@+id/compactcalendar_view"
+            android:background="@color/cor_branca" />
 
-    </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/agenda_floating_add_medico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/compactcalendar_view"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_medico_add" />
+
+    </RelativeLayout>
 </ScrollView>
 

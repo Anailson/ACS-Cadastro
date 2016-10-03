@@ -16,4 +16,10 @@
     <string name="enviar_por_email">Enviar por e-mail</string>
     <string name="lembretes">Lembretes</string>
     <string name="sinalMenor"><![CDATA[<]]></string>
+    <string name="nome">Nome</string>
+    <string name="especialidade">Especialidade</string>
+    <string name="nenhum_medico_cadastrado">Nenhum médico cadastrado</string>
+    <string name="adicionar_medico">Adicionar médico</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="medico_list_check_intrucoes">Selecione os médicos que iram fazer a consula nesse dia.</string>
 </resources>
