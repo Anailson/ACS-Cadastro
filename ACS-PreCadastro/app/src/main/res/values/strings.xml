@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ACS - PreCadastro</string>
+    <string name="title_activity_map">@string/app_name</string>
+
+    <string name="txt_default">...</string>
+
+    <string name="txt_latitude">Latitude:</string>
+    <string name="txt_longitude">Longitude:</string>
+    <string name="txt_city">Cidade:</string>
+    <string name="txt_address">Endereço:</string>
+
+    <string name="btn_ok">OK</string>
+
+    <string name="err_connection">Your connection is offline</string>
+</resources>
