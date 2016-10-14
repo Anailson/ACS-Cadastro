@@ -1,6 +1,5 @@
 package tcc.acs_precadastro.controllers;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -21,6 +20,7 @@ import java.util.List;
 import tcc.acs_precadastro.R;
 import tcc.acs_precadastro.interfaces.SearchLocationListener;
 import tcc.acs_precadastro.utils.ManagerConection;
+import tcc.acs_precadastro.utils.ManagerSnackbar;
 import tcc.acs_precadastro.utils.ManagerToast;
 import tcc.acs_precadastro.utils.SearchMyLocation;
 
@@ -29,18 +29,20 @@ import tcc.acs_precadastro.utils.SearchMyLocation;
  */
 public class MapController {
 
+    private View view;
     private Context context;
     private GoogleMap googleMap;
     private TextView txtLatitude, txtLongitude, txtAddress, txtCity;
 
-    public MapController(Activity activity){
+    public MapController(View view){
 
+        this.view = view;
         this.googleMap = null;
-        this.context = activity.getBaseContext();
-        this.txtLatitude = (TextView) activity.findViewById(R.id.txtLatitude);
-        this.txtLongitude = (TextView) activity.findViewById(R.id.txtLongitude);
-        this.txtAddress = (TextView) activity.findViewById(R.id.txtAddress);
-        this.txtCity = (TextView) activity.findViewById(R.id.txtCity);
+        this.context = view.getContext();
+        this.txtLatitude = (TextView) view.findViewById(R.id.txtLatitude);
+        this.txtLongitude = (TextView) view.findViewById(R.id.txtLongitude);
+        this.txtAddress = (TextView) view.findViewById(R.id.txtAddress);
+        this.txtCity = (TextView) view.findViewById(R.id.txtCity);
     }
 
     public void setGoogleMap(GoogleMap googleMap) {
@@ -107,14 +109,15 @@ public class MapController {
 
             txtLatitude.setText(String.valueOf(location.getLatitude()));
             txtLongitude.setText(String.valueOf(location.getLongitude()));
+            updateMap(location);
 
             if(ManagerConection.hasConnection(context)){
 
                 updateForm(location);
-                updateMap(location);
 
             } else {
-                ManagerToast.showLongToast(context, R.string.err_connection);
+
+                ManagerToast.showLongToast(context, R.string.err_connection_offline);
             }
         }
 
@@ -122,16 +125,28 @@ public class MapController {
 
             Address address = getAddress(location);
 
-            String completAddress = address.getAddressLine(0);
-            String city = address.getLocality();
+            if(address != null){
 
-            txtAddress.setText(completAddress);
+                String completAddress = address.getAddressLine(0);
+                String city = address.getLocality();
 
-            if (txtCity != null) {
-                txtCity.setText(city);
+                txtAddress.setText(completAddress);
+
+                if (txtCity != null) {
+                    txtCity.setText(city);
+                }
+
+                ManagerToast.showLongToast(context, completAddress);
+
+            } else {
+
+                ManagerSnackbar.showIndefiniteSnackbar(view, R.string.err_connection_unknown, "Close", new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view) {
+                        ManagerSnackbar.getSnackbar().dismiss();
+                    }
+                });
             }
-
-            ManagerToast.showLongToast(context, completAddress);
         }
 
         private void updateMap(Location location){
@@ -147,12 +162,13 @@ public class MapController {
 
             try {
                 Geocoder geocoder = new Geocoder(context);
-                List<Address> addresses  =  geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 return addresses.get(0);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             return null;
         }
     }

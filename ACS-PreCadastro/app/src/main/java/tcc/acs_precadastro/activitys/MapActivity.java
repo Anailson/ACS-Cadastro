@@ -1,8 +1,13 @@
 package tcc.acs_precadastro.activitys;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -18,7 +23,7 @@ import tcc.acs_precadastro.R;
 import tcc.acs_precadastro.controllers.MapController;
 import tcc.acs_precadastro.utils.ManagerToast;
 
-public class MapActivity extends FragmentActivity
+public class MapActivity extends Fragment
         implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks {
 
     private GoogleMap googleMap;
@@ -26,31 +31,44 @@ public class MapActivity extends FragmentActivity
     private MapController controller;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
-        apiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addApi(LocationServices.API).build();
-
-        controller = new MapController(this);
-
-        Button btnOk = (Button) findViewById(R.id.btnOk);
-        btnOk.setOnClickListener(controller.getButtonClickListener());
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
-    protected void onStart() {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        View view = inflater.inflate(R.layout.activity_map, container, false);
+
+        apiClient = new GoogleApiClient.Builder(this.getActivity())
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API).build();
+
+        controller = new MapController(view);
+
+        Button btnOk = (Button) view.findViewById(R.id.btnOk);
+        btnOk.setOnClickListener(controller.getButtonClickListener());
+
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
         apiClient.connect();
         super.onStart();
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         apiClient.disconnect();
         super.onStop();
     }
@@ -60,6 +78,7 @@ public class MapActivity extends FragmentActivity
         LatLng myLocation = new LatLng(0, 0);
 
         controller.setGoogleMap(googleMap);
+
         this.googleMap = googleMap;
         this.googleMap.setMinZoomPreference((float) 4);
         this.googleMap.setOnMapClickListener(controller.getMapClickListener());
@@ -69,7 +88,8 @@ public class MapActivity extends FragmentActivity
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        ManagerToast.showShortToast(this, "onConnected");
+        ManagerToast.showShortToast(this.getContext(), "onConnected");
+
     }
 
     @Override

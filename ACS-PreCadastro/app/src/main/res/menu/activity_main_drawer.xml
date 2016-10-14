@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:title="@string/title_nav_register">
+        <menu>
+            <item
+                android:title="@string/title_nav_residence"
+                android:id="@+id/nav_reg_residence"
+                android:icon="@drawable/ic_reg_residence">
+            </item>
+            <item
+                android:title="@string/title_nav_person"
+                android:id="@+id/nav_reg_person"
+                android:icon="@mipmap/ic_reg_person">
+            </item>
+        </menu>
+    </item>
+
+    <item android:title="@string/title_nav_accompaniment">
+        <menu>
+            <item
+                android:title="@string/title_nav_residence"
+                android:id="@+id/nav_accomp_residence"
+                android:icon="@mipmap/ic_accomp_residence">
+            </item>
+            <item
+                android:title="@string/title_nav_person"
+                android:id="@+id/nav_accomp_person"
+                android:icon="@mipmap/ic_accomp_person">
+            </item>
+        </menu>
+    </item>
+</menu>

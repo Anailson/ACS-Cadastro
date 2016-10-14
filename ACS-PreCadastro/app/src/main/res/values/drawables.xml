@@ -1,0 +1,6 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="ic_reg_residence" type="drawable">@mipmap/ic_reg_residence</item>
+    <item name="ic_reg_person" type="drawable">@mipmap/ic_reg_person</item>
+    <item name="ic_accomp_residence" type="drawable">@mipmap/ic_accomp_residence</item>
+    <item name="ic_accomp_person" type="drawable">@mipmap/ic_accomp_person</item>
+</resources>

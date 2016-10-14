@@ -12,6 +12,7 @@ public class ManagerToast {
 
     private ManagerToast(){}
 
+
     private static void showToast(Context context, String message, int duration){
 
         if(toast == null){
