@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_marginTop="5dp"
+    android:gravity="left"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
+
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
@@ -30,77 +33,76 @@
             android:background="@color/colorPrimary"
             android:src="@drawable/icon_medico" />
 
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
         <LinearLayout
-
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="left"
-            android:orientation="horizontal"
-            android:textAlignment="center">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <!--            android:fontFamily="sans-serif-light"-->
+            <TextView
+                android:id="@+id/list_item_medico_check_nome"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:textAlignment="center">
+                android:layout_height="wrap_content"
+                android:text="Médico: Iuri batista Teles "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
 
-                <!--            android:fontFamily="sans-serif-light"-->
-                <TextView
-                    android:id="@+id/list_item_medico_check_nome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="Médico: Iuri batista Teles "
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textStyle="bold"
-                    tools:ignore="UnusedAttribute" />
-
-                <TextView
-                    android:id="@+id/list_item_medico_check_especialidade"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="Especialidade: Pediatra"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold"
-                    tools:ignore="UnusedAttribute" />
-
-                <TextView
-                    android:id="@+id/list_medico_telefone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="Telefone: (79) 9 9670-2237"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold"
-                    tools:ignore="UnusedAttribute" />
-
-
-            </LinearLayout>
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="vertical">-->
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <CheckBox
-                android:id="@+id/chk_categoria"
+            <TextView
+                android:id="@+id/list_item_medico_check_especialidade"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal" />
+                android:layout_height="wrap_content"
+                android:text="Especialidade: Pediatra"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
 
-            <!--</LinearLayout>-->
+            <TextView
+                android:id="@+id/list_item_medico_telefone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Telefone: (79) 9 9670-2237"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
 
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/selecionar_medico_btn_add"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/cor_azul"
+                android:text="@string/adicionar_medico_ln" />
+
+        </LinearLayout>
+        <!--</LinearLayout>-->
+
+
     </LinearLayout>
+
 
 </LinearLayout>

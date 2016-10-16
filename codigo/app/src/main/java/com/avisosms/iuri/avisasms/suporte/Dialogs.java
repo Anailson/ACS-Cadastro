@@ -1,6 +1,7 @@
 package com.avisosms.iuri.avisasms.suporte;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.activity.Principal;
 import com.avisosms.iuri.avisasms.adapters.AdapterSelecionarMedico;
+import com.avisosms.iuri.avisasms.fragments.Agenda;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 
 import java.text.SimpleDateFormat;
@@ -54,7 +57,7 @@ public class Dialogs {
         alertDialog.show();
     }
 
-    public static void medicoListSelecionar(final Context context, Date data) {// final AdapterListaLeis adapter
+    public static void medicoListSelecionar(final Context context, final android.support.v4.app.FragmentManager  fragmentManager, Date data) {// final AdapterListaLeis adapter
 
         SimpleDateFormat dataFormatada = new SimpleDateFormat("EEE',' dd 'de' MMM 'de' yyyy");
         String dataStr = dataFormatada.format(data);
@@ -76,26 +79,34 @@ public class Dialogs {
         RealmResults<Medico> medicos = realm.where(Medico.class).findAll();
         realm.close();
 
-        AdapterSelecionarMedico arrayAdapter = new AdapterSelecionarMedico(context, R.id.medico_listview_check, medicos,  data.getTime());
+        AdapterSelecionarMedico arrayAdapter = new AdapterSelecionarMedico(context, R.id.medico_listview_check, medicos, data.getTime());
         mListView.setAdapter(arrayAdapter);
+
 
         //Button cancelar
         Button btnOk = (Button) dialog.findViewById(R.id.categoria_list_btn_cancelar);
+        assert btnOk != null;
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+
+                //android.support.v4.app.FragmentManager fragmentManager = fragmentManager;
+               fragmentManager.beginTransaction().replace(R.id.content_frame, new Agenda()).commit();
+
             }
         });
 
         //Button para adicionar um medico para o dia
-        Button btnAdicionarCategoria = (Button) dialog.findViewById(R.id.categoria_list_btn_adicionar);
+        Button btnAdicionarMedico = (Button) dialog.findViewById(R.id.categoria_list_btn_adicionar);
 
-        btnAdicionarCategoria.setOnClickListener(new View.OnClickListener() {
+        btnAdicionarMedico.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                fragmentManager.beginTransaction().replace(R.id.content_frame, new Agenda()).commit();
             }
         });
 
-     }
+
+    }
 }

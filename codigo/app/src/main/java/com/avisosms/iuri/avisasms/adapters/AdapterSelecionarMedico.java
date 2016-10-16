@@ -1,22 +1,27 @@
 package com.avisosms.iuri.avisasms.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
+import com.avisosms.iuri.avisasms.dataHandler.ConsultaHandler;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 /**
@@ -27,18 +32,22 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
     private Context context;
     private List<Medico> medicos;
     private long timeMillisseconds;
+    Adapter adapter;
+    // private RealmResults<Consulta> consultas;//identificar os médicos da consulta
 
     public AdapterSelecionarMedico(Context context, int view, List<Medico> objects, long timeMillisseconds) {
         super(context, view, objects);
-        medicos = objects;
+        // medicos = objects;
         this.context = context;
         this.timeMillisseconds = timeMillisseconds;
+
+
     }
 
-    @Override
+    /*@Override
     public int getCount() {
         return medicos.size();
-    }
+    }*/
 
     ViewHolder holder = null;
 
@@ -47,34 +56,89 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
         final Medico medico = getItem(position);
 
         View row = convertView;
-        if (row == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.medico_listview_item_check, null);
-            holder = new ViewHolder();
-            holder.corIndicativa = (View) row.findViewById(R.id.list_item_medico_check_cor);
-            holder.textNome = (TextView) row.findViewById(R.id.list_item_medico_check_nome);
-            holder.textEspecialidae = (TextView) row.findViewById(R.id.list_item_medico_check_especialidade);
-            holder.categoriaCheckBox = (CheckBox) row.findViewById(R.id.chk_categoria);
+       /* if (row == null) {*/
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        row = inflater.inflate(R.layout.medico_listview_item_check, null);
+        holder = new ViewHolder();
+        holder.corIndicativa = (View) row.findViewById(R.id.list_item_medico_check_cor);
+        holder.textNome = (TextView) row.findViewById(R.id.list_item_medico_check_nome);
+        holder.textEspecialidade = (TextView) row.findViewById(R.id.list_item_medico_check_especialidade);
+        holder.textTelefone = (TextView) row.findViewById(R.id.list_item_medico_telefone);
+        holder.selecionarMedico = (Button) row.findViewById(R.id.selecionar_medico_btn_add);
 
-            row.setTag(holder);
-        } else {
+
+         /*   row.setTag(holder);*/
+        /*} else {
             holder = (ViewHolder) convertView.getTag();
-        }
+        }*/
 
         holder.textNome.setText(medico.getNome());
+        holder.textTelefone.setText(medico.getTelefone());
+        holder.textEspecialidade.setText(medico.getEspecialidade());
 
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", timeMillisseconds).findAll();
 
         //Marcar os medicos já selecionados para o dia
 
         holder.corIndicativa.setBackgroundColor(medico.getCorIndicativa());
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", timeMillisseconds).findAll();
 
-        if (consultas.contains(medico)) {
-            holder.categoriaCheckBox.setChecked(true);
-        } else {
-            holder.categoriaCheckBox.setChecked(false);
+        for (Consulta consulta : consultas) {
+
+            if (consulta.getMedico().getId() == medico.getId()) {
+                holder.selecionarMedico.setBackgroundColor(ContextCompat.getColor(context, R.color.cor_vermelho));
+                holder.selecionarMedico.setText(R.string.remover_medico);
+                holder.textNome.setText((consultas.get(0).getDataDoAtendimentoEmMilissegundo() == timeMillisseconds) + " ");
+                break;
+            }
         }
+      /*  if (consultas.contains(medico)) {
+
+        } else {
+            holder.selecionarMedico.setBackgroundColor(ContextCompat.getColor(context, R.color.cor_azul));
+            holder.selecionarMedico.setText(R.string.adicionar_medico_ln);
+        }*/
+
+        realm.close();
+
+        holder.selecionarMedico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Realm realm = Realm.getDefaultInstance();
+                RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", timeMillisseconds).findAll();
+
+                boolean existe = false;
+                for (Consulta consulta : consultas) {
+                    if (consulta.getMedico().getId() == medico.getId()) {
+                        existe = true;
+
+                        realm.beginTransaction();
+                        consulta.deleteFromRealm();
+                        realm.commitTransaction();
+
+                        v.setBackgroundColor(ContextCompat.getColor(context, R.color.cor_azul));
+                        ((Button) v).setText(R.string.adicionar_medico_ln);
+                        Toast.makeText(v.getContext(), "Medico removido", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                /*Medico medico = getItem(position);*/
+                if (!existe) {
+
+                    ConsultaHandler.newConsulta(medico, timeMillisseconds, realm);
+                    v.setBackgroundColor(ContextCompat.getColor(context, R.color.cor_vermelho));
+                    ((Button) v).setText(R.string.remover_medico);
+                }
+
+                realm.close();
+
+                // notifyDataSetInvalidated();
+                //notifyDataSetInvalidated();
+                notifyDataSetChanged();
+
+            }
+        });
 
         holder.textNome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +149,7 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
         });
 
 
-        holder.textEspecialidae.setOnClickListener(new View.OnClickListener() {
+        holder.textEspecialidade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -93,13 +157,6 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
             }
         });
 
-
-        holder.categoriaCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         return row;
     }
@@ -113,9 +170,10 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
 
     static class ViewHolder {
         TextView textNome;
-        TextView textEspecialidae;
+        TextView textEspecialidade;
+        TextView textTelefone;
         View corIndicativa;
-        CheckBox categoriaCheckBox;
+        Button selecionarMedico;
 
 
     }

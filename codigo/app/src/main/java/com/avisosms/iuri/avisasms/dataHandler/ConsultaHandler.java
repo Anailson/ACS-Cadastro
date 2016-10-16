@@ -1,5 +1,6 @@
 package com.avisosms.iuri.avisasms.dataHandler;
 
+import com.avisosms.iuri.avisasms.objetos.Consulta;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
 
@@ -8,21 +9,23 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class ConsultaHandler {
-    public static Medico newMedico(Medico medico) {
+    public static Consulta newConsulta(Medico medico, long timeInMillis, Realm realm) {
 
-        Realm realm = Realm.getDefaultInstance();
+        Consulta consulta = new Consulta();
 
         int nextkey = 1;
-        if (realm.where(Paciente.class).max("id") != null)
-            nextkey = realm.where(Paciente.class).max("id").intValue() + 1;
+        if (realm.where(Consulta.class).max("id") != null)
+            nextkey = realm.where(Consulta.class).max("id").intValue() + 1;
 
-        medico.setId(nextkey);
+        consulta.setDataDoAtendimentoEmMilissegundo(timeInMillis);
+        consulta.setMedico(medico);
+        consulta.setId(nextkey);
+
         realm.beginTransaction();
-        realm.copyToRealm(medico);
+        realm.copyToRealm(consulta);
         realm.commitTransaction();
-        realm.close();
 
-        return medico;
+        return consulta;
     }
 
     public RealmList<Medico> getAll() {

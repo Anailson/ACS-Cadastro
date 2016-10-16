@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by iuri on 6/7/2016.
@@ -54,4 +55,19 @@ public class Funcoes {
         return calendar;
 
     }
+
+    public static Date dataBanco(Date date){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+
+    }
+
+
 }

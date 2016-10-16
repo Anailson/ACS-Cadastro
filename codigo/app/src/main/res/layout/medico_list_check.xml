@@ -51,17 +51,18 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+
             android:padding="30px"
-            android:text="@string/adicionar_medico" />
+            android:text="@string/novo_medico" />
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/categoria_list_btn_cancelar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="30px"
-            android:text="@string/cancelar" />
+            android:text="@string/ok" />
     </LinearLayout>
 
 </RelativeLayout>

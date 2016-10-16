@@ -1,7 +1,9 @@
 package com.avisosms.iuri.avisasms.fragments;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.adapters.AdapterListaAgendaDeMedicos;
@@ -49,33 +52,20 @@ public class Agenda extends Fragment {
     private Date dataSelecionada;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onStart() {
+        super.onStart();
+        atualizarCalendario();
 
-        view = inflater.inflate(R.layout.agenda, container, false);
-        view.refreshDrawableState();
+        Toast.makeText(getContext(), "OnStart", Toast.LENGTH_SHORT).show();
+    }
 
-        final List<Medico> mutableBookings = new ArrayList<Medico>();
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Toast.makeText(getContext(), "onAttach", Toast.LENGTH_SHORT).show();
+    }
 
-        ListView listMedicosDoDia = (ListView) view.findViewById(R.id.agenda_list_agendamento_medicos);
-        Button btnMostrarMesAnterior = (Button) view.findViewById(R.id.prev_button);
-        Button btnMostraMesSeguinte = (Button) view.findViewById(R.id.next_button);
-
-        // ImageButton btnAdicionarMedico = (ImageButton) view.findViewById(R.id.agenda_btn_add_medico);
-        FloatingActionButton btnFloatAdicionarMedico = (FloatingActionButton) view.findViewById(R.id.agenda_floating_add_medico);
-
-        final AdapterListaAgendaDeMedicos adapter = new AdapterListaAgendaDeMedicos(view.getContext(), mutableBookings);
-        listMedicosDoDia.setAdapter(adapter);
-
-        final CompactCalendarView compactCalendarView = (CompactCalendarView) view.findViewById(R.id.compactcalendar_view);
-
-        compactCalendarView.setDayColumnNames(new String[]{"dom", "seg", "ter", "qua", "qui", "sex", "sab"});
-
-        // below allows you to configure color for the current day in the month
-        //  compactCalendarView.setCurrentDayBackgroundColor(getResources().getColor(R.color.cor_preta));
-        // below allows you to configure colors for the current day the user has selected
-        // compactCalendarView.setCurrentSelectedDayBackgroundColor(getResources().getColor(R.color.cor_vermelho_escuro));
-
-        realm = Realm.getDefaultInstance();
+    private void atualizarCalendario(){
 
         Calendar calendar = Funcoes.dataHoje();
         dataSelecionada = calendar.getTime();
@@ -97,7 +87,43 @@ public class Agenda extends Fragment {
             adapter.notifyDataSetChanged();
         }
 
+    }
 
+    CompactCalendarView compactCalendarView;
+    List<Medico> mutableBookings;
+    AdapterListaAgendaDeMedicos adapter;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        view = inflater.inflate(R.layout.agenda, container, false);
+        view.refreshDrawableState();
+
+        mutableBookings = new ArrayList<Medico>();
+
+        ListView listMedicosDoDia = (ListView) view.findViewById(R.id.agenda_list_agendamento_medicos);
+        Button btnMostrarMesAnterior = (Button) view.findViewById(R.id.prev_button);
+        Button btnMostraMesSeguinte = (Button) view.findViewById(R.id.next_button);
+
+        // ImageButton btnAdicionarMedico = (ImageButton) view.findViewById(R.id.agenda_btn_add_medico);
+        FloatingActionButton btnFloatAdicionarMedico = (FloatingActionButton) view.findViewById(R.id.agenda_floating_add_medico);
+
+        adapter = new AdapterListaAgendaDeMedicos(view.getContext(), mutableBookings);
+        listMedicosDoDia.setAdapter(adapter);
+
+        compactCalendarView = (CompactCalendarView) view.findViewById(R.id.compactcalendar_view);
+
+        compactCalendarView.setDayColumnNames(new String[]{"dom", "seg", "ter", "qua", "qui", "sex", "sab"});
+
+        // below allows you to configure color for the current day in the month
+        //  compactCalendarView.setCurrentDayBackgroundColor(getResources().getColor(R.color.cor_preta));
+        // below allows you to configure colors for the current day the user has selected
+        // compactCalendarView.setCurrentSelectedDayBackgroundColor(getResources().getColor(R.color.cor_vermelho_escuro));
+
+        realm = Realm.getDefaultInstance();
+
+
+        atualizarCalendario();
 /*
         View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
@@ -196,18 +222,21 @@ public class Agenda extends Fragment {
             }
         });*/
 
+
         btnFloatAdicionarMedico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                Dialogs.medicoListSelecionar(v.getContext(), dataSelecionada);
+                Dialogs.medicoListSelecionar(v.getContext(), getActivity().getSupportFragmentManager(), Funcoes.dataBanco(dataSelecionada));
+                //Toast.makeText(getContext(), "Depois Dialog", Toast.LENGTH_SHORT).show();
 
             }
         });
 
         return view;
     }
+
+
 
 
     private void addEvents(CompactCalendarView compactCalendarView, int month) {

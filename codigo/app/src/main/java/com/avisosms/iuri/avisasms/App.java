@@ -19,8 +19,8 @@ public class App extends Application{
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
-        //Realm.deleteRealm(config);
-        //BancoDeDados.AdicionarTesteDados();
+        Realm.deleteRealm(config);
+        BancoDeDados.AdicionarTesteDados();
 
     }
 
