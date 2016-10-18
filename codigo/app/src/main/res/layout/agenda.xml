@@ -68,8 +68,7 @@
             app:compactCalendarMultiEventIndicatorColor="#fff"
             app:compactCalendarTargetHeight="300dp"
             app:compactCalendarTextColor="#fff"
-            app:compactCalendarTextSize="20sp" />
-
+            app:compactCalendarTextSize="20sp"/>
 
         <com.avisosms.iuri.avisasms.componentes.ExpandableHeightListView
             android:id="@+id/agenda_list_agendamento_medicos"
@@ -77,7 +76,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/compactcalendar_view"
-            android:background="@color/cor_branca" />
+            android:background="@color/amber_a100" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/agenda_floating_add_medico"

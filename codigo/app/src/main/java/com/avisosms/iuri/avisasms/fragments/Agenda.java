@@ -1,11 +1,13 @@
 package com.avisosms.iuri.avisasms.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
-import com.avisosms.iuri.avisasms.adapters.AdapterListaAgendaDeMedicos;
+import com.avisosms.iuri.avisasms.adapters.AdapterListaDeMedicosAddPaciente;
 import com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView;
 import com.avisosms.iuri.avisasms.compactcalendarview.Event;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
@@ -45,19 +47,9 @@ public class Agenda extends Fragment {
     View view;
     //TODO Agenda
     private static final String TAG = "Agenda";
-    private Calendar currentCalender = Calendar.getInstance(Locale.getDefault());
-    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MM(MMMM) - yyyy", Locale.getDefault());
-    private boolean shouldShow = false;
+    private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MM (MMMM) - yyyy", Locale.getDefault());
     Realm realm;
-    private Date dataSelecionada;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        atualizarCalendario();
-
-        Toast.makeText(getContext(), "OnStart", Toast.LENGTH_SHORT).show();
-    }
+    private Date dataSelecionada ;
 
     @Override
     public void onAttach(Context context) {
@@ -65,10 +57,8 @@ public class Agenda extends Fragment {
         Toast.makeText(getContext(), "onAttach", Toast.LENGTH_SHORT).show();
     }
 
-    private void atualizarCalendario(){
+    private void atualizarCalendario() {
 
-        Calendar calendar = Funcoes.dataHoje();
-        dataSelecionada = calendar.getTime();
         RealmResults<Consulta> consultas = realm.where(Consulta.class)
                 // .equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis())
                 .findAll();
@@ -77,7 +67,7 @@ public class Agenda extends Fragment {
             compactCalendarView.addEvent(new Event(medico.getCorIndicativa(), consulta.getDataDoAtendimentoEmMilissegundo(), medico), true);
         }
 
-        List<Event> bookingsFromMap = compactCalendarView.getEvents(calendar.getTime());
+        List<Event> bookingsFromMap = compactCalendarView.getEvents(Funcoes.dataHoje().getTime());
         if (bookingsFromMap != null) {
             Log.d(TAG, bookingsFromMap.toString());
             mutableBookings.clear();
@@ -91,13 +81,24 @@ public class Agenda extends Fragment {
 
     CompactCalendarView compactCalendarView;
     List<Medico> mutableBookings;
-    AdapterListaAgendaDeMedicos adapter;
+    AdapterListaDeMedicosAddPaciente adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.agenda, container, false);
-        view.refreshDrawableState();
+        //view.refreshDrawableState();
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        compactCalendarView = (CompactCalendarView) view.findViewById(R.id.compactcalendar_view);
+        toolbar.setTitle(dateFormatForMonth.format(compactCalendarView.getFirstDayOfCurrentMonth()));
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voltarParaHoje();
+            }
+        });
+
+        realm = Realm.getDefaultInstance();
 
         mutableBookings = new ArrayList<Medico>();
 
@@ -108,10 +109,14 @@ public class Agenda extends Fragment {
         // ImageButton btnAdicionarMedico = (ImageButton) view.findViewById(R.id.agenda_btn_add_medico);
         FloatingActionButton btnFloatAdicionarMedico = (FloatingActionButton) view.findViewById(R.id.agenda_floating_add_medico);
 
-        adapter = new AdapterListaAgendaDeMedicos(view.getContext(), mutableBookings);
+        Calendar calendar = Funcoes.dataHoje();
+        dataSelecionada = calendar.getTime();
+
+
+        adapter = new AdapterListaDeMedicosAddPaciente(view.getContext(), mutableBookings, Funcoes.dataBanco(dataSelecionada));
         listMedicosDoDia.setAdapter(adapter);
 
-        compactCalendarView = (CompactCalendarView) view.findViewById(R.id.compactcalendar_view);
+        atualizarCalendario();
 
         compactCalendarView.setDayColumnNames(new String[]{"dom", "seg", "ter", "qua", "qui", "sex", "sab"});
 
@@ -119,27 +124,6 @@ public class Agenda extends Fragment {
         //  compactCalendarView.setCurrentDayBackgroundColor(getResources().getColor(R.color.cor_preta));
         // below allows you to configure colors for the current day the user has selected
         // compactCalendarView.setCurrentSelectedDayBackgroundColor(getResources().getColor(R.color.cor_vermelho_escuro));
-
-        realm = Realm.getDefaultInstance();
-
-
-        atualizarCalendario();
-/*
-        View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText(consulta.getMedico().getNome() + " numSecao " + numeroSecao);*/
-
-       /* addEvents(compactCalendarView, -1);
-        addEvents(compactCalendarView, Calendar.DECEMBER);
-        addEvents(compactCalendarView, Calendar.AUGUST);
-        addEvents(compactCalendarView, Calendar.MAY);
-        addEvents(compactCalendarView, Calendar.MARCH);
-        addEvents(compactCalendarView, Calendar.APRIL);
-        addEvents(compactCalendarView, Calendar.JANUARY);
-        addEvents(compactCalendarView, Calendar.JULY);
-        addEvents(compactCalendarView, Calendar.SEPTEMBER);
-        addEvents(compactCalendarView, Calendar.NOVEMBER);
-        addEvents(compactCalendarView, Calendar.FEBRUARY);*/
 
         //compactCalendarView.invalidate();
 
@@ -154,18 +138,7 @@ public class Agenda extends Fragment {
         titulo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar c = Funcoes.dataHoje();
-                compactCalendarView.setCurrentDate(c.getTime());
-
-                List<Event> bookingsFromMap = compactCalendarView.getEvents(c.getTime());
-                if (bookingsFromMap != null) {
-                    Log.d(TAG, bookingsFromMap.toString());
-                    mutableBookings.clear();
-                    for (Event booking : bookingsFromMap) {
-                        mutableBookings.add((Medico) booking.getData());
-                    }
-                    adapter.notifyDataSetChanged();
-                }
+                voltarParaHoje();
             }
         });
 
@@ -176,9 +149,9 @@ public class Agenda extends Fragment {
             public void onDayClick(Date dateClicked) {
                 List<Event> bookingsFromMap = compactCalendarView.getEvents(dateClicked);
                 dataSelecionada = dateClicked;
-                Log.d(TAG, "inside onclick " + dateClicked);
+                //Log.d(TAG, "inside onclick " + dateClicked);
                 if (bookingsFromMap != null) {
-                    Log.d(TAG, bookingsFromMap.toString());
+                    //Log.d(TAG, bookingsFromMap.toString());
                     mutableBookings.clear();
                     for (Event booking : bookingsFromMap) {
                         mutableBookings.add((Medico) booking.getData());
@@ -210,24 +183,12 @@ public class Agenda extends Fragment {
             }
         });
 
-      /*  btnAdicionarMedico.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              /*  if (shouldShow) {
-                    compactCalendarView.showCalendar();
-                } else {
-                    compactCalendarView.hideCalendar();
-                }
-                shouldShow = !shouldShow;
-            }
-        });*/
-
 
         btnFloatAdicionarMedico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Dialogs.medicoListSelecionar(v.getContext(), getActivity().getSupportFragmentManager(), Funcoes.dataBanco(dataSelecionada));
+                Dialogs.medicoListSelecionar(v.getContext(), compactCalendarView, Funcoes.dataBanco(dataSelecionada));
                 //Toast.makeText(getContext(), "Depois Dialog", Toast.LENGTH_SHORT).show();
 
             }
@@ -236,62 +197,28 @@ public class Agenda extends Fragment {
         return view;
     }
 
+    private void voltarParaHoje() {
+        Calendar c = Funcoes.dataHoje();
+        compactCalendarView.setCurrentDate(c.getTime());
 
+        ((TextView) view.findViewById(R.id.agenda_meses)).setText(dateFormatForMonth.format(dataSelecionada));
 
-
-    private void addEvents(CompactCalendarView compactCalendarView, int month) {
-        currentCalender.setTime(new Date());
-        currentCalender.set(Calendar.DAY_OF_MONTH, 1);
-        Date firstDayOfMonth = currentCalender.getTime();
-        for (int i = 0; i < 20; i++) {
-            currentCalender.setTime(firstDayOfMonth);
-            if (month > -1) {
-                currentCalender.set(Calendar.MONTH, month);
+        List<Event> bookingsFromMap = compactCalendarView.getEvents(c.getTime());
+        if (bookingsFromMap != null) {
+            //Log.d(TAG, bookingsFromMap.toString());
+            mutableBookings.clear();
+            for (Event booking : bookingsFromMap) {
+                mutableBookings.add((Medico) booking.getData());
             }
-            currentCalender.add(Calendar.DATE, i);
-            setToMidnight(currentCalender);
-            long timeInMillis = currentCalender.getTimeInMillis();
-
-            List<Event> events = getEvents(timeInMillis, i);
-
-            compactCalendarView.addEvents(events);
+            adapter.notifyDataSetChanged();
         }
     }
 
-    private List<Event> getEvents(long timeInMillis, int day) {
-        if (day < 2) {
-            return Arrays.asList(new Event(Color.argb(255, 169, 68, 255), timeInMillis, "Medico 1"));
-        } else if (day > 2 && day <= 4) {
-            return Arrays.asList(
-                    new Event(Color.argb(255, 169, 68, 65), timeInMillis, "Medico 1"),
-                    new Event(Color.argb(255, 100, 68, 65), timeInMillis, "Medico 2"));
-        } else if (day > 5 && day <= 10) {
-            return Arrays.asList(
-                    new Event(Color.argb(255, 10, 68, 56), timeInMillis, "Medico 1"),
-                    new Event(Color.argb(50, 100, 68, 65), timeInMillis, "Medico 2"),
-                    new Event(Color.argb(100, 70, 5, 56), timeInMillis, "Medico 3"),
-                    new Event(Color.argb(6, 80, 68, 65), timeInMillis, "Medico 4"));
-        } else {
-            return Arrays.asList(
-                    new Event(Color.argb(255, 255, 0, 65), timeInMillis, "Medico 1"),
-                    new Event(Color.argb(255, 255, 255, 65), timeInMillis, "Medico 2"),
-                    new Event(Color.argb(100, 0, 100, 65), timeInMillis, "Medico 3"));
-
-        }
-    }
-
-    private void setToMidnight(Calendar calendar) {
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-    }
 
     @Override
     public void onDestroy() {
-
-        realm.close();
-
         super.onDestroy();
+        realm.close();
     }
+
 }

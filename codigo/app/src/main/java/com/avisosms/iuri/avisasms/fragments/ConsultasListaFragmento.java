@@ -233,6 +233,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                 }
             });
 
+            ((View) rootView.findViewById(R.id.consulta_medico_cor)).setBackgroundColor(consulta.getMedico().getCorIndicativa());
             ///////List
             mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
 

@@ -95,6 +95,16 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
             if (editar) {
                 setTitle("Editar Médico(a)");
 
+                icon_medico.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (medico != null)
+                            colorPicker(medico.getCorIndicativa());
+                        else
+                            colorPicker(14560768);
+                    }
+                });
+
             } else {
                 setTitle("Visualizar Médico(a)");
                 medico_nome.setKeyListener(null);
@@ -122,15 +132,6 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
 
         }
 
-        icon_medico.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (medico != null)
-                    colorPicker(medico.getCorIndicativa());
-                else
-                    colorPicker(14560768);
-            }
-        });
     }
 
 

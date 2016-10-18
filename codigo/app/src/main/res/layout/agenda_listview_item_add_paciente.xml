@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="10dp"
+    android:background="@color/cor_branca"
     android:gravity="left"
     android:orientation="horizontal">
 
     <LinearLayout
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
@@ -30,7 +32,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
-            android:background="@color/colorPrimary"
+
             android:src="@drawable/icon_medico" />
 
     </LinearLayout>
@@ -89,12 +91,22 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+            <!--Button
+                android:id="@+id/selecionar_medico_btn_add"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/cor_azul"
+                android:text="@string/adicionar_paciente" /-->
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/list_medico_especialidade_add_paciente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_account_plus_white_24dp"
+                app:backgroundTint="@color/cor_verde" />
 
-            <ImageView
-                android:id="@+id/imgEditar"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_border_color_grey600_24dp" />
 
         </LinearLayout>
         <!--</LinearLayout>-->

@@ -36,6 +36,15 @@ public class Paciente extends RealmObject {
         this.idConsulta = idConsulta;
     }
 
+    public Paciente(String nome, String telefone, int ordem, long idConsulta, boolean pago) {
+
+        this.nome = nome;
+        this.telefone = telefone;
+        this.ordem = ordem;
+        this.pago = pago;
+        this.idConsulta = idConsulta;
+    }
+
     public Paciente(String nome, String telefone) {
 
         this.nome = nome;

@@ -10,8 +10,8 @@ import io.realm.RealmConfiguration;
 /**
  * Created by andre on 01/07/2016.
  */
-public class App extends Application{
-   // private static App mInstance;
+public class App extends Application {
+    // private static App mInstance;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -19,8 +19,8 @@ public class App extends Application{
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
-        Realm.deleteRealm(config);
-        BancoDeDados.AdicionarTesteDados();
+        //Realm.deleteRealm(config);
+        // BancoDeDados.AdicionarTesteDados();
 
     }
 

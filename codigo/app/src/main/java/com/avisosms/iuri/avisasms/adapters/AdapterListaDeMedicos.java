@@ -3,7 +3,6 @@ package com.avisosms.iuri.avisasms.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +100,6 @@ public class AdapterListaDeMedicos extends ArrayAdapter<Medico> {
                 mContext.finish();
             }
         });
-
 
         return row;
     }

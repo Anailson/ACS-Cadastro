@@ -6,63 +6,85 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/medico_list_check_titulo"
+        android:id="@+id/paciente_list_medico_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="@string/medico_list_check_intrucoes"
+        android:layout_marginTop="5dp"
+        android:text="Nome do Médico"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium">
+
         <requestFocus />
     </TextView>
 
+    <View
+        android:id="@+id/paciente_list_medico_cor"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_above="@+id/fragment_lista_dynamicListView"
+        android:layout_below="@+id/paciente_list_medico_nome"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/icon_retangulo_verde" />
 
     <TextView
-        android:id="@+id/medico_emptyText"
+        android:id="@+id/paciente_list_check_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paciente_list_medico_cor"
+        android:text="@string/paciente_list_check_intrucoes"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceMedium">
+
+        <requestFocus />
+    </TextView>
+
+    <TextView
+        android:id="@+id/paciente_emptyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-
     <ListView
-        android:id="@+id/medico_listview_check"
+        android:id="@+id/paciente_listview_add"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/categoria_layout_aux"
-        android:layout_below="@+id/medico_list_check_titulo"
+        android:layout_above="@+id/paciente_layout_aux"
+        android:layout_below="@+id/paciente_list_check_titulo"
         android:clickable="true"
         android:divider="#d4bababa"
         android:dividerHeight="2px"
         android:fadeScrollbars="false"
-        android:scrollbars="horizontal"></ListView>
-
+        android:scrollbars="horizontal" />
 
     <LinearLayout
-        android:id="@+id/categoria_layout_aux"
+        android:id="@+id/paciente_layout_aux"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <Button
-            android:layout_weight="1"
-            android:id="@+id/categoria_list_btn_cancelar"
+            android:id="@+id/paciente_list_btn_ok"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.7"
             android:padding="30px"
             android:text="@string/ok" />
 
         <Button
-            android:layout_weight="0.9"
-            android:id="@+id/categoria_list_btn_adicionar"
+            android:id="@+id/paciente_list_btn_adicionar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:padding="30px"
-            android:text="@string/novo_medico" />
+            android:text="@string/novo_paciente" />
+
 
     </LinearLayout>
 

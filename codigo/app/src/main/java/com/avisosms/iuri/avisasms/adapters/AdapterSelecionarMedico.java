@@ -88,7 +88,6 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
             if (consulta.getMedico().getId() == medico.getId()) {
                 holder.selecionarMedico.setBackgroundColor(ContextCompat.getColor(context, R.color.cor_vermelho));
                 holder.selecionarMedico.setText(R.string.remover_medico);
-                holder.textNome.setText((consultas.get(0).getDataDoAtendimentoEmMilissegundo() == timeMillisseconds) + " ");
                 break;
             }
         }
@@ -119,8 +118,10 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
                         v.setBackgroundColor(ContextCompat.getColor(context, R.color.cor_azul));
                         ((Button) v).setText(R.string.adicionar_medico_ln);
                         Toast.makeText(v.getContext(), "Medico removido", Toast.LENGTH_SHORT).show();
+                        break;
 
                     }
+
                 }
 
                 /*Medico medico = getItem(position);*/
