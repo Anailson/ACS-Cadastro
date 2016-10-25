@@ -60,18 +60,20 @@ public class BancoDeDados {
         ///Adicionar Médicos e o agendamento dos pacientess
         for (int i = 0; i < 5; i++) {
 
-            int nextkey = 1;
 
-            Medico medico = new Medico("Médico " + i, "Cirurgião", "Telefone " + i);
+
+            Medico medico = new Medico("Médico ", "Cirurgião", "Telefone " + i);
             medico.setCorIndicativa(-17408605);
+
             new MedicoHandler().add(medico, realm);
 
             Calendar calendar = Funcoes.dataHoje();
-            if(i != 4)
-            calendar.set(Calendar.DAY_OF_MONTH, i+1 );
+            if (i != 4)
+                calendar.set(Calendar.DAY_OF_MONTH, i + 1);
             //Adicionar Consulta
             Consulta consulta = new Consulta();
 
+            int nextkey = 1;
             if (realm.where(Consulta.class).max("id") != null)
                 nextkey = realm.where(Consulta.class).max("id").intValue() + 1;
 

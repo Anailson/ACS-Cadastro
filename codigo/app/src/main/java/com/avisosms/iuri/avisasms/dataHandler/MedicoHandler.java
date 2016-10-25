@@ -20,20 +20,7 @@ public class MedicoHandler {
             nextkey = realm.where(Medico.class).max("id").intValue() + 1;
 
         medico.setId(nextkey);
-        realm.beginTransaction();
-        realm.copyToRealm(medico);
-        realm.commitTransaction();
-
-        return medico;
-    }
-
-    public static Medico add(Realm realm, Medico medico) {
-
-        int nextkey = 0;
-        if (realm.where(Medico.class).max("id") != null)
-            nextkey = realm.where(Medico.class).max("id").intValue() + 1;
-
-        medico.setId(nextkey);
+        medico.setNome(medico.getNome() + " " + nextkey);
         realm.beginTransaction();
         realm.copyToRealm(medico);
         realm.commitTransaction();

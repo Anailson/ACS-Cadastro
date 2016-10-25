@@ -1,14 +1,12 @@
 package com.avisosms.iuri.avisasms.fragments;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +20,9 @@ import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.adapters.AdapterListaDePacientes;
-import com.avisosms.iuri.avisasms.dataHandler.PacienteHandler;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
-import com.avisosms.iuri.avisasms.objetos.Medico;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
+import com.avisosms.iuri.avisasms.suporte.Dialogs;
 import com.avisosms.iuri.avisasms.suporte.Funcoes;
 import com.nhaarman.listviewanimations.ArrayAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
@@ -123,8 +120,6 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
         }
 
 
-
-
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -141,6 +136,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
         AdapterListaDePacientes adapter;
         AlphaInAnimationAdapter animAdapter;
         DynamicListView mDynamicListView;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -158,7 +154,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
             final View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(consulta.getMedico().getCorIndicativa() +"  " +consulta.getMedico().getNome() + " numSecao " + numeroSecao);
+            textView.setText(consulta.getMedico().getCorIndicativa() + "  " + consulta.getMedico().getNome() + " numSecao " + numeroSecao);
 
 
             LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.fragment_tab_layout_indicadores);
@@ -168,13 +164,13 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
         params.weight = (int) pixels;*/
 
             //static  int id = 1;// getResources().getIdentifier("gameover", "drawable", getPackageName());
-            for (  int i = 0; i < tabQuantidade; i++) {
+            for (int i = 0; i < tabQuantidade; i++) {
                 ImageView imgView = new ImageView(getContext());
                 //imgView.setId(0x7f0d0079);
                 imgView.setImageResource(R.drawable.icon_clipboard);
-                imgView.setLayoutParams(new LinearLayout.LayoutParams((int)pixels,(int) pixels));//new LinearLayout.LayoutParams(30, 30));
+                imgView.setLayoutParams(new LinearLayout.LayoutParams((int) pixels, (int) pixels));//new LinearLayout.LayoutParams(30, 30));
 
-                if(i == numeroSecao){
+                if (i == numeroSecao) {
                     int color = getResources().getColor(R.color.colorAccent); //The color u want
                     imgView.setColorFilter(color);
                 }
@@ -183,7 +179,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
             }
 
-            Button btn_ordenar = (Button)  rootView.findViewById(R.id.btn_ordenar);
+            Button btn_ordenar = (Button) rootView.findViewById(R.id.btn_ordenar);
             btn_ordenar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -202,34 +198,23 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                 @Override
                 public void onClick(View view) {
 
-
                     RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis()).findAll();
 
-                    final Consulta consulta = consultas.get(numeroSecao);
+                    Consulta consulta = consultas.get(numeroSecao);
 
-                   /* Paciente paciente = new PacienteHandler().newPaciente(realm, new Paciente("Novo paciente","(79) 999652-5874", animAdapter.getCount(), consulta.getId()));
-
-                    realm.beginTransaction();
-                    consulta.getPacientes().add(paciente);
-
-                    realm.commitTransaction();*/
+                    Dialogs.listarPacientesAddConsulta(view.getContext(), consulta);
 
                     adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
-/*
-                    adapter.notifyDataSetInvalidated();
-
-                    animAdapter.notifyDataSetChanged();*/
                     animAdapter.notifyDataSetInvalidated();
-
 
                     mDynamicListView.setAdapter(adapter);
                     mDynamicListView.invalidate();
                     mDynamicListView.setSelection(mDynamicListView.getCount());
-                    //mDynamicListView.invalidateViews();
-                    //mDynamicListView.refreshDrawableState();
+
 
                     Snackbar.make(view, "Add <> paciente, para o médico " + consulta.getMedico().getId(), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
+
                 }
             });
 
@@ -237,14 +222,13 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             ///////List
             mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
 
-             adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
+            adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
 
             animAdapter = new AlphaInAnimationAdapter(adapter);
             animAdapter.setAbsListView(mDynamicListView);
             mDynamicListView.setAdapter(animAdapter);
 
             adapter.notifyDataSetInvalidated();
-
 
 
             mDynamicListView.enableDragAndDrop();

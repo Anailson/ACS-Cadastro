@@ -16,6 +16,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/paciente_excluir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_x"
+                android:layout_margin="5dp" />
+
             <CheckBox
                 android:id="@+id/paciente_add_chk_pago"
                 android:layout_margin="10dp"

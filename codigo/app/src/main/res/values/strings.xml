@@ -23,11 +23,12 @@
     <string name="adicionar_medico">Adicionar médico</string>
     <string name="novo_medico">Novo médico</string>
     <string name="novo_paciente">Novo paciente</string>
-    <string name="adicionar_medico_ln">Adicionar \n médico</string>
-    <string name="remover_medico">Remover\nmédico</string>
+    <string name="adicionar_medico_ln">Adicionar\n médico</string>
+    <string name="remover_medico">Remover\n médico</string>
     <string name="cancelar">Cancelar</string>
     <string name="medico_list_check_intrucoes">Selecione os médicos que iram fazer a consula nesse dia.</string>
-    <string name="paciente_list_check_intrucoes">Agendar paciente para ser consultado.</string>
+    <string name="paciente_agendamento_list_intrucoes">Agendar pacientes que iram ser consultado.</string>
+    <string name="paciente_consulta_list_intrucoes">Adicionar paciente para serem consultados, na ordem de chegada.</string>
     <string name="ok">Ok</string>
     <string name="adicionar_paciente">Adicionar\n paciente</string>
 </resources>

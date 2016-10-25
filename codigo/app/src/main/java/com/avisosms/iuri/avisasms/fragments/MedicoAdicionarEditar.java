@@ -253,7 +253,7 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
 
         if (idMedico == -1) {
 
-            new MedicoHandler().add(realm, medico);
+            new MedicoHandler().add(medico, realm);
 
         } else if (editar) {
 

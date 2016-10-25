@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/paciente_list_medico_nome"
+        android:id="@+id/paciente_consulta_list_medico_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -18,11 +18,11 @@
     </TextView>
 
     <View
-        android:id="@+id/paciente_list_medico_cor"
+        android:id="@+id/paciente_consulta_list_medico_cor"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_above="@+id/fragment_lista_dynamicListView"
-        android:layout_below="@+id/paciente_list_medico_nome"
+        android:layout_below="@+id/paciente_consulta_list_medico_nome"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
@@ -32,8 +32,8 @@
         android:id="@+id/paciente_list_check_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/paciente_list_medico_cor"
-        android:text="@string/paciente_agendamento_list_intrucoes"
+        android:layout_below="@+id/paciente_consulta_list_medico_cor"
+        android:text="@string/paciente_consulta_list_intrucoes"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceMedium">
 
@@ -68,7 +68,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/paciente_list_btn_ok"
+            android:id="@+id/paciente_consulta_list_btn_ok"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
             android:text="@string/ok" />
 
         <Button
-            android:id="@+id/paciente_list_btn_adicionar"
+            android:id="@+id/paciente_consulta_list_btn_adicionar"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

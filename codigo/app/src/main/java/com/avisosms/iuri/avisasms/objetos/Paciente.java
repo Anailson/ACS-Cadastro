@@ -20,6 +20,7 @@ public class Paciente extends RealmObject {
     @Nullable
     private boolean atendido;
     private int ordem;
+    /*Colocar ordem de chegada e ordem de atendimento?*/
     @Nullable
     private boolean pago;
 

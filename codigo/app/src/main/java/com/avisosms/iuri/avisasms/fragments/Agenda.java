@@ -102,7 +102,7 @@ public class Agenda extends Fragment {
 
         mutableBookings = new ArrayList<Medico>();
 
-        ListView listMedicosDoDia = (ListView) view.findViewById(R.id.agenda_list_agendamento_medicos);
+        final ListView listMedicosDoDia = (ListView) view.findViewById(R.id.agenda_list_agendamento_medicos);
         Button btnMostrarMesAnterior = (Button) view.findViewById(R.id.prev_button);
         Button btnMostraMesSeguinte = (Button) view.findViewById(R.id.next_button);
 
@@ -142,8 +142,6 @@ public class Agenda extends Fragment {
             }
         });
 
-
-        //set title on calendar scroll
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
@@ -151,12 +149,14 @@ public class Agenda extends Fragment {
                 dataSelecionada = dateClicked;
                 //Log.d(TAG, "inside onclick " + dateClicked);
                 if (bookingsFromMap != null) {
-                    //Log.d(TAG, bookingsFromMap.toString());
+                    //Log.d(TAG, bookingsFromMap.toString() + Funcoes.dataBanco(dataSelecionada).getTime() );
                     mutableBookings.clear();
                     for (Event booking : bookingsFromMap) {
                         mutableBookings.add((Medico) booking.getData());
                     }
-                    adapter.notifyDataSetChanged();
+                    adapter = new AdapterListaDeMedicosAddPaciente(view.getContext(), mutableBookings, Funcoes.dataBanco(dataSelecionada));
+                    listMedicosDoDia.setAdapter(adapter);
+                   // adapter.notifyDataSetChanged();
                 }
 
             }

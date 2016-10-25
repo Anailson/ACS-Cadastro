@@ -36,18 +36,15 @@ public class PacienteHandler {
         return paciente;
     }
 
-    public static Paciente newPaciente(Realm realm, Paciente paciente) {
+    public static Paciente editPaciente(Paciente paciente, Realm realm) {
 
-        int nextkey = 1;
-        if (realm.where(Paciente.class).max("id") != null)
-            nextkey = realm.where(Paciente.class).max("id").intValue() + 1;
-        paciente.setId(nextkey);
         realm.beginTransaction();
-        realm.copyToRealm(paciente);
+        realm.copyToRealmOrUpdate(paciente);
         realm.commitTransaction();
 
         return paciente;
     }
+
 
     public RealmList<Paciente> getAll() {
         Realm realm = Realm.getDefaultInstance();
