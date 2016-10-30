@@ -31,4 +31,14 @@
     <string name="paciente_consulta_list_intrucoes">Adicionar paciente para serem consultados, na ordem de chegada.</string>
     <string name="ok">Ok</string>
     <string name="adicionar_paciente">Adicionar\n paciente</string>
+    <string name="backup_nao_encontrado">Ainda não foi feito nenhum Backup das informações.</string>
+    <string name="descricao">Descrição</string>
+    <string name="subdescricao">Subdescrição</string>
+    <string name="deletar">Deletar</string>
+    <string name="restaurar">Restaurar</string>
+    <string name="backup">BackUp</string>
+    <string name="backup_restaura">Backup e restaurar</string>
+    <string name="criar">Criar</string>
+    <string name="backup_informacoes">Backup das informações</string>
+    <string name="backup_salvos">Backups salvos</string>
 </resources>

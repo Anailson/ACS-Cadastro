@@ -8,6 +8,12 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
+<!-- Debug  - com.avisosms.iuri.avisasms -->
+    <meta-data android:name="com.google.android.backup.api_key"
+        android:value="AIzaSyC4YX8oQ-nHUvrne2pwW6BO6s24bx9ZJ7g" />
+
+    <meta-data android:name="com.google.android.apps.drive.APP_ID" android:value="id=1234567890" />
+
     <application
         android:allowBackup="true"
         android:name=".App"
@@ -47,6 +53,11 @@
         <!--meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /-->
+
+        <activity android:name=".backup.Backup"
+            android:screenOrientation="portrait"
+            android:label="@string/backup"/>
+
     </application>
 
 </manifest>

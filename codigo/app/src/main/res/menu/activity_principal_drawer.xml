@@ -26,6 +26,16 @@
             android:title="@string/configuracoes" />
     </group>
 
+    <item android:title="@string/backup">
+        <menu>
+            <item
+                android:id="@+id/nav_backup_restore"
+                android:icon="@drawable/backup_restore"
+                android:title="@string/backup_restaura" />
+        </menu>
+    </item>
+
+
     <item android:title="@string/comunicao">
         <menu>
             <item

@@ -81,7 +81,6 @@ public class Consultas extends Fragment {
         ViewPager mViewPager;
         mConsultasListaFragmento = new ConsultasListaFragmento(getChildFragmentManager(), consultas.size());
 
-
         realm.close();
 
         // Set up the ViewPager with the sections adapter.

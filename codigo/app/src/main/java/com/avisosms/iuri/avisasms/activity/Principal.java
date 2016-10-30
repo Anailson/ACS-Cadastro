@@ -1,6 +1,7 @@
 package com.avisosms.iuri.avisasms.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
+import com.avisosms.iuri.avisasms.backup.Backup;
 import com.avisosms.iuri.avisasms.fragments.Agenda;
 import com.avisosms.iuri.avisasms.fragments.Consultas;
 import com.avisosms.iuri.avisasms.fragments.Medicos;
@@ -119,6 +121,16 @@ public class Principal extends AppCompatActivity
                 fragmentManager.beginTransaction().replace(R.id.content_frame, new Medicos()).commit();
 
                 break;
+
+            case R.id.nav_backup_restore:
+
+                setTitle(getString(R.string.backup_restaura));
+                startActivity(new Intent(this, Backup.class));
+                finish();
+
+                break;
+
+
             case R.id.nav_share:
 
                 setTitle(getString(R.string.compartilhar));

@@ -113,7 +113,6 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
          * fragment.
          */
 
-
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
@@ -143,7 +142,6 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
             realm = Realm.getDefaultInstance();
 
-
             final int numeroSecao = getArguments().getInt(ARG_SECTION_NUMBER);
 
             final Calendar calendar = Funcoes.dataHoje();
@@ -156,14 +154,13 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(consulta.getMedico().getCorIndicativa() + "  " + consulta.getMedico().getNome() + " numSecao " + numeroSecao);
 
-
             LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.fragment_tab_layout_indicadores);
             float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
-        /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-        params.height = (int) pixels;
-        params.weight = (int) pixels;*/
+            /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
+            params.height = (int) pixels;
+            params.weight = (int) pixels;*/
 
-            //static  int id = 1;// getResources().getIdentifier("gameover", "drawable", getPackageName());
+            //static int id = 1;// getResources().getIdentifier("gameover", "drawable", getPackageName());
             for (int i = 0; i < tabQuantidade; i++) {
                 ImageView imgView = new ImageView(getContext());
                 //imgView.setId(0x7f0d0079);
@@ -179,10 +176,36 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
             }
 
+            ((View) rootView.findViewById(R.id.consulta_medico_cor)).setBackgroundColor(consulta.getMedico().getCorIndicativa());
+            ///////List
+            mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
+
+
+            adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem"));
+
+            animAdapter = new AlphaInAnimationAdapter(adapter);
+            animAdapter.setAbsListView(mDynamicListView);
+            mDynamicListView.setAdapter(animAdapter);
+
+            adapter.notifyDataSetInvalidated();
+
+
+            mDynamicListView.enableDragAndDrop();
+            mDynamicListView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
+            /*mDynamicListView.setOnItemMovedListener(new MyOnItemMovedListener(adapter, this));
+            mDynamicListView.setOnItemLongClickListener(new MyOnItemLongClickListener(mDynamicListView));*/
+
+            // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.principal_content_fab);
+            // fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapter));
+
+            //adapter.notifyDataSetInvalidated();
+          /*  Toast.makeText(getContext(), " " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();*/
+
             Button btn_ordenar = (Button) rootView.findViewById(R.id.btn_ordenar);
             btn_ordenar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("atendido", Sort.DESCENDING));
 
                     mDynamicListView.setAdapter(adapter);
@@ -204,12 +227,12 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
                     Dialogs.listarPacientesAddConsulta(view.getContext(), consulta);
 
-                    adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
+                   /* adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
                     animAdapter.notifyDataSetInvalidated();
 
                     mDynamicListView.setAdapter(adapter);
                     mDynamicListView.invalidate();
-                    mDynamicListView.setSelection(mDynamicListView.getCount());
+                    mDynamicListView.setSelection(mDynamicListView.getCount());*/
 
 
                     Snackbar.make(view, "Add <> paciente, para o médico " + consulta.getMedico().getId(), Snackbar.LENGTH_LONG)
@@ -217,30 +240,6 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
                 }
             });
-
-            ((View) rootView.findViewById(R.id.consulta_medico_cor)).setBackgroundColor(consulta.getMedico().getCorIndicativa());
-            ///////List
-            mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
-
-            adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
-
-            animAdapter = new AlphaInAnimationAdapter(adapter);
-            animAdapter.setAbsListView(mDynamicListView);
-            mDynamicListView.setAdapter(animAdapter);
-
-            adapter.notifyDataSetInvalidated();
-
-
-            mDynamicListView.enableDragAndDrop();
-            mDynamicListView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
-            /*mDynamicListView.setOnItemMovedListener(new MyOnItemMovedListener(adapter, this));
-            mDynamicListView.setOnItemLongClickListener(new MyOnItemLongClickListener(mDynamicListView));*/
-
-            // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.principal_content_fab);
-            // fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapter));
-
-            //adapter.notifyDataSetInvalidated();
-          /*  Toast.makeText(getContext(), " " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();*/
 
             return rootView;
         }

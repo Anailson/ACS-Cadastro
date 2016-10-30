@@ -31,6 +31,10 @@ dependencies {
 
     compile 'com.thebluealliance:spectrum:0.5.0'//color selection
 
+    //backup Google Drive
+    compile 'com.google.android.gms:play-services-drive:8.4.0'
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+
     //compile 'com.github.pinball83:masked-edittext:1.0.3'//mask edit text
 
     //Google calender

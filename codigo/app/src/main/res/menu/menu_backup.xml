@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_settings"
+        android:enabled="true"
+        android:icon="@drawable/ic_dots_vertical_white_24dp"
+        android:title="@string/action_settings">
+
+        <item
+            android:id="@+id/menu_backup_alterarConta"
+            android:title="Altera conta" />
+
+        <item
+            android:id="@+id/menu_backup_removerConta"
+            android:title="Remover conta" />
+        <!--<item-->
+        <!--android:id="@+id/menu_webview_action_modo_noturno"-->
+        <!--android:title="@string/modo_noturno" />-->
+
+        <!--<item-->
+        <!--android:id="@+id/menu_webview_action_atualizar"-->
+        <!--android:title="Atualizar" />-->
+
+        <!--<item-->
+        <!--android:id="@+id/action_adicionar"-->
+        <!--android:title="Enviar por email" />-->
+
+    </item>
+
+</menu>
