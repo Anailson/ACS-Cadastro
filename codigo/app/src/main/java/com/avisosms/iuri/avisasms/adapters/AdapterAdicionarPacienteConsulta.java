@@ -1,6 +1,8 @@
 package com.avisosms.iuri.avisasms.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
+import com.avisosms.iuri.avisasms.suporte.Dialogs;
 
 import java.util.List;
 
@@ -28,15 +31,16 @@ public class AdapterAdicionarPacienteConsulta extends ArrayAdapter<Paciente> {
 
     private Context context;
     private long idConsulta;
-    private Adapter adapter;
+    private AdapterListaDePacientes adapterListaPaciente;
     // private List<Paciente> pacientes;
 
-    public AdapterAdicionarPacienteConsulta(Context context, int view, List<Paciente> pacientes, long idConsulta) {
+    public AdapterAdicionarPacienteConsulta(Context context, int view, List<Paciente> pacientes, long idConsulta, AdapterListaDePacientes adapterListaPaciente) {
         super(context, view, pacientes);
         this.context = context;
         this.idConsulta = idConsulta;
-        this.adapter = adapter;
-        //     this.pacientes = pacientes;
+        this.adapterListaPaciente = adapterListaPaciente;
+        //    this.pacientes = pacientes;
+
 
     }
 
@@ -70,11 +74,11 @@ public class AdapterAdicionarPacienteConsulta extends ArrayAdapter<Paciente> {
                     @Override
                     public void onClick(View v) {
 
-                        Realm realm = Realm.getDefaultInstance();
+                        final Realm realm = Realm.getDefaultInstance();
 
-                        RealmResults<Paciente> pacientes = realm.where(Consulta.class)
-                                .equalTo("id", idConsulta)
-                                .findFirst()
+                        Consulta consulta = realm.where(Consulta.class).equalTo("id", idConsulta)
+                                .findFirst();
+                        RealmResults<Paciente> pacientes = consulta
                                 .getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem", Sort.ASCENDING);
 
                         int posicao = 1;
@@ -83,19 +87,48 @@ public class AdapterAdicionarPacienteConsulta extends ArrayAdapter<Paciente> {
                             posicao = pacientes.get(pacientes.size() - 1).getOrdem() + 1;
                         }
 
-                        realm.beginTransaction();
+                        final int finalPosicao = posicao;
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        paciente.setOrdem(posicao);
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
 
-                        realm.commitTransaction();
 
-                        realm.close();
+                                        realm.beginTransaction();
 
-                        notifyDataSetChanged();
-//                        notifyDataSetInvalidated();
+                                        paciente.setOrdem(finalPosicao);
 
-                        Toast.makeText(v.getContext(), "Adicionado Posicao = " + posicao, Toast.LENGTH_SHORT).show();
+                                        realm.commitTransaction();
 
+
+                                        //List<Paciente> pacients = realm.where(Consulta.class).equalTo("id", idConsulta)
+                                        //       .findFirst().getPacientes().where().lessThanOrEqualTo("ordem", 0).findAll();
+
+                                        //adpt.addAll(pacients);
+
+                                        notifyDataSetChanged();
+                                        //adpt.notifyDataSetInvalidated();
+
+                                        Toast.makeText(context, "Adicionado Posicao --- = " + finalPosicao, Toast.LENGTH_SHORT).show();
+
+                                        adapterListaPaciente.notifyDataSetChanged();
+
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        break;
+                                }
+                            }
+                        };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setMessage("Deseja adicionar o paciente na posição " +posicao+ "?").setPositiveButton("Sim", dialogClickListener)
+                                .setNegativeButton("Não", dialogClickListener).show();
+
+                        realm.close();//fechar depois do notifyDataSetChanged();
                     }
                 }
         );

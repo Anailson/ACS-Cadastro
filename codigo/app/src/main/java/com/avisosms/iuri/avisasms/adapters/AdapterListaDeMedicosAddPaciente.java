@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class AdapterListaDeMedicosAddPaciente extends ArrayAdapter<Medico> {
 
-    Activity mContext;
+    Context mContext;
     Date date;
 
-    public AdapterListaDeMedicosAddPaciente(Context context, List<Medico> medicos, Date date) {
-        super(context, R.layout.medico_layout, medicos);
-        this.mContext = (Activity) context;
+    public AdapterListaDeMedicosAddPaciente(Context view, List<Medico> medicos, Date date) {
+        super(view, R.layout.medico_layout, medicos);
+        this.mContext = view;
         this.date = date;
     }
 

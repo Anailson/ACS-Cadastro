@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
+import com.avisosms.iuri.avisasms.objetos.Consulta;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
 import com.nhaarman.listviewanimations.ArrayAdapter;
 
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by iuri on 6/8/2016.
@@ -27,9 +31,13 @@ import io.realm.Realm;
 public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
 
     Context mContext;
+    long idConsulta;
+    long idMedico;
 
-    public AdapterListaDePacientes(Context context, List<Paciente> objects) {
+    public AdapterListaDePacientes(Context context, List<Paciente> objects, long idConsulta, long idMedico) {
         this.mContext = context;
+        this.idConsulta = idConsulta;
+        this.idMedico = idMedico;
         addAll(objects);
 
     }
@@ -77,7 +85,7 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.textDescricao.setText(p.getNome());
+        holder.textDescricao.setText(p.getOrdem() + "° - " + p.getNome());
         holder.textSubDescricao.setText(p.getTelefone());
 
         final ViewHolder finalHolder = holder;
@@ -86,30 +94,73 @@ public class AdapterListaDePacientes extends ArrayAdapter<Paciente> {
             @Override
             public void onClick(View v) {
                 Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
+
 
                 CheckBox checkBox = (CheckBox) v;
                 if (checkBox.isChecked()) {
+                    realm.beginTransaction();
                     p.setAtendido(true);
+                    realm.commitTransaction();
+
+                    Consulta consulta = realm.where(Consulta.class).equalTo("id", idConsulta).findFirst();
+
+                    List<Paciente> pacientes = consulta.getPacientes().where().equalTo("atendido", false).greaterThan("ordem", 0).findAllSorted("ordem");
+
+                    Toast.makeText(v.getContext(), "Enviar notificacao para os demais pacientes", Toast.LENGTH_SHORT).show();
+
+                    /*for (int i = 0; i < pacientes.size(); i++) {
+
+                        final int finalI = i;
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                try {
+                                    SmsManager smsManager = SmsManager.getDefault();
+                                    String telefones = p.getTelefone().split("/")[0].replaceAll("\\(", "").replaceAll("\\)", "").replaceAll(" ", "").replaceAll("/", "").replaceAll("-", "");
+
+                                    String mensagem = "";
+                                    if (finalI < 5) {
+                                        mensagem = "Faltam " + (finalI + 1) + " paciente(s) para o seu atendimento.";
+                                    } else {
+                                        mensagem = "O paciente n° " + p.getOrdem() + "foi atendido.\n Faltam " + (finalI + 1) + " para seu atendimento";
+                                    }
+
+                                    smsManager.sendTextMessage(telefones, null, mensagem, null, null);
+
+                                    Log.e("SMS", mensagem);
+                                } catch (Exception e) {
+
+                                    e.printStackTrace();
+
+                                }
+                            }
+                        });
+                    }*/
+
+
                 } else {
+                    realm.beginTransaction();
                     p.setAtendido(false);
+                    realm.commitTransaction();
+                    Toast.makeText(v.getContext(), "Desmacou um atendimento? :(", Toast.LENGTH_SHORT).show();
+
                 }
 
                /* SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(p.getTelefone().split("/")[0].replaceAll("\\(","").replaceAll("\\)","").replaceAll(" ","").replaceAll("/","").replaceAll("-",""), null, "sms message", null, null);
 
                 Toast.makeText(v.getContext(), p.getId() + " " + p.getNome(), Toast.LENGTH_SHORT).show();
-                /*SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(p.getTelefone().split("/")[0].replaceAll("\\(","").replaceAll("\\)","").replaceAll(" ","").replaceAll("/","").replaceAll("-",""), null, "sms message", null, null);
+                /*
 
                 Toast.makeText(v.getContext(), p.getId() + " " + p.getNome(), Toast.LENGTH_SHORT).show();*/
-                realm.commitTransaction();
+
                 realm.close();
 
-               // notifyDataSetInvalidated();
+                // notifyDataSetInvalidated();
             }
         });
-        
+
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

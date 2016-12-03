@@ -50,30 +50,12 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
     public ConsultasListaFragmento(FragmentManager fm, int tabQuantidade) {
         super(fm);
-//        Realm realm = Realm.getDefaultInstance();
-//
-//        Calendar calendar = Funcoes.dataHoje();
-//
-//        RealmResults<Consulta> consultas = realm.where(Consulta.class)
-//                .equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis())
-//                .findAll();
-//
-//
-//        for (Consulta consulta : consultas) {
-//            Log.i("Consulta", consulta.getDataDoAtendimentoEmMilissegundo() + " <> " + calendar.getTimeInMillis());
-//        }
-
         this.tabQuantidade = tabQuantidade;
-
-//        realm.close();
-
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
         return PlaceholderFragment.newInstance(position);
     }
 
@@ -152,7 +134,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
             final View rootView = inflater.inflate(R.layout.consulta_lista_de_pacientes, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(consulta.getMedico().getCorIndicativa() + "  " + consulta.getMedico().getNome() + " numSecao " + numeroSecao);
+            textView.setText(consulta.getMedico().getNome());//consulta.getMedico().getCorIndicativa() + "  " +  + " numSecao " + numeroSecao);
 
             LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.fragment_tab_layout_indicadores);
             float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
@@ -181,7 +163,9 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
 
 
-            adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem"));
+            adapter = new AdapterListaDePacientes(rootView.getContext()
+                    ,consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem").sort("atendido", Sort.DESCENDING)
+                    ,consulta.getId(), consulta.getMedico().getId());
 
             animAdapter = new AlphaInAnimationAdapter(adapter);
             animAdapter.setAbsListView(mDynamicListView);
@@ -206,7 +190,9 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                 @Override
                 public void onClick(View v) {
 
-                    adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("atendido", Sort.DESCENDING));
+                    adapter = new AdapterListaDePacientes(rootView.getContext()
+                            ,consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem").sort("atendido", Sort.DESCENDING)
+                            ,consulta.getId(), consulta.getMedico().getId());
 
                     mDynamicListView.setAdapter(adapter);
                     mDynamicListView.invalidate();
@@ -225,7 +211,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
 
                     Consulta consulta = consultas.get(numeroSecao);
 
-                    Dialogs.listarPacientesAddConsulta(view.getContext(), consulta);
+                    Dialogs.listarPacientesAddConsulta(view.getContext(), consulta, adapter);
 
                    /* adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
                     animAdapter.notifyDataSetInvalidated();

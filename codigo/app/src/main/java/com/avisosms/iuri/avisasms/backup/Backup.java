@@ -153,6 +153,10 @@ public class Backup extends AppCompatActivity implements
 
         } else {
 
+            Intent refresh = new Intent(Backup.this, Principal.class);
+            startActivity(refresh);
+            finish();
+
             showMessage("Não conectado.");
 
         }

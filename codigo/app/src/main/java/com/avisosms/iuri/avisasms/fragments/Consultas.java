@@ -35,34 +35,6 @@ public class Consultas extends Fragment {
         view = inflater.inflate(R.layout.consultas, container, false);
         view.refreshDrawableState();
 
-//        <ImageView
-//        android:
-//        id = "@+id/icon_clipboard"
-//        android:
-//        layout_width = "30dp"
-//        android:
-//        layout_height = "30dp"
-//        android:
-//        layout_marginLeft = "10dp"
-//        android:
-//        src = "@drawable/icon_clipboard" / >
-
-//        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.fragment_tab_layout_indicadores);
-//        float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
-//        /*LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) view.getLayoutParams();
-//        params.height = (int) pixels;
-//        params.weight = (int) pixels;*/
-//
-//        //static  int id = 1;// getResources().getIdentifier("gameover", "drawable", getPackageName());
-//        for (  int i = 0; i < 5; i++) {
-//            ImageView imgView = new ImageView(getContext());
-//            //imgView.setId(0x7f0d0079);
-//            imgView.setImageResource(R.drawable.icon_clipboard);
-//            imgView.setLayoutParams(new LinearLayout.LayoutParams((int)pixels,(int) pixels));//new LinearLayout.LayoutParams(30, 30));
-//            linearLayout.addView(imgView);
-//        }
-
-        ///////////
         Realm realm = Realm.getDefaultInstance();
 
         Calendar calendar = Funcoes.dataHoje();
@@ -96,10 +68,6 @@ public class Consultas extends Fragment {
             @Override
             public void onPageSelected(int position) {
 
-                Toast.makeText(getContext(), position + "", Toast.LENGTH_SHORT).show();
-
-//                ImageView lineColorCode = (ImageView) view.findViewById(R.id.icon_clipboard4);
-
                 switch (position) {
                     case 1:
 //                        lineColorCode = (ImageView) view.findViewById(R.id.icon_clipboard);
@@ -120,9 +88,6 @@ public class Consultas extends Fragment {
                     default:
                         break;
                 }
-
-//                int color = getResources().getColor(R.color.colorAccent); //The color u want
-//                lineColorCode.setColorFilter(color);*/
 
             }
 

@@ -25,7 +25,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentStart="true"
                 android:background="@color/blue_grey_500"
-                android:src="@drawable/icon_medico" />
+                android:src="@drawable/icon_medico2" />
 
             <ImageView
                 android:id="@+id/medico_colorpicker"

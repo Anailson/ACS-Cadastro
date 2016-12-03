@@ -31,7 +31,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="15dp"
             android:background="@color/colorPrimary"
-            android:src="@drawable/icon_medico" />
+            android:src="@drawable/icon_medico2" />
 
     </LinearLayout>
 

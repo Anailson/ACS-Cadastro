@@ -25,6 +25,7 @@ import com.avisosms.iuri.avisasms.activity.Principal;
 import com.avisosms.iuri.avisasms.adapters.AdapterAdicionarPacienteAgendamento;
 import com.avisosms.iuri.avisasms.adapters.AdapterAdicionarPacienteConsulta;
 import com.avisosms.iuri.avisasms.adapters.AdapterDriveFiles;
+import com.avisosms.iuri.avisasms.adapters.AdapterListaDePacientes;
 import com.avisosms.iuri.avisasms.adapters.AdapterSelecionarMedico;
 import com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView;
 import com.avisosms.iuri.avisasms.dataHandler.PacienteHandler;
@@ -58,6 +59,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by iuri on 7/15/2016.
@@ -176,10 +178,13 @@ public class Dialogs {
         txt.setText(R.string.nenhum_paciente_cadastrado);
         mListView.setEmptyView(txt);
 
-        final AdapterAdicionarPacienteAgendamento arrayAdapter = new AdapterAdicionarPacienteAgendamento(context, R.id.paciente_listview_add, consulta.getPacientes());
+        List<Paciente> pacientes = consulta.getPacientes();
+
+        final AdapterAdicionarPacienteAgendamento arrayAdapter = new AdapterAdicionarPacienteAgendamento(context, R.id.paciente_listview_add, pacientes);
         mListView.setAdapter(arrayAdapter);
 
         realm.close();
+
 
         //Button cancelar
         Button btnOk = (Button) dialog.findViewById(R.id.paciente_list_btn_ok);
@@ -255,8 +260,10 @@ public class Dialogs {
 
             editNome.setText(paciente.getNome());
             String[] telefones = paciente.getTelefone().split("/");
-            editTelefone.setText(telefones[0]);
-            editTelefone2.setText(telefones[1]);
+            try {
+                editTelefone.setText(telefones[0]);
+                editTelefone2.setText(telefones[1]);
+            }catch (Exception e){}//tratar excessão
             chkPago.setChecked(paciente.isPago());
 
         }
@@ -299,9 +306,9 @@ public class Dialogs {
 
                 }
 
-                realm.close();
-
                 adapter.notifyDataSetChanged();
+
+                realm.close();//debpois do notify
 
                 dialog.dismiss();
 
@@ -336,7 +343,7 @@ public class Dialogs {
 
     }
 
-    public static void listarPacientesAddConsulta(final Context context, final Consulta consulta) {// final AdapterListaLeis adapter
+    public static void listarPacientesAddConsulta(final Context context, final Consulta consulta, AdapterListaDePacientes adapterListaPaciente) {// final AdapterListaLeis adapter
 
         SimpleDateFormat dataFormatada = new SimpleDateFormat("EEE',' dd 'de' MMM 'de' yyyy");
         String dataStr = dataFormatada.format(consulta.getDataDoAtendimentoEmMilissegundo());
@@ -349,6 +356,7 @@ public class Dialogs {
         dialog.show();
 
         dialog.setIcon(ContextCompat.getDrawable(context, R.drawable.icon_paciente));
+
 
         final Medico medico = consulta.getMedico();
 
@@ -365,7 +373,7 @@ public class Dialogs {
         List<Paciente> pacientes = consulta.getPacientes().where().lessThanOrEqualTo("ordem", 0).findAll();
 
         final AdapterAdicionarPacienteConsulta arrayAdapter =
-                new AdapterAdicionarPacienteConsulta(context, R.id.paciente_listview_add, pacientes, consulta.getId());
+                new AdapterAdicionarPacienteConsulta(context, R.id.paciente_listview_add, pacientes, consulta.getId(), adapterListaPaciente);
         mListView.setAdapter(arrayAdapter);
 
 
@@ -411,6 +419,8 @@ public class Dialogs {
 
     }
 
+
+    /*Lista arquivos do Google Drive*/
     public static void listarBackups(final Activity context, final GoogleApiClient googleApiClient) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Backups (Pontos de restauração)");

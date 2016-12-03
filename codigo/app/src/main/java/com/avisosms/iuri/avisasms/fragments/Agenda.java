@@ -106,8 +106,19 @@ public class Agenda extends Fragment {
         Button btnMostrarMesAnterior = (Button) view.findViewById(R.id.prev_button);
         Button btnMostraMesSeguinte = (Button) view.findViewById(R.id.next_button);
 
-        // ImageButton btnAdicionarMedico = (ImageButton) view.findViewById(R.id.agenda_btn_add_medico);
+        // B
         FloatingActionButton btnFloatAdicionarMedico = (FloatingActionButton) view.findViewById(R.id.agenda_floating_add_medico);
+
+        btnFloatAdicionarMedico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Dialogs.medicoListSelecionar(v.getContext(), compactCalendarView, Funcoes.dataBanco(dataSelecionada));
+                //Toast.makeText(getContext(), "Depois Dialog", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
         Calendar calendar = Funcoes.dataHoje();
         dataSelecionada = calendar.getTime();
@@ -184,15 +195,6 @@ public class Agenda extends Fragment {
         });
 
 
-        btnFloatAdicionarMedico.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Dialogs.medicoListSelecionar(v.getContext(), compactCalendarView, Funcoes.dataBanco(dataSelecionada));
-                //Toast.makeText(getContext(), "Depois Dialog", Toast.LENGTH_SHORT).show();
-
-            }
-        });
 
         return view;
     }

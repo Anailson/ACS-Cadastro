@@ -61,9 +61,19 @@ public class BancoDeDados {
         for (int i = 0; i < 5; i++) {
 
 
-
             Medico medico = new Medico("Médico ", "Cirurgião", "Telefone " + i);
-            medico.setCorIndicativa(-17408605);
+            if (i == 1)
+                medico.setCorIndicativa(-16307805);
+            else if (i == 2)
+                medico.setCorIndicativa(-16307806);
+            else if (i == 3)
+                medico.setCorIndicativa(-13730510);
+            else if (i == 3)
+                medico.setCorIndicativa(-3536986);
+            else if (i == 4)
+                medico.setCorIndicativa(-67840);
+            else
+                medico.setCorIndicativa(-6543440);
 
             new MedicoHandler().add(medico, realm);
 
@@ -87,9 +97,9 @@ public class BancoDeDados {
             for (int y = 0; y < 10; y++) {
 
                 Paciente paciente = listPacientes.get(y);
-                paciente.setNome(paciente.getNome() + " <> " + (y + i));
+                paciente.setNome(paciente.getNome());
 
-                paciente = new Paciente(paciente, y, consulta.getId());
+                paciente = new Paciente(paciente, 0, consulta.getId());
 
                 new PacienteHandler().newPaciente(paciente);
 
@@ -112,7 +122,7 @@ public class BancoDeDados {
 
     }
 
-
+/*
     static List<Paciente> listPacientes = new ArrayList<Paciente>() {{
         add(new Paciente("Alfedro Santos da Costa", "(79) 99985-7423/"));
         add(new Paciente("Fernando Dias da Conceição", "(79) 98856-7458/"));
@@ -132,6 +142,25 @@ public class BancoDeDados {
         add(new Paciente("Jhony Kleyton do Nascimento", "(79) 99958-1102/"));
 
 
+    }};*/
+
+    static List<Paciente> listPacientes = new ArrayList<Paciente>() {{
+        add(new Paciente("Alfedro Santos da Costa", "996702363/"));
+        add(new Paciente("Fernando Dias da Conceição", "996702363/"));
+        add(new Paciente("Maria Silva", "996702363/"));
+        add(new Paciente("Ana Tereza de A. Vasques", "996702363/"));
+        add(new Paciente("Glaucia Adriana Dantas Pereira", "996702363/"));
+        add(new Paciente("Genildson Alvez de Oliveira", "996702363/"));
+        add(new Paciente("Míriam Síria R. de Souza", "996702363/"));
+        add(new Paciente("José Lucas Ferreira e Silva", "996702363/"));
+        add(new Paciente("Ramon Douglas Neves de Andrade", "996702237/"));
+        add(new Paciente("Lorena Alcântara de Farias", "996702363/"));
+        add(new Paciente("Kalyne Ribeiro Dantas Q. de Vasconcelos", "996702363/"));
+        add(new Paciente("Glenda Eloíse de P. Feitosa", "996702363/"));
+        add(new Paciente("Mirna Souza da Silva", "996702363/"));
+        add(new Paciente("Nathália Alcântara de Farias ", "996702363/"));
+        add(new Paciente("Ewertom Mascena de Araújo", "996702363/"));
+        add(new Paciente("Jhony Kleyton do Nascimento", "996702363/"));
     }};
 
 }
