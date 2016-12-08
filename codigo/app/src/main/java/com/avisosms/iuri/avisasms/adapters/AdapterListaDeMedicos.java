@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avisosms.iuri.avisasms.R;
-import com.avisosms.iuri.avisasms.fragments.MedicoAdicionarEditar;
+import com.avisosms.iuri.avisasms.activity.MedicoAdicionarEditar;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 
 import java.util.List;

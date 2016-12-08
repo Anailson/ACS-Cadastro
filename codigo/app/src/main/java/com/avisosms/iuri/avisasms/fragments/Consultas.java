@@ -3,15 +3,10 @@ package com.avisosms.iuri.avisasms.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.Layout;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
@@ -55,7 +50,7 @@ public class Consultas extends Fragment {
 
         realm.close();
 
-        // Set up the ViewPager with the sections adapter.
+        // Set up the ViewPager with the sections adapterListaDePacientes.
         //setContentView(R.layout.fragment_tab);
         mViewPager = (ViewPager) view.findViewById(R.id.container);
         mViewPager.setAdapter(mConsultasListaFragmento);

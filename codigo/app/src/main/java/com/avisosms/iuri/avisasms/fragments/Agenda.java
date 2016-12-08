@@ -1,35 +1,31 @@
 package com.avisosms.iuri.avisasms.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.adapters.AdapterListaDeMedicosAddPaciente;
+import com.avisosms.iuri.avisasms.adapters.AdapterSelecionarMedico;
 import com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView;
 import com.avisosms.iuri.avisasms.compactcalendarview.Event;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
 import com.avisosms.iuri.avisasms.objetos.Medico;
-import com.avisosms.iuri.avisasms.suporte.Dialogs;
 import com.avisosms.iuri.avisasms.suporte.Funcoes;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -49,12 +45,12 @@ public class Agenda extends Fragment {
     private static final String TAG = "Agenda";
     private SimpleDateFormat dateFormatForMonth = new SimpleDateFormat("MM (MMMM) - yyyy", Locale.getDefault());
     Realm realm;
-    private Date dataSelecionada ;
+    private Date dataSelecionada;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Toast.makeText(getContext(), "onAttach", Toast.LENGTH_SHORT).show();
+
     }
 
     private void atualizarCalendario() {
@@ -62,26 +58,86 @@ public class Agenda extends Fragment {
         RealmResults<Consulta> consultas = realm.where(Consulta.class)
                 // .equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis())
                 .findAll();
-        for (Consulta consulta : consultas) {
-            Medico medico = consulta.getMedico();
-            compactCalendarView.addEvent(new Event(medico.getCorIndicativa(), consulta.getDataDoAtendimentoEmMilissegundo(), medico), true);
-        }
 
-        List<Event> bookingsFromMap = compactCalendarView.getEvents(Funcoes.dataHoje().getTime());
+        //realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", dataSelecionada.getTime()).findAll();
+
+        List<Medico> medicos = new ArrayList<Medico>();
+        Medico medico;
+        for (Consulta consulta : consultas) {
+            medico = consulta.getMedico();
+            long data = consulta.getDataDoAtendimentoEmMilissegundo();
+            if (Funcoes.dataHoje().getTimeInMillis() == data) {
+                medicos.add(medico);
+            }
+
+            compactCalendarView.addEvent(new Event(medico.getCorIndicativa(), data, medico), true);
+
+        }
+        listaDeMedicos = medicos;
+
+        /*List<Event> bookingsFromMap = compactCalendarView.getEvents(Funcoes.dataHoje().getTime());
         if (bookingsFromMap != null) {
             Log.d(TAG, bookingsFromMap.toString());
-            mutableBookings.clear();
+            listaDeMedicos.clear();
             for (Event booking : bookingsFromMap) {
-                mutableBookings.add((Medico) booking.getData());
+                listaDeMedicos.add((Medico) booking.getData());
             }
-            adapter.notifyDataSetChanged();
-        }
+            adapterListaDeMedicos.notifyDataSetChanged();
+        }*/
 
     }
 
-    CompactCalendarView compactCalendarView;
-    List<Medico> mutableBookings;
-    AdapterListaDeMedicosAddPaciente adapter;
+
+    private static CompactCalendarView compactCalendarView;
+    private List<Medico> listaDeMedicos;
+    private static AdapterListaDeMedicosAddPaciente adapterListaDeMedicos;
+    private static ListView listMedicosDoDia;
+
+
+    //Otimizar para nao utilizar metodo estatico
+    public static void atualizarListaMedicoDoDia(Context context, Realm realm, Date data) {
+
+
+        RealmResults<Consulta> consultas = realm.where(Consulta.class)
+                // .equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis())
+                .findAll();
+
+        //realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", dataSelecionada.getTime()).findAll();
+        compactCalendarView.removeAllEvents();
+        List<Medico> medicos = new ArrayList<Medico>();
+        Medico medico;
+        for (Consulta consulta : consultas) {
+            medico = consulta.getMedico();
+            long data2 = consulta.getDataDoAtendimentoEmMilissegundo();
+            if (Funcoes.dataHoje().getTimeInMillis() == data2) {
+                medicos.add(medico);
+            }
+
+            compactCalendarView.addEvent(new Event(medico.getCorIndicativa(), data2, medico), true);
+
+        }
+      /*
+        RealmResults<Consulta> consultas = realm.where(Consulta.class)
+                .equalTo("dataDoAtendimentoEmMilissegundo", data.getTime())
+                .findAll();
+        List<Medico> medicos = new ArrayList<Medico>();
+        Medico medico;
+        for (Consulta consulta : consultas) {
+            medico = consulta.getMedico();
+            medicos.add(medico);
+        }*/
+        adapterListaDeMedicos = new AdapterListaDeMedicosAddPaciente(context, realm, medicos, data);
+        listMedicosDoDia.setAdapter(adapterListaDeMedicos);
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Toast.makeText(getContext(), "Start", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -100,34 +156,42 @@ public class Agenda extends Fragment {
 
         realm = Realm.getDefaultInstance();
 
-        mutableBookings = new ArrayList<Medico>();
+        listaDeMedicos = new ArrayList<Medico>();
 
-        final ListView listMedicosDoDia = (ListView) view.findViewById(R.id.agenda_list_agendamento_medicos);
+        listMedicosDoDia = (ListView) view.findViewById(R.id.agenda_list_agendamento_medicos);
         Button btnMostrarMesAnterior = (Button) view.findViewById(R.id.prev_button);
         Button btnMostraMesSeguinte = (Button) view.findViewById(R.id.next_button);
 
-        // B
         FloatingActionButton btnFloatAdicionarMedico = (FloatingActionButton) view.findViewById(R.id.agenda_floating_add_medico);
 
         btnFloatAdicionarMedico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Dialogs.medicoListSelecionar(v.getContext(), compactCalendarView, Funcoes.dataBanco(dataSelecionada));
+
+                /*long data = Funcoes.dataBanco(dataSelecionada).getTime();
+                Intent i = new Intent(getActivity(), AgendaAdicionarEditarMedico.class);
+                i.putExtra("dataSelecionada", data);
+                startActivity(i);*/
+                // getActivity().finish();
+
+                medicoListSelecionar(v.getContext(), compactCalendarView, Funcoes.dataBanco(dataSelecionada));
                 //Toast.makeText(getContext(), "Depois Dialog", Toast.LENGTH_SHORT).show();
 
             }
         });
 
 
+        //Atualizar Calendrio
+        atualizarCalendario();
+
         Calendar calendar = Funcoes.dataHoje();
         dataSelecionada = calendar.getTime();
 
 
-        adapter = new AdapterListaDeMedicosAddPaciente(view.getContext(), mutableBookings, Funcoes.dataBanco(dataSelecionada));
-        listMedicosDoDia.setAdapter(adapter);
+        adapterListaDeMedicos = new AdapterListaDeMedicosAddPaciente(view.getContext(), realm, listaDeMedicos, Funcoes.dataBanco(dataSelecionada));
+        listMedicosDoDia.setAdapter(adapterListaDeMedicos);
 
-        atualizarCalendario();
 
         compactCalendarView.setDayColumnNames(new String[]{"dom", "seg", "ter", "qua", "qui", "sex", "sab"});
 
@@ -161,13 +225,13 @@ public class Agenda extends Fragment {
                 //Log.d(TAG, "inside onclick " + dateClicked);
                 if (bookingsFromMap != null) {
                     //Log.d(TAG, bookingsFromMap.toString() + Funcoes.dataBanco(dataSelecionada).getTime() );
-                    mutableBookings.clear();
+                    listaDeMedicos.clear();
                     for (Event booking : bookingsFromMap) {
-                        mutableBookings.add((Medico) booking.getData());
+                        listaDeMedicos.add((Medico) booking.getData());
                     }
-                    adapter = new AdapterListaDeMedicosAddPaciente(view.getContext(), mutableBookings, Funcoes.dataBanco(dataSelecionada));
-                    listMedicosDoDia.setAdapter(adapter);
-                   // adapter.notifyDataSetChanged();
+                    adapterListaDeMedicos = new AdapterListaDeMedicosAddPaciente(view.getContext(), realm, listaDeMedicos, Funcoes.dataBanco(dataSelecionada));
+                    listMedicosDoDia.setAdapter(adapterListaDeMedicos);
+                    // adapterListaDePacientes.notifyDataSetChanged();
                 }
 
             }
@@ -195,7 +259,6 @@ public class Agenda extends Fragment {
         });
 
 
-
         return view;
     }
 
@@ -208,11 +271,11 @@ public class Agenda extends Fragment {
         List<Event> bookingsFromMap = compactCalendarView.getEvents(c.getTime());
         if (bookingsFromMap != null) {
             //Log.d(TAG, bookingsFromMap.toString());
-            mutableBookings.clear();
+            listaDeMedicos.clear();
             for (Event booking : bookingsFromMap) {
-                mutableBookings.add((Medico) booking.getData());
+                listaDeMedicos.add((Medico) booking.getData());
             }
-            adapter.notifyDataSetChanged();
+            adapterListaDeMedicos.notifyDataSetChanged();
         }
     }
 
@@ -223,4 +286,56 @@ public class Agenda extends Fragment {
         realm.close();
     }
 
+    //TODO simplificar
+    public void medicoListSelecionar(final Context context, final CompactCalendarView calendar, Date data) {// final AdapterListaLeis adapterListaDePacientes
+
+        SimpleDateFormat dataFormatada = new SimpleDateFormat("EEE',' dd 'de' MMM 'de' yyyy");
+        String dataStr = dataFormatada.format(data);
+
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle(dataStr)
+                .setView(R.layout.medico_list_check)
+                .create();
+
+        dialog.show();
+
+        dialog.setIcon(ContextCompat.getDrawable(context, R.drawable.icon_medico));
+
+        ListView mListView = (ListView) dialog.findViewById(R.id.medico_listview_check);
+
+        TextView txt = (TextView) dialog.findViewById(R.id.medico_emptyText);
+        txt.setText(R.string.nenhum_medico_cadastrado);
+        mListView.setEmptyView(txt);
+
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Medico> medicos = realm.where(Medico.class).findAll();
+        realm.close();
+
+        AdapterSelecionarMedico arrayAdapter = new AdapterSelecionarMedico(context, R.id.medico_listview_check, medicos, data.getTime(), adapterListaDeMedicos);
+        mListView.setAdapter(arrayAdapter);
+
+        //Button cancelar
+        Button btnOk = (Button) dialog.findViewById(R.id.categoria_list_btn_cancelar);
+        assert btnOk != null;
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                //android.support.v4.app.FragmentManager fragmentManager = fragmentManager;
+                //  fragmentManager.beginTransaction().replace(R.id.content_frame, new Agenda()).commit();
+
+            }
+        });
+
+        //Button para adicionar um medico para o dia
+        Button btnAdicionarMedico = (Button) dialog.findViewById(R.id.categoria_list_btn_adicionar);
+
+        btnAdicionarMedico.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                //fragmentManager.beginTransaction().replace(R.id.content_frame, new Agenda()).commit();
+            }
+        });
+
+    }
 }

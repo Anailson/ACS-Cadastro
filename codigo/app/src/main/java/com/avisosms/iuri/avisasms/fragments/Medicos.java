@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.avisosms.iuri.avisasms.R;
+import com.avisosms.iuri.avisasms.activity.MedicoAdicionarEditar;
 import com.avisosms.iuri.avisasms.adapters.AdapterListaDeMedicos;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 
@@ -56,7 +57,7 @@ public class Medicos extends Fragment {
         }*/
         RealmResults<Medico> medicos = realm.where(Medico.class).findAll();
 
-        /* Setup the adapter */
+        /* Setup the adapterListaDePacientes */
         final AdapterListaDeMedicos adapter = new AdapterListaDeMedicos(getContext(), medicos);
         mListView.setAdapter(adapter);
 
@@ -66,11 +67,12 @@ public class Medicos extends Fragment {
 
                 Medico m = adapter.getItem(position);
 
-                getActivity().finish();
+
                 Intent i = new Intent(getActivity(), MedicoAdicionarEditar.class);
                 i.putExtra("editar", false);
                 i.putExtra("idMedico", m.getId());
                 startActivity(i);
+                getActivity().finish();
             }
         });
 
@@ -79,10 +81,11 @@ public class Medicos extends Fragment {
             @Override
             public void onClick(View view) {
 
-                getActivity().finish();
+
                 Intent i = new Intent(getActivity(), MedicoAdicionarEditar.class);
                 i.putExtra("editar", true);
                 startActivity(i);
+                getActivity().finish();
             }
         });
 

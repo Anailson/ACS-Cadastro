@@ -5,41 +5,44 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
 import com.avisosms.iuri.avisasms.dataHandler.ConsultaHandler;
+import com.avisosms.iuri.avisasms.fragments.Agenda;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
-import io.realm.RealmQuery;
+import io.realm.RealmBaseAdapter;
 import io.realm.RealmResults;
 
 /**
  * Created by iuri on 03/10/2016.
  */
-public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
+public class AdapterSelecionarMedico extends RealmBaseAdapter<Medico> implements ListAdapter {
 
     private Context context;
     private List<Medico> medicos;
     private long timeMillisseconds;
-    Adapter adapter;
+       AdapterListaDeMedicosAddPaciente adapter;
     // private RealmResults<Consulta> consultas;//identificar os médicos da consulta
 
-    public AdapterSelecionarMedico(Context context, int view, List<Medico> objects, long timeMillisseconds) {
-        super(context, view, objects);
-        // medicos = objects;
+
+
+    public AdapterSelecionarMedico(Context context, int view, OrderedRealmCollection<Medico> objects, long timeMillisseconds, AdapterListaDeMedicosAddPaciente adapter) {
+        super(context, objects);
+        medicos = objects;
         this.context = context;
         this.timeMillisseconds = timeMillisseconds;
+        this.adapter =  adapter;
 
 
     }
@@ -132,11 +135,18 @@ public class AdapterSelecionarMedico extends ArrayAdapter<Medico> {
                     ((Button) v).setText(R.string.remover_medico);
                 }
 
+               /* adapter.notifyDataSetInvalidated();
+                adapter.notifyDataSetInvalidated();*/
+
+                notifyDataSetChanged();
+
+                Agenda.atualizarListaMedicoDoDia(context, realm, new Date(timeMillisseconds));
+
                 realm.close();
 
-                // notifyDataSetInvalidated();
-                //notifyDataSetInvalidated();
-                notifyDataSetChanged();
+
+
+
 
             }
         });

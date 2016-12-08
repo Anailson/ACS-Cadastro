@@ -1,28 +1,37 @@
 package com.avisosms.iuri.avisasms.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
+import com.avisosms.iuri.avisasms.adapters.AdapterAdicionarPacienteConsulta;
 import com.avisosms.iuri.avisasms.adapters.AdapterListaDePacientes;
+import com.avisosms.iuri.avisasms.dataHandler.PacienteHandler;
 import com.avisosms.iuri.avisasms.objetos.Consulta;
+import com.avisosms.iuri.avisasms.objetos.Medico;
 import com.avisosms.iuri.avisasms.objetos.Paciente;
-import com.avisosms.iuri.avisasms.suporte.Dialogs;
 import com.avisosms.iuri.avisasms.suporte.Funcoes;
 import com.nhaarman.listviewanimations.ArrayAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
@@ -30,7 +39,9 @@ import com.nhaarman.listviewanimations.itemmanipulation.DynamicListView;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.OnItemMovedListener;
 import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDraggableManager;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -114,7 +125,7 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
         }
 
         Realm realm;
-        AdapterListaDePacientes adapter;
+        AdapterListaDePacientes adapterListaDePacientes;
         AlphaInAnimationAdapter animAdapter;
         DynamicListView mDynamicListView;
 
@@ -163,26 +174,26 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             mDynamicListView = (DynamicListView) rootView.findViewById(R.id.fragment_lista_dynamicListView);
 
 
-            adapter = new AdapterListaDePacientes(rootView.getContext()
-                    ,consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem").sort("atendido", Sort.DESCENDING)
-                    ,consulta.getId(), consulta.getMedico().getId());
+            adapterListaDePacientes = new AdapterListaDePacientes(rootView.getContext()
+                    , consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem").sort("atendido", Sort.DESCENDING)
+                    , consulta.getId(), consulta.getMedico().getId());
 
-            animAdapter = new AlphaInAnimationAdapter(adapter);
+            animAdapter = new AlphaInAnimationAdapter(adapterListaDePacientes);
             animAdapter.setAbsListView(mDynamicListView);
             mDynamicListView.setAdapter(animAdapter);
 
-            adapter.notifyDataSetInvalidated();
+            adapterListaDePacientes.notifyDataSetInvalidated();
 
 
             mDynamicListView.enableDragAndDrop();
             mDynamicListView.setDraggableManager(new TouchViewDraggableManager(R.id.list_row_draganddrop_touchview));
-            /*mDynamicListView.setOnItemMovedListener(new MyOnItemMovedListener(adapter, this));
+            /*mDynamicListView.setOnItemMovedListener(new MyOnItemMovedListener(adapterListaDePacientes, this));
             mDynamicListView.setOnItemLongClickListener(new MyOnItemLongClickListener(mDynamicListView));*/
 
             // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.principal_content_fab);
-            // fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapter));
+            // fab.setOnClickListener(new MyOnItemClickListener(mDynamicListView, adapterListaDePacientes));
 
-            //adapter.notifyDataSetInvalidated();
+            //adapterListaDePacientes.notifyDataSetInvalidated();
           /*  Toast.makeText(getContext(), " " + getArguments().getInt(ARG_SECTION_NUMBER), Toast.LENGTH_SHORT).show();*/
 
             Button btn_ordenar = (Button) rootView.findViewById(R.id.btn_ordenar);
@@ -190,11 +201,11 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                 @Override
                 public void onClick(View v) {
 
-                    adapter = new AdapterListaDePacientes(rootView.getContext()
-                            ,consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem").sort("atendido", Sort.DESCENDING)
-                            ,consulta.getId(), consulta.getMedico().getId());
+                    adapterListaDePacientes = new AdapterListaDePacientes(rootView.getContext()
+                            , consulta.getPacientes().where().greaterThan("ordem", 0).findAllSorted("ordem").sort("atendido", Sort.DESCENDING)
+                            , consulta.getId(), consulta.getMedico().getId());
 
-                    mDynamicListView.setAdapter(adapter);
+                    mDynamicListView.setAdapter(adapterListaDePacientes);
                     mDynamicListView.invalidate();
                     mDynamicListView.setSelection(mDynamicListView.getCount());
                     Toast.makeText(v.getContext(), "Color selected: #", Toast.LENGTH_SHORT).show();
@@ -207,22 +218,22 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                 @Override
                 public void onClick(View view) {
 
+
+                    /*Intent i = new Intent(getActivity(), AdicionarPacienteAFila.class);
+                    i.putExtra("dataSelecionada", calendar.getTimeInMillis());
+                    startActivity(i);*/
+                    // getActivity().finish();
+
                     RealmResults<Consulta> consultas = realm.where(Consulta.class).equalTo("dataDoAtendimentoEmMilissegundo", calendar.getTimeInMillis()).findAll();
 
                     Consulta consulta = consultas.get(numeroSecao);
 
-                    Dialogs.listarPacientesAddConsulta(view.getContext(), consulta, adapter);
+                    listarPacientesAddConsulta(consulta);
 
-                   /* adapter = new AdapterListaDePacientes(rootView.getContext(), consulta.getPacientes().sort("ordem"));
-                    animAdapter.notifyDataSetInvalidated();
+                    onStop();
 
-                    mDynamicListView.setAdapter(adapter);
-                    mDynamicListView.invalidate();
-                    mDynamicListView.setSelection(mDynamicListView.getCount());*/
-
-
-                    Snackbar.make(view, "Add <> paciente, para o médico " + consulta.getMedico().getId(), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    /*Snackbar.make(view, "Add <> paciente, para o médico " + consulta.getMedico().getId(), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();*/
 
                 }
             });
@@ -237,6 +248,12 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
                 realm.close();
         }
 
+        @Override
+        public void onStart() {
+            super.onStart();
+
+            Toast.makeText(getContext(), "On Start", Toast.LENGTH_SHORT).show();
+        }
 
         private class MyOnItemClickListener implements AdapterView.OnClickListener {
 
@@ -316,6 +333,208 @@ public class ConsultasListaFragmento extends FragmentPagerAdapter {
             }
         }
 
+        //TODO Simlicar Dialog
+        public void listarPacientesAddConsulta(final Consulta consulta) {// final AdapterListaLeis adapterListaDePacientes
+
+            SimpleDateFormat dataFormatada = new SimpleDateFormat("EEE',' dd 'de' MMM 'de' yyyy");
+            String dataStr = dataFormatada.format(consulta.getDataDoAtendimentoEmMilissegundo());
+
+            final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                    .setTitle(dataStr)
+                    .setView(R.layout.paciente_consulta_list)
+                    .create();
+
+            dialog.show();
+
+            dialog.setIcon(ContextCompat.getDrawable(getActivity(), R.drawable.icon_paciente));
+
+
+            final Medico medico = consulta.getMedico();
+
+            ListView mListView = (ListView) dialog.findViewById(R.id.paciente_listview_add);
+
+            ((TextView) dialog.findViewById(R.id.paciente_consulta_list_medico_nome)).setText(medico.getNome());
+            ((View) dialog.findViewById(R.id.paciente_consulta_list_medico_cor)).setBackgroundColor(medico.getCorIndicativa());
+
+            TextView txt = (TextView) dialog.findViewById(R.id.paciente_emptyText);
+            txt.setText(R.string.nenhum_paciente_cadastrado);
+            mListView.setEmptyView(txt);
+
+            //Obtem todos os pacientes que ainda não possuem um ordem definida, ou seja, ainda não chegaram
+            RealmResults<Paciente> pacientes = consulta.getPacientes().where().lessThanOrEqualTo("ordem", 0).findAll();
+
+            final AdapterAdicionarPacienteConsulta arrayAdapter =
+                    new AdapterAdicionarPacienteConsulta(getActivity(), R.id.paciente_listview_add, realm, pacientes, consulta.getId(), adapterListaDePacientes);
+            mListView.setAdapter(arrayAdapter);
+
+
+            //Button cancelar
+            Button btnOk = (Button) dialog.findViewById(R.id.paciente_consulta_list_btn_ok);
+            assert btnOk != null;
+            btnOk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    //android.support.v4.app.FragmentManager fragmentManager = fragmentManager;
+                    //  fragmentManager.beginTransaction().replace(R.id.content_frame, new Agenda()).commit();
+
+                }
+            });
+
+            //Button para adicionar um medico para o dia
+            Button btnAdicionarPaciente = (Button) dialog.findViewById(R.id.paciente_consulta_list_btn_adicionar);
+
+            btnAdicionarPaciente.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    Date data = new Date();
+                    data.setTime(consulta.getDataDoAtendimentoEmMilissegundo());
+
+                    adicionarEditarPaciente(v.getContext(), arrayAdapter, medico, data, -1);
+
+                }
+            });
+
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Date data = new Date();
+                    data.setTime(consulta.getDataDoAtendimentoEmMilissegundo());
+
+                    Paciente p = (Paciente) parent.getItemAtPosition(position);
+                    adicionarEditarPaciente(view.getContext(), arrayAdapter, medico, data, p.getId());
+
+                }
+            });
+
+        }
+
+        //TODO Simlicar Dialog Repetido
+
+        /**
+         * @param idPaciente = -1 novo, >-1 existente
+         */
+        public void adicionarEditarPaciente(final Context context,  AdapterAdicionarPacienteConsulta adapter,
+                                            final Medico medico, final Date data, final long idPaciente) {
+
+
+            final AlertDialog dialog = new AlertDialog.Builder(context)
+                    .setTitle("Adicionar paciente")
+                    .setView(R.layout.paciente_add_editar_layout)
+                    .create();
+
+            dialog.show();
+
+            dialog.setIcon(ContextCompat.getDrawable(context, R.drawable.icon_paciente));
+
+
+            ImageButton btnExcluir = (ImageButton) dialog.findViewById(R.id.paciente_excluir);
+            final EditText editNome = (EditText) dialog.findViewById(R.id.paciente_add_nome);
+            final EditText editTelefone = (EditText) dialog.findViewById(R.id.paciente_add_telefone);
+            final EditText editTelefone2 = (EditText) dialog.findViewById(R.id.paciente_add_telefone2);
+
+            final CheckBox chkPago = (CheckBox) dialog.findViewById(R.id.paciente_add_chk_pago);
+            if (idPaciente == -1) {
+
+                dialog.setTitle("Adicionar paciente");
+                btnExcluir.setVisibility(View.GONE);
+
+            } else {
+
+                dialog.setTitle("Editar/Excluir paciente");
+                btnExcluir.setVisibility(View.VISIBLE);
+
+               // Realm realm = Realm.getDefaultInstance();
+                Paciente paciente = realm.where(Paciente.class).equalTo("id", idPaciente).findFirst();
+                //realm.close();
+
+                editNome.setText(paciente.getNome());
+                String[] telefones = paciente.getTelefone().split("/");
+                try {
+                    editTelefone.setText(telefones[0]);
+                    editTelefone2.setText(telefones[1]);
+                } catch (Exception e) {
+                }//tratar excessão
+                chkPago.setChecked(paciente.isPago());
+
+            }
+
+            Button btnSalvar = (Button) dialog.findViewById(R.id.paciente_add_btn_salvar);
+            Button btnCancelar = (Button) dialog.findViewById(R.id.paciente_add_btn_cancelar);
+
+
+            btnSalvar.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    //Realm realm = Realm.getDefaultInstance();
+                    if (idPaciente == -1) {
+
+
+                        Consulta consulta = realm.where(Consulta.class)
+                                .equalTo("dataDoAtendimentoEmMilissegundo", data.getTime())
+                                .equalTo("medico.id", medico.getId())
+                                .findFirst();
+
+                        Paciente paciente = new Paciente(editNome.getText().toString(), editTelefone.getText() + "/" + editTelefone2.getText(), 0, consulta.getId(), chkPago.isChecked());
+
+                        new PacienteHandler().newPaciente(paciente, realm);
+
+                        realm.beginTransaction();
+                        consulta.getPacientes().add(paciente);
+                        realm.commitTransaction();
+
+
+                    } else {
+
+                        Paciente paciente = realm.where(Paciente.class).equalTo("id", idPaciente).findFirst();
+                        realm.beginTransaction();
+                        paciente.setNome(editNome.getText().toString());
+                        paciente.setTelefone(editTelefone.getText() + "/" + editTelefone2.getText());
+                        paciente.setPago(chkPago.isChecked());
+                        realm.commitTransaction();
+
+                        new PacienteHandler().editPaciente(paciente, realm);
+
+                    }
+
+                    //adapter.notifyDataSetChanged();
+
+                    //realm.close();//debpois do notify
+
+                    dialog.dismiss();
+
+                }
+            });
+
+            btnExcluir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                   // Realm realm = Realm.getDefaultInstance();
+
+                    Paciente paciente = realm.where(Paciente.class).equalTo("id", idPaciente).findFirst();
+
+                    realm.beginTransaction();
+                    paciente.deleteFromRealm();
+                    realm.commitTransaction();
+
+                    //realm.close();
+
+                    //adapter.notifyDataSetChanged();
+
+                    dialog.dismiss();
+                }
+            });
+
+            btnCancelar.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+        }
 
     }
+
 }

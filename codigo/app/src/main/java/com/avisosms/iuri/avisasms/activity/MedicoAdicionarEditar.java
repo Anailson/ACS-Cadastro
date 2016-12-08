@@ -1,4 +1,4 @@
-package com.avisosms.iuri.avisasms.fragments;
+package com.avisosms.iuri.avisasms.activity;
 
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.avisosms.iuri.avisasms.R;
-import com.avisosms.iuri.avisasms.activity.Principal;
 import com.avisosms.iuri.avisasms.dataHandler.MedicoHandler;
 import com.avisosms.iuri.avisasms.objetos.Medico;
 import com.avisosms.iuri.avisasms.suporte.Dialogs;
@@ -177,11 +176,11 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
                     @Override
                     public void onColorSelected(boolean positiveResult, @ColorInt int color) {
 
-                       // if (positiveResult) {
-                            Toast.makeText(getApplication(), "Color selected: #" + Integer.toHexString(color).toUpperCase() + " " + color, Toast.LENGTH_SHORT).show();
-                            View view_medico_cor = (View) findViewById(R.id.medico_cor);
-                            view_medico_cor.setBackgroundColor(color);
-                            corIndicativa = color;
+                        // if (positiveResult) {
+                        Toast.makeText(getApplication(), "Color selected: #" + Integer.toHexString(color).toUpperCase() + " " + color, Toast.LENGTH_SHORT).show();
+                        View view_medico_cor = (View) findViewById(R.id.medico_cor);
+                        view_medico_cor.setBackgroundColor(color);
+                        corIndicativa = color;
                         //}
 
                     }
@@ -216,12 +215,12 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_editar) {
 
-            finish();
-
             Intent i = new Intent(this, MedicoAdicionarEditar.class);
             i.putExtra("editar", true);
             i.putExtra("idMedico", idMedico);
             startActivity(i);
+
+            finish();
 
             return true;
         } else {
@@ -282,11 +281,14 @@ public class MedicoAdicionarEditar extends AppCompatActivity {
 
         }
 
-        finish();
+
 
         Intent i = new Intent(this, Principal.class);
         i.putExtra("idNavTab", R.id.nav_atendente);
         this.startActivity(i);
+
+        finish();
+
 
         return super.onKeyDown(keyCode, event);
 

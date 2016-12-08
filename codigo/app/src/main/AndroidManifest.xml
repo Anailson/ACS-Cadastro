@@ -34,17 +34,29 @@
             </intent-filter>
         </activity>
 
-        <!--activity
-            android:name=".CalendarioGoogleAPi"
-            android:label="Google Calendar API Android Quickstart" >
-        </activity-->
 
         <activity
-            android:name=".fragments.MedicoAdicionarEditar"
+            android:name=".activity.MedicoAdicionarEditar"
+            android:label="Adicionar Médico(a)" >
+        </activity>
+
+        <activity
+            android:name=".activity.AgendaAdicionarEditarMedico"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
             android:label="Adicionar Médico(a)" >
         </activity>
 
 
+        <activity
+            android:name=".activity.AdicionarPacienteAFila"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:label="Adicionar Médico(a)" >
+        </activity>
+
+        <!--activity
+            android:name=".CalendarioGoogleAPi"
+            android:label="Google Calendar API Android Quickstart" >
+        </activity-->
         <!--meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /-->
