@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Aviso SMS</string>
+    <string name="app_name">Marta</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -41,4 +41,7 @@
     <string name="criar">Criar</string>
     <string name="backup_informacoes">Backup das informações</string>
     <string name="backup_salvos">Backups salvos</string>
+    <string name="sobre">Sobre</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="manual_feedback">Manual e feedback</string>
 </resources>
