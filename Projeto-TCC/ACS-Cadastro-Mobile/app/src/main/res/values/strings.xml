@@ -1,0 +1,143 @@
+<resources>
+    <!-- Titles -->
+    <string name="app_name">ACS-PreCadastro</string>
+    <string name="title_activity_add_citizen">Adicionar Ciadadão</string>
+
+    <!-- Text Views -->
+    <string name="txt_brazil">Brasil</string>
+    <string name="txt_another">Outro</string>
+    <string name="txt_unknow">Não sabe</string>
+    <string name="txt_default">- - -</string>
+    <string name="txt_yes">Sim</string>
+    <string name="txt_no">Não</string>
+    <string name="txt_num_sus">Número do SUS</string>
+    <string name="txt_area">Área</string>
+    <string name="txt_equip">Equipe</string>
+    <string name="txt_if_yes">Se sim, qual(ais)?</string>
+    <string name="txt_select_date">Selecione uma data</string>
+    <string name="txt_day">Dia</string>
+    <string name="txt_month">Mês</string>
+    <string name="txt_year">Ano</string>
+
+    <string name="txt_ctz_data_1">Dados pessoais</string>
+    <string name="txt_ctz_data_2">Informações sociodemográficas</string>
+    <string name="txt_ctz_data_3">Condiçoes gerais de saúde</string>
+    <string name="txt_ctz_data_4">Cidadão em situação de rua</string>
+    <string name="txt_ctz_num_sus">Número do cartão do SUS</string>
+    <string name="txt_ctz_name">Nome completo</string>
+    <string name="txt_ctz_social_name">Nome social</string>
+    <string name="txt_ctz_mother_name">Nome completo da mãe</string>
+    <string name="txt_ctz_num_pis_pasep">Numero NIS (PIS/PASE)</string>
+    <string name="txt_ctz_responsible">Responsável familiar</string>
+    <string name="txt_ctz_birth_date">Data de nascimento</string>
+    <string name="txt_ctz_gender">Sexo</string>
+    <string name="txt_ctz_race">Raça/Cor</string>
+    <string name="txt_ctz_nation">Nacionalidade</string>
+    <string name="txt_ctz_uf_city">UF e município de nascimento</string>
+    <string name="txt_ctz_phone">Telefone</string>
+    <string name="txt_ctz_email">E-mail</string>
+    <string name="txt_ctz_nation_birth">País de nascimento</string>
+    <string name="txt_ctz_kinship">Relação de parentesco com o responsável familiar</string>
+    <string name="txt_ctz_occupation">Ocupação</string>
+    <string name="txt_ctz_school">Frequenta escola ou creche?</string>
+    <string name="txt_ctz_education">Qual o curso mais elevado que frequenta ou frequentou?</string>
+    <string name="txt_ctz_employment">Situação no mercado de trabalho</string>
+    <string name="txt_ctz_kids_0_9">Crianças de 0 a 9 anos, com quem ficam?</string>
+    <string name="txt_ctz_caregiver">Frequenta cuidador tradicional?</string>
+    <string name="txt_ctz_community_group">Participa de algum grupo comunitário?</string>
+    <string name="txt_ctz_health_plan">Possui plano de saúde privado?</string>
+    <string name="txt_ctz_community_traditional">É membro de povo ou comunidade tradicional?"</string>
+    <string name="txt_ctz_orientation_sexual">Deseja informar sua orientação sexual/identidade de gênero?</string>
+    <string name="txt_ctz_deficiency">Tem alguma deficiência?</string>
+    <string name="txt_ctz_deficiency_hearing">Auditiva</string>
+    <string name="txt_ctz_deficiency_visual">Visual</string>
+    <string name="txt_ctz_deficiency_intellectual">Intelectual/Cognitiva</string>
+    <string name="txt_ctz_deficiency_physical">Fisica</string>
+    <string name="txt_ctz_pregnant">Está gestante?</string>
+    <string name="txt_ctz_maternity">Se sim, qual materinadade de preferência?</string>
+    <string name="txt_ctz_weight">Sobre seu peso, voce se considera</string>
+    <string name="txt_ctz_smoking">Está fumante?</string>
+    <string name="txt_ctz_alcohol">Faz consumo de alcóol?</string>
+    <string name="txt_ctz_drugs">Faz uso de outras drogas?</string>
+    <string name="txt_ctz_hypertension">Tem hipertensao arterial?</string>
+    <string name="txt_ctz_diabetes">Tem diabetes?</string>
+    <string name="txt_ctz_avc">Teve AVC/derrame?</string>
+    <string name="txt_ctz_heart_atk">Teve infarto?</string>
+    <string name="txt_ctz_leprosy">Etá com hanseniase?</string>
+    <string name="txt_ctz_tuberculosis">Está com tuberculose?</string>
+    <string name="txt_ctz_cancer">Tem ou teve câncer?</string>
+    <string name="txt_ctz_mental_health">Fez ou faz tratamento com psquiatra
+            ou teve internação por problema de saúde mental?</string>
+    <string name="txt_ctz_is_in_bed">Está acamado?</string>
+    <string name="txt_ctz_is_domiciled">Está dommiciliado?</string>
+    <string name="txt_ctz_interment">Teve alguma internação nos últimos 12 meses?</string>
+    <string name="txt_ctz_interment_why">Se sim, por qual causa?</string>
+    <string name="txt_ctz_plants">Usa plantas medicinais?</string>
+    <string name="txt_ctz_plants_what">Se sim, indique qual(ais)</string>
+    <string name="txt_ctz_another_practices">Usa outras praticas integrativas e complementares?</string>
+    <string name="txt_ctz_cardiac_insufficiency">Insuficiência cardiaca</string>
+    <string name="txt_ctz_renal_insufficiency">Insuficiência cardiaca</string>
+    <string name="txt_ctz_asthma">Asma</string>
+    <string name="txt_ctz_emphysema">DEPOC/Enfisema</string>
+    <string name="txt_ctz_heart_disease">Tem doença cardíaca?</string>
+    <string name="txt_ctz_kidney_disease">Tem/teve problema nos rins?</string>
+    <string name="txt_ctz_respiratory_disease">Tem doença respiratória?</string>
+
+    <string name="txt_ctz_street">Está em situação de rua?</string>
+    <string name="txt_ctz_street_time">Tempo em situação de rua?</string>
+    <string name="txt_ctz_any_benefit">Recebe algum benefício?</string>
+    <string name="txt_ctz_family">Possui referência familiar?</string>
+    <string name="txt_ctz_food_per_day">Quantas vezes se alimenta ao dia?</string>
+    <string name="txt_ctz_food_origin">Qual a origem da alimentação?</string>
+    <string name="txt_ctz_restaurant">Restaurante popular</string>
+    <string name="txt_ctz_restaurant_donation">Doação de restaurante</string>
+    <string name="txt_ctz_people_donation">Doação popular</string>
+    <string name="txt_ctz_religious_donation">Doação de grupo religioso</string>
+    <string name="txt_ctz_another_institution">É acompanhado por outra instituição?</string>
+    <string name="txt_ctz_another_institution_what">Se sim, qual(ais)?</string>
+    <string name="txt_ctz_family_visit">Visita algum familiar com frequência?</string>
+    <string name="txt_ctz_family_visit_what">Se sim, qual o grau de parentensco?</string>
+    <string name="txt_ctz_personal_hygiene">Tem acesso a higiene pessoal?</string>
+    <string name="txt_ctz_personal_hygiene_what">Se sim, indique qual(ais)?</string>
+    <string name="txt_ctz_bath">Banho</string>
+    <string name="txt_ctz_sanitary">Acesso ao sanitário</string>
+    <string name="txt_ctz_oral">Higiene bucal</string>
+
+
+    <!-- Menus -->
+    <string name="menu_settings">Settings</string>
+    <string name="menu_citizen">Cidadão</string>
+    <string name="menu_residence">Residência</string>
+    <string name="menu_accompany">Acompanhamento</string>
+    <string name="menu_visit">Visita</string>
+    <string name="menu_update_system">Atualizar o sistema</string>
+
+    <!-- Buttons -->
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_save">Salvar</string>
+    <string name="btn_back">Voltar</string>
+    <string name="btn_progress">Avançar</string>
+    <string name="btn_add_citizen">Adicionar novo cidadão</string>
+    <string name="btn_add_residence">Adicionar nova residência</string>
+    <string name="btn_sign_in">Sign in or register</string>
+
+    <!-- Edit Text Hints -->
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password (optional)</string>
+    <string name="hint_seach_citizen">Digite o nome ou o número do SUS</string>
+    <string name="hint_edit_citizen">Icone de edição para um cidadão</string>
+    <string name="hint_delete_citizen">Icone de edição para um cidadão</string>
+
+    <!-- Messages -->
+    <string name="msg_edit_citizen">msg_edit_citizen</string>
+    <string name="msg_delete_citizen">msg_delete_citizen</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_residence">ResidenceActivity</string>
+    <string name="title_activity_citizend_edit_acitivity">CitizendEditAcitivity</string>
+</resources>
+
+

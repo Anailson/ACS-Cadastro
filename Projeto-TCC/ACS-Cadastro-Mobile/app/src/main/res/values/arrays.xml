@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- TODO: Replace Uf-Array and City-Array to webservice or Realm DataBase -->
+    <string-array name="uf">
+        <item>@string/txt_default</item>
+        <item>AL</item>
+        <item>BA</item>
+        <item>SE</item>
+    </string-array>
+
+    <string-array name="al_cities">
+        <item>@string/txt_default</item>
+        <item>Maceió</item>
+        <item>Arapiraca</item>
+        <item>Palmeira dos Índios</item>
+        <item>Coruripe</item>
+        <item>Santana do Ipanema</item>
+    </string-array>
+
+    <string-array name="ba_cities">
+        <item>@string/txt_default</item>
+        <item>Salvador</item>
+        <item>Feira de Santana</item>
+        <item>Porto Seguro</item>
+        <item>Paulo Afonso</item>
+        <item>Vitória da Conquista</item>
+    </string-array>
+
+    <string-array name="se_cities">
+        <item>@string/txt_default</item>
+        <item>Aracaju</item>
+        <item>Itabaina</item>
+        <item>Areia Branca</item>
+        <item>Lagarto</item>
+        <item>Estância</item>
+    </string-array>
+
+    <!-- Spinner values -->
+    <string-array name="days">
+        <item>1</item> <item>2</item> <item>3</item> <item>4</item> <item>5</item>
+        <item>6</item> <item>7</item> <item>8</item> <item>9</item> <item>10</item>
+        <item>11</item> <item>12</item> <item>13</item> <item>14</item> <item>15</item>
+        <item>16</item> <item>17</item> <item>18</item> <item>19</item> <item>20</item>
+        <item>21</item> <item>22</item> <item>23</item> <item>24</item><item>25</item>
+        <item>26</item> <item>27</item> <item>28</item> <item>29</item> <item>30</item>
+        <item>31</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>Janeiro</item> <item>Fevereiro</item> <item>Março</item> <item>Abril</item>
+        <item>Maio</item> <item>Junho</item> <item>Julho</item> <item>Agosto</item>
+        <item>Setembro</item> <item>Outubro</item> <item>Novembro</item> <item>Dezembro</item>
+    </string-array>
+
+    <string-array name="weight">
+        <item>@string/txt_default</item>
+        <item>Abaixo do peso</item>
+        <item>Peso adequado</item>
+        <item>Acima do peso</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>@string/txt_default</item>
+        <item>Masculino</item>
+        <item>Feminino</item>
+    </string-array>
+
+    <string-array name="race">
+        <item>@string/txt_default</item>
+        <item>Branca</item>
+        <item>Preta</item>
+        <item>Parda</item>
+        <item>Amarela</item>
+        <item>Indígena</item>
+    </string-array>
+
+    <string-array name="nation">
+        <item>@string/txt_default</item>
+        <item>Brasileiro</item>
+        <item>Naturalizado</item>
+        <item>Estrangeiro</item>
+    </string-array>
+
+    <string-array name="kinship">
+        <item>@string/txt_default</item>
+        <item>Cônjuje/Companheiro(a)</item>
+        <item>Filho(a)</item>
+        <item>Entenado(a)</item>
+        <item>Neto(a)/Bisneto(a)</item>
+        <item>Pai/Mãe</item>
+        <item>Irmão/Irmã</item>
+        <item>Genro/Nora</item>
+        <item>@string/txt_another</item>
+        <item>Não parente</item>
+    </string-array>
+
+    <string-array name="education">
+        <item>@string/txt_default</item>
+        <item>Creche</item>
+        <item>Pré-escola (exceto CA)</item>
+        <item>Classe Alfabetizada - CA</item>
+        <item>Ensino Fundamental 1ª a 4ª séries</item>
+        <item>Ensino Fundamental 5ª a 8ª séries</item>
+        <item>Ensino Fundamental Completo</item>
+        <item>Ensino Fundamental Especial</item>
+        <item>Ensino Fundamental EJA - séries iniciais(Supletivo 1ª a 4ª)</item>
+        <item>Ensino Fundamental EJA - séries finais (Supletivo 5ª a 9ª)</item>
+        <item>Ensino Médio, Médio 2º Ciclo (Científico, Técnico e etc)</item>
+        <item>Ensino Médio Especial</item>
+        <item>Ensino Médio EJA (Supletivo)</item>
+        <item>Superior, Aperfeiçoamento, Especialização, Mestrado, Doutorado</item>
+        <item>Alfabetização para Adultos (Mobral, etc)</item>
+        <item>Nenhum</item>
+    </string-array>
+
+    <string-array name="employment">
+        <item>@string/txt_default</item>
+        <item>Empregador</item>
+        <item>Assalariado com carteira de trabalho</item>
+        <item>Assalariado sem carteira de trabalho</item>
+        <item>Autônomo com previdência social</item>
+        <item>Autônomo sem previdência social</item>
+        <item>Aposentado/Pensionista</item>
+        <item>Desempregado</item>
+        <item>Não trabalha</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="kids_0_9">
+        <item>@string/txt_default</item>
+        <item>Adulto Responsável</item>
+        <item>Outra(s) Criança(s)</item>
+        <item>Adolescente</item>
+        <item>Sozinha</item>
+        <item>Creche</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="orientation_sexual">
+        <item>Heterossexual</item>
+        <item>Lésbica</item>
+        <item>Travesti</item>
+        <item>Gay</item>
+        <item>Bissexual</item>
+        <item>Transsexual</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="street_time">
+        <item>@string/txt_default</item>
+        <item>Menos de 6 meses</item>
+        <item>Entre 6 e 12 meses</item>
+        <item>Entre 1 e 5 anos</item>
+        <item>Mais de 5 anos</item>
+    </string-array>
+
+    <string-array name="food_per_day">
+        <item>@string/txt_default</item>
+        <item>1 vez</item>
+        <item>2 ou 3 vezes</item>
+        <item>Mais de 3 vezes</item>
+    </string-array>
+
+</resources>

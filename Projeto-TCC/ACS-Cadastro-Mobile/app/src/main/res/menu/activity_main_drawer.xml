@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_citizen"
+            android:icon="@drawable/ic_citizen"
+            android:title="@string/menu_citizen" />
+        <item
+            android:id="@+id/nav_residence"
+            android:icon="@drawable/ic_residence"
+            android:title="@string/menu_residence" />
+        <item
+            android:id="@+id/nav_accompany"
+            android:icon="@drawable/ic_accompany"
+            android:title="@string/menu_accompany" />
+        <item
+            android:id="@+id/nav_visit"
+            android:icon="@drawable/ic_visit"
+            android:title="@string/menu_visit" />
+    </group>
+
+    <item android:title="Sistema">
+        <menu>
+            <item
+                android:id="@+id/nav_update_system"
+                android:icon="@drawable/ic_upload"
+                android:title="@string/menu_update_system" />
+        </menu>
+    </item>
+
+</menu>
