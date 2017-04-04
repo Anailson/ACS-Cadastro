@@ -1,16 +1,46 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.ResidenceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp">
 
-    <TextView
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_search_residence"
+            android:hint="@string/hint_search_residence"
+            android:drawableRight="@android:drawable/ic_menu_search"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_weight="11" />
+    </LinearLayout>
+
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/menu_residence"
-        android:id="@+id/textView3"
-        android:layout_gravity="left|top" />
-</FrameLayout>
+        android:id="@+id/lvw_residence"
+        android:layout_gravity="left|top"
+        android:layout_below="@+id/linearLayout" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_residence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_citizen_add"
+
+        android:layout_marginRight="@dimen/minimum_gap"
+        android:layout_marginBottom="@dimen/medium_gap"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

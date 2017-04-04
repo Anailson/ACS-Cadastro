@@ -2,14 +2,14 @@ package tcc.acs_cadastro_mobile.models;
 
 import java.io.Serializable;
 
-public class SocialDemographicDataModel implements Serializable {
+public class SocialDemographicModel implements Serializable {
 
     private String[] kinship, education, employment, kids09, sexualOrientation, communityTraditional;
     private String occupation;
     private boolean school, caregiver, communityGroup, healthPlan;//, communityTraditionalYN, sexualOrientationYN, deficiencyYN;
     private boolean[] deficiency;
 
-    public SocialDemographicDataModel() {
+    public SocialDemographicModel() {
         kinship = education = employment = kids09 = communityTraditional = sexualOrientation
                 = new String[]{"" + CitizenModel.INT_DEFAULT_VALUE, CitizenModel.STRING_DEFAULT_VALUE};
         occupation = CitizenModel.STRING_DEFAULT_VALUE;
@@ -17,10 +17,10 @@ public class SocialDemographicDataModel implements Serializable {
         deficiency = new boolean[]{false, false, false, false, false, false};
     }
 
-    public SocialDemographicDataModel(String[] kinship, String occupation, boolean school, String[] education,
-                                      String[] employment, String[] kids09, boolean caregiver, boolean communityGroup,
-                                      boolean healthPlan, String[] communityTraditional, String[] sexualOrientation,
-                                      boolean[] deficiency) {
+    public SocialDemographicModel(String[] kinship, String occupation, boolean school, String[] education,
+                                  String[] employment, String[] kids09, boolean caregiver, boolean communityGroup,
+                                  boolean healthPlan, String[] communityTraditional, String[] sexualOrientation,
+                                  boolean[] deficiency) {
         this.kinship = kinship;
         this.occupation = occupation;
         this.school = school;

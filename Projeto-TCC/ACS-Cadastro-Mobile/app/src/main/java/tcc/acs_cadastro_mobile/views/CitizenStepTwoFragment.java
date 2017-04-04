@@ -15,14 +15,14 @@ import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepTwoController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
-import tcc.acs_cadastro_mobile.models.SocialDemographicDataModel;
+import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
 
 public class CitizenStepTwoFragment extends Fragment {
 
     private static final String SOCIAL_DEMOGRAPHIC_DATA = "SOCIAL_DEMOGRAPHIC_DATA";
 
     private ICitizenData sendCitizenData;
-    private SocialDemographicDataModel socialDemographicData;
+    private SocialDemographicModel socialDemographicData;
     private CitizenStepTwoController controller;
 
     private EditText edtOccupation, edtCommunityTraditional;
@@ -31,7 +31,7 @@ public class CitizenStepTwoFragment extends Fragment {
             rgrpCommunityTraditional, rgrpSexualOrientation, rgrpDeficiency;
     private CheckBox chbHearing, chbVisual,chbIntellectual, chbPhysical, chbAnother;
 
-    public static Fragment newInstance(SocialDemographicDataModel socialDemographicData) {
+    public static Fragment newInstance(SocialDemographicModel socialDemographicData) {
         Fragment fragment = new CitizenStepTwoFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(SOCIAL_DEMOGRAPHIC_DATA, socialDemographicData);
@@ -50,7 +50,7 @@ public class CitizenStepTwoFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.content_ctz_add_2, container, false);
         controller = new CitizenStepTwoController(this);
-        socialDemographicData = (SocialDemographicDataModel) getArguments().getSerializable(SOCIAL_DEMOGRAPHIC_DATA);
+        socialDemographicData = (SocialDemographicModel) getArguments().getSerializable(SOCIAL_DEMOGRAPHIC_DATA);
 
         //TODO what if screen to rotation to horizontal/vertical, how to get values???
 
@@ -112,7 +112,7 @@ public class CitizenStepTwoFragment extends Fragment {
         boolean[] deficiency = controller.getDeficiency(rgrpDeficiency, chbHearing, chbVisual,
                 chbIntellectual, chbPhysical, chbAnother);
 
-        socialDemographicData = new SocialDemographicDataModel(kinship, occupation, school, education,
+        socialDemographicData = new SocialDemographicModel(kinship, occupation, school, education,
                 employment, kids09, caregiver, communityGroup, healthPlan, communityTraditional,
                 sexualOrientation, deficiency);
         sendCitizenData.send(socialDemographicData);

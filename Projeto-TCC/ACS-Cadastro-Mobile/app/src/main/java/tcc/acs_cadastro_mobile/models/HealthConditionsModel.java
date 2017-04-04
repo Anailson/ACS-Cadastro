@@ -3,14 +3,14 @@ package tcc.acs_cadastro_mobile.models;
 import java.io.Serializable;
 
 
-public class HealthConditionsDataModel implements Serializable {
+public class HealthConditionsModel implements Serializable {
 
     private String[] pregnant, weight, interment, plants;
     private boolean smoker, alcohol, drugs, hypertension, diabetes, avc, heartAttack, leprosy,
             tuberculosis, cancer, inBend, domiciled, mentalHealth;
     private boolean [] heartDisease, kidneyDisease, respiratoryDisease;
 
-    public HealthConditionsDataModel(){
+    public HealthConditionsModel(){
         pregnant = weight = interment = plants = new String[]{"" + CitizenModel.INT_DEFAULT_VALUE,
                         CitizenModel.STRING_DEFAULT_VALUE};
         smoker = alcohol = drugs = hypertension = diabetes = avc = heartAttack = leprosy
@@ -19,12 +19,12 @@ public class HealthConditionsDataModel implements Serializable {
         respiratoryDisease = new boolean[5];
     }
 
-    public HealthConditionsDataModel(String[] pregnant, String[] weight, boolean smoker, boolean alcohol,
-                                     boolean drugs, boolean hypertension, boolean diabetes, boolean avc,
-                                     boolean heartAttack, boolean leprosy, boolean tuberculosis, boolean cancer,
-                                     boolean inBend, boolean domiciled, boolean mentalHealth,
-                                     boolean[] heartDisease, boolean[] kidneyDisease, boolean[] respiratoryDisease,
-                                     String [] interment, String [] plants){
+    public HealthConditionsModel(String[] pregnant, String[] weight, boolean smoker, boolean alcohol,
+                                 boolean drugs, boolean hypertension, boolean diabetes, boolean avc,
+                                 boolean heartAttack, boolean leprosy, boolean tuberculosis, boolean cancer,
+                                 boolean inBend, boolean domiciled, boolean mentalHealth,
+                                 boolean[] heartDisease, boolean[] kidneyDisease, boolean[] respiratoryDisease,
+                                 String [] interment, String [] plants){
         this.pregnant = pregnant;
         this.weight = weight;
         this.smoker = smoker;

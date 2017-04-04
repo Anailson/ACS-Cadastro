@@ -4,15 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
-import android.widget.ProgressBar;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenAddController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
-import tcc.acs_cadastro_mobile.models.HealthConditionsDataModel;
+import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
-import tcc.acs_cadastro_mobile.models.SocialDemographicDataModel;
-import tcc.acs_cadastro_mobile.models.StreetSituationDataModel;
+import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
+import tcc.acs_cadastro_mobile.models.StreetSituationModel;
 
 public class CitizenAddActivity extends AppCompatActivity
         implements ICitizenData {
@@ -24,7 +23,7 @@ public class CitizenAddActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citizen_add);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.bar_ctz_add);
         setSupportActionBar(toolbar);
         controller = new CitizenAddController(this);
 
@@ -43,17 +42,17 @@ public class CitizenAddActivity extends AppCompatActivity
     }
 
     @Override
-    public void send(SocialDemographicDataModel socialDemographicData) {
+    public void send(SocialDemographicModel socialDemographicData) {
         controller.send(socialDemographicData);
     }
 
     @Override
-    public void send(HealthConditionsDataModel healthConditions) {
+    public void send(HealthConditionsModel healthConditions) {
         controller.send(healthConditions);
     }
 
     @Override
-    public void send(StreetSituationDataModel streetSituation) {
+    public void send(StreetSituationModel streetSituation) {
         controller.send(streetSituation);
     }
 }

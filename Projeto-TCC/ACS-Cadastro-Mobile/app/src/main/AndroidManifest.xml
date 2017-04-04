@@ -20,12 +20,16 @@
         </activity>
         <activity android:name=".views.LoginActivity" />
         <activity
+            android:name=".views.CalendarActivity"
+            android:theme="@style/AppTheme.FloatingTheme" />
+        <activity
             android:name=".views.CitizenAddActivity"
             android:label="@string/title_activity_add_citizen"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".views.CalendarActivity"
-            android:theme="@style/AppTheme.FloatingTheme" />
+            android:name=".views.ResidenceAddActivity"
+            android:label="@string/title_activity_add_residence"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

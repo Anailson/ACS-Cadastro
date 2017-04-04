@@ -21,6 +21,7 @@ import tcc.acs_cadastro_mobile.models.PersonalDataModel;
 public class CitizenStepOneFragment extends Fragment {
 
     private static final String PERSONAL_DATA = "PERSONAL_DATA";
+
     private CitizenStepOneController controller;
     private ICitizenData citizenData;
     private PersonalDataModel personalData;

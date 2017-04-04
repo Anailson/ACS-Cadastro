@@ -37,7 +37,7 @@ public class CitizenFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_citizen, container, false);
         EditText edtSearch = (EditText) view.findViewById(R.id.edt_search_citizen);
-        FloatingActionButton btnAddCitizen = (FloatingActionButton) view.findViewById(R.id.fab);
+        FloatingActionButton btnAddCitizen = (FloatingActionButton) view.findViewById(R.id.fab_add_citizen);
         lvwCitizens = (ListView) view.findViewById(R.id.lvw_citizens);
 
         controller = new CitizenController(getContext());

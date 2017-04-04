@@ -2,8 +2,10 @@
     <!-- Titles -->
     <string name="app_name">ACS-PreCadastro</string>
     <string name="title_activity_add_citizen">Adicionar Ciadadão</string>
+    <string name="title_activity_add_residence">Adicionar Domicílio</string>
 
     <!-- Text Views -->
+    <!-- Citizen -->
     <string name="txt_brazil">Brasil</string>
     <string name="txt_another">Outro</string>
     <string name="txt_unknow">Não sabe</string>
@@ -18,9 +20,8 @@
     <string name="txt_day">Dia</string>
     <string name="txt_month">Mês</string>
     <string name="txt_year">Ano</string>
-
     <string name="txt_ctz_data_1">Dados pessoais</string>
-    <string name="txt_ctz_data_2">fInformações sociodemográficas</string>
+    <string name="txt_ctz_data_2">Informações sociodemográficas</string>
     <string name="txt_ctz_data_3">Condiçoes gerais de saúde</string>
     <string name="txt_ctz_data_4">Cidadão em situação de rua</string>
     <string name="txt_ctz_num_sus">Número do cartão do SUS</string>
@@ -82,7 +83,6 @@
     <string name="txt_ctz_heart_disease">Tem doença cardíaca?</string>
     <string name="txt_ctz_kidney_disease">Tem/teve problema nos rins?</string>
     <string name="txt_ctz_respiratory_disease">Tem doença respiratória?</string>
-
     <string name="txt_ctz_street">Está em situação de rua?</string>
     <string name="txt_ctz_street_time">Tempo em situação de rua?</string>
     <string name="txt_ctz_any_benefit">Recebe algum benefício?</string>
@@ -103,6 +103,20 @@
     <string name="txt_ctz_sanitary">Acesso ao sanitário</string>
     <string name="txt_ctz_oral">Higiene bucal</string>
 
+    <!-- Residence -->
+
+    <string name="txt_rsd_data_1">Endereço</string>
+    <string name="txt_rsd_data_2">Condições de moradia</string>
+
+    <string name="txt_rsd_place_type">Tipo do logradouro</string>
+    <string name="txt_rsd_place_name">Nome do logradouro</string>
+    <string name="txt_rsd_number">Numero</string>
+    <string name="txt_rsd_complement">Complemento</string>
+    <string name="txt_rsd_neighborhood">Bairro</string>
+    <string name="txt_rsd_uf_city">UF e Município</string>
+    <string name="txt_rsd_cep">CEP</string>
+    <string name="txt_rsd_home_phone">Telefone residencial</string>
+    <string name="txt_rsd_reference_phone">Telefone de referência</string>
 
     <!-- Menus -->
     <string name="menu_settings">Settings</string>
@@ -125,9 +139,11 @@
     <!-- Edit Text Hints -->
     <string name="hint_email">Email</string>
     <string name="hint_password">Password (optional)</string>
-    <string name="hint_seach_citizen">Digite o nome ou o número do SUS</string>
+
+    <string name="hint_search_citizen">Digite o nome ou o número do SUS</string>
     <string name="hint_edit_citizen">Icone de edição para um cidadão</string>
     <string name="hint_delete_citizen">Icone de edição para um cidadão</string>
+    <string name="hint_search_residence">Digite o nome do logradouro ou o CEP</string>
 
     <!-- Messages -->
     <string name="msg_edit_citizen">msg_edit_citizen</string>

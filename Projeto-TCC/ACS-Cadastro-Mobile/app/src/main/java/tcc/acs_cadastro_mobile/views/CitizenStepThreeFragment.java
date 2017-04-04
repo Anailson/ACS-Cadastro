@@ -14,8 +14,7 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepThreeController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
-import tcc.acs_cadastro_mobile.models.HealthConditionsDataModel;
+import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 
 public class CitizenStepThreeFragment extends Fragment {
 
@@ -23,7 +22,7 @@ public class CitizenStepThreeFragment extends Fragment {
 
     private CitizenStepThreeController controller;
     private ICitizenData citizenData;
-    private HealthConditionsDataModel healthConditions;
+    private HealthConditionsModel healthConditions;
 
     private RadioGroup rgrpPregnant, rgrpSmoker, rgrpAlcohol, rgrpDrugs, rgrpHypertension, rgrpDiabetes,
             rgrpAvc, rgrpHeartAttack, rgrpLeprosy, rgrpTuberculosis, rgrpCancer, rgrpInBed, rgrpDomiciled,
@@ -34,7 +33,7 @@ public class CitizenStepThreeFragment extends Fragment {
     private CheckBox chbCardiacInsufficiency, chbHeartAnother, chbHeartDontKnow, chbRenalInsufficiency,
             chbKidneyAnother, chbKidneyDontKnow, chbAsthma, chbEmphysema, chbRespiratoryAnother, chbRespiratoryDontKnow;
 
-    public static Fragment newInstance(HealthConditionsDataModel healthConditions) {
+    public static Fragment newInstance(HealthConditionsModel healthConditions) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(HEALTH_CONDITIONS_DATA, healthConditions);
         Fragment fragment = new CitizenStepThreeFragment();
@@ -53,7 +52,7 @@ public class CitizenStepThreeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.content_ctz_add_3, container, false);
         controller = new CitizenStepThreeController(this);
-        healthConditions = (HealthConditionsDataModel) getArguments().getSerializable(HEALTH_CONDITIONS_DATA);
+        healthConditions = (HealthConditionsModel) getArguments().getSerializable(HEALTH_CONDITIONS_DATA);
 
         rgrpPregnant = (RadioGroup) view.findViewById(R.id.rgrp_ctz_pregnant);
         rgrpSmoker = (RadioGroup) view.findViewById(R.id.rgrp_ctz_smoker);
@@ -91,13 +90,13 @@ public class CitizenStepThreeFragment extends Fragment {
 
         spnWeight.setAdapter(controller.getSpinnerAdapter(R.array.weight));
 
-        rgrpPregnant.setOnCheckedChangeListener(controller.getRadioChangeListener());
+        /*rgrpPregnant.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpHeartDisease.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpKidneyDisease.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpRespiratoryDisease.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpInterment.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpPlants.setOnCheckedChangeListener(controller.getRadioChangeListener());
-
+*/
         if (healthConditions != null) {
             fillFields();
         }
@@ -113,7 +112,7 @@ public class CitizenStepThreeFragment extends Fragment {
     }
 
     private void getFields() {
-
+/*
         String[] pregnant = controller.getPregnant(rgrpPregnant, edtPregnant);
         String[] weight = controller.getIndexAndValue(spnWeight);
         boolean smoker = controller.isSmoker(rgrpSmoker);
@@ -138,14 +137,15 @@ public class CitizenStepThreeFragment extends Fragment {
         String[] interment = controller.getInterment(rgrpInterment, edtInterment);
         String[] plants = controller.getPlants(rgrpPlants, edtPlants);
 
-        healthConditions = new HealthConditionsDataModel(pregnant, weight, smoker, alcohol, drugs,
+        healthConditions = new HealthConditionsModel(pregnant, weight, smoker, alcohol, drugs,
                 hypertension, diabetes, avc, heartAttack, leprosy, tuberculosis, cancer, inBend, domiciled,
                 mentalHealth, heartDisease, kidneyDisease, respiratoryDisease, interment, plants);
         citizenData.send(healthConditions);
+*/
     }
 
     private void fillFields() {
-
+/*
         controller.fillPregnant(edtPregnant, healthConditions.getPregnant()[CitizenModel.VALUE],
                 rgrpPregnant, healthConditions.isPregnant());
         controller.fillField(spnWeight, healthConditions.getWeight()[CitizenModel.INDEX]);
@@ -173,5 +173,6 @@ public class CitizenStepThreeFragment extends Fragment {
                 rgrpInterment, healthConditions.isInterment());
         controller.fillPlants(edtPlants, healthConditions.getPlants()[CitizenModel.VALUE],
                 rgrpPlants, healthConditions.isPlants());
+*/
     }
 }

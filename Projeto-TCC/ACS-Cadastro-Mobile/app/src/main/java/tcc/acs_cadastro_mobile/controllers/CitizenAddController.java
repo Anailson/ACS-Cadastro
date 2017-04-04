@@ -10,10 +10,10 @@ import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
-import tcc.acs_cadastro_mobile.models.HealthConditionsDataModel;
+import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
-import tcc.acs_cadastro_mobile.models.SocialDemographicDataModel;
-import tcc.acs_cadastro_mobile.models.StreetSituationDataModel;
+import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
+import tcc.acs_cadastro_mobile.models.StreetSituationModel;
 import tcc.acs_cadastro_mobile.views.CitizenStepFourFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepOneFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepThreeFragment;
@@ -30,9 +30,9 @@ public class CitizenAddController  {
     private AppCompatActivity parent;
     private CtzOnClickListener listener;
     private PersonalDataModel personalData;
-    private SocialDemographicDataModel socialDemographicData;
-    private HealthConditionsDataModel healthConditions;
-    private StreetSituationDataModel streetSituation;
+    private SocialDemographicModel socialDemographicData;
+    private HealthConditionsModel healthConditions;
+    private StreetSituationModel streetSituation;
 
     public CitizenAddController (AppCompatActivity view){
         this.actualMenu = FIRST_STEP;
@@ -51,15 +51,15 @@ public class CitizenAddController  {
         this.personalData = personalData;
     }
 
-    public void send(SocialDemographicDataModel socialDemographicData){
+    public void send(SocialDemographicModel socialDemographicData){
         this.socialDemographicData = socialDemographicData;
     }
 
-    public void send(HealthConditionsDataModel healthConditions){
+    public void send(HealthConditionsModel healthConditions){
         this.healthConditions = healthConditions;
     }
 
-    public void send(StreetSituationDataModel streetSituation){
+    public void send(StreetSituationModel streetSituation){
         this.streetSituation = streetSituation;
     }
 
@@ -135,7 +135,7 @@ public class CitizenAddController  {
     }
 
     private void updateProgressBar(final int progress){
-        final ProgressBar pBar = (ProgressBar) parent.findViewById(R.id.pbarCitizen);
+        final ProgressBar pBar = (ProgressBar) parent.findViewById(R.id.pbar_citizen);
         new Thread(){
             @Override
             public void run() {
@@ -145,14 +145,14 @@ public class CitizenAddController  {
         }.start();
     }
 
-    private void replaceStep(final Fragment fragment){
-        FragmentManager manager = parent.getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frame_ctz_add, fragment).commit();
-    }
-
     private void replaceTitle(final int id){
         TextView txtTitle = (TextView) parent.findViewById(R.id.txt_ctz_add);
         txtTitle.setText(id);
+    }
+
+    private void replaceStep(final Fragment fragment){
+        FragmentManager manager = parent.getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.frame_ctz_add, fragment).commit();
     }
 
     private class CtzOnClickListener implements View.OnClickListener {

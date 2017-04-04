@@ -31,10 +31,10 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
         LayoutInflater layout = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = layout.inflate(R.layout.list_citizens, parent, false);
 
-        TextView txtName = (TextView) convertView.findViewById(R.id.txt_name);
-        TextView txtSusNum = (TextView) convertView.findViewById(R.id.txt_sus_num);
-        TextView txtAddress = (TextView) convertView.findViewById(R.id.txt_address);
-        TextView txtPhone = (TextView) convertView.findViewById(R.id.txt_phone);
+        TextView txtName = (TextView) convertView.findViewById(R.id.txt_ctz_name);
+        TextView txtSusNum = (TextView) convertView.findViewById(R.id.txt_ctz_sus_num);
+        TextView txtAddress = (TextView) convertView.findViewById(R.id.txt_ctz_address);
+        TextView txtPhone = (TextView) convertView.findViewById(R.id.txt_ctz_phone);
 
         CitizenModel citizen = citizens.get(position);
 

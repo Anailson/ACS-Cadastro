@@ -17,24 +17,24 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_ctz_name"
+            android:id="@+id/txt_rsd_address"
             android:text="@string/txt_default"
             android:gravity="bottom" />
 
         <TextView
-            android:id="@+id/txt_ctz_address"
+            android:id="@+id/txt_rsd_cep"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_default" />
 
         <TextView
-            android:id="@+id/txt_ctz_sus_num"
+            android:id="@+id/txt_rsd_home_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_default" />
 
         <TextView
-            android:id="@+id/txt_ctz_phone"
+            android:id="@+id/txt_rsd_reference_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_default" />

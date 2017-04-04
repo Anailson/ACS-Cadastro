@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
                 android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/hint_seach_citizen"
+                android:imeActionLabel="@string/hint_search_citizen"
                 android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
                 android:maxLines="1"

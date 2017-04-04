@@ -17,9 +17,9 @@ public class CitizenModel {
     private int numberAddress;
 
     private PersonalDataModel personalData;
-    private SocialDemographicDataModel socioDemographicData;
-    private HealthConditionsDataModel healthConditions;
-    private StreetSituationDataModel streetSituation;
+    private SocialDemographicModel socioDemographicData;
+    private HealthConditionsModel healthConditions;
+    private StreetSituationModel streetSituation;
 
     public CitizenModel(String name){
         this.name = name;
@@ -27,13 +27,13 @@ public class CitizenModel {
         this.numberAddress = new Random().nextInt(1000);
 
         this.personalData = new PersonalDataModel();
-        this.socioDemographicData = new SocialDemographicDataModel();
-        this.healthConditions = new HealthConditionsDataModel();
-        this.streetSituation = new StreetSituationDataModel();
+        this.socioDemographicData = new SocialDemographicModel();
+        this.healthConditions = new HealthConditionsModel();
+        this.streetSituation = new StreetSituationModel();
     }
 
-    public CitizenModel(PersonalDataModel personalData, SocialDemographicDataModel socioDemographicData,
-                        HealthConditionsDataModel healthConditions, StreetSituationDataModel streetSituation){
+    public CitizenModel(PersonalDataModel personalData, SocialDemographicModel socioDemographicData,
+                        HealthConditionsModel healthConditions, StreetSituationModel streetSituation){
 
         this.personalData = personalData;
         this.socioDemographicData = socioDemographicData;

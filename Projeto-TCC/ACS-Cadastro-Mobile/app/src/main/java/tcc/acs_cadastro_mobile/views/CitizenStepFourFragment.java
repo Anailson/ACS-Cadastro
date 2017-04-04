@@ -10,18 +10,18 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepFourController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
-import tcc.acs_cadastro_mobile.models.StreetSituationDataModel;
+import tcc.acs_cadastro_mobile.models.StreetSituationModel;
 
 public class CitizenStepFourFragment extends Fragment {
 
     private static final String STREET_SITUATION_DATA = "STREET_SITUATION_DATA";
 
     private CitizenStepFourController controller;
-    private StreetSituationDataModel streetSituation;
+    private StreetSituationModel streetSituation;
     private ICitizenData citizenData;
 
 
-    public static Fragment newInstance(StreetSituationDataModel streetSituation){
+    public static Fragment newInstance(StreetSituationModel streetSituation){
         Bundle bundle = new Bundle();
         bundle.putSerializable(STREET_SITUATION_DATA, streetSituation);
         Fragment fragment = new CitizenStepFourFragment();
@@ -34,7 +34,7 @@ public class CitizenStepFourFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.content_ctz_add_4, container, false);
         controller = new CitizenStepFourController(this);
-        streetSituation = (StreetSituationDataModel) getArguments().getSerializable(STREET_SITUATION_DATA);
+        streetSituation = (StreetSituationModel) getArguments().getSerializable(STREET_SITUATION_DATA);
 
         Spinner spnCtzStreetTime = (Spinner) view.findViewById(R.id.spn_ctz_street_time);
         Spinner spnCtzFoodPerDay = (Spinner) view.findViewById(R.id.spn_ctz_food_per_day);
@@ -61,7 +61,7 @@ public class CitizenStepFourFragment extends Fragment {
 
     private void fillFields(){
 
-        streetSituation = new StreetSituationDataModel();
+        streetSituation = new StreetSituationModel();
         citizenData.send(streetSituation);
     }
 }
