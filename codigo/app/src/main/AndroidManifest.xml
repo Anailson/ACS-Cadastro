@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.avisosms.iuri.avisasms">
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
+<!-- Debug  - com.avisosms.iuri.avisasms -->
+    <meta-data android:name="com.google.android.backup.api_key"
+        android:value="AIzaSyC4YX8oQ-nHUvrne2pwW6BO6s24bx9ZJ7g" />
+
+    <meta-data android:name="com.google.android.apps.drive.APP_ID" android:value="id=1234567890" />
+
+    <application
+        android:allowBackup="true"
+        android:name=".App"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!--android:configChanges="keyboardHidden|orientation"
+        android:screenOrientation="sensorPortrait"-->
+        <activity
+            android:name=".activity.Principal"
+            android:label="@string/app_name"
+
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".activity.MedicoAdicionarEditar"
+            android:label="Adicionar Médico(a)" >
+        </activity>
+
+        <activity
+            android:name=".activity.AgendaAdicionarEditarMedico"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:label="Adicionar Médico(a)" >
+        </activity>
+
+
+        <activity
+            android:name=".activity.AdicionarPacienteAFila"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:label="Adicionar Médico(a)" >
+        </activity>
+
+        <!--activity
+            android:name=".CalendarioGoogleAPi"
+            android:label="Google Calendar API Android Quickstart" >
+        </activity-->
+        <!--meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" /-->
+
+        <activity android:name=".backup.Backup"
+            android:screenOrientation="portrait"
+            android:label="@string/backup"/>
+
+    </application>
+
+</manifest>

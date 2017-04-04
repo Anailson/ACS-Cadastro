@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cor_azul"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.Principal">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/agenda_layout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/prev_button"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sinalMenor"
+                android:textColor="@color/cor_branca"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/agenda_meses"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Mês/ano"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/cor_preta" />
+
+            <Button
+                android:id="@+id/next_button"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:textColor="@color/cor_branca"
+                android:textSize="30sp" />
+
+
+        </LinearLayout>
+
+
+        <com.avisosms.iuri.avisasms.compactcalendarview.CompactCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/compactcalendar_view"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/agenda_layout_btn"
+            android:padding="20dp"
+            android:paddingRight="20dp"
+            app:compactCalendarBackgroundColor="@color/cor_azul2"
+            app:compactCalendarCurrentDayBackgroundColor="@color/blue_900"
+            app:compactCalendarCurrentSelectedDayBackgroundColor="@color/blue_a200"
+            app:compactCalendarMultiEventIndicatorColor="#fff"
+            app:compactCalendarTargetHeight="300dp"
+            app:compactCalendarTextColor="#fff"
+            app:compactCalendarTextSize="20sp"/>
+
+        <com.avisosms.iuri.avisasms.componentes.ExpandableHeightListView
+            android:id="@+id/agenda_list_agendamento_medicos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/compactcalendar_view"
+            android:background="@color/amber_a100" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/agenda_floating_add_medico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/compactcalendar_view"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_medico_add" />
+
+    </RelativeLayout>
+</ScrollView>
+

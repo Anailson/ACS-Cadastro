@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_consulta_do_dia"
+            android:icon="@drawable/ic_calendar_clock_grey600_24dp"
+            android:title="@string/consultas_do_dia" />
+
+        <item
+            android:id="@+id/nav_agenda"
+            android:icon="@drawable/ic_calendar_multiple_grey600_24dp"
+            android:title="@string/agenda" />
+        <!--<item-->
+            <!--android:id="@+id/nav_lembretes"-->
+            <!--android:icon="@drawable/ic_calendar_blank_grey600_24dp"-->
+            <!--android:title="@string/lembretes" />-->
+        <item
+            android:id="@+id/nav_atendente"
+            android:icon="@drawable/ic_account_card_details_grey600_24dp"
+            android:title="@string/medicos" />
+        <item
+            android:id="@+id/nav_configuracao"
+            android:icon="@drawable/ic_settings_grey600_24dp"
+            android:title="@string/configuracoes" />
+    </group>
+
+    <item android:title="@string/backup">
+        <menu>
+            <item
+                android:id="@+id/nav_backup_restore"
+                android:icon="@drawable/backup_restore"
+                android:title="@string/backup_restaura" />
+        </menu>
+    </item>
+
+
+    <item android:title="@string/comunicao">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/compartilhar" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/enviar_por_email" />
+        </menu>
+    </item>
+
+    <item android:title="@string/sobre">
+        <menu>
+            <item
+                android:id="@+id/nav_manual_feedback"
+                android:icon="@drawable/ic_help_circle_grey600_24dp"
+                android:title="@string/manual_feedback" />
+            <item
+                android:id="@+id/nav_sobre"
+                android:icon="@drawable/ic_information_grey600_24dp"
+                android:title="@string/sobre" />
+        </menu>
+    </item>
+
+</menu>

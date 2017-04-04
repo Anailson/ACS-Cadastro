@@ -1,0 +1,35 @@
+Google drive Api
+
+https://developers.google.com/drive/android/get-started#create_a_file_in_google_drive
+
+https://console.developers.google.com/flows/enableapi?apiid=drive&credential=client_key
+
+cmd:
+
+cd C:\Program Files\Java\jre1.8.0_102\bin
+
+//Debug Key
+keytool -exportcert -alias androiddebugkey -keystore C:\Users\iuri\.android\debug.keystore -list -v -storepass android  -keypass android 
+
+SHA1: 64:2C:E3:7D:EA:BD:A8:3A:3E:1E:3D:D5:86:C0:49:86:B1:8E:4A:AC
+
+
+Cliente ID
+1048933097007-ukh56h06croe4lln55grlggb3amqt1ea.apps.googleusercontent.com
+
+//com.avisosms.iuri.avisasms (DEBUG)
+API key(Manifest)  AIzaSyC4YX8oQ-nHUvrne2pwW6BO6s24bx9ZJ7g
+
+https://developer.android.com/google/backup/signup.html - habilitar o backup
+android:fullBackupOnly="true"
+
+<meta-data android:name="com.google.android.backup.api_key" 
+android:value="AEdPqrEAAAAISmacyka7KOqHPrpdBb9xT1UsssEikTsUUXRzwQ" />
+
+
+keytool -exportcert -alias androiddebugkey -keystore C:\Users\iuri\Documents\Projetos\Android\workspace_studio\Leis\Codigo\password_legis.jks -list -v
+
+
+keytool -list -v -keystore C:\Users\iuri\Documents\Projetos\Android\workspace_studio\Leis\Codigo\password_legis.jks
+
+password_legis
