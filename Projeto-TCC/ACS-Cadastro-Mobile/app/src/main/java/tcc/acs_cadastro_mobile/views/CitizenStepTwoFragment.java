@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
@@ -26,10 +26,10 @@ public class CitizenStepTwoFragment extends Fragment {
     private CitizenStepTwoController controller;
 
     private EditText edtOccupation, edtCommunityTraditional;
-    private Spinner spnKinship, spnEducation, spnEmployment, spnKids09, spnOrientationSex;
-    //private RadioGroup
-    private CheckBox chbSchool, chbCaregiver, chbCommunityGroup, chbCommunityTraditional, chbHealthPlan,
-            chbOrientationSexual, chbDeficiency, chbHearing, chbVisual, chbIntellectual, chbPhysical, chbAnother;
+    private Spinner spnKinship, spnEducation, spnEmployment, spnKids09, spnSexualOrientation;
+    private RadioGroup rgrpSchool, rgrpCaregiver, rgrpCommunityGroup, rgrpHealthPlan,
+            rgrpCommunityTraditional, rgrpSexualOrientation, rgrpDeficiency;
+    private CheckBox chbHearing, chbVisual,chbIntellectual, chbPhysical, chbAnother;
 
     public static Fragment newInstance(SocialDemographicDataModel socialDemographicData) {
         Fragment fragment = new CitizenStepTwoFragment();
@@ -52,20 +52,22 @@ public class CitizenStepTwoFragment extends Fragment {
         controller = new CitizenStepTwoController(this);
         socialDemographicData = (SocialDemographicDataModel) getArguments().getSerializable(SOCIAL_DEMOGRAPHIC_DATA);
 
+        //TODO what if screen to rotation to horizontal/vertical, how to get values???
+
         edtOccupation = (EditText) view.findViewById(R.id.edt_ctz_occupation);
         edtCommunityTraditional = (EditText) view.findViewById(R.id.edt_ctz_community_traditional);
         spnKinship = (Spinner) view.findViewById(R.id.spn_ctz_kinship);
         spnEducation = (Spinner) view.findViewById(R.id.spn_ctz_education);
         spnEmployment = (Spinner) view.findViewById(R.id.spn_ctz_employment);
         spnKids09 = (Spinner) view.findViewById(R.id.spn_ctz_kids_0_9);
-        spnOrientationSex = (Spinner) view.findViewById(R.id.spn_ctz_orientation_sexual);
-        chbSchool = (CheckBox) view.findViewById(R.id.chb_ctz_school);
-        chbCaregiver = (CheckBox) view.findViewById(R.id.chb_ctz_caregiver);
-        chbCommunityGroup = (CheckBox) view.findViewById(R.id.chb_ctz_community_group);
-        chbHealthPlan = (CheckBox) view.findViewById(R.id.chb_ctz_health_plan);
-        chbCommunityTraditional = (CheckBox) view.findViewById(R.id.chb_ctz_community_traditional);
-        chbOrientationSexual = (CheckBox) view.findViewById(R.id.chb_ctz_orientation_sexual);
-        chbDeficiency = (CheckBox) view.findViewById(R.id.chb_ctz_deficiency);
+        spnSexualOrientation = (Spinner) view.findViewById(R.id.spn_ctz_sexual_orientation);
+        rgrpSchool = (RadioGroup) view.findViewById(R.id.rgrp_ctz_school);
+        rgrpCaregiver = (RadioGroup) view.findViewById(R.id.rgrp_ctz_caregiver);
+        rgrpCommunityGroup = (RadioGroup) view.findViewById(R.id.rgrp_ctz_community_group);
+        rgrpHealthPlan = (RadioGroup) view.findViewById(R.id.rgrp_ctz_health_plan);
+        rgrpCommunityTraditional = (RadioGroup) view.findViewById(R.id.rgrp_ctz_community_traditional);
+        rgrpSexualOrientation = (RadioGroup) view.findViewById(R.id.rgrp_ctz_sexual_orientation);
+        rgrpDeficiency = (RadioGroup) view.findViewById(R.id.rgrp_ctz_deficiency);
         chbHearing = (CheckBox) view.findViewById(R.id.chb_ctz_deficiency_hearing);
         chbVisual = (CheckBox) view.findViewById(R.id.chb_ctz_deficiency_visual);
         chbIntellectual = (CheckBox) view.findViewById(R.id.chb_ctz_deficiency_intellectual);
@@ -76,11 +78,11 @@ public class CitizenStepTwoFragment extends Fragment {
         spnEducation.setAdapter(controller.getSpinnerAdapter(R.array.education));
         spnEmployment.setAdapter(controller.getSpinnerAdapter(R.array.employment));
         spnKids09.setAdapter(controller.getSpinnerAdapter(R.array.kids_0_9));
-        spnOrientationSex.setAdapter(controller.getSpinnerAdapter(R.array.orientation_sexual));
+        spnSexualOrientation.setAdapter(controller.getSpinnerAdapter(R.array.orientation_sexual));
 
-        chbCommunityTraditional.setOnCheckedChangeListener(controller.getCheckedChangeListener());
-        chbOrientationSexual.setOnCheckedChangeListener(controller.getCheckedChangeListener());
-        chbDeficiency.setOnCheckedChangeListener(controller.getCheckedChangeListener());
+        rgrpCommunityTraditional.setOnCheckedChangeListener(controller.getCheckedChangeListener());
+        rgrpSexualOrientation.setOnCheckedChangeListener(controller.getCheckedChangeListener());
+        rgrpDeficiency.setOnCheckedChangeListener(controller.getCheckedChangeListener());
 
         if (socialDemographicData != null) {
             fillFields();
@@ -91,35 +93,47 @@ public class CitizenStepTwoFragment extends Fragment {
 
     @Override
     public void onDetach() {
+        getFields();
         super.onDetach();
-/*
+    }
+
+    private void getFields(){
         String[] kinship = controller.getIndexAndValue(spnKinship);
         String occupation = edtOccupation.getText().toString();
-        boolean school = controller.isYesGroup(rgrpSchool, R.id.rgrp_ctz_school_y);
+        boolean school = controller.isSchool(rgrpSchool);
         String[] education = controller.getIndexAndValue(spnEducation);
         String[] employment = controller.getIndexAndValue(spnEmployment);
         String[] kids09 = controller.getIndexAndValue(spnKids09);
-        boolean caregiver = controller.isYesGroup(rgrpCaregiver, R.id.rgrp_ctz_caregiver_y);
-        boolean communityGroup = controller.isYesGroup(rgrpCommunityGroup, R.id.rgrp_ctz_community_group_y);
-        boolean healthPlan = controller.isYesGroup(rgrpHealthPlan, R.id.rgrp_ctz_health_plan_y);
+        boolean caregiver = controller.isCaregiver(rgrpCaregiver);
+        boolean communityGroup = controller.isCommunityGroup(rgrpCommunityGroup);
+        boolean healthPlan = controller.isHealthPlan(rgrpHealthPlan);
         String[] communityTraditional = controller.getCommunityTraditional(rgrpCommunityTraditional, edtCommunityTraditional);
-        String[] orientationSexual = controller.getOrientationSexual(rgrpOrientationSexual, spnOrientationSex);
-        boolean[] deficiency = controller.getDeficiency(rgrpDeficiency, chbVisual, chbHearing, chbIntellectual, chbPhysical, chbAnother);
+        String[] sexualOrientation = controller.getSexualOrientation(rgrpSexualOrientation, spnSexualOrientation);
+        boolean[] deficiency = controller.getDeficiency(rgrpDeficiency, chbHearing, chbVisual,
+                chbIntellectual, chbPhysical, chbAnother);
 
-        Log.e("TwoFragment.onDetach", "kinship: " + kinship[1] + " occupation:" + occupation
-                + " school: " + school + "education: " + education[1] + " employment: " + employment[1]
-                + " kids09: " + kids09[1] + " caregiver: " + caregiver + " communityGroup: " + communityGroup
-                + " healthPlan: " + healthPlan + " communityTraditional: " + communityTraditional[1]
-                + " orientationSexual: " + orientationSexual[1] + " deficiency: " + deficiency[0]
-                + " " + deficiency[1] + " " + deficiency[2] + " " + deficiency[3] + " " + deficiency[4]);
         socialDemographicData = new SocialDemographicDataModel(kinship, occupation, school, education,
-                    employment, kids09, caregiver, communityGroup, healthPlan, communityTraditional,
-                    orientationSexual, deficiency);
+                employment, kids09, caregiver, communityGroup, healthPlan, communityTraditional,
+                sexualOrientation, deficiency);
         sendCitizenData.send(socialDemographicData);
-*/
     }
 
     private void fillFields() {
-
+        controller.fillField(spnKinship, socialDemographicData.getKinship()[CitizenModel.INDEX]);
+        controller.fillField(edtOccupation, socialDemographicData.getOccupation());
+        controller.fillSchool(rgrpSchool, socialDemographicData.isSchool());
+        controller.fillField(spnEducation, socialDemographicData.getEducation()[CitizenModel.INDEX]);
+        controller.fillField(spnEmployment, socialDemographicData.getEmployment()[CitizenModel.INDEX]);
+        controller.fillField(spnKids09, socialDemographicData.getKids()[CitizenModel.INDEX]);
+        controller.fillCaregiver(rgrpCaregiver, socialDemographicData.isCaregiver());
+        controller.fillCommunityGroup(rgrpCommunityGroup, socialDemographicData.isCommunityGroup());
+        controller.fillHealthPlan(rgrpHealthPlan, socialDemographicData.isHealthPlan());
+        controller.fillCommunityTraditional(rgrpCommunityTraditional, edtCommunityTraditional,
+                socialDemographicData.getCommunityTraditional(), socialDemographicData.isCommunityTraditional());
+        controller.fillSexualOrientation(rgrpSexualOrientation, spnSexualOrientation,
+                socialDemographicData.getSexualOrientation()[CitizenModel.INDEX], socialDemographicData.isSexualOrientation());
+        controller.fillDeficiency(rgrpDeficiency, socialDemographicData.isDeficiency(),
+                socialDemographicData.getDeficiency(), chbHearing, chbVisual, chbIntellectual, chbPhysical, chbAnother);
     }
 }
+

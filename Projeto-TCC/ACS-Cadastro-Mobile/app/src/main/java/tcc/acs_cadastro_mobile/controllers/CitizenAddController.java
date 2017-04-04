@@ -79,7 +79,6 @@ public class CitizenAddController  {
 
     private void previousMenu(){
         switch (actualMenu){
-            case FIRST_STEP: parent.finish(); break;
             case SECOND_STEP: shiftToStepOne(); break;
             case THIRD_STEP: shiftToStepTwo(); break;
             case FOURTH_STEP: shiftToStepThree(); break;
@@ -129,7 +128,7 @@ public class CitizenAddController  {
         Button btnProgress = (Button) parent.findViewById(R.id.btn_ctz_add_progress);
         btnProgress.setText(R.string.btn_save);
 
-        updateProgressBar(FIRST_STEP);
+        updateProgressBar(FOURTH_STEP);
         replaceTitle(R.string.txt_ctz_data_4);
         replaceStep(CitizenStepFourFragment.newInstance(streetSituation));
         actualMenu = FOURTH_STEP;

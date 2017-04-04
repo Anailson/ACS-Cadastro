@@ -16,6 +16,7 @@ import java.util.Formatter;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.Adapter;
+import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.views.CalendarActivity;
 
 public class CitizenStepOneController {
@@ -92,7 +93,7 @@ public class CitizenStepOneController {
     }
 
     public void fillField(Spinner spinner, String index){
-        int position = index.equals("-1") ? 0 : Integer.parseInt(index);
+        int position = index.equals(String.valueOf(CitizenModel.INT_DEFAULT_VALUE)) ? 0 : Integer.parseInt(index);
         fillField(spinner, position);
     }
 

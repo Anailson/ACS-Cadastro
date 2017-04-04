@@ -138,6 +138,7 @@
     </string-array>
 
     <string-array name="orientation_sexual">
+        <item>@string/txt_default</item>
         <item>Heterossexual</item>
         <item>Lésbica</item>
         <item>Travesti</item>

@@ -5,18 +5,16 @@ import java.util.Formatter;
 
 public class PersonalDataModel implements Serializable {
 
-    private final String STRING_DEFAULT_VALUE = "No value";
-    private final int INT_DEFAULT_VALUE = -1;
-
     private long numSus, numNis, respNumSus;
     private String name, socialName, motherName, respBirth, birth, nationBirth, phone, email;
     private String[] gender, race, nationality, uf, city;
     private boolean motherUnknown, responsible;
 
     public PersonalDataModel() {
-        name = socialName = motherName = birth = nationBirth = phone = email = STRING_DEFAULT_VALUE;
-        gender = race = nationality = uf = city = new String[]{Integer.toString(INT_DEFAULT_VALUE), STRING_DEFAULT_VALUE};
-        numSus = numNis = respNumSus = -1;
+        name = socialName = motherName = birth = nationBirth = phone = email = CitizenModel.STRING_DEFAULT_VALUE;
+        gender = race = nationality = uf = city
+                = new String[]{Integer.toString(CitizenModel.INT_DEFAULT_VALUE), CitizenModel.STRING_DEFAULT_VALUE};
+        numSus = numNis = respNumSus = CitizenModel.INT_DEFAULT_VALUE;
     }
 
     public PersonalDataModel(long numSus, String name, String socialName, boolean motherUnknown,

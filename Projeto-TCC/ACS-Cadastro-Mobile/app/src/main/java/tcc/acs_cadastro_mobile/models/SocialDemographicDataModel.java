@@ -1,33 +1,26 @@
 package tcc.acs_cadastro_mobile.models;
 
-import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
-
 import java.io.Serializable;
 
 public class SocialDemographicDataModel implements Serializable {
 
-    private String[] kinship, education, employment, kids09, communityTraditional, sexualOrientation;
+    private String[] kinship, education, employment, kids09, sexualOrientation, communityTraditional;
     private String occupation;
-    private boolean school, caregiver, communityGroup, healthPlan;
+    private boolean school, caregiver, communityGroup, healthPlan;//, communityTraditionalYN, sexualOrientationYN, deficiencyYN;
     private boolean[] deficiency;
 
     public SocialDemographicDataModel() {
         kinship = education = employment = kids09 = communityTraditional = sexualOrientation
-                = new String[]{Integer.toString(0), "No value"};
-        occupation = "No value";
+                = new String[]{"" + CitizenModel.INT_DEFAULT_VALUE, CitizenModel.STRING_DEFAULT_VALUE};
+        occupation = CitizenModel.STRING_DEFAULT_VALUE;
         school = caregiver = communityGroup = healthPlan = false;
-        deficiency = new boolean[]{false, false, false, false, false};
+        deficiency = new boolean[]{false, false, false, false, false, false};
     }
 
-    public SocialDemographicDataModel(String[] kinship, String occupation, boolean school,
-                                      String[] education, String[] employment, String[] kids09, boolean caregiver,
-                                      boolean communityGroup, boolean healthPlan, String[] communityTraditional,
-                                      String[] sexualOrientation, boolean[] deficiency) {
-
+    public SocialDemographicDataModel(String[] kinship, String occupation, boolean school, String[] education,
+                                      String[] employment, String[] kids09, boolean caregiver, boolean communityGroup,
+                                      boolean healthPlan, String[] communityTraditional, String[] sexualOrientation,
+                                      boolean[] deficiency) {
         this.kinship = kinship;
         this.occupation = occupation;
         this.school = school;
@@ -46,81 +39,67 @@ public class SocialDemographicDataModel implements Serializable {
     public String toString() {
         return super.toString();
     }
-/*
-    public void fillKinship(Spinner spnKinship) {
-        fillField(spnKinship, Integer.parseInt(kinship[0]));
+
+    public String[] getKinship() {
+        return kinship;
     }
 
-    public void fillOccupation(EditText edtOccupation) {
-        fillField(edtOccupation, occupation);
+    public String getOccupation() {
+        return occupation;
     }
 
-    public void fillSchool(RadioGroup rgrpSchool, int idYes, int idNo) {
-        fillField(rgrpSchool, idYes, idNo, school);
+    public boolean isSchool() {
+        return school;
     }
 
-    public void fillEducation(Spinner spnEducation) {
-        fillField(spnEducation, Integer.parseInt(education[0]));
+    public String[] getEducation() {
+        return education;
     }
 
-    public void fillEmployment(Spinner spnEmployment) {
-        fillField(spnEmployment, Integer.parseInt(employment[0]));
+    public String[] getEmployment() {
+        return employment;
     }
 
-    public void fillKids09(Spinner spnKids09) {
-        fillField(spnKids09, Integer.parseInt(kids09[0]));
+    public String[] getKids() {
+        return kids09;
     }
 
-    public void fillCaregiver(RadioGroup rgrpCaregiver, int idYes, int idNo) {
-        fillField(rgrpCaregiver, idYes, idNo, caregiver);
+    public boolean isCaregiver() {
+        return caregiver;
     }
 
-    public void fillCommunityGroup(RadioGroup rgrpCommunityGroup, int idYes, int idNo) {
-        fillField(rgrpCommunityGroup, idYes, idNo, communityGroup);
+    public boolean isCommunityGroup() {
+        return communityGroup;
     }
 
-    public void fillHealthPlan(RadioGroup rgrpHealthPlan, int idYes, int idNo) {
-        fillField(rgrpHealthPlan, idYes, idNo, healthPlan);
+    public boolean isHealthPlan() {
+        return healthPlan;
     }
 
-    public void fillCommunityTraditional(RadioGroup rgrpCommunityTraditional, int idYes, int idNo, EditText edtCommunityTraditional) {
+    public boolean isCommunityTraditional() {
+        return !communityTraditional[CitizenModel.INDEX].equals(CitizenModel.INT_DEFAULT_VALUE + "");
+    }
 
-        if (Boolean.parseBoolean(communityTraditional[0])) {
-            fillField(rgrpCommunityTraditional, idYes, idNo, true);
-            fillField(edtCommunityTraditional, communityTraditional[1]);
-        }else {
-            fillField(edtCommunityTraditional, "");
-            fillField(rgrpCommunityTraditional, idYes, idNo, false);
+    public String[] getCommunityTraditional() {
+        return communityTraditional;
+    }
+
+    public boolean isSexualOrientation() {
+        return !sexualOrientation[CitizenModel.INDEX].equals(CitizenModel.INT_DEFAULT_VALUE + "");
+    }
+
+    public String[] getSexualOrientation() {
+        return sexualOrientation;
+    }
+
+    public boolean isDeficiency() {
+        if (deficiency.length != 6) {
+            throw new IllegalStateException("Array 'deficiency' must be 6 index. It currently has " + deficiency.length);
         }
+        return deficiency[0];
     }
 
-    public void fillOrientationSexual(RadioGroup rgrpOrientationSexual, int idYes, int idNo) {
-        fillField(rgrpOrientationSexual, idYes, idNo, Boolean.parseBoolean(sexualOrientation[0]));
+    public boolean[] getDeficiency() {
+        return deficiency;
     }
-
-    public void fillDeficiency(CheckBox chbVisual, CheckBox chbHearing, CheckBox chbIntellectual,
-                               CheckBox chbPhysical, CheckBox chbAnother) {
-        chbVisual.setChecked(deficiency[0]);
-        chbHearing.setChecked(deficiency[1]);
-        chbIntellectual.setChecked(deficiency[2]);
-        chbPhysical.setChecked(deficiency[3]);
-        chbAnother.setChecked(deficiency[4]);
-    }
-
-    private void fillField(EditText editText, String value) {
-        editText.setText(value);
-    }
-
-    private void fillField(Spinner spinner, int position){
-        spinner.setSelection(position);
-    }
-
-    private void fillField(RadioGroup rGroup, int idYes, int idNo, boolean check) {
-
-        if (check) {
-            rGroup.check(idYes);
-        } else {
-            rGroup.check(idNo);
-        }
-    }*/
 }

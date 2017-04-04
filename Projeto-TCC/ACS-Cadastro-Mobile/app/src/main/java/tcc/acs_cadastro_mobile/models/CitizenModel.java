@@ -6,6 +6,8 @@ public class CitizenModel {
 
     public static final int INDEX = 0;
     public static final int VALUE = 1;
+    public static final String STRING_DEFAULT_VALUE = "No value";
+    public static final int INT_DEFAULT_VALUE = -1;
 
     private static int count = 1;
     private static final int SUS_NUM = 111111111;

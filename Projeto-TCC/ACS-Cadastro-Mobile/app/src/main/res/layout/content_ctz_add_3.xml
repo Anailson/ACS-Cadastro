@@ -32,7 +32,7 @@
                         android:layout_weight="0.8" />
 
                     <RadioGroup
-                        android:id="@+id/radioGroup3"
+                        android:id="@+id/rgrp_ctz_pregnant"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -41,14 +41,14 @@
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/radioButton5"
+                            android:id="@+id/rgrp_ctz_pregnant_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/radioButton6"
+                            android:id="@+id/rgrp_ctz_pregnant_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -66,11 +66,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/txt_ctz_maternity"
+                        android:text="@string/txt_ctz_pregnant_what"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
-
                     <EditText
-                        android:id="@+id/edt_ctz_maternity"
+                        android:id="@+id/edt_ctz_pregnant"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="text" />
@@ -343,7 +342,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioGroup
-                    android:id="@+id/rgrp_ctz_heart_atk"
+                    android:id="@+id/rgrp_ctz_heart_attack"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
@@ -352,14 +351,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/rgrp_ctz_heart_atk_y"
+                        android:id="@+id/rgrp_ctz_heart_attack_y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:text="@string/txt_yes" />
 
                     <RadioButton
-                        android:id="@+id/rgrp_ctz_heart_atk_n"
+                        android:id="@+id/rgrp_ctz_heart_attack_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -499,7 +498,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup4"
+                    android:id="@+id/rgrp_ctz_in_bed"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
@@ -508,14 +507,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton7"
+                        android:id="@+id/rgrp_ctz_in_bed_y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:text="@string/txt_yes" />
 
                     <RadioButton
-                        android:id="@+id/radioButton8"
+                        android:id="@+id/rgrp_ctz_in_bed_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -538,7 +537,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup5"
+                    android:id="@+id/rgrp_ctz_domiciled"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
@@ -547,14 +546,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton9"
+                        android:id="@+id/rgrp_ctz_domiciled_y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:text="@string/txt_yes" />
 
                     <RadioButton
-                        android:id="@+id/radioButton10"
+                        android:id="@+id/rgrp_ctz_domiciled_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -578,7 +577,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup6"
+                    android:id="@+id/rgrp_ctz_mental_health"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
@@ -587,14 +586,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/radioButton11"
+                        android:id="@+id/rgrp_ctz_mental_health_y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:text="@string/txt_yes" />
 
                     <RadioButton
-                        android:id="@+id/radioButton12"
+                        android:id="@+id/rgrp_ctz_mental_health_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -933,7 +932,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <RadioGroup
-                        android:id="@+id/radioGroup"
+                        android:id="@+id/rgrp_ctz_interment"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -942,14 +941,14 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/radioButton"
+                            android:id="@+id/rgrp_ctz_interment_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/radioButton2"
+                            android:id="@+id/rgrp_ctz_interment_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -976,7 +975,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <EditText
-                            android:id="@+id/edt_ctz_interment_why"
+                            android:id="@+id/edt_ctz_interment"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="text" />
@@ -1003,7 +1002,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <RadioGroup
-                        android:id="@+id/radioGroup2"
+                        android:id="@+id/rgrp_ctz_plants"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -1012,14 +1011,14 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/radioButton3"
+                            android:id="@+id/rgrp_ctz_plants_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/radioButton4"
+                            android:id="@+id/rgrp_ctz_plants_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"

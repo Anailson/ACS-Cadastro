@@ -12,215 +12,215 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <!--
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:text="@string/txt_ctz_kinship"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/spn_ctz_kinship"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:spinnerMode="dialog" />
-                        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/txt_ctz_kinship"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                <Spinner
+                    android:id="@+id/spn_ctz_kinship"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/txt_ctz_occupation"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                            <EditText
-                                android:id="@+id/edt_ctz_occupation"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:inputType="text" />
-                        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_ctz_occupation"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/minimum_gap">
+                <EditText
+                    android:id="@+id/edt_ctz_occupation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text" />
+            </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/textView"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.8"
-                                android:text="@string/txt_ctz_school"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/minimum_gap">
 
-                            <RadioGroup
-                                android:id="@+id/rgrp_ctz_school"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="right"
-                                android:layout_weight="0.4"
-                                android:gravity="right"
-                                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:text="@string/txt_ctz_school"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                <RadioButton
-                                    android:id="@+id/rgrp_ctz_school_y"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="false"
-                                    android:text="@string/txt_yes" />
+                <RadioGroup
+                    android:id="@+id/rgrp_ctz_school"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.4"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                                <RadioButton
-                                    android:id="@+id/rgrp_ctz_school_n"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
-                                    android:checked="false"
-                                    android:text="@string/txt_no" />
-                            </RadioGroup>
-                        </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/rgrp_ctz_school_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/txt_yes" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                    <RadioButton
+                        android:id="@+id/rgrp_ctz_school_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:checked="false"
+                        android:text="@string/txt_no" />
+                </RadioGroup>
+            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/txt_ctz_education"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/spn_ctz_education"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:spinnerMode="dialog" />
-                        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_ctz_education"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                <Spinner
+                    android:id="@+id/spn_ctz_education"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/txt_ctz_employment"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/spn_ctz_employment"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:spinnerMode="dialog" />
-                        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_ctz_employment"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                <Spinner
+                    android:id="@+id/spn_ctz_employment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/txt_ctz_kids_0_9"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/spn_ctz_kids_0_9"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:spinnerMode="dialog" />
-                        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_ctz_kids_0_9"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/minimum_gap">
+                <Spinner
+                    android:id="@+id/spn_ctz_kids_0_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.8"
-                                android:text="@string/txt_ctz_caregiver"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/minimum_gap">
 
-                            <RadioGroup
-                                android:id="@+id/rgrp_ctz_caregiver"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="right"
-                                android:layout_weight="0.4"
-                                android:gravity="right"
-                                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:text="@string/txt_ctz_caregiver"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                <RadioButton
-                                    android:id="@+id/rgrp_ctz_caregiver_y"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="false"
-                                    android:text="@string/txt_yes" />
+                <RadioGroup
+                    android:id="@+id/rgrp_ctz_caregiver"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.4"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                                <RadioButton
-                                    android:id="@+id/rgrp_ctz_caregiver_n"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
-                                    android:checked="false"
-                                    android:text="@string/txt_no" />
-                            </RadioGroup>
-                        </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/rgrp_ctz_caregiver_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/txt_yes" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/minimum_gap">
+                    <RadioButton
+                        android:id="@+id/rgrp_ctz_caregiver_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:checked="false"
+                        android:text="@string/txt_no" />
+                </RadioGroup>
+            </LinearLayout>
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="0.8"
-                                android:text="@string/txt_ctz_community_group"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/minimum_gap">
 
-                            <RadioGroup
-                                android:id="@+id/rgrp_ctz_community_group"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="right"
-                                android:layout_weight="0.4"
-                                android:gravity="right"
-                                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.8"
+                    android:text="@string/txt_ctz_community_group"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                                <RadioButton
-                                    android:id="@+id/rgrp_community_group_y"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:checked="false"
-                                    android:text="@string/txt_yes" />
+                <RadioGroup
+                    android:id="@+id/rgrp_ctz_community_group"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.4"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-                                <RadioButton
-                                    android:id="@+id/rgrp_community_group_n"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="right"
-                                    android:checked="false"
-                                    android:text="@string/txt_no" />
-                            </RadioGroup>
-                        </LinearLayout>
-            -->
+                    <RadioButton
+                        android:id="@+id/rgrp_ctz_community_group_y"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="@string/txt_yes" />
+
+                    <RadioButton
+                        android:id="@+id/rgrp_ctz_community_group_n"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:checked="false"
+                        android:text="@string/txt_no" />
+                </RadioGroup>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -244,14 +244,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/rgrp_health_plan_y"
+                        android:id="@+id/rgrp_ctz_health_plan_y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:text="@string/txt_yes" />
 
                     <RadioButton
-                        android:id="@+id/rgrp_health_plan_n"
+                        android:id="@+id/rgrp_ctz_health_plan_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -279,7 +279,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <RadioGroup
-                        android:id="@+id/rgrp_community_traditional"
+                        android:id="@+id/rgrp_ctz_community_traditional"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -288,14 +288,14 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/rgrp_community_traditional_y"
+                            android:id="@+id/rgrp_ctz_community_traditional_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/rgrp_community_traditional_n"
+                            android:id="@+id/rgrp_ctz_community_traditional_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -342,7 +342,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <RadioGroup
-                        android:id="@+id/rgrp_orientation_sexual"
+                        android:id="@+id/rgrp_ctz_sexual_orientation"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -351,14 +351,14 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/rgrp_orientation_sexual_y"
+                            android:id="@+id/rgrp_ctz_sexual_orientation_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/rgrp_orientation_sexual_n"
+                            android:id="@+id/rgrp_ctz_sexual_orientation_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -379,7 +379,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <Spinner
-                        android:id="@+id/spn_ctz_orientation_sexual"
+                        android:id="@+id/spn_ctz_sexual_orientation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:spinnerMode="dialog" />
@@ -405,7 +405,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <RadioGroup
-                        android:id="@+id/rgrp_deficiency"
+                        android:id="@+id/rgrp_ctz_deficiency"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -414,14 +414,14 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/rgrp_deficiency_y"
+                            android:id="@+id/rgrp_ctz_deficiency_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/rgrp_deficiency_n"
+                            android:id="@+id/rgrp_ctz_deficiency_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -503,7 +503,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
-                            android:checked="false" />
+                            android:checked="false"
+                            android:visibility="invisible"/>
 
                     </LinearLayout>
                 </LinearLayout>

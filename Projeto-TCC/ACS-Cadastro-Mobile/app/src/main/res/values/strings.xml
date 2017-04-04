@@ -20,7 +20,7 @@
     <string name="txt_year">Ano</string>
 
     <string name="txt_ctz_data_1">Dados pessoais</string>
-    <string name="txt_ctz_data_2">Informações sociodemográficas</string>
+    <string name="txt_ctz_data_2">fInformações sociodemográficas</string>
     <string name="txt_ctz_data_3">Condiçoes gerais de saúde</string>
     <string name="txt_ctz_data_4">Cidadão em situação de rua</string>
     <string name="txt_ctz_num_sus">Número do cartão do SUS</string>
@@ -54,7 +54,7 @@
     <string name="txt_ctz_deficiency_intellectual">Intelectual/Cognitiva</string>
     <string name="txt_ctz_deficiency_physical">Fisica</string>
     <string name="txt_ctz_pregnant">Está gestante?</string>
-    <string name="txt_ctz_maternity">Se sim, qual materinadade de preferência?</string>
+    <string name="txt_ctz_pregnant_what">Se sim, qual materinadade de preferência?</string>
     <string name="txt_ctz_weight">Sobre seu peso, voce se considera</string>
     <string name="txt_ctz_smoking">Está fumante?</string>
     <string name="txt_ctz_alcohol">Faz consumo de alcóol?</string>
