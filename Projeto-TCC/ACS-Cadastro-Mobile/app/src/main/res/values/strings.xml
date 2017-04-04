@@ -138,6 +138,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_residence">ResidenceActivity</string>
     <string name="title_activity_citizend_edit_acitivity">CitizendEditAcitivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
 
 
