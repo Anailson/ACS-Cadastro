@@ -1,5 +1,9 @@
 package tcc.acs_cadastro_mobile.controllers;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +18,12 @@ import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
 import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
 import tcc.acs_cadastro_mobile.models.StreetSituationModel;
+import tcc.acs_cadastro_mobile.views.CitizenAddActivity;
 import tcc.acs_cadastro_mobile.views.CitizenStepFourFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepOneFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepThreeFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepTwoFragment;
+import tcc.acs_cadastro_mobile.views.ConfirmSaveCitizenActivity;
 
 public class CitizenAddController  {
 
@@ -27,6 +33,7 @@ public class CitizenAddController  {
     private final int FOURTH_STEP = 4;
 
     private int actualMenu;
+    private Fragment actualStep;
     private AppCompatActivity parent;
     private CtzOnClickListener listener;
     private PersonalDataModel personalData;
@@ -86,19 +93,32 @@ public class CitizenAddController  {
     }
 
     private void save(){
-        //RealmObject
-        CitizenModel citizen = new CitizenModel(personalData, socialDemographicData, healthConditions, streetSituation);
-        citizen.save();
+
+        if(actualMenu == FOURTH_STEP) {
+
+            actualStep.onDetach();
+            CitizenModel citizen = new CitizenModel(personalData, socialDemographicData, healthConditions, streetSituation);
+            new SaveCitizen(actualStep.getContext()).execute(citizen);
+        }
+    }
+
+    private void showConfirmDialog(String name){
+
+        Intent intent = new Intent(parent, ConfirmSaveCitizenActivity.class);
+        intent.putExtra(ConfirmSaveCitizenActivity.SAVE_CITIZEN, name);
+        parent.startActivity(intent);
+        parent.finish();
     }
 
     private void shiftToStepOne(){
         Button btnBack = (Button) parent.findViewById(R.id.btn_ctz_add_back);
         btnBack.setEnabled(false);
 
+        actualMenu = FIRST_STEP;
+        actualStep = CitizenStepOneFragment.newInstance(personalData);
+        replaceStep(actualStep);
         updateProgressBar(FIRST_STEP);
         replaceTitle(R.string.txt_ctz_data_1);
-        replaceStep(CitizenStepOneFragment.newInstance(personalData));
-        actualMenu = FIRST_STEP;
     }
 
     private void shiftToStepTwo(){
@@ -106,10 +126,11 @@ public class CitizenAddController  {
         Button btnBack = (Button) parent.findViewById(R.id.btn_ctz_add_back);
         btnBack.setEnabled(true);
 
+        actualMenu = SECOND_STEP;
+        actualStep = CitizenStepTwoFragment.newInstance(socialDemographicData);
+        replaceStep(actualStep);
         updateProgressBar(SECOND_STEP);
         replaceTitle(R.string.txt_ctz_data_2);
-        replaceStep(CitizenStepTwoFragment.newInstance(socialDemographicData));
-        actualMenu = SECOND_STEP;
     }
 
     private void shiftToStepThree(){
@@ -117,10 +138,11 @@ public class CitizenAddController  {
         Button btnProgress = (Button) parent.findViewById(R.id.btn_ctz_add_progress);
         btnProgress.setText(R.string.btn_progress);
 
+        actualMenu = THIRD_STEP;
+        actualStep = CitizenStepThreeFragment.newInstance(healthConditions);
+        replaceStep(actualStep);
         updateProgressBar(THIRD_STEP);
         replaceTitle(R.string.txt_ctz_data_3);
-        replaceStep(CitizenStepThreeFragment.newInstance(healthConditions));
-        actualMenu = THIRD_STEP;
     }
 
     private void shiftToStepFour(){
@@ -128,10 +150,11 @@ public class CitizenAddController  {
         Button btnProgress = (Button) parent.findViewById(R.id.btn_ctz_add_progress);
         btnProgress.setText(R.string.btn_save);
 
+        actualMenu = FOURTH_STEP;
+        actualStep = CitizenStepFourFragment.newInstance(streetSituation);
+        replaceStep(actualStep);
         updateProgressBar(FOURTH_STEP);
         replaceTitle(R.string.txt_ctz_data_4);
-        replaceStep(CitizenStepFourFragment.newInstance(streetSituation));
-        actualMenu = FOURTH_STEP;
     }
 
     private void updateProgressBar(final int progress){
@@ -161,6 +184,43 @@ public class CitizenAddController  {
             switch (view.getId()){
                 case R.id.btn_ctz_add_back: previousMenu(); break;
                 case R.id.btn_ctz_add_progress: nextMenu(); break;
+            }
+        }
+    }
+    private class SaveCitizen extends AsyncTask<CitizenModel, Void, String[]>{
+
+        private ProgressDialog progressDialog;
+
+        public SaveCitizen(Context context){
+            progressDialog = new ProgressDialog(context);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setCancelable(true);
+            progressDialog.setTitle("Salvando os dados...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String[] doInBackground(CitizenModel... citizens) {
+            CitizenModel citizen = citizens[0];
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            return new String[]{String.valueOf(citizen.save()), citizen.getName()};
+        }
+
+        @Override
+        protected void onPostExecute(String[] values) {
+            super.onPostExecute(values);
+            if(Boolean.parseBoolean(values[0])){
+                progressDialog.cancel();
+                showConfirmDialog(values[1]);
             }
         }
     }

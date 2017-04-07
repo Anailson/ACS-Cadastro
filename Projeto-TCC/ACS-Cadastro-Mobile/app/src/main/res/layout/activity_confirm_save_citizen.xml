@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context="tcc.acs_cadastro_mobile.views.ConfirmSaveCitizenActivity"
+    android:padding="@dimen/minimum_gap"
+    android:background="@drawable/border_dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/minimum_gap"
+        android:paddingRight="@dimen/minimum_gap">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/medium_gap"
+            android:paddingTop="@dimen/medium_gap">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/menu_citizen" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_default"
+                android:id="@+id/txt_ctz_save_citizen"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:paddingTop="@dimen/minimum_gap"
+                android:paddingBottom="@dimen/minimum_gap"
+                android:paddingLeft="@dimen/medium_gap" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/msg_save_success" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/minimum_gap"
+            android:paddingBottom="@dimen/minimum_gap">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3" />
+
+            <Button
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_ok"
+                android:id="@+id/btn_ctz_save_confirm"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight=".4" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

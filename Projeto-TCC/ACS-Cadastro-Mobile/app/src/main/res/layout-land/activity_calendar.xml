@@ -25,78 +25,116 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/txt_day"
-            android:layout_weight="0.3" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/txt_month"
-            android:layout_weight="0.5" />
-
-        <TextView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/txt_year"
-            android:layout_weight="0.4" />
-    </LinearLayout>
+            android:layout_weight=".2">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/txt_day" />
 
+            <NumberPicker
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/npkr_day"
+                android:orientation="horizontal" />
 
-        <NumberPicker
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/npkr_day"
-            android:layout_weight="0.3"
-            android:orientation="horizontal" />
+            android:layout_weight=".4">
 
-        <NumberPicker
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/npkr_month"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/minimum_gap"
-            android:paddingRight="@dimen/minimum_gap" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/txt_month" />
 
-        <NumberPicker
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/npkr_year"
-            android:layout_weight="0.4"
-            android:orientation="horizontal" />
+            <NumberPicker
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/npkr_month"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/minimum_gap"
+                android:paddingRight="@dimen/minimum_gap" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_weight=".3">
 
-            <Button
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/txt_year"
+                android:id="@+id/textView2" />
+
+            <NumberPicker
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/btn_ok"
-                android:id="@+id/btn_calendar_ok"
-                style="@style/Widget.AppCompat.Button.Colored" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_cancel"
-                android:id="@+id/btn_calendar_cancel"
-                style="@style/Widget.AppCompat.Button.Colored" />
+                android:id="@+id/npkr_year"
+                android:orientation="horizontal" />
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:weightSum="1"
+            android:paddingLeft="@dimen/minimum_gap"
+            android:layout_weight=".3">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".5">
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.01" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight=".5">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_ok"
+                    android:id="@+id/btn_calendar_ok"
+                    style="@style/Widget.AppCompat.Button.Colored" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_cancel"
+                    android:id="@+id/btn_calendar_cancel"
+                    style="@style/Widget.AppCompat.Button.Colored" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

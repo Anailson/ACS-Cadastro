@@ -38,7 +38,7 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
 
         CitizenModel citizen = citizens.get(position);
 
-        txtName.setText(citizen.getName());
+        txtName.setText(citizen.getTestName());
         txtSusNum.setText(citizen.getSusNum());
         txtAddress.setText(citizen.getAddress());
         txtPhone.setText(citizen.getPhone());

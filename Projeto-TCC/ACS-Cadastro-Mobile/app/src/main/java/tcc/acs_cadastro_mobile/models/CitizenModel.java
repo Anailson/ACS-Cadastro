@@ -1,5 +1,7 @@
 package tcc.acs_cadastro_mobile.models;
 
+import android.util.Log;
+
 import java.util.Random;
 
 public class CitizenModel {
@@ -32,25 +34,30 @@ public class CitizenModel {
         this.streetSituation = new StreetSituationModel();
     }
 
-    public CitizenModel(PersonalDataModel personalData, SocialDemographicModel socioDemographicData,
+    public CitizenModel(PersonalDataModel personalData, SocialDemographicModel socialDemographicData,
                         HealthConditionsModel healthConditions, StreetSituationModel streetSituation){
 
         this.personalData = personalData;
-        this.socioDemographicData = socioDemographicData;
+        this.socioDemographicData = socialDemographicData;
         this.healthConditions = healthConditions;
         this.streetSituation = streetSituation;
     }
 
-    public void save(){
-
+    public boolean save(){
+        Log.e("CitizenModel.save", "Saving CitizenModel with realmObject;");
+        return true;
     }
 
     public boolean containsKey(String key){
         return name.toUpperCase().contains(key.toUpperCase().trim());
     }
 
-    public String getName() {
+    public String getTestName() {
         return name;
+    }
+
+    public String getName() {
+        return personalData.getName();
     }
 
     public String getAddress(){

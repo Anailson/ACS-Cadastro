@@ -120,9 +120,31 @@ public class PersonalDataModel implements Serializable {
 
     @Override
     public String toString() {
+
+        /*
+        this.numSus = numSus;
+        this.name = name;
+        this.socialName = socialName;
+        this.motherUnknown = motherUnknown;
+        this.motherName = motherName;
+        this.numNis = numNis;
+        this.birth = birth;
+        this.responsible = responsible;
+        this.respNumSus = respNumSus;
+        this.respBirth = resBirth;
+        this.gender = gender;
+        this.race = race;
+        this.nationality = nation;
+        this.nationBirth = nationBirth;
+        this.uf = uf;
+        this.city = city;
+        this.phone = phone;
+        this.email = email;
+         */
+
         Formatter out = new Formatter();
-        out.format("Cidadão: %s, Nº SUS: %s, Social: %s, Mae: %s, Nascimento: %s",
-                name, numSus, socialName, motherName, birth);
+        out.format("numSus: %s, name: %s, socialName: %s, motherUnknown: %s, Nascimento: %s",
+                numSus, name, socialName, motherUnknown, birth);
         return out.toString();
     }
 }

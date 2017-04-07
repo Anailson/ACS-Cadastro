@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepThreeController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
+import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 
 public class CitizenStepThreeFragment extends Fragment {
@@ -90,13 +91,20 @@ public class CitizenStepThreeFragment extends Fragment {
 
         spnWeight.setAdapter(controller.getSpinnerAdapter(R.array.weight));
 
-        /*rgrpPregnant.setOnCheckedChangeListener(controller.getRadioChangeListener());
+        rgrpPregnant.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpHeartDisease.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpKidneyDisease.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpRespiratoryDisease.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpInterment.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpPlants.setOnCheckedChangeListener(controller.getRadioChangeListener());
-*/
+
+        rgrpPregnant.setTag(rgrpPregnant.getId(), controller.getRadioChangeListener());
+        rgrpHeartDisease.setTag(rgrpHeartDisease.getId(), controller.getRadioChangeListener());
+        rgrpKidneyDisease.setTag(rgrpKidneyDisease.getId(), controller.getRadioChangeListener());
+        rgrpRespiratoryDisease.setTag(rgrpRespiratoryDisease.getId(), controller.getRadioChangeListener());
+        rgrpInterment.setTag(rgrpInterment.getId(), controller.getRadioChangeListener());
+        rgrpPlants.setTag(rgrpPlants.getId(), controller.getRadioChangeListener());
+
         if (healthConditions != null) {
             fillFields();
         }
@@ -112,7 +120,7 @@ public class CitizenStepThreeFragment extends Fragment {
     }
 
     private void getFields() {
-/*
+
         String[] pregnant = controller.getPregnant(rgrpPregnant, edtPregnant);
         String[] weight = controller.getIndexAndValue(spnWeight);
         boolean smoker = controller.isSmoker(rgrpSmoker);
@@ -124,7 +132,7 @@ public class CitizenStepThreeFragment extends Fragment {
         boolean heartAttack = controller.isHeartAttack(rgrpHeartAttack);
         boolean leprosy = controller.isLeprosy(rgrpLeprosy);
         boolean tuberculosis = controller.isTuberculosis(rgrpTuberculosis);
-        boolean cancer = controller.isCaner(rgrpCancer);
+        boolean cancer = controller.isCancer(rgrpCancer);
         boolean inBend = controller.isInBed(rgrpInBed);
         boolean domiciled = controller.isDomiciled(rgrpDomiciled);
         boolean mentalHealth = controller.isMentalHealth(rgrpMentalHealth);
@@ -141,11 +149,10 @@ public class CitizenStepThreeFragment extends Fragment {
                 hypertension, diabetes, avc, heartAttack, leprosy, tuberculosis, cancer, inBend, domiciled,
                 mentalHealth, heartDisease, kidneyDisease, respiratoryDisease, interment, plants);
         citizenData.send(healthConditions);
-*/
     }
 
     private void fillFields() {
-/*
+
         controller.fillPregnant(edtPregnant, healthConditions.getPregnant()[CitizenModel.VALUE],
                 rgrpPregnant, healthConditions.isPregnant());
         controller.fillField(spnWeight, healthConditions.getWeight()[CitizenModel.INDEX]);
@@ -171,8 +178,7 @@ public class CitizenStepThreeFragment extends Fragment {
                 chbRespiratoryDontKnow);
         controller.fillInterment(edtInterment, healthConditions.getInterment()[CitizenModel.VALUE],
                 rgrpInterment, healthConditions.isInterment());
-        controller.fillPlants(edtPlants, healthConditions.getPlants()[CitizenModel.VALUE],
-                rgrpPlants, healthConditions.isPlants());
-*/
+        controller.fillPlants(rgrpPlants, healthConditions.isPlants(), edtPlants,
+                healthConditions.getPlants()[CitizenModel.VALUE]);
     }
 }

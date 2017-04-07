@@ -84,6 +84,10 @@ public class CitizenStepTwoFragment extends Fragment {
         rgrpSexualOrientation.setOnCheckedChangeListener(controller.getCheckedChangeListener());
         rgrpDeficiency.setOnCheckedChangeListener(controller.getCheckedChangeListener());
 
+        rgrpCommunityTraditional.setTag(rgrpCommunityTraditional.getId(), controller.getCheckedChangeListener());
+        rgrpSexualOrientation.setTag(rgrpSexualOrientation.getId(), controller.getCheckedChangeListener());
+        rgrpDeficiency.setTag(rgrpDeficiency.getId(), controller.getCheckedChangeListener());
+
         if (socialDemographicData != null) {
             fillFields();
         }
@@ -130,8 +134,8 @@ public class CitizenStepTwoFragment extends Fragment {
         controller.fillHealthPlan(rgrpHealthPlan, socialDemographicData.isHealthPlan());
         controller.fillCommunityTraditional(rgrpCommunityTraditional, edtCommunityTraditional,
                 socialDemographicData.getCommunityTraditional(), socialDemographicData.isCommunityTraditional());
-        controller.fillSexualOrientation(rgrpSexualOrientation, spnSexualOrientation,
-                socialDemographicData.getSexualOrientation()[CitizenModel.INDEX], socialDemographicData.isSexualOrientation());
+        controller.fillSexualOrientation(rgrpSexualOrientation, socialDemographicData.isSexualOrientation(),
+                spnSexualOrientation, socialDemographicData.getSexualOrientation()[CitizenModel.INDEX]);
         controller.fillDeficiency(rgrpDeficiency, socialDemographicData.isDeficiency(),
                 socialDemographicData.getDeficiency(), chbHearing, chbVisual, chbIntellectual, chbPhysical, chbAnother);
     }

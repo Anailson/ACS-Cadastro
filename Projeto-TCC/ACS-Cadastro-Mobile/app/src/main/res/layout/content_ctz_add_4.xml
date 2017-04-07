@@ -31,7 +31,7 @@
                         android:layout_weight="0.8" />
 
                     <RadioGroup
-                        android:id="@+id/radioGroup3"
+                        android:id="@+id/rgrp_ctz_street"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -40,14 +40,14 @@
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/radioButton5"
+                            android:id="@+id/rgrp_ctz_street_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/rgrp_ctz_street_y"
+                            android:id="@+id/rgrp_ctz_street_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -234,7 +234,7 @@
                     android:orientation="horizontal" >
 
                     <CheckBox
-                        android:id="@+id/chb_food_another"
+                        android:id="@+id/chb_ctz_food_another"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
@@ -263,7 +263,7 @@
                         android:layout_weight="0.8" />
 
                     <RadioGroup
-                        android:id="@+id/rgrp_ctz_another_institution"
+                        android:id="@+id/rgrp_ctz_institution_another"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -272,14 +272,14 @@
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/rgrp_ctz_another_institution_y"
+                            android:id="@+id/rgrp_ctz_institution_another_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/rgrp_ctz_another_institution_n"
+                            android:id="@+id/rgrp_ctz_institution_another_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -302,7 +302,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/edt_ctz_another_institution"
+                        android:id="@+id/edt_ctz_institution_another"
                         android:inputType="text"/>
 
                 </LinearLayout>
@@ -389,7 +389,7 @@
                         android:layout_weight="0.8" />
 
                     <RadioGroup
-                        android:id="@+id/rgrp_ctz_personal_hygiene"
+                        android:id="@+id/rgrp_ctz_hygiene"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
@@ -398,14 +398,14 @@
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/rgrp_ctz_personal_hygiene_y"
+                            android:id="@+id/rgrp_ctz_hygiene_y"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
                             android:text="@string/txt_yes" />
 
                         <RadioButton
-                            android:id="@+id/rgrp_ctz_personal_hygiene_n"
+                            android:id="@+id/rgrp_ctz_hygiene_n"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
@@ -451,7 +451,7 @@
                         android:text="@string/txt_ctz_oral" />
 
                     <CheckBox
-                        android:id="@+id/chb_another_hygiene"
+                        android:id="@+id/chb_ctz_hygiene_another"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:checked="false"

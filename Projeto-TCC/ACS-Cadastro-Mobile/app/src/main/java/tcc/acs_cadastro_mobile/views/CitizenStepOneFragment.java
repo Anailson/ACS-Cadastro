@@ -98,10 +98,11 @@ public class CitizenStepOneFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == CalendarActivity.BIRTH || requestCode == CalendarActivity.RESP_BIRTH) {
-            if (resultCode == Activity.RESULT_OK) {
-                String[] dateBirth = data.getStringArrayExtra(CalendarActivity.VALUE);
-                controller.setBirth(requestCode, dateBirth);
+        if (resultCode == Activity.RESULT_OK) {
+            String[] dateBirth = data.getStringArrayExtra(CalendarActivity.VALUE);
+            switch (requestCode){
+                case CalendarActivity.BIRTH: controller.setBirth(edtBirth, dateBirth); break;
+                case CalendarActivity.RESP_BIRTH: controller.setBirth(edtRespBirth, dateBirth); break;
             }
         }
     }
@@ -124,7 +125,7 @@ public class CitizenStepOneFragment extends Fragment {
         String[] nationality = controller.getIndexAndValue(spnNationality);
         String nationBirth = edtNationBirth.getText().toString();
         String[] uf = controller.getIndexAndValue(spnUf);
-        String[] city = controller.getIndexAndValue(spnCity);
+        String[] city = controller.getIndexAndValue(spnCity); //TODO Don't fill when return to this view
         String phone = edtPhone.getText().toString();
         String email = edtEmail.getText().toString();
 

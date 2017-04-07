@@ -1,13 +1,9 @@
 package tcc.acs_cadastro_mobile.views;
 
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
@@ -48,7 +44,7 @@ public class CalendarActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         int width = (int) (dm.widthPixels * .9);
-        int height = (int)(dm.heightPixels * .55);
+        int height = (int)(dm.heightPixels * .6);
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_LANDSCAPE){

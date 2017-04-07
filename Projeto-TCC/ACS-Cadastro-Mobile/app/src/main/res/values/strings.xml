@@ -1,6 +1,6 @@
 <resources>
     <!-- Titles -->
-    <string name="app_name">ACS-PreCadastro</string>
+    <string name="app_name">ACS-Cadastro</string>
     <string name="title_activity_add_citizen">Adicionar Ciadadão</string>
     <string name="title_activity_add_residence">Adicionar Domicílio</string>
 
@@ -148,6 +148,7 @@
     <!-- Messages -->
     <string name="msg_edit_citizen">msg_edit_citizen</string>
     <string name="msg_delete_citizen">msg_delete_citizen</string>
+    <string name="msg_save_success">Salvo com sucesso!</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

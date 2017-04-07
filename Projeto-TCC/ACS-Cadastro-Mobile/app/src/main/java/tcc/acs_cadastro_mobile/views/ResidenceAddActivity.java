@@ -35,11 +35,11 @@ public class ResidenceAddActivity extends AppCompatActivity implements IResidenc
 
     @Override
     public void send(AddressDataModel addressData) {
-        //TODO anything
+        //TODO controller.send(addressData);
     }
 
     @Override
     public void send(HousingConditionsModel housingConditions) {
-        //TODO anything
+        //TODO controller.send(housingConditions);
     }
 }
