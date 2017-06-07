@@ -15,14 +15,14 @@ public class CalendarActivity extends AppCompatActivity {
     public static final int DAY = 0;
     public static final int MONTH = 1;
     public static final int YEAR = 2;
-    public static final int BIRTH = 0;
+    public static final int BIRTH = 3;
     public static final int RESP_BIRTH = 1;
     public static final String VALUE = "birth_date";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calendar);
+        setContentView(R.layout.activity_float_calendar);
 
         CalendarController controller = new CalendarController(this);
 

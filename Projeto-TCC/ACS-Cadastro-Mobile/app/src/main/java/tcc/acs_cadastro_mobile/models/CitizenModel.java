@@ -1,79 +1,86 @@
 package tcc.acs_cadastro_mobile.models;
 
-import android.util.Log;
-
 import java.util.Random;
 
-public class CitizenModel {
+import io.realm.Realm;
+import io.realm.RealmObject;
 
-    public static final int INDEX = 0;
-    public static final int VALUE = 1;
+public class CitizenModel extends RealmObject{
+
     public static final String STRING_DEFAULT_VALUE = "No value";
-    public static final int INT_DEFAULT_VALUE = -1;
-
-    private static int count = 1;
-    private static final int SUS_NUM = 111111111;
-
-    private String name;
-    private int susNum;
-    private int numberAddress;
+    public static final String NAME = "name";
+    public static final String NUM_SUS = "numSus";
 
     private PersonalDataModel personalData;
-    private SocialDemographicModel socioDemographicData;
+    private SocialDemographicModel socialDemographicData;
     private HealthConditionsModel healthConditions;
     private StreetSituationModel streetSituation;
 
-    public CitizenModel(String name){
-        this.name = name;
-        this.susNum = SUS_NUM * (count++);
-        this.numberAddress = new Random().nextInt(1000);
-
-        this.personalData = new PersonalDataModel();
-        this.socioDemographicData = new SocialDemographicModel();
-        this.healthConditions = new HealthConditionsModel();
-        this.streetSituation = new StreetSituationModel();
+    public static CitizenModel newInstance(Realm realm, PersonalDataModel personalData,
+                                           SocialDemographicModel socialDemographic, HealthConditionsModel healthConditions,
+                                           StreetSituationModel streetSituation) {
+        realm.beginTransaction();
+        CitizenModel object = realm.createObject(CitizenModel.class);
+        object.setPersonalData(personalData);
+        object.setSocialDemographicData(socialDemographic);
+        object.setHealthConditions(healthConditions);
+        object.setStreetSituation(streetSituation);
+        realm.commitTransaction();
+        return object;
     }
 
-    public CitizenModel(PersonalDataModel personalData, SocialDemographicModel socialDemographicData,
-                        HealthConditionsModel healthConditions, StreetSituationModel streetSituation){
+    public PersonalDataModel getPersonalData() {
+        return personalData;
+    }
 
+    public void setPersonalData(PersonalDataModel personalData) {
         this.personalData = personalData;
-        this.socioDemographicData = socialDemographicData;
+    }
+
+    public SocialDemographicModel getSocialDemographicData() {return socialDemographicData;}
+
+    public void setSocialDemographicData(SocialDemographicModel socialDemographicData) {
+        this.socialDemographicData = socialDemographicData;
+    }
+
+    public HealthConditionsModel getHealthConditions() {return healthConditions;}
+
+    public void setHealthConditions(HealthConditionsModel healthConditions) {
         this.healthConditions = healthConditions;
+    }
+
+    public StreetSituationModel getStreetSituation() {return streetSituation;}
+
+    public void setStreetSituation(StreetSituationModel streetSituation) {
         this.streetSituation = streetSituation;
     }
 
-    public boolean save(){
-        Log.e("CitizenModel.save", "Saving CitizenModel with realmObject;");
-        return true;
-    }
+    public boolean nameContainsKey(String key){return containsKey(personalData.getName(), key);}
 
-    public boolean containsKey(String key){
-        return name.toUpperCase().contains(key.toUpperCase().trim());
-    }
+    public boolean susContainsKey(String key){return containsKey(String.valueOf(personalData.getNumSus()), key);}
 
-    public String getTestName() {
-        return name;
-    }
+    private boolean containsKey(String value, String key){return value.toUpperCase().contains(key.toUpperCase().trim());}
 
-    public String getName() {
-        return personalData.getName();
-    }
+    public String getName() {return personalData.getName();}
 
     public String getAddress(){
-        return "Rua " + name + " " + numberAddress + ". Bairro";
+        return "Rua " + getName() + ", " + new Random().nextInt(1000);
     }
 
-    public String getSusNum(){
-        return "Numero do SUS: " + susNum;
+    public long getNumSus(){
+        return personalData.getNumSus();
     }
 
-    public String getPhone(){
-        return "Telefone: " + susNum /2;
+    public long getPhone(){
+        return personalData.getNumSus();
+    }
+
+    public String getBirthDate(){
+        return personalData.getBirth();
     }
 
     @Override
     public String toString() {
-        return name;
+        return "Nome: " + getName() + ", SUS: " + getNumSus();
     }
 }

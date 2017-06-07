@@ -3,7 +3,7 @@ package tcc.acs_cadastro_mobile.adapters;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
-public class Adapter {
+public class Adapter{
 
     private Context context;
 

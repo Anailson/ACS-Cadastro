@@ -9,7 +9,13 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.Adapter;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.persistence.SocialDemographicPersistence;
+import tcc.acs_cadastro_mobile.required.RequiredRadioGroup;
+import tcc.acs_cadastro_mobile.subModels.CommunityTraditional;
+import tcc.acs_cadastro_mobile.subModels.Deficiency;
+import tcc.acs_cadastro_mobile.subModels.EducationEmployment;
+import tcc.acs_cadastro_mobile.subModels.HealthAndGroup;
+import tcc.acs_cadastro_mobile.subModels.SexualOrientation;
 
 public class CitizenStepTwoController extends StepsController{
 
@@ -17,6 +23,7 @@ public class CitizenStepTwoController extends StepsController{
     private RadioGroup.OnCheckedChangeListener rgrpCheckedListener;
 
     public CitizenStepTwoController(Fragment fragment) {
+        super(fragment);
         this.fragment = fragment;
     }
 
@@ -32,36 +39,42 @@ public class CitizenStepTwoController extends StepsController{
         return rgrpCheckedListener;
     }
 
-    public boolean isSchool(RadioGroup radioGroup) {
-        return isYesGroup(radioGroup, R.id.rgrp_ctz_school_y);
+    public boolean isRequiredFieldsFilled(RequiredRadioGroup rgrpSchool, RequiredRadioGroup rgrpDeficiency) {
+        hasError = true;
+
+        applyError(rgrpSchool);
+        applyError(rgrpDeficiency);
+        return hasError;
     }
 
-    public boolean isCaregiver(RadioGroup radioGroup) {
-        return isYesGroup(radioGroup, R.id.rgrp_ctz_caregiver_y);
+    public EducationEmployment getEducationEmployment(EditText edtOccupation,
+                      RequiredRadioGroup rgrpSchool, Spinner spnEducation, Spinner spnEmployment) {
+        boolean school = isYesGroup(rgrpSchool, R.id.rgrp_ctz_school_y);
+        return SocialDemographicPersistence.getEducationEmployment(school, getFields(edtOccupation),
+                getFields(spnEducation), getFields(spnEmployment));
     }
 
-    public boolean isCommunityGroup(RadioGroup radioGroup) {
-        return isYesGroup(radioGroup, R.id.rgrp_ctz_community_group_y);
+    public HealthAndGroup getHealthAndGroup(RadioGroup rgrpCaregiver, RadioGroup rgrpCommunityGroup,
+                    RadioGroup rgrpHealthPlan) {
+        boolean caregiver = isYesGroup(rgrpCaregiver, R.id.rgrp_ctz_caregiver_y);
+        boolean communityGroup = isYesGroup(rgrpCommunityGroup, R.id.rgrp_ctz_community_group_y);
+        boolean healthPlan = isYesGroup(rgrpHealthPlan, R.id.rgrp_ctz_health_plan_y);
+        return SocialDemographicPersistence.getHealthAndGroup(caregiver, communityGroup, healthPlan);
     }
 
-    public boolean isHealthPlan(RadioGroup radioGroup) {
-        return isYesGroup(radioGroup, R.id.rgrp_ctz_health_plan_y);
+    public CommunityTraditional getCommunityTraditional(RadioGroup radioGroup, EditText editText){
+        boolean isCommunityTraditional = isYesGroup(radioGroup, R.id.rgrp_ctz_community_traditional_y);
+        return SocialDemographicPersistence.getCommunityTraditional(isCommunityTraditional, getFields(editText));
     }
 
-    public String[] getCommunityTraditional(RadioGroup radioGroup, EditText editText) {
-
-        int id = R.id.rgrp_ctz_community_traditional_y;
-        return getFields(isYesGroup(radioGroup, id), editText);
+    public SexualOrientation getSexualOrientation(RadioGroup radioGroup, Spinner spinner){
+        boolean isSexualOrientation = isYesGroup(radioGroup, R.id.rgrp_ctz_sexual_orientation_y);
+        return SocialDemographicPersistence.getSexualOrientation(isSexualOrientation, getFields(spinner));
     }
 
-    public String[] getSexualOrientation(RadioGroup radioGroup, Spinner spinner) {
-        int id = R.id.rgrp_ctz_sexual_orientation_y;
-        return getFields(isYesGroup(radioGroup, id), spinner);
-    }
-
-    public boolean[] getDeficiency(RadioGroup radioGroup, CheckBox... checkBoxes) {
-        int id = R.id.rgrp_ctz_deficiency_y;
-        return getFields(isYesGroup(radioGroup, id), checkBoxes);
+    public Deficiency getDeficiency(RadioGroup radioGroup, CheckBox... checkBoxes){
+        boolean isDeficiency = isYesGroup(radioGroup, R.id.rgrp_ctz_deficiency_y);
+        return SocialDemographicPersistence.getDeficiency(isDeficiency, getFields(checkBoxes));
     }
 
     public void fillSchool(RadioGroup radioGroup, boolean bool) {
@@ -80,16 +93,17 @@ public class CitizenStepTwoController extends StepsController{
         fillField(radioGroup, bool, R.id.rgrp_ctz_health_plan_y, R.id.rgrp_ctz_health_plan_n);
     }
 
-    public void fillCommunityTraditional(RadioGroup radioGroup, EditText editText, String[] value, boolean checked) {
+    public void fillCommunityTraditional(RadioGroup radioGroup, EditText editText, String value, boolean checked) {
+
         //TODO Don't fill when return to this view
         int yes = R.id.rgrp_ctz_community_traditional_y;
-        int no = R.id.rgrp_ctz_plants_n;
-        fillField(radioGroup, checked, editText, value[CitizenModel.VALUE], yes, no);
+        int no = R.id.rgrp_ctz_community_traditional_n;
+        fillField(radioGroup, checked, editText, value, yes, no);
     }
 
-    public void fillSexualOrientation(RadioGroup radioGroup, boolean enable, Spinner spinner, String index) {
-        int no = R.id.rgrp_ctz_sexual_orientation_n;
+    public void fillSexualOrientation(RadioGroup radioGroup, boolean enable, Spinner spinner, int index) {
         int yes = R.id.rgrp_ctz_sexual_orientation_y;
+        int no = R.id.rgrp_ctz_sexual_orientation_n;
         fillField(radioGroup, enable, spinner, index, yes, no);
     }
 

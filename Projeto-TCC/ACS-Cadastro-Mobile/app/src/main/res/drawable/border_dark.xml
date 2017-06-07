@@ -11,5 +11,5 @@
         android:bottomLeftRadius="0dp" />
     <stroke
         android:width="2dp"
-        android:color="@color/colorPrimaryDark"/>
+        android:color="@color/color_primary_dark"/>
 </shape>

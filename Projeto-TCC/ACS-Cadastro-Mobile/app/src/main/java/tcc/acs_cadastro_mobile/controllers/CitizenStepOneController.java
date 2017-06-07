@@ -15,9 +15,18 @@ import java.util.Formatter;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.Adapter;
+import tcc.acs_cadastro_mobile.persistence.PersonalDataPersistence;
+import tcc.acs_cadastro_mobile.required.RequiredEditText;
+import tcc.acs_cadastro_mobile.required.RequiredSpinner;
+import tcc.acs_cadastro_mobile.subModels.Contact;
+import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
+import tcc.acs_cadastro_mobile.subModels.Mother;
+import tcc.acs_cadastro_mobile.subModels.Nationality;
+import tcc.acs_cadastro_mobile.subModels.ParticularData;
+import tcc.acs_cadastro_mobile.subModels.Responsible;
 import tcc.acs_cadastro_mobile.views.CalendarActivity;
 
-public class CitizenStepOneController extends StepsController{
+public class CitizenStepOneController extends StepsController {
 
     private final int AL = 1;
     private final int BA = 2;
@@ -29,6 +38,7 @@ public class CitizenStepOneController extends StepsController{
     private AdapterView.OnItemSelectedListener itemSelectedListener;
 
     public CitizenStepOneController(Fragment fragment) {
+        super(fragment);
         this.fragment = fragment;
     }
 
@@ -43,6 +53,7 @@ public class CitizenStepOneController extends StepsController{
         }
         return clickListener;
     }
+
     public CompoundButton.OnCheckedChangeListener getCheckBoxChangeListener() {
 
         if (chbCheckedListener == null) {
@@ -58,23 +69,63 @@ public class CitizenStepOneController extends StepsController{
         return itemSelectedListener;
     }
 
-    public void showCalendar(int id) {
+    public boolean isRequiredFieldsFilled(RequiredEditText edtName, RequiredEditText edtBirthDate,
+                  RequiredEditText edtMotherName, RequiredSpinner spnGender, RequiredSpinner spnRace,
+                  RequiredSpinner spnNationality, RequiredSpinner spnUf, RequiredSpinner spnCity) {
+        hasError = true;
+        applyError(edtName, "", "Este campo é obrigatório");
+        applyError(edtBirthDate, "", "Este campo é obrigatório");
+        applyError(edtMotherName, "", "Este campo é obrigatório");
+        applyError(spnGender, fragment.getResources().getString(R.string.txt_default));
+        applyError(spnRace, fragment.getResources().getString(R.string.txt_default));
+        applyError(spnNationality, fragment.getResources().getString(R.string.txt_default));
+        applyError(spnUf, fragment.getResources().getString(R.string.txt_default));
+        applyError(spnCity, fragment.getResources().getString(R.string.txt_default));
 
-        int request = CalendarActivity.BIRTH;
-        if (id == R.id.edt_ctz_respons_birth) {
-            request = CalendarActivity.RESP_BIRTH;
+        return hasError;
+    }
+
+    public int getCityIndex(int ufIndex, String city) {
+        switch (ufIndex) {
+            case AL: return getIndex(city, R.array.al_cities);
+            case BA: return getIndex(city, R.array.ba_cities);
+            case SE: return getIndex(city, R.array.se_cities);
+            default: return 0;
         }
-
-        Intent newActivity = new Intent(fragment.getActivity(), CalendarActivity.class);
-        fragment.startActivityForResult(newActivity, request);
     }
 
-    public long getLong(String s){
-        return Long.parseLong(s.equals("") ? "-1" : s);
+    public ParticularData getParticularData(EditText edtNumSus, EditText edtName, EditText edtSocialName,
+                                            EditText edtNumNis, EditText edtBirth) {
+
+        return PersonalDataPersistence.getParticularData(getLong(edtNumSus), getFields(edtName),
+                getFields(edtSocialName), getLong(edtNumNis), getFields(edtBirth));
+    }
+    public Mother getMother(CheckBox chbMotherUnknown, EditText edtMotherName) {
+        return PersonalDataPersistence.getMother(chbMotherUnknown.isChecked(), getFields(edtMotherName));
     }
 
-    public void fillField(EditText edt, long value){
-        String text = value < 0 ? "" : String.valueOf(value);
+    public Responsible getResponsible(CheckBox chbResponsible,
+                                      EditText edtRespNumSus, EditText edtRespBirth) {
+        return PersonalDataPersistence.getResponsible(chbResponsible.isChecked(), getLong(edtRespNumSus),
+                getFields(edtRespBirth));
+    }
+
+    public GenderAndRace getGenderAndRace(Spinner spnGender, Spinner spnRace) {
+        return PersonalDataPersistence.getGenderAndRace(getFields(spnGender), getFields(spnRace));
+    }
+
+    public Nationality getNationality(Spinner spnNationality,
+                                      EditText edtNationBirth, Spinner spnUf, Spinner spnCity) {
+        return PersonalDataPersistence.getNationality(getFields(spnNationality), getFields(edtNationBirth),
+                getFields(spnUf), getFields(spnCity));
+    }
+
+    public Contact getContact(EditText edtPhone, EditText edtEmail){
+        return PersonalDataPersistence.getContact(getFields(edtPhone), getFields(edtEmail));
+    }
+
+    public void fillField(EditText edt, long value) {
+        String text = value == 0 ? "" : String.valueOf(value);
         fillField(edt, text);
     }
 
@@ -97,10 +148,10 @@ public class CitizenStepOneController extends StepsController{
         enableView(edtRespBirth, !checked);
     }
 
-    public void fillNationBirth(CheckBox chbNation, boolean check, EditText edtNationBirth, String nationBirth){
+    public void fillNationBirth(CheckBox chbNation, boolean check, EditText edtNationBirth, String nationBirth) {
 
         //TODO Don't fill when return to this view
-        if(check){
+        if (check) {
             nationBirth = fragment.getString(R.string.txt_brazil);
         }
 
@@ -109,16 +160,19 @@ public class CitizenStepOneController extends StepsController{
         enableView(edtNationBirth, check);
     }
 
+    public void fillCity(int uf, Spinner spinner, int position){
+        enableView(spinner, true);
+        setCities(uf, spinner);
+        spinner.setSelection(position, false);
+    }
 
     public void setBirth(EditText editText, String[] date) {
-        if (date.length != 3) {
+        if (date.length != CalendarActivity.BIRTH) {
             throw new IllegalArgumentException("The birth date is invalid");
         }
-
-        Formatter out = new Formatter();
-        out.format("%s/%s/%s", date[CalendarActivity.DAY], date[CalendarActivity.MONTH],
-                date[CalendarActivity.YEAR]);
-        fillField(editText, out.toString());
+        String text = new Formatter().format("%s/%s/%s", date[CalendarActivity.DAY],
+                date[CalendarActivity.MONTH], date[CalendarActivity.YEAR]).toString();
+        fillField(editText, text);
     }
 
     private void fillMotherName(boolean checked) {
@@ -136,7 +190,7 @@ public class CitizenStepOneController extends StepsController{
         EditText edtRespNumSus = (EditText) activity.findViewById(R.id.edt_ctz_respon_num_sus);
         EditText edtRespBirth = (EditText) activity.findViewById(R.id.edt_ctz_respons_birth);
 
-        if(checked){
+        if (checked) {
             numSus = ((EditText) activity.findViewById(R.id.edt_ctz_num_sus)).getText().toString();
             birth = ((EditText) activity.findViewById(R.id.edt_ctz_birth)).getText().toString();
         }
@@ -155,16 +209,35 @@ public class CitizenStepOneController extends StepsController{
         enableView(edtNationBirth, !isChecked);
     }
 
-    private void setCities(int arrayResource) {
-        Spinner spinner = (Spinner) fragment.getActivity().findViewById(R.id.spn_ctz_city);
-        spinner.setAdapter(getSpinnerAdapter(arrayResource));
-        enableView(spinner, true);
+    private void setCities(int index) {
+        setCities(index, (Spinner) fragment.getActivity().findViewById(R.id.spn_ctz_city));
     }
 
-    private void disableSpnCity() {
-        Spinner spinner = (Spinner) fragment.getActivity().findViewById(R.id.spn_ctz_city);
-        fillField(spinner, 0);
-        enableView(spinner, false);
+    private void setCities(int index, Spinner spinner){
+        switch (index) {
+            case AL: spinner.setAdapter(getSpinnerAdapter(R.array.al_cities)); break;
+            case BA: spinner.setAdapter(getSpinnerAdapter(R.array.ba_cities)); break;
+            case SE: spinner.setAdapter(getSpinnerAdapter(R.array.se_cities)); break;
+            default: fillField(spinner, 0); break;
+        }
+        enableView(spinner, index != 0);
+    }
+
+    private void showCalendar(int id) {
+
+        int request = CalendarActivity.BIRTH;
+        if (id == R.id.edt_ctz_respons_birth) {
+            request = CalendarActivity.RESP_BIRTH;
+        }
+
+        Intent newActivity = new Intent(fragment.getActivity(), CalendarActivity.class);
+        fragment.startActivityForResult(newActivity, request);
+    }
+
+
+    private long getLong(EditText editText) {
+        String s = editText.getText().toString();
+        return Long.parseLong(s.equals("") ? "0" : s);
     }
 
     private class OnClickListener implements View.OnClickListener {
@@ -178,9 +251,15 @@ public class CitizenStepOneController extends StepsController{
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
             switch (compoundButton.getId()) {
-                case R.id.chb_ctz_mother_unknow: fillMotherName(check); break;
-                case R.id.chb_ctz_nation_birth: fillNationBirth(check); break;
-                case R.id.chb_ctz_responsible: fillResponsible(check); break;
+                case R.id.chb_ctz_mother_unknow:
+                    fillMotherName(check);
+                    break;
+                case R.id.chb_ctz_nation_birth:
+                    fillNationBirth(check);
+                    break;
+                case R.id.chb_ctz_responsible:
+                    fillResponsible(check);
+                    break;
             }
         }
     }
@@ -189,15 +268,15 @@ public class CitizenStepOneController extends StepsController{
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
 
-            switch (index) {
-                case AL: setCities(R.array.al_cities); break;
-                case BA: setCities(R.array.ba_cities); break;
-                case SE: setCities(R.array.se_cities);break;
-                default: disableSpnCity(); break;
+            switch (adapterView.getId()) {
+                case R.id.spn_ctz_uf:
+                    setCities(index);
+                    break;
             }
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {}
+        public void onNothingSelected(AdapterView<?> adapterView) {
+        }
     }
 }

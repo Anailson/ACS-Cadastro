@@ -75,7 +75,7 @@
         <item>Indígena</item>
     </string-array>
 
-    <string-array name="nation">
+    <string-array name="nationality">
         <item>@string/txt_default</item>
         <item>Brasileiro</item>
         <item>Naturalizado</item>
@@ -161,6 +161,119 @@
         <item>1 vez</item>
         <item>2 ou 3 vezes</item>
         <item>Mais de 3 vezes</item>
+    </string-array>
+
+    <string-array name="place_type">
+        <item>@string/txt_default</item>
+        <item>Avenida (Avn.:)</item>
+        <item>Fazenda (Fzn.:)</item>
+        <item>Largo (Lrg.:)</item>
+        <item>Loteamento (Ltm.:)</item>
+        <item>Parque (Prq.:)</item>
+        <item>Praça (Prc.:)</item>
+        <item>Rua (Rua.:)</item>
+        <item>Travessa (Trv.:)</item>
+    </string-array>
+
+    <string-array name="housing_situation">
+        <item>@string/txt_default</item>
+        <item>Próprio</item>
+        <item>Financiado</item>
+        <item>Alugado</item>
+        <item>Arrendado</item>
+        <item>Cedido</item>
+        <item>Ocupação</item>
+        <item>Situação de rua</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="location">
+        <item>@string/txt_default</item>
+        <item>Urbana</item>
+        <item>Rural</item>
+    </string-array>
+
+    <string-array name="residence_type">
+        <item>@string/txt_default</item>
+        <item>Casa</item>
+        <item>Apartamento</item>
+        <item>Cômodo</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="ownership">
+        <item>@string/txt_default</item>
+        <item>Proprietário</item>
+        <item>Parceiro/Meeiro</item>
+        <item>Assentado</item>
+        <item>Posseiro</item>
+        <item>Arrendatário</item>
+        <item>Comodatário</item>
+        <item>beneficitário do Banco da Terra</item>
+        <item>Nao se aplica</item>
+    </string-array>
+
+    <string-array name="residence_access">
+        <item>@string/txt_default</item>
+        <item>Pavimento</item>
+        <item>Chão batido</item>
+        <item>Fluvial</item>
+        <item>@string/txt_another</item>
+    </string-array>
+    <string-array name="residence_construction">
+        <item>@string/txt_default</item>
+        <item>Alvenaria/Tijolo</item>
+        <item>Taipa</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="construction_coating">
+        <item>@string/txt_default</item>
+        <item>Com revestimento</item>
+        <item>Sem revestimento</item>
+    </string-array>
+
+    <string-array name="construction_another">
+        <item>@string/txt_default</item>
+        <item>Madeira aparelhada</item>
+        <item>Material aproveitado</item>
+        <item>Palha</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="water_supply">
+        <item>@string/txt_default</item>
+        <item>Rede encanada até o domicílio</item>
+        <item>Poço/Nascimento no domcilio</item>
+        <item>Cisterna</item>
+        <item>Carro pipa</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="water_treatment">
+        <item>@string/txt_default</item>
+        <item>Filtração</item>
+        <item>Fervura</item>
+        <item>Cloração</item>
+        <item>Sem tratamento</item>
+    </string-array>
+
+    <string-array name="bathroom">
+        <item>@string/txt_default</item>
+        <item>Rede coletora de esgoto ou pluvial</item>
+        <item>Fossa séptica</item>
+        <item>Fossa rudimentar</item>
+        <item>Direto para o rio, lago ou mar</item>
+        <item>Céu aberto</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+    <string-array name="garbage">
+        <item>@string/txt_default</item>
+        <item>Coletado</item>
+        <item>Queimado/Enterrado</item>
+        <item>Céu aberto</item>
+        <item>@string/txt_another</item>
     </string-array>
 
 </resources>

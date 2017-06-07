@@ -1,150 +1,233 @@
 package tcc.acs_cadastro_mobile.models;
 
 import java.io.Serializable;
-import java.util.Formatter;
 
-public class PersonalDataModel implements Serializable {
+import io.realm.Realm;
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.subModels.Contact;
+import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
+import tcc.acs_cadastro_mobile.subModels.Mother;
+import tcc.acs_cadastro_mobile.subModels.Nationality;
+import tcc.acs_cadastro_mobile.subModels.ParticularData;
+import tcc.acs_cadastro_mobile.subModels.Responsible;
 
-    private long numSus, numNis, respNumSus;
-    private String name, socialName, motherName, respBirth, birth, nationBirth, phone, email;
-    private String[] gender, race, nationality, uf, city;
-    private boolean motherUnknown, responsible;
+public class PersonalDataModel extends RealmObject implements Serializable {
+
+    private ParticularData particularData;
+    private Mother mother;
+    private Responsible responsible;
+    private GenderAndRace genderNRace;
+    private Nationality nationality;
+    private Contact contact;
 
     public PersonalDataModel() {
-        name = socialName = motherName = birth = nationBirth = phone = email = CitizenModel.STRING_DEFAULT_VALUE;
-        gender = race = nationality = uf = city
-                = new String[]{Integer.toString(CitizenModel.INT_DEFAULT_VALUE), CitizenModel.STRING_DEFAULT_VALUE};
-        numSus = numNis = respNumSus = CitizenModel.INT_DEFAULT_VALUE;
+        this.particularData = new ParticularData();
+        this.mother = new Mother();
+        this.responsible = new Responsible();
+        this.genderNRace = new GenderAndRace();
+        this.nationality = new Nationality();
+        this.contact = new Contact();
     }
 
-    public PersonalDataModel(long numSus, String name, String socialName, boolean motherUnknown,
-                             String motherName, long numNis, String birth, boolean responsible,
-                             long respNumSus, String resBirth, String[] gender, String[] race, String[] nation,
-                             String nationBirth, String[] uf, String[] city, String phone, String email) {
-
-        this.numSus = numSus;
-        this.name = name;
-        this.socialName = socialName;
-        this.motherUnknown = motherUnknown;
-        this.motherName = motherName;
-        this.numNis = numNis;
-        this.birth = birth;
-        this.responsible = responsible;
-        this.respNumSus = respNumSus;
-        this.respBirth = resBirth;
-        this.gender = gender;
-        this.race = race;
-        this.nationality = nation;
-        this.nationBirth = nationBirth;
-        this.uf = uf;
-        this.city = city;
-        this.phone = phone;
-        this.email = email;
+    public static PersonalDataModel newInstance(Realm realm, ParticularData particularData, Mother mother,
+                        Responsible responsible, GenderAndRace genderNRace, Nationality nationality, Contact contact) {
+        realm.beginTransaction();
+        PersonalDataModel data = realm.createObject(PersonalDataModel.class);
+        data.setParticularData(particularData);
+        data.setMother(mother);
+        data.setResponsible(responsible);
+        data.setGenderNRace(genderNRace);
+        data.setNationality(nationality);
+        data.setContact(contact);
+        realm.commitTransaction();
+        return data;
     }
 
-    public long getNumSus() {
-        return numSus;
+    public static ParticularData getParticularData(Realm realm, long sus, String name,
+                                   String socialName, long nis, String birth) {
+        realm.beginTransaction();
+        ParticularData object = realm.createObject(ParticularData.class);
+        object.setNumSus(sus);
+        object.setName(name);
+        object.setSocialName(socialName);
+        object.setNumNis(nis);
+        object.setBirthDate(birth);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getName() {
-        return name;
+    public static Mother getMother(Realm realm, boolean isKnown, String name){
+        realm.beginTransaction();
+        Mother object = realm.createObject(Mother.class);
+        object.setKnown(isKnown);
+        object.setName(name);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getSocialName() {
-        return socialName;
+    public static Responsible getResponsible(Realm realm, boolean isResponsible, long numSus,
+                                             String birthDate){
+        realm.beginTransaction();
+        Responsible object = realm.createObject(Responsible.class);
+        object.setResponsible(isResponsible);
+        object.setNumSus(numSus);
+        object.setBirthDate(birthDate);
+        realm.commitTransaction();
+        return object;
     }
 
-    public boolean isMotherUnknown() {
-        return motherUnknown;
+    public static GenderAndRace getGenderAndRace(Realm realm, String gender, String race){
+        realm.beginTransaction();
+        GenderAndRace object = realm.createObject(GenderAndRace.class);
+        object.setGender(gender);
+        object.setRace(race);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getMotherName() {
-        return motherName;
+    public static Nationality getNationality(Realm realm,String nationality, String nationBirth,
+                                             String uf, String city){
+        realm.beginTransaction();
+        Nationality object = realm.createObject(Nationality.class);
+        object.setNationality(nationality);
+        object.setNationBirth(nationBirth);
+        object.setUf(uf);
+        object.setCity(city);
+        realm.commitTransaction();
+        return object;
     }
 
-    public long getNumNis() {
-        return numNis;
+    public static Contact getContact(Realm realm, String phone, String email){
+        realm.beginTransaction();
+        Contact object = realm.createObject(Contact.class);
+        object.setPhone(phone);
+        object.setEmail(email);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getBirth() {
-        return birth;
+
+    public ParticularData getParticularData() {
+        return particularData;
     }
 
-    public boolean isResponsible() {
+    public void setParticularData(ParticularData particularData) {
+        this.particularData = particularData;
+    }
+
+    public Mother getMother() {
+        return mother;
+    }
+
+    public void setMother(Mother mother) {
+        this.mother = mother;
+    }
+
+    public Responsible getResponsible() {
         return responsible;
     }
 
-    public long getRespNumSus() {
-        return respNumSus;
+    public GenderAndRace getGenderNRace() {
+        return genderNRace;
     }
 
-    public String getRespBirth() {
-        return respBirth;
+    public void setGenderNRace(GenderAndRace genderNRace) {
+        this.genderNRace = genderNRace;
     }
 
-    public String[] getGender() {
-        return gender;
-    }
-
-    public String[] getRace() {
-        return race;
-    }
-
-    public String[] getNationality() {
+    public Nationality getNationality() {
         return nationality;
     }
 
+    public void setNationality(Nationality nationality) {
+        this.nationality = nationality;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+
+    public long getNumSus() {
+        return getParticularData().getNumSus();
+    }
+
+    public String getName() {
+        return getParticularData().getName();
+    }
+
+    public String getSocialName() {
+        return getParticularData().getSocialName();
+    }
+
+    public boolean isMotherUnknown() {
+        return getMother().isKnown();
+    }
+
+    public String getMotherName() {
+        return getMother().getName();
+    }
+
+    public long getNumNis() {
+        return getParticularData().getNumNis();
+    }
+
+    public String getBirth() {
+        return getParticularData().getBirthDate();
+    }
+
+    public boolean isResponsible() {
+        return getResponsible().isResponsible();
+    }
+
+    public void setResponsible(Responsible responsible) {
+        this.responsible = responsible;
+    }
+
+    public long getRespNumSus() {
+        return getResponsible().getNumSus();
+    }
+
+    public String getRespBirth() {
+        return getResponsible().getBirthDate();
+    }
+
+    public String getGender() {
+        return getGenderNRace().getGender();
+    }
+
+    public String getRace() {
+        return getGenderNRace().getRace();
+    }
+
+    public String getNation() {
+        return getNationality().getNationality();
+    }
+
     public String getNationBirth() {
-        return nationBirth;
+        return getNationality().getNationBirth();
     }
 
-    public String[] getUf() {
-        return uf;
+    public String getUf() {
+        return getNationality().getUf();
     }
 
-    public String[] getCity() {
-        return city;
+    public String getCity() {
+        return getNationality().getCity();
     }
 
     public String getPhone() {
-        return phone;
+        return getContact().getPhone();
     }
 
     public String getEmail() {
-        return email;
+        return getContact().getEmail();
     }
 
     public boolean isNationBirth() {
-        return nationBirth.equals("Brasil");
-    }
-
-    @Override
-    public String toString() {
-
-        /*
-        this.numSus = numSus;
-        this.name = name;
-        this.socialName = socialName;
-        this.motherUnknown = motherUnknown;
-        this.motherName = motherName;
-        this.numNis = numNis;
-        this.birth = birth;
-        this.responsible = responsible;
-        this.respNumSus = respNumSus;
-        this.respBirth = resBirth;
-        this.gender = gender;
-        this.race = race;
-        this.nationality = nation;
-        this.nationBirth = nationBirth;
-        this.uf = uf;
-        this.city = city;
-        this.phone = phone;
-        this.email = email;
-         */
-
-        Formatter out = new Formatter();
-        out.format("numSus: %s, name: %s, socialName: %s, motherUnknown: %s, Nascimento: %s",
-                numSus, name, socialName, motherUnknown, birth);
-        return out.toString();
+        return getNationBirth().equals("Brasil");
     }
 }

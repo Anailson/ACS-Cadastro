@@ -2,9 +2,10 @@ package tcc.acs_cadastro_mobile.controllers;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.NumberPicker;
+
+import java.util.Calendar;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.views.CalendarActivity;
@@ -38,8 +39,6 @@ public class CalendarController {
         Intent result = new Intent();
         result.putExtra(CalendarActivity.VALUE, date);
         activity.setResult(Activity.RESULT_OK, result);
-
-        Log.e("SAVE", date[CalendarActivity.DAY] + "/" + date[CalendarActivity.MONTH] + "/" + date[CalendarActivity.YEAR]);
         cancel();
     }
 
@@ -47,11 +46,10 @@ public class CalendarController {
         activity.finish();
     }
 
-
     public String[] getYears(){
 
         int maxValue = 150;
-        int currentYear = 2017;
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR) - 1;
         String [] years = new String[maxValue];
 
         for(int i = 0; i < maxValue; i++){

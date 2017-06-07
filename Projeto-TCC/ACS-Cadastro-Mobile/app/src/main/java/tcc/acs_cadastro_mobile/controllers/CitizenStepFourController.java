@@ -1,6 +1,5 @@
 package tcc.acs_cadastro_mobile.controllers;
 
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -10,6 +9,13 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.Adapter;
+import tcc.acs_cadastro_mobile.interfaces.IRequired;
+import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
+import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
+import tcc.acs_cadastro_mobile.subModels.FamilyVisit;
+import tcc.acs_cadastro_mobile.subModels.Feeding;
+import tcc.acs_cadastro_mobile.subModels.Hygiene;
+import tcc.acs_cadastro_mobile.subModels.StreetSituation;
 
 public class CitizenStepFourController extends StepsController{
 
@@ -17,6 +23,7 @@ public class CitizenStepFourController extends StepsController{
     private RadioGroup.OnCheckedChangeListener onChangeListener;
 
     public CitizenStepFourController(Fragment fragment){
+        super(fragment);
         this.fragment = fragment;
     }
 
@@ -32,9 +39,9 @@ public class CitizenStepFourController extends StepsController{
         return onChangeListener;
     }
 
-    public boolean isStreetSituation(RadioGroup radioGroup){
-        int id = R.id.rgrp_ctz_street_y;
-        return isYesGroup(radioGroup, id);
+    public StreetSituation getStreetSituation(RadioGroup radioGroup, Spinner spinner){
+        boolean isStreetSituation = isYesGroup(radioGroup, R.id.rgrp_ctz_street_y);
+        return StreetSituationPersistence.getStreetSituation(isStreetSituation, getFields(spinner));
     }
 
     public boolean isBenefit(RadioGroup radioGroup){
@@ -47,30 +54,30 @@ public class CitizenStepFourController extends StepsController{
         return isYesGroup(radioGroup, id);
     }
 
-    public boolean[] getFoodOrigin(CheckBox... checkBoxes){
-        return getFields(true, checkBoxes);
+    public Feeding getFoodOrigin(Spinner spinner, CheckBox... checkBoxes){
+        return StreetSituationPersistence.getFeeding(getFields(spinner), getFields(checkBoxes));
     }
 
-    public String[] getInstitutionAnother(RadioGroup radioGroup, EditText editText){
-        int id = R.id.rgrp_ctz_institution_another_y;
-        return getFields(isYesGroup(radioGroup, id), editText);
+    public AnotherInstitution getInstitutionAnother(RadioGroup radioGroup, EditText editText){
+        boolean isAnotherInstitution = isYesGroup(radioGroup, R.id.rgrp_ctz_institution_another_y);
+        return StreetSituationPersistence.getAnotherInstitution(isAnotherInstitution, getFields(editText));
     }
 
-    public String[] getFamilyVisit(RadioGroup radioGroup, EditText editText){
-        int id = R.id.rgrp_ctz_family_visit_y;
-        return getFields(isYesGroup(radioGroup, id), editText);
+    public FamilyVisit getFamilyVisit(RadioGroup radioGroup, EditText editText){
+        boolean isFamilyVisit = isYesGroup(radioGroup, R.id.rgrp_ctz_family_visit_y);
+        return StreetSituationPersistence.getFamilyVisit(isFamilyVisit, getFields(editText));
     }
 
-    public boolean[] getHygiene(RadioGroup radioGroup, CheckBox... checkBoxes){
-        int id = R.id.rgrp_ctz_hygiene_y;
-        return getFields(isYesGroup(radioGroup, id), checkBoxes);
+    public Hygiene getHygiene(RadioGroup radioGroup, CheckBox... checkBoxes){
+        boolean isHygiene = isYesGroup(radioGroup, R.id.rgrp_ctz_hygiene_y);
+        return StreetSituationPersistence.getHygiene(isHygiene, getFields(checkBoxes));
     }
 
     public void fillStreetSituation(RadioGroup radioGroup, boolean checked){
         fillField(radioGroup, checked, R.id.rgrp_ctz_street_y, R.id.rgrp_ctz_street_n);
     }
 
-    public void fillStreetTime(Spinner spinner, String position){
+    public void fillStreetTime(Spinner spinner, int position){
         fillField(spinner, position);
     }
 
@@ -82,12 +89,12 @@ public class CitizenStepFourController extends StepsController{
         fillField(radioGroup, checked, R.id.rgrp_ctz_family_y, R.id.rgrp_ctz_family_n);
     }
 
-    public void fillFoodPerDay(Spinner spinner, String position){
+    public void fillFoodPerDay(Spinner spinner, int position){
         fillField(spinner, position);
     }
 
     public void fillFoodOrigin(boolean[] values, CheckBox... checkBoxes){
-        fillField(checkBoxes, values);
+        fillField(values, checkBoxes);
     }
 
     public void fillInstitutionAnother(RadioGroup radioGroup, boolean checked, EditText editText, String value){
@@ -108,42 +115,8 @@ public class CitizenStepFourController extends StepsController{
         fillField(radioGroup, checked, checkBoxes, values, yes, no);
     }
 
-
-
-
-
-
-
-
-    private void enableInstitutionAnother(int id){
-        boolean checked = id == R.id.rgrp_ctz_institution_another_y;
-        EditText editText = (EditText)fragment.getActivity().findViewById(R.id.edt_ctz_institution_another);
-        enableView(editText, checked);
-        if(!checked){
-            fillField(editText, "");
-        }
-    }
-
-    private void enableFamilyVisit(int id){
-        boolean checked = id == R.id.rgrp_ctz_family_visit_y;
-        EditText editText = (EditText)fragment.getActivity().findViewById(R.id.edt_ctz_family_visit);
-        enableView(editText, checked);
-        if(!checked){
-            fillField(editText, "");
-        }
-    }
-
-    private void enableHygiene(int id){
-        boolean checked = id == R.id.rgrp_ctz_hygiene_y;
-        CheckBox chbBath = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_bath);
-        CheckBox chbSanitary = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_sanitary);
-        CheckBox chbOral = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_oral);
-        CheckBox chbAnother = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_hygiene_another);
-        enableView(checked, chbBath, chbSanitary, chbOral, chbAnother);
-
-        if(!checked){
-            //fillField(editText, "");
-        }
+    public boolean isRequiredFieldsFilled(IRequired rgrpStreet) {
+        return applyError(rgrpStreet);
     }
 
     private class OnChangeListener implements RadioGroup.OnCheckedChangeListener{
@@ -155,6 +128,33 @@ public class CitizenStepFourController extends StepsController{
                 case R.id.rgrp_ctz_family_visit: enableFamilyVisit(id); break;
                 case R.id.rgrp_ctz_hygiene: enableHygiene(id); break;
             }
+        }
+
+        private void enableInstitutionAnother(int id){
+            boolean checked = id == R.id.rgrp_ctz_institution_another_y;
+            EditText editText = (EditText)fragment.getActivity().findViewById(R.id.edt_ctz_institution_another);
+            enableView(editText, checked);
+            if(!checked){
+                fillField(editText, "");
+            }
+        }
+
+        private void enableFamilyVisit(int id){
+            boolean checked = id == R.id.rgrp_ctz_family_visit_y;
+            EditText editText = (EditText)fragment.getActivity().findViewById(R.id.edt_ctz_family_visit);
+            enableView(editText, checked);
+            if(!checked){
+                fillField(editText, "");
+            }
+        }
+
+        private void enableHygiene(int id){
+            boolean checked = id == R.id.rgrp_ctz_hygiene_y;
+            CheckBox chbBath = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_bath);
+            CheckBox chbSanitary = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_sanitary);
+            CheckBox chbOral = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_oral);
+            CheckBox chbAnother = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_hygiene_another);
+            enableView(checked, chbBath, chbSanitary, chbOral, chbAnother);
         }
     }
 }

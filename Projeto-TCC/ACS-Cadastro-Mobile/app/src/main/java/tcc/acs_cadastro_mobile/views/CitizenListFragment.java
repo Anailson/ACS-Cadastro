@@ -14,14 +14,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.controllers.CitizenController;
+import tcc.acs_cadastro_mobile.controllers.CitizenListController;
 
-public class CitizenFragment extends Fragment {
+public class CitizenListFragment extends Fragment {
 
     private ListView lvwCitizens;
-    private CitizenController controller;
+    private CitizenListController controller;
 
-    public CitizenFragment () {}
+    public CitizenListFragment() {}
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -40,9 +40,9 @@ public class CitizenFragment extends Fragment {
         FloatingActionButton btnAddCitizen = (FloatingActionButton) view.findViewById(R.id.fab_add_citizen);
         lvwCitizens = (ListView) view.findViewById(R.id.lvw_citizens);
 
-        controller = new CitizenController(getContext());
+        controller = new CitizenListController(getContext());
 
-        edtSearch.addTextChangedListener(controller.getTextChangedListener(lvwCitizens));
+        edtSearch.addTextChangedListener(controller.getSearchTextChanged(lvwCitizens));
         btnAddCitizen.setOnClickListener(controller.getOnClickListener());
         return view;
     }

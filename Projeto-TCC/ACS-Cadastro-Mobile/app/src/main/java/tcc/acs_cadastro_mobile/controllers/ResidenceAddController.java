@@ -3,6 +3,8 @@ package tcc.acs_cadastro_mobile.controllers;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -10,56 +12,145 @@ import android.widget.TextView;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
+import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
+import tcc.acs_cadastro_mobile.models.ResidenceModel;
 import tcc.acs_cadastro_mobile.views.ResidenceStepOneFragment;
+import tcc.acs_cadastro_mobile.views.ResidenceStepThreeFragment;
+import tcc.acs_cadastro_mobile.views.ResidenceStepTwoFragment;
 
-public class ResidenceAddController {
+public class ResidenceAddController  {
 
     private final int FIRST_STEP = 1;
     private final int SECOND_STEP = 2;
+    private final int THIRD_STEP = 3;
 
     private int actualMenu;
+    private Fragment actualStep;
     private AppCompatActivity parent;
     private AddressDataModel addressData;
     private HousingConditionsModel housingConditions;
+    private HousingHistoricalModel[] housingHistorical;
+    private View.OnClickListener clickListener;
 
     public ResidenceAddController(AppCompatActivity view){
         this.actualMenu = FIRST_STEP;
         this.parent = view;
     }
 
+    public View.OnClickListener getClickListener() {
+        if(clickListener == null){
+            clickListener = new OnClickListener();
+        }
+        return clickListener;
+    }
+
+    public void send(AddressDataModel addressData){
+        this.addressData = addressData;
+    }
+
+    public void send(HousingConditionsModel housingConditions){
+        this.housingConditions = housingConditions;
+    }
+
+    public void send(HousingHistoricalModel[] housingHistorical){
+        this.housingHistorical = housingHistorical;
+    }
+
     public void setStepOne(){
         shiftToStepOne();
     }
 
-    private void shiftToStepOne(){
-        Button btnBack = (Button) parent.findViewById(R.id.btn_rsd_add_back);
-        btnBack.setEnabled(false);
+    private void nextMenu(){
 
-        updateProgressBar(FIRST_STEP);
-        replaceTitle(R.string.txt_rsd_data_1);
-        replaceStep(ResidenceStepOneFragment.newInstance(addressData));
-        actualMenu = FIRST_STEP;
+        switch (actualMenu){
+            case FIRST_STEP: shiftToStepTwo(); break;
+            case SECOND_STEP: shiftToStepThree(); break;
+            case THIRD_STEP: save(); break;
+        }
     }
 
-    private void updateProgressBar(final int progress){
-        final ProgressBar pBar = (ProgressBar) parent.findViewById(R.id.pbar_residence);
+    private void previousMenu(){
+        switch (actualMenu){
+            case SECOND_STEP: shiftToStepOne(); break;
+            case THIRD_STEP: shiftToStepTwo(); break;
+        }
+    }
+
+    private void save(){
+        if(actualMenu == SECOND_STEP){
+            actualStep.onDetach();
+            new ResidenceModel(addressData, housingConditions, housingHistorical);
+            Log.e("Save Residence", addressData.toString() + "\n"
+                    + housingConditions.toString() + "\n" + housingHistorical.toString());
+        }
+    }
+
+    private void shiftToStepOne(){
+        parent.findViewById(R.id.btn_rsd_add_back).setEnabled(false);
+
+        actualMenu = FIRST_STEP;
+        actualStep = ResidenceStepOneFragment.newInstance(addressData);
+        updateView(R.string.txt_rsd_data_1, actualStep, actualMenu);
+    }
+
+    private void shiftToStepTwo(){
+        parent.findViewById(R.id.btn_rsd_add_back).setEnabled(true);
+        ((Button) parent.findViewById(R.id.btn_rsd_add_progress)).setText(R.string.btn_progress);
+
+        actualMenu = SECOND_STEP;
+        actualStep = ResidenceStepTwoFragment.newInstance(housingConditions);
+        updateView(R.string.txt_rsd_data_2, actualStep, actualMenu);
+    }
+
+    private void shiftToStepThree(){
+        ((Button) parent.findViewById(R.id.btn_rsd_add_progress)).setText(R.string.btn_save);
+
+        actualMenu = THIRD_STEP;
+        actualStep = ResidenceStepThreeFragment.newInstance(housingHistorical);
+        updateView(R.string.txt_rsd_data_3, actualStep, actualMenu);
+    }
+
+    private void updateView(int title, Fragment fragment, int value){
+        replaceStep(fragment);
+        replaceTitle(title);
+        updateProgressBar(value);
+    }
+
+    private void replaceStep(final Fragment fragment){
         new Thread(){
             @Override
             public void run() {
+                FragmentManager manager = parent.getSupportFragmentManager();
+                manager.beginTransaction().replace(R.id.frame_rsd_add, fragment).commit();
                 super.run();
-                pBar.setProgress(progress);
             }
         }.start();
     }
 
     private void replaceTitle(final int id){
-        TextView txtTitle = (TextView) parent.findViewById(R.id.txt_rsd_add);
-        txtTitle.setText(id);
+        ((TextView) parent.findViewById(R.id.txt_rsd_add)).setText(id);
     }
 
-    private void replaceStep(final Fragment fragment){
-        FragmentManager manager = parent.getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frame_rsd_add, fragment).commit();
+    private void updateProgressBar(final int progress){
+
+        new Thread(){
+            @Override
+            public void run() {
+                ProgressBar pBar = (ProgressBar) parent.findViewById(R.id.pbar_residence);
+                pBar.setProgress(progress);
+                super.run();
+            }
+        }.start();
     }
 
+    private class OnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view) {
+            switch(view.getId()){
+                case R.id.btn_rsd_add_back: previousMenu(); break;
+                case R.id.btn_rsd_add_progress: nextMenu(); break;
+            }
+        }
+    }
 }

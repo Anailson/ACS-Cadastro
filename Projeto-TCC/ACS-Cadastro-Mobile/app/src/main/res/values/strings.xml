@@ -1,4 +1,17 @@
 <resources>
+
+    <!-- Constants Integers-->
+    <integer name="INDEX">0</integer>
+    <integer name="VALUE">1</integer>
+    <integer name="AL">1</integer>
+    <integer name="BA">2</integer>
+    <integer name="SE">3</integer>
+    <integer name="RURAL">2</integer>
+    <integer name="INT_DEFAULT_VALUE">-1</integer>
+
+    <!-- Constants Strings-->
+    <string name="STRING_DEFAULT_VALUE">No value</string>;
+
     <!-- Titles -->
     <string name="app_name">ACS-Cadastro</string>
     <string name="title_activity_add_citizen">Adicionar Ciadadão</string>
@@ -69,6 +82,7 @@
     <string name="txt_ctz_cancer">Tem ou teve câncer?</string>
     <string name="txt_ctz_mental_health">Fez ou faz tratamento com psquiatra
             ou teve internação por problema de saúde mental?</string>
+    <string name="txt_ctz_other_practices">Usa outras práticas integrativas e complementares?</string>
     <string name="txt_ctz_is_in_bed">Está acamado?</string>
     <string name="txt_ctz_is_domiciled">Está dommiciliado?</string>
     <string name="txt_ctz_interment">Teve alguma internação nos últimos 12 meses?</string>
@@ -104,9 +118,9 @@
     <string name="txt_ctz_oral">Higiene bucal</string>
 
     <!-- Residence -->
-
     <string name="txt_rsd_data_1">Endereço</string>
     <string name="txt_rsd_data_2">Condições de moradia</string>
+    <string name="txt_rsd_data_3">Famílias</string>
 
     <string name="txt_rsd_place_type">Tipo do logradouro</string>
     <string name="txt_rsd_place_name">Nome do logradouro</string>
@@ -117,6 +131,35 @@
     <string name="txt_rsd_cep">CEP</string>
     <string name="txt_rsd_home_phone">Telefone residencial</string>
     <string name="txt_rsd_reference_phone">Telefone de referência</string>
+
+    <string name="txt_rsd_housing_situation">Situação de moradia/posse da terra</string>
+    <string name="txt_rsd_location">Localização</string>
+    <string name="txt_rsd_location_if">Em caso de produção rural: condições de posse da terra</string>
+    <string name="txt_rsd_residence_type">Tipo do domicílio</string>
+    <string name="txt_rsd_residents">Total de moradores</string>
+    <string name="txt_rsd_rooms">Total de cômodos</string>
+    <string name="txt_rsd_residence_access">Tipo de acesso ao domicílio</string>
+    <string name="txt_rsd_residence_construction">Material predominante na construção das paredes
+            externas de seu domicílio</string>
+    <string name="txt_rsd_electric_energy">Disponibilidade de energia elétrica?</string>
+    <string name="txt_rsd_water_supply">Tipo de abastecimento de água</string>
+    <string name="txt_rsd_water_treatment">Tratamento de água no domicílio</string>
+    <string name="txt_rsd_bathroom">Forma de escoamento do banheiro ou sanitário</string>
+    <string name="txt_rsd_garbage">Destino do lixo</string>
+    <string name="txt_rsd_pets">Animais no domicílio</string>
+    <string name="txt_rsd_cat">Gato</string>
+    <string name="txt_rsd_dog">Cachorro</string>
+    <string name="txt_rsd_bird">Pássaro</string>
+    <string name="txt_rsd_breeding">Criação (galinha, porco etc)</string>
+    <string name="txt_rsd_pets_total">Quantos?</string>
+    <string name="txt_rsd_family_record">Nº prontuário familiar</string>
+    <string name="txt_rsd_resp_num_sus">Numero do SUS do responsável</string>
+    <string name="txt_rsd_resp_birth_date">Data de nascimento do responsável</string>
+    <string name="txt_rsd_famlily_income">Renda familiar</string>
+    <string name="txt_rsd_lives_since">Reside desde </string>
+    <string name="txt_rsd_n_members">Número de membros da família</string>
+    <string name="txt_rsd_moved">Mudou-se?</string>
+
 
     <!-- Menus -->
     <string name="menu_settings">Settings</string>
@@ -134,6 +177,7 @@
     <string name="btn_progress">Avançar</string>
     <string name="btn_add_citizen">Adicionar novo cidadão</string>
     <string name="btn_add_residence">Adicionar nova residência</string>
+    <string name="btn_new_resp">Adicionar novo responsável</string>
     <string name="btn_sign_in">Sign in or register</string>
 
     <!-- Edit Text Hints -->

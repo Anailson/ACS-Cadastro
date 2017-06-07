@@ -14,8 +14,15 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepThreeController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
+import tcc.acs_cadastro_mobile.persistence.HealthConditionsPersistence;
+import tcc.acs_cadastro_mobile.subModels.Diseases;
+import tcc.acs_cadastro_mobile.subModels.HeartDisease;
+import tcc.acs_cadastro_mobile.subModels.Interment;
+import tcc.acs_cadastro_mobile.subModels.KidneyDisease;
+import tcc.acs_cadastro_mobile.subModels.Plant;
+import tcc.acs_cadastro_mobile.subModels.Pregnant;
+import tcc.acs_cadastro_mobile.subModels.RespiratoryDisease;
 
 public class CitizenStepThreeFragment extends Fragment {
 
@@ -27,7 +34,7 @@ public class CitizenStepThreeFragment extends Fragment {
 
     private RadioGroup rgrpPregnant, rgrpSmoker, rgrpAlcohol, rgrpDrugs, rgrpHypertension, rgrpDiabetes,
             rgrpAvc, rgrpHeartAttack, rgrpLeprosy, rgrpTuberculosis, rgrpCancer, rgrpInBed, rgrpDomiciled,
-            rgrpMentalHealth, rgrpHeartDisease, rgrpKidneyDisease, rgrpRespiratoryDisease,
+            rgrpOtherPractices, rgrpMentalHealth, rgrpHeartDisease, rgrpKidneyDisease, rgrpRespiratoryDisease,
             rgrpInterment, rgrpPlants;
     private EditText edtPregnant, edtInterment, edtPlants;
     private Spinner spnWeight;
@@ -68,6 +75,7 @@ public class CitizenStepThreeFragment extends Fragment {
         rgrpCancer = (RadioGroup) view.findViewById(R.id.rgrp_ctz_cancer);
         rgrpInBed = (RadioGroup) view.findViewById(R.id.rgrp_ctz_in_bed);
         rgrpDomiciled = (RadioGroup) view.findViewById(R.id.rgrp_ctz_domiciled);
+        rgrpOtherPractices = (RadioGroup) view.findViewById(R.id.rgrp_ctz_other_practices);
         rgrpMentalHealth = (RadioGroup) view.findViewById(R.id.rgrp_ctz_mental_health);
         rgrpHeartDisease = (RadioGroup) view.findViewById(R.id.rgrp_ctz_heart_disease);
         rgrpKidneyDisease = (RadioGroup) view.findViewById(R.id.rgrp_ctz_kidney_disease);
@@ -121,41 +129,32 @@ public class CitizenStepThreeFragment extends Fragment {
 
     private void getFields() {
 
-        String[] pregnant = controller.getPregnant(rgrpPregnant, edtPregnant);
-        String[] weight = controller.getIndexAndValue(spnWeight);
-        boolean smoker = controller.isSmoker(rgrpSmoker);
-        boolean alcohol = controller.isAlcohol(rgrpAlcohol);
-        boolean drugs = controller.isDrugs(rgrpDrugs);
-        boolean hypertension = controller.isHypertension(rgrpHypertension);
-        boolean diabetes = controller.isDiabetes(rgrpDiabetes);
-        boolean avc = controller.isAvc(rgrpAvc);
-        boolean heartAttack = controller.isHeartAttack(rgrpHeartAttack);
-        boolean leprosy = controller.isLeprosy(rgrpLeprosy);
-        boolean tuberculosis = controller.isTuberculosis(rgrpTuberculosis);
-        boolean cancer = controller.isCancer(rgrpCancer);
-        boolean inBend = controller.isInBed(rgrpInBed);
-        boolean domiciled = controller.isDomiciled(rgrpDomiciled);
-        boolean mentalHealth = controller.isMentalHealth(rgrpMentalHealth);
-        boolean[] heartDisease = controller.getHeartDisease(rgrpHeartDisease, chbCardiacInsufficiency,
-                chbHeartAnother, chbHeartDontKnow);
-        boolean[] kidneyDisease = controller.getKidneyDisease(rgrpKidneyDisease, chbRenalInsufficiency,
-                chbKidneyAnother, chbKidneyDontKnow);
-        boolean[] respiratoryDisease = controller.getRespiratoryDisease(rgrpRespiratoryDisease, chbAsthma,
-                chbEmphysema, chbRespiratoryAnother, chbRespiratoryDontKnow);
-        String[] interment = controller.getInterment(rgrpInterment, edtInterment);
-        String[] plants = controller.getPlants(rgrpPlants, edtPlants);
+        Pregnant pregnant = controller.getPregnant(rgrpPregnant, edtPregnant);
+        String weight = controller.getFields(spnWeight);
+        Diseases diseases = controller.getDiseases(rgrpSmoker, rgrpAlcohol, rgrpDrugs,
+                rgrpHypertension, rgrpDiabetes, rgrpAvc, rgrpHeartAttack, rgrpLeprosy, rgrpTuberculosis,
+                rgrpCancer, rgrpInBed, rgrpDomiciled, rgrpOtherPractices, rgrpMentalHealth);
+        HeartDisease heartDisease = controller.getHeartDisease(rgrpHeartDisease,
+                chbCardiacInsufficiency, chbHeartAnother, chbHeartDontKnow);
+        KidneyDisease kidneyDisease = controller.getKidneyDisease(rgrpKidneyDisease,
+                chbRenalInsufficiency, chbKidneyAnother, chbKidneyDontKnow);
+        RespiratoryDisease respiratoryDisease = controller.getRespiratoryDisease(
+                rgrpRespiratoryDisease, chbAsthma, chbEmphysema, chbRespiratoryAnother, chbRespiratoryDontKnow);
+        Interment interment = controller.getInterment(rgrpInterment, edtInterment);
+        Plant plants = controller.getPlant(rgrpPlants, edtPlants);
 
-        healthConditions = new HealthConditionsModel(pregnant, weight, smoker, alcohol, drugs,
-                hypertension, diabetes, avc, heartAttack, leprosy, tuberculosis, cancer, inBend, domiciled,
-                mentalHealth, heartDisease, kidneyDisease, respiratoryDisease, interment, plants);
+
+        healthConditions = HealthConditionsPersistence.getInstance(pregnant, weight, diseases, heartDisease,
+                kidneyDisease, respiratoryDisease, interment, plants);
+
         citizenData.send(healthConditions);
     }
 
     private void fillFields() {
 
-        controller.fillPregnant(edtPregnant, healthConditions.getPregnant()[CitizenModel.VALUE],
+        controller.fillPregnant(edtPregnant, healthConditions.getMaternity(),
                 rgrpPregnant, healthConditions.isPregnant());
-        controller.fillField(spnWeight, healthConditions.getWeight()[CitizenModel.INDEX]);
+        controller.fillField(spnWeight, controller.getIndex(healthConditions.getWeight(), R.array.weight));
         controller.fillSmoker(rgrpSmoker, healthConditions.isSmoker());
         controller.fillAlcohol(rgrpAlcohol, healthConditions.isAlcohol());
         controller.fillDrugs(rgrpDrugs, healthConditions.isDrugs());
@@ -168,17 +167,18 @@ public class CitizenStepThreeFragment extends Fragment {
         controller.fillCancer(rgrpCancer, healthConditions.isCancer());
         controller.fillInBed(rgrpInBed, healthConditions.isInBend());
         controller.fillDomiciled(rgrpDomiciled, healthConditions.isDomiciled());
+        controller.fillOtherPractices(rgrpOtherPractices, healthConditions.isOtherPractices());
         controller.fillMentalHealth(rgrpMentalHealth, healthConditions.isMentalHealth());
         controller.fillHeartDisease(rgrpHeartDisease, healthConditions.isHeartDisease(),
-                healthConditions.getHeartDisease(), chbCardiacInsufficiency, chbHeartAnother, chbHeartDontKnow);
+                healthConditions.getHeartDiseases(), chbCardiacInsufficiency, chbHeartAnother, chbHeartDontKnow);
         controller.fillKidneyDisease(rgrpKidneyDisease, healthConditions.isKidneyDisease(),
-                healthConditions.getKidneyDisease(), chbRenalInsufficiency, chbKidneyAnother, chbKidneyDontKnow);
+                healthConditions.getKidneyDiseases(), chbRenalInsufficiency, chbKidneyAnother, chbKidneyDontKnow);
         controller.fillRespiratoryDisease(rgrpRespiratoryDisease, healthConditions.isRespiratoryDisease(),
-                healthConditions.getRespiratoryDisease(), chbAsthma, chbEmphysema, chbRespiratoryAnother,
+                healthConditions.getRespiratoryDiseases(), chbAsthma, chbEmphysema, chbRespiratoryAnother,
                 chbRespiratoryDontKnow);
-        controller.fillInterment(edtInterment, healthConditions.getInterment()[CitizenModel.VALUE],
+        controller.fillInterment(edtInterment, healthConditions.getIntermentValue(),
                 rgrpInterment, healthConditions.isInterment());
-        controller.fillPlants(rgrpPlants, healthConditions.isPlants(), edtPlants,
-                healthConditions.getPlants()[CitizenModel.VALUE]);
+        controller.fillPlants(rgrpPlants, healthConditions.isPlant(), edtPlants,
+                healthConditions.getPlantValue());
     }
 }

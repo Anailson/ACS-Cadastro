@@ -2,104 +2,202 @@ package tcc.acs_cadastro_mobile.models;
 
 import java.io.Serializable;
 
-public class SocialDemographicModel implements Serializable {
+import io.realm.Realm;
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.subModels.CommunityTraditional;
+import tcc.acs_cadastro_mobile.subModels.Deficiency;
+import tcc.acs_cadastro_mobile.subModels.EducationEmployment;
+import tcc.acs_cadastro_mobile.subModels.HealthAndGroup;
+import tcc.acs_cadastro_mobile.subModels.SexualOrientation;
 
-    private String[] kinship, education, employment, kids09, sexualOrientation, communityTraditional;
-    private String occupation;
-    private boolean school, caregiver, communityGroup, healthPlan;//, communityTraditionalYN, sexualOrientationYN, deficiencyYN;
-    private boolean[] deficiency;
+public class SocialDemographicModel extends RealmObject implements Serializable {
 
-    public SocialDemographicModel() {
-        kinship = education = employment = kids09 = communityTraditional = sexualOrientation
-                = new String[]{"" + CitizenModel.INT_DEFAULT_VALUE, CitizenModel.STRING_DEFAULT_VALUE};
-        occupation = CitizenModel.STRING_DEFAULT_VALUE;
-        school = caregiver = communityGroup = healthPlan = false;
-        deficiency = new boolean[]{false, false, false, false, false, false};
+    private String kinship, kids09;
+    private EducationEmployment educationEmployment;
+    private HealthAndGroup healthAndGroup;
+    private CommunityTraditional communityTraditional;
+    private SexualOrientation sexualOrientation;
+    private Deficiency deficiency;
+
+
+    public static SocialDemographicModel newInstance(Realm realm, String kinship, EducationEmployment educationEmployment,
+            HealthAndGroup healthAndGroup, String kids09, CommunityTraditional communityTraditional,
+             SexualOrientation sexualOrientation, Deficiency deficiency){
+
+        realm.beginTransaction();
+        SocialDemographicModel model = realm.createObject(SocialDemographicModel.class);
+        model.setKinship(kinship);
+        model.setEducationEmployment(educationEmployment);
+        model.setHealthAndGroup(healthAndGroup);
+        model.setKids09(kids09);
+        model.setCommunityTraditional(communityTraditional);
+        model.setSexualOrientation(sexualOrientation);
+        model.setDeficiency(deficiency);
+        realm.commitTransaction();
+        return model;
     }
 
-    public SocialDemographicModel(String[] kinship, String occupation, boolean school, String[] education,
-                                  String[] employment, String[] kids09, boolean caregiver, boolean communityGroup,
-                                  boolean healthPlan, String[] communityTraditional, String[] sexualOrientation,
-                                  boolean[] deficiency) {
-        this.kinship = kinship;
-        this.occupation = occupation;
-        this.school = school;
-        this.education = education;
-        this.employment = employment;
-        this.kids09 = kids09;
-        this.caregiver = caregiver;
-        this.communityGroup = communityGroup;
-        this.healthPlan = healthPlan;
-        this.communityTraditional = communityTraditional;
-        this.sexualOrientation = sexualOrientation;
-        this.deficiency = deficiency;
+    public static EducationEmployment getEducationEmployment(Realm realm, String occupation,
+                                                             String education, String employment) {
+        realm.beginTransaction();
+        EducationEmployment object = realm.createObject(EducationEmployment.class);
+        object.setOccupation(occupation);
+        object.setEducation(education);
+        object.setEmployment(employment);
+        realm.commitTransaction();
+        return object;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public static HealthAndGroup getHealthAndGroup(Realm realm, boolean caregiver, boolean communityGroup,
+                                                   boolean healthPlan) {
+        realm.beginTransaction();
+        HealthAndGroup object = realm.createObject(HealthAndGroup.class);
+        object.setCaregiver(caregiver);
+        object.setCommunityGroup(communityGroup);
+        object.setHealthPlan(healthPlan);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String[] getKinship() {
+    public static CommunityTraditional getCommunityTraditional(Realm realm, boolean isCommunityTraditional,
+                                                               String value) {
+        realm.beginTransaction();
+        CommunityTraditional object = realm.createObject(CommunityTraditional.class);
+        object.setCommunityTraditional(isCommunityTraditional);
+        object.setValue(value);
+        realm.commitTransaction();
+        return object;
+    }
+
+    public static SexualOrientation getSexualOrientation(Realm realm, boolean isOrientation,
+                                                         String value) {
+        realm.beginTransaction();
+        SexualOrientation object = realm.createObject(SexualOrientation.class);
+        object.setSexualOrientation(isOrientation);
+        object.setValue(value);
+        realm.commitTransaction();
+        return object;
+    }
+
+    public static Deficiency getDeficiency(Realm realm, boolean isDeficiency, boolean[] deficiencys) {
+        realm.beginTransaction();
+        Deficiency object = realm.createObject(Deficiency.class);
+        object.setDeficiency(isDeficiency);
+        object.setDeficiencys(deficiencys);
+        realm.commitTransaction();
+        return object;
+    }
+
+
+    public String getKinship() {
         return kinship;
     }
 
+    public void setKinship(String kinship) {
+        this.kinship = kinship;
+    }
+
+    public EducationEmployment getEducationEmployment() {
+        return educationEmployment;
+    }
+
+    public void setEducationEmployment(EducationEmployment educationEmployment) {
+        this.educationEmployment = educationEmployment;
+    }
+
+    public String getKids09() {
+        return kids09;
+    }
+
+    public void setKids09(String kids09) {
+        this.kids09 = kids09;
+    }
+
+    public HealthAndGroup getHealthAndGroup() {
+        return healthAndGroup;
+    }
+
+    public void setHealthAndGroup(HealthAndGroup healthAndGroup) {
+        this.healthAndGroup = healthAndGroup;
+    }
+
+    public CommunityTraditional getCommunityTraditional(){
+        return communityTraditional;
+    }
+
+    public void setCommunityTraditional(CommunityTraditional communityTraditional) {
+        this.communityTraditional = communityTraditional;
+    }
+
+    public SexualOrientation getSexualOrientation(){
+        return sexualOrientation;
+    }
+
+    public void setSexualOrientation(SexualOrientation sexualOrientation){
+        this.sexualOrientation = sexualOrientation;
+    }
+
+    public Deficiency getDeficiency() {
+        return deficiency;
+    }
+
+    public void setDeficiency(Deficiency deficiency){
+        this.deficiency = deficiency;
+    }
+
     public String getOccupation() {
-        return occupation;
+        return getEducationEmployment().getOccupation();
     }
 
     public boolean isSchool() {
-        return school;
+        return getEducationEmployment().isSchool();
     }
 
-    public String[] getEducation() {
-        return education;
+    public String getEducation() {
+        return getEducationEmployment().getEducation();
     }
 
-    public String[] getEmployment() {
-        return employment;
+    public String getEmployment() {
+        return getEducationEmployment().getEmployment();
     }
 
-    public String[] getKids() {
+    public String getKids() {
         return kids09;
     }
 
     public boolean isCaregiver() {
-        return caregiver;
+        return getHealthAndGroup().isCaregiver();
     }
 
     public boolean isCommunityGroup() {
-        return communityGroup;
+        return getHealthAndGroup().isCommunityGroup();
     }
 
     public boolean isHealthPlan() {
-        return healthPlan;
+        return healthAndGroup.isHealthPlan();
     }
 
     public boolean isCommunityTraditional() {
-        return !communityTraditional[CitizenModel.INDEX].equals(CitizenModel.INT_DEFAULT_VALUE + "");
+        return getCommunityTraditional().isCommunityTraditional();
     }
 
-    public String[] getCommunityTraditional() {
-        return communityTraditional;
+    public String getCommunityName() {
+        return getCommunityTraditional().getValue();
     }
 
     public boolean isSexualOrientation() {
-        return !sexualOrientation[CitizenModel.INDEX].equals(CitizenModel.INT_DEFAULT_VALUE + "");
+        return getSexualOrientation().isSexualOrientation();
     }
 
-    public String[] getSexualOrientation() {
-        return sexualOrientation;
+    public String getOrientation() {
+        return getSexualOrientation().getValue();
     }
 
     public boolean isDeficiency() {
-        if (deficiency.length != 6) {
-            throw new IllegalStateException("Array 'deficiency' must be 6 index. It currently has " + deficiency.length);
-        }
-        return deficiency[0];
+        return getDeficiency().isDeficiency();
     }
 
-    public boolean[] getDeficiency() {
-        return deficiency;
+    public boolean[] getDeficiencys(){
+        return getDeficiency().getDeficiencys();
     }
 }

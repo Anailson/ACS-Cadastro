@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorAccent">#ffa01a</color>
+    <color name="colorAccent">#014ddc</color>
 
-    <color name="colorPrimary">@color/colorAccent</color>
-    <color name="colorPrimaryLight">#fdae3f</color>
-    <color name="colorPrimaryDark">#fd9500</color>
+    <color name="color_default">@android:color/primary_text_light_nodisable</color>
+    <color name="color_primary">@color/colorAccent</color>
+    <color name="color_primary_light">#2770fa</color>
+    <color name="color_primary_dark">#023493</color>
 
     <color name="background">#a7b6f9</color>
+    <color name="error">#D32F2F</color>
+
+    <color name="ex_01">#129101</color>
+    <color name="ex_02">#9500b3</color>
+    <color name="ex_03">#011b93</color>
+    <color name="ex_04">#797a7b</color>
 </resources>

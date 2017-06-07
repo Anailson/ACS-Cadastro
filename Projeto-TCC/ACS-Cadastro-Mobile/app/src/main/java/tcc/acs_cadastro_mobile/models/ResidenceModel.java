@@ -13,6 +13,7 @@ public class ResidenceModel {
 
     private AddressDataModel addressData;
     private HousingConditionsModel housingConditions;
+    private HousingHistoricalModel[] housingHistorical;
 
     public ResidenceModel(String address){
         this.address = address;
@@ -20,9 +21,26 @@ public class ResidenceModel {
         this.cep = CEP_NUM * count;
         this.homePhone = new Random().nextInt(CEP_NUM);
         this.referencePhone = homePhone + CEP_NUM;
+    }
 
-        this.addressData = new AddressDataModel();
-        this.housingConditions = new HousingConditionsModel();
+    public ResidenceModel (AddressDataModel addressData, HousingConditionsModel housingConditions,
+                            HousingHistoricalModel[] housingHistorical){
+        this.addressData = addressData;
+        this.housingConditions = housingConditions;
+        this.housingHistorical = housingHistorical;
+    }
+
+
+    public boolean addressContainsKey(String key){
+        return containsKey(address, key);
+    }
+
+    public boolean cepContainsKey(String key){
+        return containsKey(String.valueOf(cep), key);
+    }
+
+    private boolean containsKey(String value, String key){
+        return value.toUpperCase().contains(key.toUpperCase().trim());
     }
 
     public String getAddress(){

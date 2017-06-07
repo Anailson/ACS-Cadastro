@@ -30,7 +30,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:layout_weight="0.8" />
 
-                    <RadioGroup
+                    <tcc.acs_cadastro_mobile.required.RequiredRadioGroup
                         android:id="@+id/rgrp_ctz_street"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -53,7 +53,7 @@
                             android:layout_gravity="right"
                             android:checked="false"
                             android:text="@string/txt_no" />
-                    </RadioGroup>
+                    </tcc.acs_cadastro_mobile.required.RequiredRadioGroup>
 
                 </LinearLayout>
 

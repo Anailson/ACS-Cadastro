@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:id="@+id/pbar_residence"
             android:indeterminate="false"
-            android:max="2" />
+            android:max="3" />
 
     </LinearLayout>
 

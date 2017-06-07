@@ -13,16 +13,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.controllers.CitizenController;
-import tcc.acs_cadastro_mobile.controllers.ResidenceController;
+import tcc.acs_cadastro_mobile.controllers.ResidenceListController;
 
 
-public class ResidenceFragment extends Fragment {
+public class ResidenceListFragment extends Fragment {
 
     private ListView lvwResidences;
-    private ResidenceController controller;
+    private ResidenceListController controller;
 
-    public ResidenceFragment(){}
+    public ResidenceListFragment(){}
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -42,8 +41,9 @@ public class ResidenceFragment extends Fragment {
         FloatingActionButton btnAddResidence = (FloatingActionButton) view.findViewById(R.id.fab_add_residence);
         lvwResidences = (ListView) view.findViewById(R.id.lvw_residence);
 
-        controller = new ResidenceController(getContext());
+        controller = new ResidenceListController(getContext());
 
+        edtSearch.addTextChangedListener(controller.getSearchTextChanged(lvwResidences));
         btnAddResidence.setOnClickListener(controller.getClickListener());
 
         return view;

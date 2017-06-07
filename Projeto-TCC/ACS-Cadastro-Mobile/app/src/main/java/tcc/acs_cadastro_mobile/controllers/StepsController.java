@@ -1,52 +1,100 @@
 package tcc.acs_cadastro_mobile.controllers;
 
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import tcc.acs_cadastro_mobile.interfaces.IRequired;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 
 public class StepsController {
 
-    public final boolean isYesGroup(RadioGroup radioGroup, int id) {
+    private Fragment fragment;
+    boolean hasError;
+
+    StepsController(Fragment fragment){
+        this.fragment = fragment;
+    }
+
+    public int getIndex(String value, int idArray) {
+
+        String[] array = fragment.getResources().getStringArray(idArray);
+        for(int i = 0; i < array.length; i++){
+            if(value.toUpperCase().equals(array[i].toUpperCase())){
+                return i;
+            }
+        }
+        throw new IllegalArgumentException("Value " + value + " was not founded");
+    }
+
+    final boolean applyError(IRequired required){
+        return applyError(required, "", "");
+    }
+
+    final boolean  applyError(IRequired required, String match){
+        return applyError(required, match, "");
+    }
+
+    final boolean  applyError(IRequired required, String match, String msg){
+
+        if (required.isInvalid(match)) {
+            required.setError(msg);
+            hasError = false;
+        } else {
+            required.clearError();
+        }
+        return hasError;
+    }
+
+    final boolean isYesGroup(RadioGroup radioGroup, int id) {
         return radioGroup.getCheckedRadioButtonId() == id;
+    }
+
+    public String getFields(EditText editText){
+        return editText.getText().toString();
     }
 
     public String[] getFields(boolean checked, EditText editText) {
 
+        String value = CitizenModel.STRING_DEFAULT_VALUE;
         if (checked) {
-            return new String[]{"1", editText.getText().toString()};
+            value = editText.getText().toString();
         }
-        return new String[]{"" + CitizenModel.INT_DEFAULT_VALUE, CitizenModel.STRING_DEFAULT_VALUE};
+        return new String[]{Boolean.toString(checked), value};
     }
 
     public final String[] getFields(boolean checked, Spinner spinner){
+        String value = CitizenModel.STRING_DEFAULT_VALUE;
         if(checked){
-            return new String[]{""+spinner.getSelectedItemPosition(), spinner.getSelectedItem().toString()};
+            value = spinner.getSelectedItem().toString();
         }
-        return new String[]{"" + CitizenModel.INT_DEFAULT_VALUE, CitizenModel.STRING_DEFAULT_VALUE};
+        return new String[]{Boolean.toString(checked), value};
     }
-
 
     public boolean[] getFields(boolean checked, CheckBox... checkBoxes) {
         if (checked) {
-            boolean[] values = new boolean[checkBoxes.length + 1];
-            values[0] = true;
-            for (int i = 0; i < checkBoxes.length; i++) {
-                values[i + 1] = checkBoxes[i].isChecked();
-            }
-            return values;
+           return getFields(checkBoxes);
         }
-        return new boolean[checkBoxes.length + 1];
+        return new boolean[checkBoxes.length];
+    }
+
+    public boolean[] getFields(CheckBox... checkBoxes) {
+
+        boolean[] values = new boolean[checkBoxes.length];
+        for (int i = 0; i < checkBoxes.length; i++) {
+            values[i] = checkBoxes[i].isChecked();
+        }
+        return values;
     }
 
     public final void enableView(View view, boolean enable) {
         view.setEnabled(enable);
     }
 
-    public final void enableView(boolean enable, CheckBox... checkBoxes) {
+    final void enableView(boolean enable, CheckBox... checkBoxes) {
         for (CheckBox checkBox : checkBoxes) {
             enableView(checkBox, enable);
             if (!enable) {
@@ -72,9 +120,9 @@ public class StepsController {
         checkBox.setChecked(checked);
     }
 
-    public final void fillField(CheckBox[] checkBoxes, boolean[] values){
+    public final void fillField(boolean[] values, CheckBox... checkBoxes){
         for(int i = 0; i < checkBoxes.length; i++){
-            checkBoxes[i].setChecked(values[i + 1]);
+            fillField(checkBoxes[i], values[i]);
         }
     }
 
@@ -103,17 +151,17 @@ public class StepsController {
         fillField(radioGroup, checked, yes, no);
     }
 
-    public final void fillField(RadioGroup radioGroup, boolean checked, Spinner spinner, String value, int yes, int no) {
+    public final void fillField(RadioGroup radioGroup, boolean checked, Spinner spinner, int index, int yes, int no) {
         int position = 0;
         if(checked){
-            position = Integer.parseInt(value);
+            position = index;
         }
         fillField(spinner, position);
         fillField(radioGroup, checked, yes, no);
     }
 
     public final void fillField(RadioGroup radioGroup, boolean checked, CheckBox[] checkBoxes, boolean[] values, int yes, int no) {
-        fillField(checkBoxes, values);
+        fillField(values, checkBoxes);
 
         if(!checked){
             for (CheckBox checkBox : checkBoxes) {
@@ -122,10 +170,9 @@ public class StepsController {
         }
         fillField(radioGroup, checked, yes, no);
     }
-
-
-    public final String[] getIndexAndValue(Spinner spinner) {
-        return new String[]{spinner.getSelectedItemPosition() + "", spinner.getSelectedItem().toString()};
+    
+    public final String getFields(Spinner spinner) {
+        return spinner.getSelectedItem().toString();
     }
 
     private int getYesOrNo(boolean checked, int yes, int no){

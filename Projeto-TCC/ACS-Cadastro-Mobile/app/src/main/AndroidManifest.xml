@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication" >
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
@@ -19,10 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.LoginActivity" />
         <activity
-            android:name=".views.CalendarActivity"
-            android:theme="@style/AppTheme.FloatingTheme" />
+            android:name=".views.LoginActivity" />
         <activity
             android:name=".views.CitizenAddActivity"
             android:label="@string/title_activity_add_citizen"
@@ -31,6 +30,12 @@
             android:name=".views.ResidenceAddActivity"
             android:label="@string/title_activity_add_residence"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.CalendarActivity"
+            android:theme="@style/AppTheme.FloatingTheme" />
+        <activity
+            android:name=".views.NewResponsibleActivity"
+            android:theme="@style/AppTheme.FloatingTheme" />
         <activity
             android:name=".views.ConfirmSaveCitizenActivity"
             android:theme="@style/AppTheme.FloatingTheme"/>

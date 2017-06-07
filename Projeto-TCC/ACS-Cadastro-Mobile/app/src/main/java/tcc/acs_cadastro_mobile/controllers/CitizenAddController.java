@@ -1,9 +1,6 @@
 package tcc.acs_cadastro_mobile.controllers;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,14 +15,14 @@ import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
 import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
 import tcc.acs_cadastro_mobile.models.StreetSituationModel;
-import tcc.acs_cadastro_mobile.views.CitizenAddActivity;
+import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 import tcc.acs_cadastro_mobile.views.CitizenStepFourFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepOneFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepThreeFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepTwoFragment;
 import tcc.acs_cadastro_mobile.views.ConfirmSaveCitizenActivity;
 
-public class CitizenAddController  {
+public class CitizenAddController {
 
     private final int FIRST_STEP = 1;
     private final int SECOND_STEP = 2;
@@ -77,10 +74,21 @@ public class CitizenAddController  {
     private void nextMenu(){
 
         switch (actualMenu){
-            case FIRST_STEP: shiftToStepTwo(); break;
-            case SECOND_STEP: shiftToStepThree(); break;
+            case FIRST_STEP:
+                if(((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
+                    shiftToStepTwo();
+                }
+                break;
+            case SECOND_STEP:
+                if(((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
+                    shiftToStepThree();
+                }
+                break;
             case THIRD_STEP: shiftToStepFour(); break;
-            case FOURTH_STEP: save(); break;
+            case FOURTH_STEP:
+                if(((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
+                    save();
+                }
         }
     }
 
@@ -95,22 +103,15 @@ public class CitizenAddController  {
     private void save(){
 
         if(actualMenu == FOURTH_STEP) {
-
             actualStep.onDetach();
-            CitizenModel citizen = new CitizenModel(personalData, socialDemographicData, healthConditions, streetSituation);
-            new SaveCitizen(actualStep.getContext()).execute(citizen);
+            CitizenModel citizen = CitizenPersistence.getInstance(personalData, socialDemographicData,
+                    healthConditions, streetSituation);
+            new SaveCitizen().save(citizen);
         }
     }
 
-    private void showConfirmDialog(String name){
-
-        Intent intent = new Intent(parent, ConfirmSaveCitizenActivity.class);
-        intent.putExtra(ConfirmSaveCitizenActivity.SAVE_CITIZEN, name);
-        parent.startActivity(intent);
-        parent.finish();
-    }
-
     private void shiftToStepOne(){
+
         Button btnBack = (Button) parent.findViewById(R.id.btn_ctz_add_back);
         btnBack.setEnabled(false);
 
@@ -187,41 +188,22 @@ public class CitizenAddController  {
             }
         }
     }
-    private class SaveCitizen extends AsyncTask<CitizenModel, Void, String[]>{
+    private class SaveCitizen {
 
-        private ProgressDialog progressDialog;
+        void save(CitizenModel citizen){
 
-        public SaveCitizen(Context context){
-            progressDialog = new ProgressDialog(context);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setCancelable(true);
-            progressDialog.setTitle("Salvando os dados...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected String[] doInBackground(CitizenModel... citizens) {
-            CitizenModel citizen = citizens[0];
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            CitizenModel saved = CitizenPersistence.save(citizen);
+            if(saved != null){
+                showConfirmDialog(saved.getName());
             }
-
-            return new String[]{String.valueOf(citizen.save()), citizen.getName()};
         }
 
-        @Override
-        protected void onPostExecute(String[] values) {
-            super.onPostExecute(values);
-            if(Boolean.parseBoolean(values[0])){
-                progressDialog.cancel();
-                showConfirmDialog(values[1]);
-            }
+        private void showConfirmDialog(String name){
+
+            Intent intent = new Intent(parent, ConfirmSaveCitizenActivity.class);
+            intent.putExtra(ConfirmSaveCitizenActivity.SAVE_CITIZEN, name);
+            parent.startActivity(intent);
+            parent.finish();
         }
     }
 }

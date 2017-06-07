@@ -18,7 +18,7 @@ public class ConfirmSaveCitizenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_confirm_save_citizen);
+        setContentView(R.layout.activity_float_confirm_save_citizen);
 
         ConfirmSaveCitizenController controller = new ConfirmSaveCitizenController(this);
         Button btnOk = (Button) findViewById(R.id.btn_ctz_save_confirm);

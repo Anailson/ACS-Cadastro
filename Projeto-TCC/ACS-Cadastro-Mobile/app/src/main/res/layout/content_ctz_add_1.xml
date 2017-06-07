@@ -29,7 +29,7 @@
                     android:id="@+id/edt_ctz_num_sus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="number" />
             </LinearLayout>
 
             <LinearLayout
@@ -44,7 +44,7 @@
                     android:text="@string/txt_ctz_name"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <EditText
+                <tcc.acs_cadastro_mobile.required.RequiredEditText
                     android:id="@+id/edt_ctz_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                         android:text="@string/txt_unknow" />
                 </LinearLayout>
 
-                <EditText
+                <tcc.acs_cadastro_mobile.required.RequiredEditText
                     android:id="@+id/edt_ctz_mother_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                     android:text="@string/txt_ctz_birth_date"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <EditText
+                <tcc.acs_cadastro_mobile.required.RequiredEditText
                     android:id="@+id/edt_ctz_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                         android:text="@string/txt_ctz_birth_date"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <EditText
+                    <tcc.acs_cadastro_mobile.required.RequiredEditText
                         android:id="@+id/edt_ctz_respons_birth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
                     android:text="@string/txt_ctz_gender"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <Spinner
+                <tcc.acs_cadastro_mobile.required.RequiredSpinner
                     android:id="@+id/spn_ctz_gender"
                     style="@style/Base.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
@@ -250,7 +250,7 @@
                     android:text="@string/txt_ctz_race"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <Spinner
+                <tcc.acs_cadastro_mobile.required.RequiredSpinner
                     android:id="@+id/spn_ctz_race"
                     style="@style/Base.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
@@ -271,7 +271,7 @@
                     android:text="@string/txt_ctz_nation"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <Spinner
+                <tcc.acs_cadastro_mobile.required.RequiredSpinner
                     android:id="@+id/spn_ctz_nationality"
                     style="@style/Base.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
@@ -331,20 +331,20 @@
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/minimum_gap">
 
-                    <Spinner
+                    <tcc.acs_cadastro_mobile.required.RequiredSpinner
                         android:id="@+id/spn_ctz_uf"
                         style="@style/Base.Widget.AppCompat.Spinner"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.2"
+                        android:layout_weight="0.4"
                         android:spinnerMode="dialog" />
 
-                    <Spinner
+                    <tcc.acs_cadastro_mobile.required.RequiredSpinner
                         android:id="@+id/spn_ctz_city"
                         style="@style/Base.Widget.AppCompat.Spinner"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
+                        android:layout_weight="0.6"
                         android:spinnerMode="dialog" />
                 </LinearLayout>
             </LinearLayout>

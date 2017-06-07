@@ -10,6 +10,7 @@ import tcc.acs_cadastro_mobile.controllers.ResidenceAddController;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
+import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
 
 public class ResidenceAddActivity extends AppCompatActivity implements IResidenceData{
 
@@ -27,19 +28,24 @@ public class ResidenceAddActivity extends AppCompatActivity implements IResidenc
         Button btnProgress = (Button) findViewById(R.id.btn_rsd_add_progress);
         controller = new ResidenceAddController(this);
 
-        //btnBack.setOnClickListener(controller.getClickListener());
-        //btnProgress.setOnClickListener(controller.getClickListener());
+        btnBack.setOnClickListener(controller.getClickListener());
+        btnProgress.setOnClickListener(controller.getClickListener());
 
         controller.setStepOne();
     }
 
     @Override
     public void send(AddressDataModel addressData) {
-        //TODO controller.send(addressData);
+        controller.send(addressData);
     }
 
     @Override
     public void send(HousingConditionsModel housingConditions) {
-        //TODO controller.send(housingConditions);
+        controller.send(housingConditions);
+    }
+
+    @Override
+    public void send(HousingHistoricalModel[] housingHistorical) {
+        controller.send(housingHistorical);
     }
 }

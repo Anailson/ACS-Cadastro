@@ -1,6 +1,7 @@
 package tcc.acs_cadastro_mobile.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +20,18 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
     private List<CitizenModel> citizens;
 
     public CitizenListAdapter(Context context, List<CitizenModel> citizens) {
-        super(context, R.layout.list_citizens, citizens);
+        super(context, R.layout.item_list_citizen, citizens);
 
         this.context = context;
         this.citizens = citizens;
     }
 
+    @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
 
         LayoutInflater layout = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = layout.inflate(R.layout.list_citizens, parent, false);
+        convertView = layout.inflate(R.layout.item_list_citizen, parent, false);
 
         TextView txtName = (TextView) convertView.findViewById(R.id.txt_ctz_name);
         TextView txtSusNum = (TextView) convertView.findViewById(R.id.txt_ctz_sus_num);
@@ -38,10 +40,10 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
 
         CitizenModel citizen = citizens.get(position);
 
-        txtName.setText(citizen.getTestName());
-        txtSusNum.setText(citizen.getSusNum());
+        txtName.setText(citizen.getName());
+        txtSusNum.setText(String.valueOf(citizen.getNumSus()));
         txtAddress.setText(citizen.getAddress());
-        txtPhone.setText(citizen.getPhone());
+        txtPhone.setText(String.valueOf(citizen.getPhone()));
 
         convertView.setOnClickListener(getListener(position));
         return convertView;

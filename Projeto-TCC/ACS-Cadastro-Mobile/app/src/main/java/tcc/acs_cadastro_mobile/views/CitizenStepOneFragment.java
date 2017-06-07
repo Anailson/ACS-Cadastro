@@ -10,13 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 
-import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepOneController;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
+import tcc.acs_cadastro_mobile.subModels.Contact;
+import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
+import tcc.acs_cadastro_mobile.subModels.Mother;
+import tcc.acs_cadastro_mobile.subModels.Nationality;
+import tcc.acs_cadastro_mobile.subModels.ParticularData;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
+import tcc.acs_cadastro_mobile.subModels.Responsible;
+import tcc.acs_cadastro_mobile.persistence.PersonalDataPersistence;
+import tcc.acs_cadastro_mobile.required.RequiredEditText;
+import tcc.acs_cadastro_mobile.required.RequiredSpinner;
 
 public class CitizenStepOneFragment extends Fragment {
 
@@ -26,13 +33,14 @@ public class CitizenStepOneFragment extends Fragment {
     private ICitizenData citizenData;
     private PersonalDataModel personalData;
 
-    private EditText edtNumSus, edtName, edtSocialName, edtMotherName, edtNumNis, edtBirth,
-            edtRespNumSus, edtRespBirth, edtNationBirth, edtPhone, edtEmail;
-    private Spinner spnGender, spnRace, spnNationality, spnUf, spnCity;
+    private RequiredEditText edtName, edtMotherName, edtBirth;
+    private RequiredSpinner spnGender, spnRace, spnNationality, spnUf, spnCity;
+    private EditText edtNumSus, edtSocialName, edtNumNis, edtRespNumSus, edtRespBirth, edtNationBirth,
+            edtPhone, edtEmail;
     private CheckBox chbMotherUnknown, chbResponsible, chbNationBirth;
 
-    public static Fragment newInstance(PersonalDataModel personalData) {
-        Fragment fragment = new CitizenStepOneFragment();
+    public static CitizenStepOneFragment newInstance(PersonalDataModel personalData) {
+        CitizenStepOneFragment fragment = new CitizenStepOneFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(PERSONAL_DATA, personalData);
         fragment.setArguments(bundle);
@@ -54,31 +62,32 @@ public class CitizenStepOneFragment extends Fragment {
         personalData = (PersonalDataModel) getArguments().getSerializable(PERSONAL_DATA);
 
         edtNumSus = (EditText) view.findViewById(R.id.edt_ctz_num_sus);
-        edtName = (EditText) view.findViewById(R.id.edt_ctz_name);
+        edtName = (RequiredEditText) view.findViewById(R.id.edt_ctz_name);
         edtSocialName = (EditText) view.findViewById(R.id.edt_ctz_social_name);
-        edtMotherName = (EditText) view.findViewById(R.id.edt_ctz_mother_name);
+        edtMotherName = (RequiredEditText) view.findViewById(R.id.edt_ctz_mother_name);
         edtNumNis = (EditText) view.findViewById(R.id.edt_ctz_num_nis);
-        edtBirth = (EditText) view.findViewById(R.id.edt_ctz_birth);
+        edtBirth = (RequiredEditText) view.findViewById(R.id.edt_ctz_birth);
         edtRespNumSus = (EditText) view.findViewById(R.id.edt_ctz_respon_num_sus);
-        edtRespBirth = (EditText) view.findViewById(R.id.edt_ctz_respons_birth);
+        edtRespBirth = (RequiredEditText) view.findViewById(R.id.edt_ctz_respons_birth);
         edtNationBirth = (EditText) view.findViewById(R.id.edt_ctz_nation_birth);
         edtPhone = (EditText) view.findViewById(R.id.edt_ctz_phone);
         edtEmail = (EditText) view.findViewById(R.id.edt_ctz_email);
-        spnGender = (Spinner) view.findViewById(R.id.spn_ctz_gender);
-        spnRace = (Spinner) view.findViewById(R.id.spn_ctz_race);
-        spnNationality = (Spinner) view.findViewById(R.id.spn_ctz_nationality);
-        spnUf = (Spinner) view.findViewById(R.id.spn_ctz_uf);
-        spnCity = (Spinner) view.findViewById(R.id.spn_ctz_city);
+        spnGender = (RequiredSpinner) view.findViewById(R.id.spn_ctz_gender);
+        spnRace = (RequiredSpinner) view.findViewById(R.id.spn_ctz_race);
+        spnNationality = (RequiredSpinner) view.findViewById(R.id.spn_ctz_nationality);
+        spnUf = (RequiredSpinner) view.findViewById(R.id.spn_ctz_uf);
+        spnCity = (RequiredSpinner) view.findViewById(R.id.spn_ctz_city);
         chbMotherUnknown = (CheckBox) view.findViewById(R.id.chb_ctz_mother_unknow);
         chbResponsible = (CheckBox) view.findViewById(R.id.chb_ctz_responsible);
         chbNationBirth = (CheckBox) view.findViewById(R.id.chb_ctz_nation_birth);
 
         spnGender.setAdapter(controller.getSpinnerAdapter(R.array.gender));
         spnRace.setAdapter(controller.getSpinnerAdapter(R.array.race));
-        spnNationality.setAdapter(controller.getSpinnerAdapter(R.array.nation));
+        spnNationality.setAdapter(controller.getSpinnerAdapter(R.array.nationality));
         spnUf.setAdapter(controller.getSpinnerAdapter(R.array.uf));
         spnCity.setAdapter(controller.getSpinnerAdapter(R.array.se_cities));
         spnCity.setEnabled(false);
+
 
         if (personalData != null) {
             fillFields(personalData);
@@ -92,6 +101,12 @@ public class CitizenStepOneFragment extends Fragment {
         chbResponsible.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TODO fill fields when fragment is on resume
     }
 
     @Override
@@ -110,38 +125,26 @@ public class CitizenStepOneFragment extends Fragment {
     @Override
     public void onDetach() {
 
-        long numSus = controller.getLong(edtNumSus.getText().toString());
-        String name = edtName.getText().toString();
-        String socialName = edtSocialName.getText().toString();
-        boolean isMotherUnknown = chbMotherUnknown.isChecked();
-        String motherName = edtMotherName.getText().toString();
-        long numNis = controller.getLong(edtNumNis.getText().toString());
-        String birth = edtBirth.getText().toString();
-        boolean responsible = chbResponsible.isChecked();
-        long respNumSus = controller.getLong(edtRespNumSus.getText().toString());
-        String respBirth = edtRespBirth.getText().toString();
-        String[] gender = controller.getIndexAndValue(spnGender);
-        String[] race = controller.getIndexAndValue(spnRace);
-        String[] nationality = controller.getIndexAndValue(spnNationality);
-        String nationBirth = edtNationBirth.getText().toString();
-        String[] uf = controller.getIndexAndValue(spnUf);
-        String[] city = controller.getIndexAndValue(spnCity); //TODO Don't fill when return to this view
-        String phone = edtPhone.getText().toString();
-        String email = edtEmail.getText().toString();
+        ParticularData particular = controller.getParticularData(edtNumSus, edtName, edtSocialName, edtNumNis, edtBirth);
+        Mother mother = controller.getMother(chbMotherUnknown, edtMotherName);
+        Responsible responsible = controller.getResponsible(chbResponsible, edtRespNumSus, edtRespBirth);
+        GenderAndRace genderAndRace = controller.getGenderAndRace(spnGender, spnRace);
+        Nationality nationality = controller.getNationality(spnNationality, edtNationBirth, spnUf, spnCity);
+        Contact contact = controller.getContact(edtPhone, edtEmail);
 
-        personalData = new PersonalDataModel(numSus, name, socialName, isMotherUnknown, motherName,
-                numNis, birth, responsible, respNumSus, respBirth, gender, race, nationality,
-                nationBirth, uf, city, phone, email);
+        personalData = PersonalDataPersistence.getInstance(particular, mother, responsible,genderAndRace, nationality, contact);
         citizenData.send(personalData);
 
         super.onDetach();
     }
 
-    private boolean isFilled(){
-        return true;
+    public boolean isRequiredFieldsFilled(){
+        return controller.isRequiredFieldsFilled(edtName, edtMotherName,
+                edtBirth, spnGender, spnRace, spnNationality, spnUf, spnCity);
     }
 
     private void fillFields(PersonalDataModel personalData) {
+        int ufIndex = controller.getIndex(personalData.getUf(), R.array.uf);
 
         //TODO: Set spinner city according personalData value (whats wrong?)
         controller.fillField(edtNumSus, personalData.getNumSus());
@@ -153,13 +156,13 @@ public class CitizenStepOneFragment extends Fragment {
         controller.fillField(edtBirth, personalData.getBirth());
         controller.fillResponsible(chbResponsible, personalData.isResponsible(), edtRespNumSus,
                 personalData.getRespNumSus() + "", edtRespBirth, personalData.getRespBirth());
-        controller.fillField(spnGender, personalData.getGender()[CitizenModel.INDEX]);
-        controller.fillField(spnRace, personalData.getRace()[CitizenModel.INDEX]);
-        controller.fillField(spnNationality, personalData.getNationality()[CitizenModel.INDEX]);
+        controller.fillField(spnGender, controller.getIndex(personalData.getGender(), R.array.gender));
+        controller.fillField(spnRace, controller.getIndex(personalData.getRace(), R.array.race));
+        controller.fillField(spnNationality, controller.getIndex(personalData.getNation(), R.array.nationality));
         controller.fillNationBirth(chbNationBirth, personalData.isNationBirth(), edtNationBirth,
                 personalData.getNationBirth());
-        controller.fillField(spnUf, personalData.getUf()[CitizenModel.INDEX]);
-        controller.fillField(spnCity, personalData.getCity()[CitizenModel.INDEX]);
+        controller.fillField(spnUf, ufIndex);
+        controller.fillCity(ufIndex, spnCity, controller.getCityIndex(ufIndex, personalData.getCity()));
         controller.fillField(edtPhone, personalData.getPhone());
         controller.fillField(edtEmail, personalData.getEmail());
     }

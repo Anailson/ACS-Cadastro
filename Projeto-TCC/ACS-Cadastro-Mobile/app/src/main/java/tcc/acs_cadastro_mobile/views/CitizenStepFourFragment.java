@@ -14,8 +14,14 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepFourController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.StreetSituationModel;
+import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
+import tcc.acs_cadastro_mobile.required.RequiredRadioGroup;
+import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
+import tcc.acs_cadastro_mobile.subModels.FamilyVisit;
+import tcc.acs_cadastro_mobile.subModels.Feeding;
+import tcc.acs_cadastro_mobile.subModels.Hygiene;
+import tcc.acs_cadastro_mobile.subModels.StreetSituation;
 
 public class CitizenStepFourFragment extends Fragment {
 
@@ -24,7 +30,8 @@ public class CitizenStepFourFragment extends Fragment {
     private CitizenStepFourController controller;
     private StreetSituationModel streetSituation;
     private ICitizenData citizenData;
-    private RadioGroup rgrpStreet, rgrpBenefit, rgrpFamily, rgrpInstitutionAnother, rgrpFamilyVisit,
+    private RequiredRadioGroup rgrpStreet;
+    private RadioGroup rgrpBenefit, rgrpFamily, rgrpInstitutionAnother, rgrpFamilyVisit,
             rgrpHygiene;
     private CheckBox chbRestaurant, chbRestaurantDonation, chbReligiousDonation, chbPeopleDonation,
             chbFoodAnother, chbBath, chbSanitary, chbOral, chbHygieneAnother;
@@ -53,7 +60,7 @@ public class CitizenStepFourFragment extends Fragment {
         controller = new CitizenStepFourController(this);
         streetSituation = (StreetSituationModel) getArguments().getSerializable(STREET_SITUATION_DATA);
 
-        rgrpStreet = (RadioGroup) view.findViewById(R.id.rgrp_ctz_street);
+        rgrpStreet = (RequiredRadioGroup) view.findViewById(R.id.rgrp_ctz_street);
         rgrpBenefit = (RadioGroup) view.findViewById(R.id.rgrp_ctz_any_benefit);
         rgrpFamily = (RadioGroup) view.findViewById(R.id.rgrp_ctz_family);
         rgrpInstitutionAnother = (RadioGroup) view.findViewById(R.id.rgrp_ctz_institution_another);
@@ -98,35 +105,40 @@ public class CitizenStepFourFragment extends Fragment {
 
     private void getFields() {
 
-        boolean street = controller.isStreetSituation(rgrpStreet);
-        String[] streetTime = controller.getIndexAndValue(spnStreetTime);
+        StreetSituation street = controller.getStreetSituation(rgrpStreet, spnStreetTime);
         boolean benefit = controller.isBenefit(rgrpBenefit);
         boolean family = controller.isFamily(rgrpFamily);
-        String[] foodPerDay = controller.getIndexAndValue(spnFoodPerDay);
-        boolean[] foodOrigin = controller.getFoodOrigin(chbRestaurant, chbRestaurantDonation,
-                chbReligiousDonation, chbPeopleDonation, chbFoodAnother);
-        String[] institutionAnother = controller.getInstitutionAnother(rgrpInstitutionAnother, edtInstitutionAnother);
-        String[] familyVisit = controller.getFamilyVisit(rgrpFamilyVisit, edtFamilyVisit);
-        boolean[] hygiene = controller.getHygiene(rgrpHygiene, chbBath, chbSanitary, chbOral, chbHygieneAnother);
+        Feeding feeding = controller.getFoodOrigin(spnFoodPerDay, chbRestaurant,
+                chbRestaurantDonation, chbReligiousDonation, chbPeopleDonation, chbFoodAnother);
+        AnotherInstitution anotherInstitution = controller.getInstitutionAnother(
+                rgrpInstitutionAnother, edtInstitutionAnother);
+        FamilyVisit familyVisit = controller.getFamilyVisit(rgrpFamilyVisit,
+                edtFamilyVisit);
+        Hygiene hygiene = controller.getHygiene(rgrpHygiene, chbBath,
+                chbSanitary, chbOral, chbHygieneAnother);
 
-        streetSituation = new StreetSituationModel(street, streetTime, benefit, family, foodPerDay,
-                foodOrigin, institutionAnother, familyVisit, hygiene);
+        streetSituation = StreetSituationPersistence.getInstance(street, benefit, family, feeding,
+                anotherInstitution, familyVisit, hygiene);
         citizenData.send(streetSituation);
+    }
+
+    public boolean isRequiredFieldsFilled(){
+        return controller.isRequiredFieldsFilled(rgrpStreet);
     }
 
     private void fillFields() {
         controller.fillStreetSituation(rgrpStreet, streetSituation.isStreetSituation());
-        controller.fillStreetTime(spnStreetTime, streetSituation.getStreetTime()[CitizenModel.INDEX]);
+        controller.fillStreetTime(spnStreetTime, controller.getIndex(streetSituation.getStreetTime(), R.array.street_time));
         controller.fillBenefit(rgrpBenefit, streetSituation.isBenefit());
         controller.fillFamily(rgrpFamily, streetSituation.isFamily());
-        controller.fillFoodPerDay(spnFoodPerDay, streetSituation.getFoodPerDay()[CitizenModel.INDEX]);
+        controller.fillFoodPerDay(spnFoodPerDay, controller.getIndex(streetSituation.getFoodPerDay(), R.array.food_per_day));
         controller.fillFoodOrigin(streetSituation.getFoodOrigin(), chbRestaurant, chbRestaurantDonation,
                 chbReligiousDonation, chbPeopleDonation, chbFoodAnother);
         controller.fillInstitutionAnother(rgrpInstitutionAnother, streetSituation.isInstitutionAnother(),
-                edtInstitutionAnother, streetSituation.getInstitutionAnother()[CitizenModel.VALUE]);
+                edtInstitutionAnother, streetSituation.getInstitutionAnother());
         controller.fillFamilyVisit(rgrpFamilyVisit, streetSituation.isFamilyVisit(),
-                edtFamilyVisit, streetSituation.getFamilyVisit()[CitizenModel.VALUE]);
-        controller.fillHygiene(rgrpHygiene, streetSituation.isHygiene(), streetSituation.getHygiene(),
+                edtFamilyVisit, streetSituation.getFamilyVisitValue());
+        controller.fillHygiene(rgrpHygiene, streetSituation.isHygiene(), streetSituation.getHygienes(),
                 chbBath, chbSanitary, chbOral, chbHygieneAnother);
     }
 }

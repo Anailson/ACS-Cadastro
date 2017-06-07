@@ -6,7 +6,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +48,7 @@
                 <EditText
                     android:id="@+id/edt_ctz_occupation"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:inputType="text" />
             </LinearLayout>
 
@@ -63,7 +66,7 @@
                     android:text="@string/txt_ctz_school"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <RadioGroup
+                <tcc.acs_cadastro_mobile.required.RequiredRadioGroup
                     android:id="@+id/rgrp_ctz_school"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -86,7 +89,7 @@
                         android:layout_gravity="right"
                         android:checked="false"
                         android:text="@string/txt_no" />
-                </RadioGroup>
+                </tcc.acs_cadastro_mobile.required.RequiredRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -404,7 +407,7 @@
                         android:text="@string/txt_ctz_deficiency"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <RadioGroup
+                    <tcc.acs_cadastro_mobile.required.RequiredRadioGroup
                         android:id="@+id/rgrp_ctz_deficiency"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -427,7 +430,7 @@
                             android:layout_gravity="right"
                             android:checked="false"
                             android:text="@string/txt_no" />
-                    </RadioGroup>
+                    </tcc.acs_cadastro_mobile.required.RequiredRadioGroup>
                 </LinearLayout>
 
                 <TextView

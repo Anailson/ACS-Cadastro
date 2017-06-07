@@ -14,10 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.persistence.AcsCadastroPersistence;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigation.setNavigationItemSelectedListener(this);
 
+        AcsCadastroPersistence.startDatabase(this);
         /*TextView txtAgentName = (TextView) navigation.findViewById(R.id.txt_agent_name);
         TextView txtAgentSusNum = (TextView) navigation.findViewById(R.id.txt_agent_sus_num);
         TextView txtArea = (TextView) navigation.findViewById(R.id.txt_area);
@@ -82,8 +83,8 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
         switch (id){
-            case R.id.nav_citizen: fragment = new CitizenFragment(); break;
-            case R.id.nav_residence: fragment = new ResidenceFragment();break;
+            case R.id.nav_citizen: fragment = new CitizenListFragment(); break;
+            case R.id.nav_residence: fragment = new ResidenceListFragment();break;
             case R.id.nav_accompany: fragment = new AccompanyFragment(); break;
             case R.id.nav_visit: fragment = new VisitFragment(); break;
             case R.id.nav_update_system: fragment = new UpdateSystemFragment(); break;

@@ -11,7 +11,6 @@ import android.widget.Toast;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.ResidenceModel;
 
 public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
@@ -20,7 +19,7 @@ public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
     private List<ResidenceModel> residences;
 
     public ResidenceListAdapter(Context context, List<ResidenceModel> residences) {
-        super(context, R.layout.list_residences, residences);
+        super(context, R.layout.item_list_residence, residences);
 
         this.context = context;
         this.residences = residences;
@@ -30,7 +29,7 @@ public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater layout = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = layout.inflate(R.layout.list_residences, parent, false);
+        convertView = layout.inflate(R.layout.item_list_residence, parent, false);
 
         TextView txtAddress = (TextView) convertView.findViewById(R.id.txt_rsd_address);
         TextView txtCep = (TextView) convertView.findViewById(R.id.txt_rsd_cep);
