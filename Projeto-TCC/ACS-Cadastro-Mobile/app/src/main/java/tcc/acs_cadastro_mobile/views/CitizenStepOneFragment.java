@@ -14,6 +14,7 @@ import android.widget.EditText;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepOneController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.subModels.Contact;
 import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
 import tcc.acs_cadastro_mobile.subModels.Mother;
@@ -25,7 +26,7 @@ import tcc.acs_cadastro_mobile.persistence.PersonalDataPersistence;
 import tcc.acs_cadastro_mobile.required.RequiredEditText;
 import tcc.acs_cadastro_mobile.required.RequiredSpinner;
 
-public class CitizenStepOneFragment extends Fragment {
+public class CitizenStepOneFragment extends Fragment implements IRequiredFields {
 
     private static final String PERSONAL_DATA = "PERSONAL_DATA";
 
@@ -138,6 +139,7 @@ public class CitizenStepOneFragment extends Fragment {
         super.onDetach();
     }
 
+    @Override
     public boolean isRequiredFieldsFilled(){
         return controller.isRequiredFieldsFilled(edtName, edtMotherName,
                 edtBirth, spnGender, spnRace, spnNationality, spnUf, spnCity);

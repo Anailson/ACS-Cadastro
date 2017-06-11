@@ -12,7 +12,12 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.Adapter;
-import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
+import tcc.acs_cadastro_mobile.persistence.HousingConditionsPersistence;
+import tcc.acs_cadastro_mobile.required.RequiredSpinner;
+import tcc.acs_cadastro_mobile.subModels.House;
+import tcc.acs_cadastro_mobile.subModels.HousingSituation;
+import tcc.acs_cadastro_mobile.subModels.Pet;
+import tcc.acs_cadastro_mobile.subModels.WaterAndSanitation;
 
 public class ResidenceStepTwoController extends StepsController {
 
@@ -49,38 +54,47 @@ public class ResidenceStepTwoController extends StepsController {
         return onChangeListener;
     }
 
-    public HousingConditionsModel.HousingSituation getHousingSituation(Spinner spnHousingSituation,
-                                                                       Spinner spnLocation, Spinner spnLocationIf) {
-        return new HousingConditionsModel.HousingSituation(getFields(spnHousingSituation),
+    public boolean isRequiredFieldsFilled(RequiredSpinner spnHousingSituation, RequiredSpinner spnLocation) {
+        startErrors();
+        applyError(spnHousingSituation);
+        applyError(spnLocation);
+        return hasError();
+    }
+
+    public HousingSituation getHousingSituation(Spinner spnHousingSituation,
+                                                Spinner spnLocation, Spinner spnLocationIf) {
+        return HousingConditionsPersistence.getHousingSituation(getFields(spnHousingSituation),
                 getFields(spnLocation), getFields(spnLocationIf));
     }
 
-    public HousingConditionsModel.House getHouse(Spinner spnResidenceType, EditText edtResidents, EditText edtRooms,
-                                                 Spinner spnResidenceAccess, Spinner spnResidenceConstruction, Spinner spnConstructionType) {
+    public House getHouse(Spinner spnResidenceType, EditText edtResidents, EditText edtRooms,
+                          Spinner spnResidenceAccess, Spinner spnResidenceConstruction, Spinner spnConstructionType) {
         String type = getFields(spnResidenceType);
-        int nResidents = Integer.parseInt(getFields(edtResidents));
-        int nRooms = Integer.parseInt(getFields(edtRooms));
+        int nResidents = getInt(edtResidents);
+        int nRooms = getInt(edtRooms);
         String access = getFields(spnResidenceAccess);
         String construction = getFields(spnResidenceConstruction);
         String constructionType = getFields(spnConstructionType);
-        return new HousingConditionsModel.House(type, nResidents, nRooms, access, construction, constructionType);
+        return HousingConditionsPersistence.getHouse(type, nResidents, nRooms, access, construction, constructionType);
     }
 
-    public HousingConditionsModel.WaterAndSanitation getWaterAndSanitation(Spinner spnWaterSupply,
-                                                                           Spinner spnWaterTreatment, Spinner spnBathroom) {
-        return new HousingConditionsModel.WaterAndSanitation(getFields(spnWaterSupply),
-                getFields(spnWaterTreatment), getFields(spnBathroom));
+    public WaterAndSanitation getWaterAndSanitation(Spinner spnWaterSupply, Spinner spnWaterTreatment,
+                                                    Spinner spnBathroom) {
+        String waterSupply = getFields(spnWaterSupply);
+        String waterTreatment = getFields(spnWaterTreatment);
+        String bathroom = getFields(spnBathroom);
+        return HousingConditionsPersistence.getWaterAndSanitation(waterSupply, waterTreatment, bathroom);
     }
 
     public boolean getElectricEnergy(RadioGroup rgrpElectricEnergy) {
         return isYesGroup(rgrpElectricEnergy, R.id.rgrp_rsd_electric_energy_y);
     }
 
-    public HousingConditionsModel.Pet getPets(RadioGroup radioGroup, EditText edtPets, CheckBox... checkboxes) {
+    public Pet getPets(RadioGroup radioGroup, EditText edtPets, CheckBox... checkboxes) {
         boolean hasPet = isYesGroup(radioGroup, R.id.rgrp_rsd_pets_y);
         boolean pets[] = getFields(checkboxes);
-        int nPets = Integer.parseInt(getFields(edtPets));
-        return new HousingConditionsModel.Pet(hasPet, pets, nPets);
+        int nPets = getInt(edtPets);
+        return HousingConditionsPersistence.getPet(hasPet, pets, nPets);
     }
 
     public int getOwnershipIndex(int locationIndex, String ownership) {
@@ -106,6 +120,18 @@ public class ResidenceStepTwoController extends StepsController {
 
     public void fillElectricEnergy(RadioGroup rgrpElectricEnergy, boolean electricEnergy) {
         fillField(rgrpElectricEnergy, electricEnergy, R.id.rgrp_rsd_electric_energy_y, R.id.rgrp_rsd_electric_energy_n);
+    }
+
+    public void fillWaterSupply(Spinner spnWaterSupply, String waterSupply) {
+        fillField(spnWaterSupply, waterSupply, fragment.getString(R.string.txt_default));
+    }
+
+    public void fillWaterConditions(Spinner spnWaterTreatment, String waterTreatment) {
+        fillField(spnWaterTreatment, waterTreatment, fragment.getString(R.string.txt_default));
+    }
+
+    public void fillBathroom(Spinner spnBathroom, String bathroom) {
+        fillField(spnBathroom, bathroom, fragment.getString(R.string.txt_default));
     }
 
     public void fillPets(RadioGroup rgrpPets, boolean hasPets, boolean[] values, CheckBox... checkBoxes) {

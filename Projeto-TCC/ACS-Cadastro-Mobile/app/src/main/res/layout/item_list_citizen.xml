@@ -22,12 +22,6 @@
             android:gravity="bottom" />
 
         <TextView
-            android:id="@+id/txt_ctz_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_default" />
-
-        <TextView
             android:id="@+id/txt_ctz_sus_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

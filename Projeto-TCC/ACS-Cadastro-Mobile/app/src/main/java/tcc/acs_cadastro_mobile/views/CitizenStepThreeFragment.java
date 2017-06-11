@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepThreeController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.persistence.HealthConditionsPersistence;
 import tcc.acs_cadastro_mobile.subModels.Diseases;
@@ -24,7 +25,7 @@ import tcc.acs_cadastro_mobile.subModels.Plant;
 import tcc.acs_cadastro_mobile.subModels.Pregnant;
 import tcc.acs_cadastro_mobile.subModels.RespiratoryDisease;
 
-public class CitizenStepThreeFragment extends Fragment {
+public class CitizenStepThreeFragment extends Fragment implements IRequiredFields{
 
     private static final String HEALTH_CONDITIONS_DATA = "HEALTH_CONDITIONS_DATA";
 
@@ -125,6 +126,11 @@ public class CitizenStepThreeFragment extends Fragment {
 
         getFields();
         super.onDetach();
+    }
+
+    @Override
+    public boolean isRequiredFieldsFilled() {
+        return true;
     }
 
     private void getFields() {

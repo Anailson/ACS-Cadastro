@@ -25,7 +25,7 @@
                     android:text="@string/txt_rsd_housing_situation"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <Spinner
+                <tcc.acs_cadastro_mobile.required.RequiredSpinner
                     android:id="@+id/spn_rsd_housing_situation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -43,7 +43,7 @@
                     android:text="@string/txt_rsd_location"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <Spinner
+                <tcc.acs_cadastro_mobile.required.RequiredSpinner
                     android:id="@+id/spn_rsd_location"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

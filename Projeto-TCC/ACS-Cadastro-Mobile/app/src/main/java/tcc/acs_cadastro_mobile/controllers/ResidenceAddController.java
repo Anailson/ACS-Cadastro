@@ -9,11 +9,13 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
 import tcc.acs_cadastro_mobile.models.ResidenceModel;
+import tcc.acs_cadastro_mobile.persistence.ResidencePersistence;
 import tcc.acs_cadastro_mobile.views.ResidenceStepOneFragment;
 import tcc.acs_cadastro_mobile.views.ResidenceStepThreeFragment;
 import tcc.acs_cadastro_mobile.views.ResidenceStepTwoFragment;
@@ -29,7 +31,7 @@ public class ResidenceAddController  {
     private AppCompatActivity parent;
     private AddressDataModel addressData;
     private HousingConditionsModel housingConditions;
-    private HousingHistoricalModel[] housingHistorical;
+    private RealmList<HousingHistoricalModel> housingHistorical;
     private View.OnClickListener clickListener;
 
     public ResidenceAddController(AppCompatActivity view){
@@ -52,7 +54,8 @@ public class ResidenceAddController  {
         this.housingConditions = housingConditions;
     }
 
-    public void send(HousingHistoricalModel[] housingHistorical){
+    public void send(RealmList<HousingHistoricalModel> housingHistorical){
+        Log.e("controller#send", String.valueOf(housingHistorical == null));
         this.housingHistorical = housingHistorical;
     }
 
@@ -63,8 +66,16 @@ public class ResidenceAddController  {
     private void nextMenu(){
 
         switch (actualMenu){
-            case FIRST_STEP: shiftToStepTwo(); break;
-            case SECOND_STEP: shiftToStepThree(); break;
+            case FIRST_STEP:
+                if(((ResidenceStepOneFragment) actualStep).isRequiredFieldsFilled()){
+                    shiftToStepTwo();
+                }
+                break;
+            case SECOND_STEP:
+                if(((ResidenceStepTwoFragment) actualStep).isRequiredFieldsFilled()){
+                    shiftToStepThree();
+                }
+                break;
             case THIRD_STEP: save(); break;
         }
     }
@@ -79,9 +90,7 @@ public class ResidenceAddController  {
     private void save(){
         if(actualMenu == SECOND_STEP){
             actualStep.onDetach();
-            new ResidenceModel(addressData, housingConditions, housingHistorical);
-            Log.e("Save Residence", addressData.toString() + "\n"
-                    + housingConditions.toString() + "\n" + housingHistorical.toString());
+            new SaveResidence().save(addressData, housingConditions, housingHistorical);
         }
     }
 
@@ -151,6 +160,26 @@ public class ResidenceAddController  {
                 case R.id.btn_rsd_add_back: previousMenu(); break;
                 case R.id.btn_rsd_add_progress: nextMenu(); break;
             }
+        }
+    }
+
+    private class SaveResidence {
+        void save(AddressDataModel addressData, HousingConditionsModel housingConditions,
+                         RealmList<HousingHistoricalModel> housingHistorical) {
+            ResidenceModel saved = ResidencePersistence.save(addressData, housingConditions, housingHistorical);
+            if(saved != null){
+                showConfirmDialog(saved.getCompleteAddress());
+            }
+        }
+
+        private void showConfirmDialog(String name){
+
+            /*
+            Intent intent = new Intent(parent, ConfirmSaveCitizenActivity.class);
+            intent.putExtra(ConfirmSaveCitizenActivity.SAVE_CITIZEN, name);
+            parent.startActivity(intent);
+            parent.finish()
+             */
         }
     }
 }

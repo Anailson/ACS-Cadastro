@@ -2,7 +2,7 @@ package tcc.acs_cadastro_mobile.interfaces;
 
 import android.widget.TextView;
 
-public interface IRequired {
+public interface IRequiredView {
 
     boolean isInvalid(String index);
 

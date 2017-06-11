@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
 
@@ -21,7 +22,7 @@ public class HousingHistoricalListAdapter extends ArrayAdapter<HousingHistorical
     private Context context;
     private List<HousingHistoricalModel> historicals;
 
-    public HousingHistoricalListAdapter(Context context, List<HousingHistoricalModel> historical) {
+    public HousingHistoricalListAdapter(Context context, RealmList<HousingHistoricalModel> historical) {
         super(context, R.layout.item_list_new_resp, historical);
 
         this.context = context;

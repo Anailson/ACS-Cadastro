@@ -34,7 +34,7 @@
             android:name=".views.CalendarActivity"
             android:theme="@style/AppTheme.FloatingTheme" />
         <activity
-            android:name=".views.NewResponsibleActivity"
+            android:name=".views.ResidenceNewResponsibleActivity"
             android:theme="@style/AppTheme.FloatingTheme" />
         <activity
             android:name=".views.ConfirmSaveCitizenActivity"

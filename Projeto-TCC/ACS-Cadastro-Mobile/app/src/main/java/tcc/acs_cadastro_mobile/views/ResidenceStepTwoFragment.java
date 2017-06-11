@@ -14,10 +14,17 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepTwoController;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
+import tcc.acs_cadastro_mobile.persistence.HousingConditionsPersistence;
+import tcc.acs_cadastro_mobile.required.RequiredSpinner;
+import tcc.acs_cadastro_mobile.subModels.House;
+import tcc.acs_cadastro_mobile.subModels.HousingSituation;
+import tcc.acs_cadastro_mobile.subModels.Pet;
+import tcc.acs_cadastro_mobile.subModels.WaterAndSanitation;
 
-public class ResidenceStepTwoFragment extends Fragment {
+public class ResidenceStepTwoFragment extends Fragment implements IRequiredFields{
 
     private static final String HOUSING_CONDITIONS = "HOUSING_CONDITIONS";
 
@@ -25,7 +32,9 @@ public class ResidenceStepTwoFragment extends Fragment {
     private HousingConditionsModel housingConditions;
     private ResidenceStepTwoController controller;
 
-    private Spinner spnHousingSituation, spnLocation, spnOwnership, spnResidenceType, spnResidenceAccess,
+    private RequiredSpinner spnHousingSituation, spnLocation;
+
+    private Spinner spnOwnership, spnResidenceType, spnResidenceAccess,
             spnResidenceConstruction, spnConstructionType, spnWaterSupply, spnWaterTreatment, spnBathroom;
     private EditText edtResidents, edtRooms, edtPets;
     private CheckBox chbCat, chbDog, chbBird, chbBreeding, chbPetsAnother;
@@ -52,8 +61,8 @@ public class ResidenceStepTwoFragment extends Fragment {
         housingConditions = (HousingConditionsModel) getArguments().getSerializable(HOUSING_CONDITIONS);
         controller = new ResidenceStepTwoController(this);
 
-        spnHousingSituation = (Spinner) view.findViewById(R.id.spn_rsd_housing_situation);
-        spnLocation = (Spinner) view.findViewById(R.id.spn_rsd_location);
+        spnHousingSituation = (RequiredSpinner) view.findViewById(R.id.spn_rsd_housing_situation);
+        spnLocation = (RequiredSpinner) view.findViewById(R.id.spn_rsd_location);
         spnOwnership = (Spinner) view.findViewById(R.id.spn_rsd_location_if);
         spnResidenceType = (Spinner) view.findViewById(R.id.spn_rsd_residence_type);
         spnResidenceAccess = (Spinner) view.findViewById(R.id.spn_rsd_residence_access);
@@ -104,20 +113,24 @@ public class ResidenceStepTwoFragment extends Fragment {
         super.onDetach();
     }
 
-    private void getFields() {
+    @Override
+    public boolean isRequiredFieldsFilled() {
+        return controller.isRequiredFieldsFilled(spnHousingSituation, spnLocation);
+    }
 
-        HousingConditionsModel.HousingSituation housingSituation = controller.getHousingSituation(
+    private void getFields() {
+        HousingSituation housingSituation = controller.getHousingSituation(
                 spnHousingSituation, spnLocation, spnOwnership);
-        HousingConditionsModel.House house = controller.getHouse(spnResidenceType, edtResidents,
+        House house = controller.getHouse(spnResidenceType, edtResidents,
                 edtRooms, spnResidenceAccess, spnResidenceConstruction, spnConstructionType);
         boolean electricEnergy = controller.getElectricEnergy(rgrpElectricEnergy);
-        HousingConditionsModel.WaterAndSanitation waterAndSanitation = controller.getWaterAndSanitation(
+        WaterAndSanitation waterAndSanitation = controller.getWaterAndSanitation(
                 spnWaterSupply, spnWaterTreatment, spnBathroom);
-        HousingConditionsModel.Pet pet = controller.getPets(rgrpPets, edtPets, chbCat, chbDog, chbBird,
+        Pet pet = controller.getPets(rgrpPets, edtPets, chbCat, chbDog, chbBird,
                 chbBreeding, chbPetsAnother);
 
-        housingConditions = new HousingConditionsModel(housingSituation, house, electricEnergy,
-                waterAndSanitation, pet);
+        housingConditions = HousingConditionsPersistence.getHousingConditionsModel(housingSituation,
+                house, electricEnergy, waterAndSanitation, pet);
         residenceData.send(housingConditions);
     }
 
@@ -127,7 +140,7 @@ public class ResidenceStepTwoFragment extends Fragment {
         int constructionIndex = controller.getIndex(housingConditions.getConstruction(), R.array.residence_construction);
 
         controller.fillField(spnHousingSituation,
-                controller.getIndex(housingConditions.getHousingSituation(), R.array.housing_situation));
+                controller.getIndex(housingConditions.getSituation(), R.array.housing_situation));
         controller.fillField(spnLocation, locationIndex);
         controller.fillField(spnOwnership, controller.getOwnershipIndex(locationIndex, housingConditions.getOwnership()));
         controller.fillField(spnResidenceType,
@@ -140,9 +153,9 @@ public class ResidenceStepTwoFragment extends Fragment {
         controller.fillField(spnConstructionType,
                 controller.getConstructionTypeIndex(constructionIndex, housingConditions.getConstructionType()));
         controller.fillElectricEnergy(rgrpElectricEnergy, housingConditions.isElectricEnergy());
-        controller.fillField(spnWaterSupply, housingConditions.getWaterSupply());
-        controller.fillField(spnWaterTreatment, housingConditions.getWaterTreatment());
-        controller.fillField(spnBathroom, housingConditions.getBathroom());
+        controller.fillWaterSupply(spnWaterSupply, housingConditions.getWaterSupply());
+        controller.fillWaterConditions(spnWaterTreatment, housingConditions.getWaterTreatment());
+        controller.fillBathroom(spnBathroom, housingConditions.getBathroom());
         controller.fillPets(rgrpPets, housingConditions.isHasPets(), housingConditions.getPets(),
                 chbCat, chbDog, chbBird, chbBreeding, chbPetsAnother);
         controller.fillField(housingConditions.getPets(), chbCat, chbDog, chbBird, chbBreeding, chbPetsAnother);

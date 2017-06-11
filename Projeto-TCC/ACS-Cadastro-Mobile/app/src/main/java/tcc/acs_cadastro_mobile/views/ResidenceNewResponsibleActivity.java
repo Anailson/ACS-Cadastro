@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.NewResponsibleController;
 
-public class NewResponsibleActivity extends AppCompatActivity {
+public class ResidenceNewResponsibleActivity extends AppCompatActivity {
 
     private EditText edtFamilyRecord, edtNumSus, edtBirthDate, edtLivesSince, edtNMembers;
     private Spinner spnFamilyIncome;
@@ -40,7 +40,7 @@ public class NewResponsibleActivity extends AppCompatActivity {
         btnSave = (Button) findViewById(R.id.btn_new_resp_save);
         btnCancel = (Button) findViewById(R.id.btn_new_resp_cancel);
 
-        edtNumSus.setOnFocusChangeListener(controller.getFocusChangeListener());
+        edtNumSus.addTextChangedListener(controller.getTextWatcher());
         btnSave.setOnClickListener(controller.getClickListener());
         btnCancel.setOnClickListener(controller.getClickListener());
 

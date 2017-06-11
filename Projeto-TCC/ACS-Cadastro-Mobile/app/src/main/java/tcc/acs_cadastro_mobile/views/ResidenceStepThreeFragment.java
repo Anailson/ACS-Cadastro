@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.Arrays;
-import java.util.List;
-
+import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.HousingHistoricalListAdapter;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepThreeController;
@@ -24,16 +22,15 @@ public class ResidenceStepThreeFragment extends Fragment{
     private static final String HOUSING_HISTORICAL = "HOUSING_HISTORICAL";
 
     private IResidenceData residenceData;
-    private HousingHistoricalModel[] housingHistorical;
+    private RealmList<HousingHistoricalModel> housingHistorical;
     private ResidenceStepThreeController controller;
 
     private ListView lvwResponsibles;
 
-    public static Fragment newInstance(HousingHistoricalModel[] housingHistoricals) {
-
+    public static Fragment newInstance(RealmList<HousingHistoricalModel> housingHistorical) {
         Fragment fragment = new ResidenceStepThreeFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(HOUSING_HISTORICAL, housingHistoricals);
+        bundle.putSerializable(HOUSING_HISTORICAL, ResidenceStepThreeController.getArray(housingHistorical));
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -48,13 +45,14 @@ public class ResidenceStepThreeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_rsd_add_3, container, false);
-        housingHistorical = (HousingHistoricalModel[]) getArguments().getSerializable(HOUSING_HISTORICAL);
-        controller = new ResidenceStepThreeController(this);
+
+        housingHistorical = ResidenceStepThreeController.getList(getArguments(), HOUSING_HISTORICAL);
 
         lvwResponsibles = (ListView) view.findViewById(R.id.lvw_responsible);
         Button btnNewResp = (Button) view.findViewById(R.id.btn_rsd_new_resp);
+        controller = new ResidenceStepThreeController(this);
 
-        //lvwResponsibles.setOnItemClickListener(controller.getItemClickListener());
+        //lvwResponsible.setOnItemClickListener(controller.getItemClickListener());
         btnNewResp.setOnClickListener(controller.getClickListener());
 
         if(housingHistorical != null){
@@ -65,16 +63,12 @@ public class ResidenceStepThreeFragment extends Fragment{
 
     @Override
     public void onDetach() {
-        getFields();
+        housingHistorical = controller.getHousingHistorical(lvwResponsibles);
+        residenceData.send(housingHistorical);
         super.onDetach();
     }
 
-    private void getFields(){
-        housingHistorical = controller.getHousingHistorical(lvwResponsibles);
-        residenceData.send(housingHistorical);
-    }
-
     private void fillFields(){
-        lvwResponsibles.setAdapter(new HousingHistoricalListAdapter(this.getContext(), Arrays.asList(housingHistorical)));
+        lvwResponsibles.setAdapter(new HousingHistoricalListAdapter(getContext(), housingHistorical));
     }
 }

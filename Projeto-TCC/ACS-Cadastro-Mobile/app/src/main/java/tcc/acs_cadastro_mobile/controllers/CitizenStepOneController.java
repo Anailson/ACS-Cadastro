@@ -70,9 +70,9 @@ public class CitizenStepOneController extends StepsController {
     }
 
     public boolean isRequiredFieldsFilled(RequiredEditText edtName, RequiredEditText edtBirthDate,
-                  RequiredEditText edtMotherName, RequiredSpinner spnGender, RequiredSpinner spnRace,
-                  RequiredSpinner spnNationality, RequiredSpinner spnUf, RequiredSpinner spnCity) {
-        hasError = true;
+                                          RequiredEditText edtMotherName, RequiredSpinner spnGender, RequiredSpinner spnRace,
+                                          RequiredSpinner spnNationality, RequiredSpinner spnUf, RequiredSpinner spnCity) {
+        startErrors();
         applyError(edtName, "", "Este campo é obrigatório");
         applyError(edtBirthDate, "", "Este campo é obrigatório");
         applyError(edtMotherName, "", "Este campo é obrigatório");
@@ -81,8 +81,7 @@ public class CitizenStepOneController extends StepsController {
         applyError(spnNationality, fragment.getResources().getString(R.string.txt_default));
         applyError(spnUf, fragment.getResources().getString(R.string.txt_default));
         applyError(spnCity, fragment.getResources().getString(R.string.txt_default));
-
-        return hasError;
+        return hasError();
     }
 
     public int getCityIndex(int ufIndex, String city) {
@@ -232,12 +231,6 @@ public class CitizenStepOneController extends StepsController {
 
         Intent newActivity = new Intent(fragment.getActivity(), CalendarActivity.class);
         fragment.startActivityForResult(newActivity, request);
-    }
-
-
-    private long getLong(EditText editText) {
-        String s = editText.getText().toString();
-        return Long.parseLong(s.equals("") ? "0" : s);
     }
 
     private class OnClickListener implements View.OnClickListener {

@@ -2,64 +2,102 @@ package tcc.acs_cadastro_mobile.models;
 
 import java.io.Serializable;
 
-public class AddressDataModel implements Serializable {
+import io.realm.Realm;
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.subModels.CityLocation;
+import tcc.acs_cadastro_mobile.subModels.Phones;
+import tcc.acs_cadastro_mobile.subModels.StreetLocation;
 
-    private String placeName, complement, neighborhood, cep, phoneHome, phoneReference;
-    private int number;
-    private String placeType, uf, city;
+public class AddressDataModel extends RealmObject implements Serializable {
 
-    public AddressDataModel(String placeType, String placeName, int number, String complement,
-                            String neighborhood, String uf, String city, String cep,
-                            String phoneHome, String phoneReference) {
-        this.placeType = placeType;
-        this.placeName = placeName;
-        this.number = number;
-        this.complement = complement;
-        this.neighborhood = neighborhood;
-        this.uf = uf;
-        this.city = city;
-        this.cep = cep;
-        this.phoneHome = phoneHome;
-        this.phoneReference = phoneReference;
+    private StreetLocation street;
+    private CityLocation city;
+    private Phones phones;
+
+    public static AddressDataModel newInstance(Realm realm, StreetLocation street, CityLocation city, Phones phones) {
+        realm.beginTransaction();
+        AddressDataModel object = realm.createObject(AddressDataModel.class);
+        object.setStreet(street);
+        object.setCity(city);
+        object.setPhones(phones);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getPlaceType() {
-        return placeType;
+    public static StreetLocation getStreetLocation(Realm realm, String type, String name, int number, String complement){
+        realm.beginTransaction();
+        StreetLocation object = realm.createObject(StreetLocation.class);
+        object.setType(type);
+        object.setName(name);
+        object.setNumber(number);
+        object.setComplement(complement);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getPlaceName() {
-        return placeName;
+    public static CityLocation getCityLocation(Realm realm, String neighborhood, String city, String uf, long cep){
+        realm.beginTransaction();
+        CityLocation object = realm.createObject(CityLocation.class);
+        object.setNeighborhood(neighborhood);
+        object.setName(city);
+        object.setUf(uf);
+        object.setCep(cep);
+        realm.commitTransaction();
+        return object;
     }
 
-    public int getNumber() {
-        return number;
+    public static Phones getPhones(Realm realm, String home, String reference){
+        realm.beginTransaction();
+        Phones object = realm.createObject(Phones.class);
+        object.setHome(home);
+        object.setReference(reference);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getComplement() {
-        return complement;
+    public StreetLocation getStreet() {
+        return street;
     }
 
-    public String getNeighborhood() {
-        return neighborhood;
+    public void setStreet(StreetLocation street) {
+        this.street = street;
     }
 
-    public String getUf() {
-        return uf;
-    }
-
-    public String getCity() {
+    public CityLocation getCity() {
         return city;
     }
 
-    public String getCep() {
-        return cep;
+    public void setCity(CityLocation city) {
+        this.city = city;
     }
 
-    public String getPhoneHome() {
-        return phoneHome;
+    public Phones getPhones() {
+        return phones;
     }
 
-    public String getPhoneReference() {
-        return phoneReference;
+    public void setPhones(Phones phones) {
+        this.phones = phones;
     }
+
+    public String getPlaceType() {return getStreet().getType();}
+
+    public String getPlaceName() {return getStreet().getName();}
+
+    public int getNumber() {return getStreet().getNumber();}
+
+    public String getComplement() { return getStreet().getComplement();}
+
+    public String getNeighborhood() {return getCity().getNeighborhood();}
+
+    public String getUf() {return getCity().getUf();}
+
+    public String getCityName() {return getCity().getName();}
+
+    public long getCep(){
+        return getCity().getCep();
+    }
+
+    public String getPhoneHome() {return getPhones().getHome();}
+
+    public String getPhoneReference() {return getPhones().getReference();}
 }

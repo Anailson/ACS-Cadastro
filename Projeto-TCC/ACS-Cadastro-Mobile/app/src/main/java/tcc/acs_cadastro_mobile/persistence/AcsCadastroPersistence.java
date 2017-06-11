@@ -9,7 +9,9 @@ public class AcsCadastroPersistence {
 
     public static void startDatabase(Context context){
         Realm.init(context);
-        RealmConfiguration config = new RealmConfiguration.Builder().build();
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
         Realm.setDefaultConfiguration(config);
         //Realm.deleteRealm(config);
     }

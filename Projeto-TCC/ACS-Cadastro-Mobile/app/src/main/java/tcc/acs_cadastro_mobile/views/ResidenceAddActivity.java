@@ -3,8 +3,10 @@ package tcc.acs_cadastro_mobile.views;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Button;
 
+import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceAddController;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
@@ -19,10 +21,9 @@ public class ResidenceAddActivity extends AppCompatActivity implements IResidenc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_residence_add);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.bar_rsd_add);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_residence_add);
+        setSupportActionBar((Toolbar) findViewById(R.id.bar_rsd_add));
 
         Button btnBack = (Button) findViewById(R.id.btn_rsd_add_back);
         Button btnProgress = (Button) findViewById(R.id.btn_rsd_add_progress);
@@ -35,17 +36,15 @@ public class ResidenceAddActivity extends AppCompatActivity implements IResidenc
     }
 
     @Override
-    public void send(AddressDataModel addressData) {
-        controller.send(addressData);
-    }
+    public void send(AddressDataModel addressData) {controller.send(addressData);}
 
     @Override
-    public void send(HousingConditionsModel housingConditions) {
-        controller.send(housingConditions);
-    }
+    public void send(HousingConditionsModel housingConditions) {controller.send(housingConditions);}
 
     @Override
-    public void send(HousingHistoricalModel[] housingHistorical) {
+    public void send(RealmList<HousingHistoricalModel> housingHistorical) {
+
+        Log.e("activity#send", String.valueOf(housingHistorical == null));
         controller.send(housingHistorical);
     }
 }

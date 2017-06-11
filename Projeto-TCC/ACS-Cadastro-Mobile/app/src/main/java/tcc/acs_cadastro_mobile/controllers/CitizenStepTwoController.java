@@ -40,15 +40,14 @@ public class CitizenStepTwoController extends StepsController{
     }
 
     public boolean isRequiredFieldsFilled(RequiredRadioGroup rgrpSchool, RequiredRadioGroup rgrpDeficiency) {
-        hasError = true;
-
+        startErrors();
         applyError(rgrpSchool);
         applyError(rgrpDeficiency);
-        return hasError;
+        return hasError();
     }
 
     public EducationEmployment getEducationEmployment(EditText edtOccupation,
-                      RequiredRadioGroup rgrpSchool, Spinner spnEducation, Spinner spnEmployment) {
+                                                      RequiredRadioGroup rgrpSchool, Spinner spnEducation, Spinner spnEmployment) {
         boolean school = isYesGroup(rgrpSchool, R.id.rgrp_ctz_school_y);
         return SocialDemographicPersistence.getEducationEmployment(school, getFields(edtOccupation),
                 getFields(spnEducation), getFields(spnEmployment));

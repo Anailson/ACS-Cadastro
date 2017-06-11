@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepFourController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.StreetSituationModel;
 import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
 import tcc.acs_cadastro_mobile.required.RequiredRadioGroup;
@@ -23,7 +24,7 @@ import tcc.acs_cadastro_mobile.subModels.Feeding;
 import tcc.acs_cadastro_mobile.subModels.Hygiene;
 import tcc.acs_cadastro_mobile.subModels.StreetSituation;
 
-public class CitizenStepFourFragment extends Fragment {
+public class CitizenStepFourFragment extends Fragment implements IRequiredFields {
 
     private static final String STREET_SITUATION_DATA = "STREET_SITUATION_DATA";
 
@@ -103,6 +104,11 @@ public class CitizenStepFourFragment extends Fragment {
         super.onDetach();
     }
 
+    @Override
+    public boolean isRequiredFieldsFilled(){
+        return controller.isRequiredFieldsFilled(rgrpStreet);
+    }
+
     private void getFields() {
 
         StreetSituation street = controller.getStreetSituation(rgrpStreet, spnStreetTime);
@@ -120,10 +126,6 @@ public class CitizenStepFourFragment extends Fragment {
         streetSituation = StreetSituationPersistence.getInstance(street, benefit, family, feeding,
                 anotherInstitution, familyVisit, hygiene);
         citizenData.send(streetSituation);
-    }
-
-    public boolean isRequiredFieldsFilled(){
-        return controller.isRequiredFieldsFilled(rgrpStreet);
     }
 
     private void fillFields() {

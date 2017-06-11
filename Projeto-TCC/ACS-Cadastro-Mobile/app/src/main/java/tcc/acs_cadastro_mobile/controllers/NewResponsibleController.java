@@ -1,10 +1,15 @@
 package tcc.acs_cadastro_mobile.controllers;
 
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 
 public class NewResponsibleController {
 
@@ -22,11 +27,9 @@ public class NewResponsibleController {
         return listener;
     }
 
-    public View.OnFocusChangeListener getFocusChangeListener(){
+    public TextWatcher getTextWatcher(){
         if(listener == null){
             listener = new Listener();
-        }else{
-            Log.e("getFocusChangeListener", String.valueOf(true));
         }
         return listener;
     }
@@ -39,13 +42,13 @@ public class NewResponsibleController {
         activity.finish();
     }
 
-    private void searchCitizen(boolean hasFocus){
-        if(!hasFocus) {
-            Log.e("searchCitizen", String.valueOf(hasFocus));
-        }
-    }
+    private class Listener implements View.OnClickListener, TextWatcher {
 
-    private class Listener implements View.OnClickListener, View.OnFocusChangeListener {
+        private EditText edtBirthDate;
+
+        public Listener() {
+            this.edtBirthDate = (EditText) activity.findViewById(R.id.edt_rsd_resp_birth_date);
+        }
 
         @Override
         public void onClick(View v) {
@@ -56,10 +59,25 @@ public class NewResponsibleController {
         }
 
         @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            switch (v.getId()){
-                case R.id.edt_rsd_resp_num_sus: searchCitizen(hasFocus);break;
-            }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            edtBirthDate.setText("");
         }
+
+        @Override
+        public void onTextChanged(final CharSequence s, int start, int before, int count) {
+            new Thread(){
+                @Override
+                public void run() {
+                    CitizenModel citizen = CitizenPersistence.get(Long.valueOf(s.toString()));
+                    if (citizen != null){
+                        edtBirthDate.setText(citizen.getBirthDate());
+                    }
+                    super.run();
+                }
+            }.start();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {}
     }
 }

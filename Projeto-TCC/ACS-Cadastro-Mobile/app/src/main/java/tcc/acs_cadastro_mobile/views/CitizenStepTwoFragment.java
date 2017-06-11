@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepTwoController;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
 import tcc.acs_cadastro_mobile.persistence.SocialDemographicPersistence;
 import tcc.acs_cadastro_mobile.required.RequiredRadioGroup;
@@ -23,7 +24,7 @@ import tcc.acs_cadastro_mobile.subModels.EducationEmployment;
 import tcc.acs_cadastro_mobile.subModels.HealthAndGroup;
 import tcc.acs_cadastro_mobile.subModels.SexualOrientation;
 
-public class CitizenStepTwoFragment extends Fragment {
+public class CitizenStepTwoFragment extends Fragment implements IRequiredFields{
 
     private static final String SOCIAL_DEMOGRAPHIC_DATA = "SOCIAL_DEMOGRAPHIC_DATA";
 
@@ -108,6 +109,10 @@ public class CitizenStepTwoFragment extends Fragment {
         getFields();
         super.onDetach();
     }
+    @Override
+    public boolean isRequiredFieldsFilled() {
+        return controller.isRequiredFieldsFilled(rgrpSchool, rgrpDeficiency);
+    }
 
     private void getFields(){
         String kinship = controller.getFields(spnKinship);
@@ -121,10 +126,6 @@ public class CitizenStepTwoFragment extends Fragment {
         socialDemographicData = SocialDemographicPersistence.getInstance(kinship, educationEmployment,
                 healthAndGroup, kids09, communityTraditional, sexualOrientation, deficiency);
         sendCitizenData.send(socialDemographicData);
-    }
-
-    public boolean isRequiredFieldsFilled() {
-        return controller.isRequiredFieldsFilled(rgrpSchool, rgrpDeficiency);
     }
 
     private void fillFields() {

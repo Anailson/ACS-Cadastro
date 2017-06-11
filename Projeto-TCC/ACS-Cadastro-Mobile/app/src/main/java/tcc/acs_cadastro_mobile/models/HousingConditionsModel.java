@@ -2,7 +2,14 @@ package tcc.acs_cadastro_mobile.models;
 
 import java.io.Serializable;
 
-public class HousingConditionsModel implements Serializable {
+import io.realm.Realm;
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.subModels.House;
+import tcc.acs_cadastro_mobile.subModels.HousingSituation;
+import tcc.acs_cadastro_mobile.subModels.Pet;
+import tcc.acs_cadastro_mobile.subModels.WaterAndSanitation;
+
+public class HousingConditionsModel extends RealmObject implements Serializable {
 
     private HousingSituation housingSituation;
     private House house;
@@ -10,143 +17,141 @@ public class HousingConditionsModel implements Serializable {
     private WaterAndSanitation waterAndSanitation;
     private Pet pet;
 
-    public HousingConditionsModel(HousingSituation housingSituation, House house, boolean electricEnergy,
-                                  WaterAndSanitation waterAndSanitation, Pet pet) {
-
-        this.housingSituation = housingSituation;
-        this.house = house;
-        this.electricEnergy = electricEnergy;
-        this.waterAndSanitation = waterAndSanitation;
-        this.pet = pet;
+    public static HousingConditionsModel newInstance(Realm realm, HousingSituation housingSituation,
+                     House house, boolean electricEnergy, WaterAndSanitation waterAndSanitation, Pet pet) {
+        realm.beginTransaction();
+        HousingConditionsModel object = realm.createObject(HousingConditionsModel.class);
+        object.setHousingSituation(housingSituation);
+        object.setHouse(house);
+        object.setElectricEnergy(electricEnergy);
+        object.setWaterAndSanitation(waterAndSanitation);
+        object.setPet(pet);
+        realm.commitTransaction();
+        return object;
     }
 
-    public String getHousingSituation() {
-        return housingSituation.situation;
+    public static HousingSituation getHousingSituation(Realm realm, String situation, String location,
+                                                       String ownership){
+        realm.beginTransaction();
+        HousingSituation object = realm.createObject(HousingSituation.class);
+        object.setSituation(situation);
+        object.setLocation(location);
+        object.setOwnership(ownership);
+        realm.commitTransaction();
+        return object;
+    }
+
+    public static House getHouse(Realm realm, String type, int nResidents, int nRooms, String access,
+                                 String construction, String constructionType){
+        realm.beginTransaction();
+        House object = realm.createObject(House.class);
+        object.setType(type);
+        object.setnResident(nResidents);
+        object.setnRoom(nRooms);
+        object.setAccess(access);
+        object.setContruction(construction);
+        object.setContructionType(constructionType);
+        realm.commitTransaction();
+        return object;
+    }
+
+    public static WaterAndSanitation getWaterAndSanitation(Realm realm, String waterSupply,
+                                               String waterTreatment, String bathroom){
+        realm.beginTransaction();
+        WaterAndSanitation object = realm.createObject(WaterAndSanitation.class);
+        object.setWaterSupply(waterSupply);
+        object.setWaterTreatment(waterTreatment);
+        object.setBathroom(bathroom);
+        realm.commitTransaction();
+        return object;
+    }
+
+    public static Pet getPet(Realm realm, boolean hasPet, boolean[] pets, int nPets){
+        realm.beginTransaction();
+        Pet object = realm.createObject(Pet.class);
+        object.setHasPet(hasPet);
+        object.setPets(pets);
+        object.setnPets(nPets);
+        realm.commitTransaction();
+        return object;
+    }
+
+    public HousingSituation getHousingSituation(){return housingSituation;}
+
+    public void setHousingSituation(HousingSituation housingSituation) {
+        this.housingSituation = housingSituation;
+    }
+
+    public House getHouse() {return house;}
+
+    public void setHouse(House house) {this.house = house;}
+
+    public boolean isElectricEnergy() {return electricEnergy;}
+
+    public void setElectricEnergy(boolean electricEnergy) {this.electricEnergy = electricEnergy;}
+
+    public WaterAndSanitation getWaterAndSanitation() {return waterAndSanitation;}
+
+    public void setWaterAndSanitation(WaterAndSanitation waterAndSanitation) {
+        this.waterAndSanitation = waterAndSanitation;
+    }
+
+    public Pet getPet() {return pet;}
+
+    public void setPet(Pet pet) {this.pet = pet;}
+
+    public String getSituation() {
+        return getHousingSituation().getSituation();
     }
 
     public String getLocation() {
-        return housingSituation.location;
+        return getHousingSituation().getLocation();
     }
 
     public String getOwnership() {
-        return housingSituation.location;
+        return getHousingSituation().getOwnership();
     }
 
     public String getResidenceType() {
-        return house.type;
+        return getHouse().getType();
     }
 
     public int getTotalResidents() {
-        return house.nResident;
+        return getHouse().getnResident();
     }
 
     public int getTotalRooms() {
-        return house.nRoom;
+        return getHouse().getnRoom();
     }
 
     public String getResidenceAccess() {
-        return house.access;
+        return getHouse().getAccess();
     }
 
     public String getConstruction() {
-        return house.contruction;
+        return getHouse().getContruction();
     }
 
     public String getConstructionType() {
-        return house.contructionType;
+        return getHouse().getContructionType();
     }
 
     public String getWaterSupply(){
-        return waterAndSanitation.waterSupply;
+        return getWaterAndSanitation().getWaterSupply();
     }
 
     public String getWaterTreatment(){
-        return waterAndSanitation.waterTreatment;
+        return getWaterAndSanitation().getWaterTreatment();
     }
 
     public String getBathroom(){
-        return waterAndSanitation.bathroom;
+        return getWaterAndSanitation().getBathroom();
     }
 
+    public boolean[] getPets() {return getPet().getPets();}
 
+    public boolean isHasPets() {return getPet().isHasPet();}
 
+    public int getTotalPets() {return getPet().getnPets();}
 
-
-
-
-
-
-
-
-
-    public boolean isElectricEnergy() {
-        return electricEnergy;
-    }
-
-    public boolean[] getPets() {
-        return new boolean[]{pet.cat, pet.dog, pet.bird, pet.criation, pet.another};
-    }
-
-    public boolean isHasPets() {
-        return pet.hasPet;
-    }
-
-    public int getTotalPets() {
-        return pet.nPets;
-    }
-
-
-    public static class HousingSituation{
-        private String situation, location, ownership;
-
-        public  HousingSituation(String situation, String location, String ownership){
-            this.situation = situation;
-            this.location = location;
-            this.ownership = ownership;
-        }
-    }
-
-    public static class House{
-        private String type, access, contruction, contructionType;
-        private int nResident, nRoom;
-
-        public House(String type, int nResident, int nRoom, String access, String contruction, String contructionType){
-            this.type = type;
-            this.nResident = nResident;
-            this.nRoom = nRoom;
-            this.access = access;
-            this.contruction = contruction;
-            this.contructionType = contructionType;
-        }
-    }
-
-    public static class WaterAndSanitation{
-        private String waterSupply, waterTreatment, bathroom;
-
-        public WaterAndSanitation (String waterApply, String waterTreatment, String bathroom){
-            this.waterSupply = waterApply;
-            this.waterTreatment = waterTreatment;
-            this.bathroom = bathroom;
-        }
-    }
-
-    public static class Pet {
-        private boolean hasPet, cat, dog, bird, criation, another;
-        private int nPets;
-
-        public Pet (boolean hasPet, boolean cat, boolean dog, boolean bird, boolean criation,
-                    boolean another, int nPets){
-            this.hasPet = hasPet;
-            this.cat = cat;
-            this.dog = dog;
-            this.bird = bird;
-            this.criation = criation;
-            this.another = another;
-            this.nPets = nPets;
-        }
-
-        public Pet(boolean hasPet, boolean[] pets, int nPets){
-            this(hasPet, pets[0], pets[1], pets[2], pets[3], pets[4], nPets);
-        }
-    }
 }

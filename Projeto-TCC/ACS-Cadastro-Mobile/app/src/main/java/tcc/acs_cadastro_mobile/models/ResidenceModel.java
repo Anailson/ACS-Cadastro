@@ -1,62 +1,109 @@
 package tcc.acs_cadastro_mobile.models;
 
-import java.util.Random;
+import java.io.Serializable;
+import java.util.Formatter;
 
-public class ResidenceModel {
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-    private static int count = 1;
-    private static final int CEP_NUM = 111111111;
+public class ResidenceModel extends RealmObject implements Serializable{
 
-    private String address;
-    private int number;
-    private long cep, homePhone, referencePhone;
+    public static final String CEP = "cep";
+    public static final String STREET_NAME = "streetName";
 
+    @PrimaryKey
+    private long cep;
+    private String streetName;
     private AddressDataModel addressData;
     private HousingConditionsModel housingConditions;
-    private HousingHistoricalModel[] housingHistorical;
+    private RealmList<HousingHistoricalModel> housingHistorical;
 
-    public ResidenceModel(String address){
-        this.address = address;
-        this.number = (count++) * 100;
-        this.cep = CEP_NUM * count;
-        this.homePhone = new Random().nextInt(CEP_NUM);
-        this.referencePhone = homePhone + CEP_NUM;
+
+    public static ResidenceModel newInstance(Realm realm, AddressDataModel addressData,
+                     HousingConditionsModel housingConditions, RealmList<HousingHistoricalModel> housingHistorical){
+        realm.beginTransaction();
+        ResidenceModel object = realm.createObject(ResidenceModel.class, addressData.getCep());
+        object.setStreetName(addressData.getPlaceName());
+        object.setAddressData(addressData);
+        object.setHousingConditions(housingConditions);
+        object.setHousingHistorical(housingHistorical);
+        realm.commitTransaction();
+        return object;
     }
 
-    public ResidenceModel (AddressDataModel addressData, HousingConditionsModel housingConditions,
-                            HousingHistoricalModel[] housingHistorical){
+    public long getCep() {
+        return cep;
+    }
+
+    public void setCep(long cep) {
+        this.cep = cep;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public void setStreetName(String streetName) {
+        this.streetName = streetName;
+    }
+
+    public AddressDataModel getAddressData() {
+        return addressData;
+    }
+
+    public void setAddressData(AddressDataModel addressData) {
         this.addressData = addressData;
+    }
+
+    public HousingConditionsModel getHousingConditions() {
+        return housingConditions;
+    }
+
+    public void setHousingConditions(HousingConditionsModel housingConditions) {
         this.housingConditions = housingConditions;
+    }
+
+    public RealmList<HousingHistoricalModel> getHousingHistorical() {
+        return housingHistorical;
+    }
+
+    public void setHousingHistorical(RealmList<HousingHistoricalModel> housingHistorical) {
         this.housingHistorical = housingHistorical;
     }
 
-
     public boolean addressContainsKey(String key){
-        return containsKey(address, key);
+        return containsKey(getAddressData().getPlaceName(), key);
     }
 
     public boolean cepContainsKey(String key){
-        return containsKey(String.valueOf(cep), key);
+        return containsKey(String.valueOf(getCep()), key);
     }
 
     private boolean containsKey(String value, String key){
         return value.toUpperCase().contains(key.toUpperCase().trim());
     }
 
-    public String getAddress(){
-        return "Rua " + address + " " + number + ". Bairro";
+    public String getSimpleAddress(){
+        Formatter out = new Formatter();
+        out.format("%s %s, %d.", getAddressData().getPlaceType(), getStreetName(), getAddressData().getNumber());
+        return out.toString();
     }
 
-
-    public String getCep() {
-        return "CEP: " + cep;
+    public String getCompleteAddress(){
+        Formatter out = new Formatter();
+        out.format("%s %s, %d. %s %s-%s, %d", getAddressData().getPlaceType(), getStreetName(),
+                getAddressData().getNumber(), getAddressData().getNeighborhood(), getAddressData().getCityName(),
+                getAddressData().getUf(), getCep());
+        return out.toString();
     }
 
     public String getHomePhone() {
-        return "Telefone residencial: " + homePhone;
+        return getAddressData().getPhoneHome();
     }
 
     public String getReferencePhone() {
-        return "Telefone de referencia: " + referencePhone;
+        return getAddressData().getPhoneReference();
     }
 }

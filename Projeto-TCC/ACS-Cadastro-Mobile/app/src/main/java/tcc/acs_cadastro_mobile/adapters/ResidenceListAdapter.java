@@ -38,8 +38,8 @@ public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
 
         ResidenceModel residence = residences.get(position);
 
-        txtAddress.setText(residence.getAddress());
-        txtCep.setText(residence.getCep());
+        txtAddress.setText(residence.getCompleteAddress());
+        txtCep.setText(String.valueOf(residence.getCep()));
         txtHomePhone.setText(residence.getHomePhone());
         txtReferencePhone.setText(residence.getReferencePhone());
 

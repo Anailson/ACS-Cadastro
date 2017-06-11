@@ -7,9 +7,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.interfaces.IRequired;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 
-public class RequiredRadioGroup extends RadioGroup implements IRequired {
+public class RequiredRadioGroup extends RadioGroup implements IRequiredView {
 
     private TextView title;
 

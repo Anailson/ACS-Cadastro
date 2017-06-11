@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -73,22 +74,31 @@ public class CitizenAddController {
 
     private void nextMenu(){
 
-        switch (actualMenu){
-            case FIRST_STEP:
-                if(((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
+        Log.e("save","Menu: " + actualMenu);
+
+        switch (actualMenu) {
+            case FIRST_STEP:{
+                if (((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepTwo();
                 }
                 break;
-            case SECOND_STEP:
-                if(((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
+            }
+            case SECOND_STEP:{
+                if (((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepThree();
                 }
                 break;
-            case THIRD_STEP: shiftToStepFour(); break;
-            case FOURTH_STEP:
-                if(((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
+            }
+            case THIRD_STEP: {
+                shiftToStepFour();
+                break;
+            }
+            case FOURTH_STEP: {
+                if (((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
                     save();
                 }
+                break;
+            }
         }
     }
 
@@ -101,12 +111,9 @@ public class CitizenAddController {
     }
 
     private void save(){
-
         if(actualMenu == FOURTH_STEP) {
             actualStep.onDetach();
-            CitizenModel citizen = CitizenPersistence.getInstance(personalData, socialDemographicData,
-                    healthConditions, streetSituation);
-            new SaveCitizen().save(citizen);
+            new SaveCitizen().save(personalData, socialDemographicData, healthConditions, streetSituation);
         }
     }
 
@@ -190,16 +197,16 @@ public class CitizenAddController {
     }
     private class SaveCitizen {
 
-        void save(CitizenModel citizen){
+        private void save(PersonalDataModel personalData, SocialDemographicModel socialDemographicData,
+                  HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
 
-            CitizenModel saved = CitizenPersistence.save(citizen);
+            CitizenModel saved = CitizenPersistence.save(personalData, socialDemographicData, healthConditions, streetSituation);
             if(saved != null){
                 showConfirmDialog(saved.getName());
             }
         }
 
         private void showConfirmDialog(String name){
-
             Intent intent = new Intent(parent, ConfirmSaveCitizenActivity.class);
             intent.putExtra(ConfirmSaveCitizenActivity.SAVE_CITIZEN, name);
             parent.startActivity(intent);

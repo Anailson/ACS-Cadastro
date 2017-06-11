@@ -12,10 +12,17 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepOneController;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
+import tcc.acs_cadastro_mobile.persistence.AddressDataPersistence;
+import tcc.acs_cadastro_mobile.required.RequiredEditText;
+import tcc.acs_cadastro_mobile.required.RequiredSpinner;
+import tcc.acs_cadastro_mobile.subModels.CityLocation;
+import tcc.acs_cadastro_mobile.subModels.Phones;
+import tcc.acs_cadastro_mobile.subModels.StreetLocation;
 
-public class ResidenceStepOneFragment extends Fragment {
+public class ResidenceStepOneFragment extends Fragment implements IRequiredFields {
 
     private static final String ADDRESS_DATA = "ADDRESS_DATA";
 
@@ -23,9 +30,11 @@ public class ResidenceStepOneFragment extends Fragment {
     private AddressDataModel addressData;
 
     private ResidenceStepOneController controller;
-    private Spinner spnPlaceType, spnUf, spnCity;
-    private EditText edtPlaceName, edtNumber, edtComplement, edtNeighborhood, edtCep, edtHomePhone,
-            edtReferencePhone;
+    private RequiredEditText edtPlaceName, edtNumber, edtNeighborhood, edtCep;
+    private RequiredSpinner spnUf, spnCity;
+
+    private Spinner spnPlaceType;
+    private EditText edtComplement, edtHomePhone, edtReferencePhone;
 
     public static Fragment newInstance(AddressDataModel addressData) {
         Fragment fragment = new ResidenceStepOneFragment();
@@ -48,16 +57,16 @@ public class ResidenceStepOneFragment extends Fragment {
         addressData = (AddressDataModel) getArguments().getSerializable(ADDRESS_DATA);
         controller = new ResidenceStepOneController(this);
 
-        edtPlaceName = (EditText) view.findViewById(R.id.edt_rsd_place_name);
-        edtNumber = (EditText) view.findViewById(R.id.edt_rsd_number);
+        edtPlaceName = (RequiredEditText) view.findViewById(R.id.edt_rsd_place_name);
+        edtNumber = (RequiredEditText) view.findViewById(R.id.edt_rsd_number);
         edtComplement = (EditText) view.findViewById(R.id.edt_rsd_complement);
-        edtNeighborhood = (EditText) view.findViewById(R.id.edt_rsd_neighborhood);
-        edtCep = (EditText) view.findViewById(R.id.edt_rsd_cep);
+        edtNeighborhood = (RequiredEditText) view.findViewById(R.id.edt_rsd_neighborhood);
+        edtCep = (RequiredEditText) view.findViewById(R.id.edt_rsd_cep);
         edtHomePhone = (EditText) view.findViewById(R.id.edt_rsd_home_phone);
         edtReferencePhone = (EditText) view.findViewById(R.id.edt_rsd_reference_phone);
         spnPlaceType = (Spinner) view.findViewById(R.id.spn_rsd_place_type);
-        spnUf = (Spinner) view.findViewById(R.id.spn_rsd_uf);
-        spnCity = (Spinner) view.findViewById(R.id.spn_rsd_city);
+        spnUf = (RequiredSpinner) view.findViewById(R.id.spn_rsd_uf);
+        spnCity = (RequiredSpinner) view.findViewById(R.id.spn_rsd_city);
 
         spnPlaceType.setAdapter(controller.getSpinnerAdapter(R.array.place_type));
         spnUf.setAdapter(controller.getSpinnerAdapter(R.array.uf));
@@ -78,25 +87,20 @@ public class ResidenceStepOneFragment extends Fragment {
 
     @Override
     public void onDetach() {
-        getFields();
+
+        StreetLocation street = controller.getStreetLocation(spnPlaceType, edtPlaceName, edtNumber, edtComplement);
+        CityLocation city = controller.getCityLocation(edtNeighborhood, spnUf, spnCity, edtCep);
+        Phones phones = controller.getPhones(edtHomePhone, edtReferencePhone);
+
+        addressData = AddressDataPersistence.getInstance(street, city, phones);
+        residenceData.send(addressData);
         super.onDetach();
     }
 
-    private void getFields(){
-        String placeType = controller.getFields(spnPlaceType);
-        String placeName = controller.getFields(edtPlaceName);
-        int number = Integer.parseInt(controller.getFields(edtNumber));
-        String complement = controller.getFields(edtComplement);
-        String neighborhood = controller.getFields(edtNeighborhood);
-        String uf = controller.getFields(spnUf);
-        String city = controller.getFields(spnCity);
-        String cep = controller.getFields(edtCep);
-        String phoneHome = controller.getFields(edtHomePhone);
-        String phoneReference = controller.getFields(edtReferencePhone);
-
-        addressData = new AddressDataModel(placeType, placeName, number, complement, neighborhood,
-                uf, city, cep, phoneHome, phoneReference);
-        residenceData.send(addressData);
+    @Override
+    public boolean isRequiredFieldsFilled(){
+        return controller.isRequiredFieldsFilled(edtPlaceName, edtNumber, edtNeighborhood, spnUf,
+                spnCity, edtCep);
     }
 
     private void fillFields(){
@@ -109,8 +113,8 @@ public class ResidenceStepOneFragment extends Fragment {
         controller.fillField(edtComplement, addressData.getComplement());
         controller.fillField(edtNeighborhood, addressData.getNeighborhood());
         controller.fillField(spnUf, indexUf);
-        controller.fillField(spnCity, controller.getCityIndex(indexUf, addressData.getCity()));
-        controller.fillField(edtCep, addressData.getCep());
+        controller.fillField(spnCity, controller.getCityIndex(indexUf, addressData.getCityName()));
+        controller.fillField(edtCep, String.valueOf(addressData.getCep()));
         controller.fillField(edtHomePhone, addressData.getPhoneHome());
         controller.fillField(edtReferencePhone, addressData.getPhoneReference());
     }

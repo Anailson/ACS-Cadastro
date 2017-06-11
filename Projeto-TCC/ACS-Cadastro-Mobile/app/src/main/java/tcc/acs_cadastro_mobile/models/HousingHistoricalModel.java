@@ -2,7 +2,10 @@ package tcc.acs_cadastro_mobile.models;
 
 import java.io.Serializable;
 
-public class HousingHistoricalModel implements Serializable{
+import io.realm.Realm;
+import io.realm.RealmObject;
+
+public class HousingHistoricalModel extends RealmObject implements Serializable{
 
     private long familyRecord;
     private CitizenModel responsible;
@@ -11,14 +14,13 @@ public class HousingHistoricalModel implements Serializable{
     private String livesSince;
     private boolean moved;
 
-    public HousingHistoricalModel(long familyRecord, CitizenModel responsible, float familyIncome,
-                                  int nMembers, String livesSince, boolean moved){
-        this.familyRecord = familyRecord;
-        this.responsible = responsible;
-        this.familyIncome = familyIncome;
-        this.nMembers = nMembers;
-        this.livesSince = livesSince;
-        this.moved = moved;
+    public static HousingHistoricalModel getHousingHistoricalModel(Realm realm, long familyRecord,
+                   CitizenModel responsible, float familyIncome, int nMembers, String livesSince, boolean moved){
+        realm.beginTransaction();
+        HousingHistoricalModel object = realm.createObject(HousingHistoricalModel.class);
+
+        realm.commitTransaction();
+        return object;
     }
 
     public long getFamilyRecord() {

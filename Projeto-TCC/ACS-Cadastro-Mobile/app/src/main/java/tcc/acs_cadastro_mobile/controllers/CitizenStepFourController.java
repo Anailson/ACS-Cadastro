@@ -9,7 +9,7 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.Adapter;
-import tcc.acs_cadastro_mobile.interfaces.IRequired;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
 import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
 import tcc.acs_cadastro_mobile.subModels.FamilyVisit;
@@ -17,7 +17,7 @@ import tcc.acs_cadastro_mobile.subModels.Feeding;
 import tcc.acs_cadastro_mobile.subModels.Hygiene;
 import tcc.acs_cadastro_mobile.subModels.StreetSituation;
 
-public class CitizenStepFourController extends StepsController{
+public class CitizenStepFourController extends StepsController {
 
     private Fragment fragment;
     private RadioGroup.OnCheckedChangeListener onChangeListener;
@@ -115,8 +115,10 @@ public class CitizenStepFourController extends StepsController{
         fillField(radioGroup, checked, checkBoxes, values, yes, no);
     }
 
-    public boolean isRequiredFieldsFilled(IRequired rgrpStreet) {
-        return applyError(rgrpStreet);
+    public boolean isRequiredFieldsFilled(IRequiredView rgrpStreet) {
+        startErrors();
+        applyError(rgrpStreet);
+        return hasError();
     }
 
     private class OnChangeListener implements RadioGroup.OnCheckedChangeListener{

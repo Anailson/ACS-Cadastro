@@ -6,9 +6,9 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.interfaces.IRequired;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 
-public class RequiredEditText extends android.support.design.widget.TextInputEditText implements IRequired {
+public class RequiredEditText extends android.support.design.widget.TextInputEditText implements IRequiredView {
 
     private TextView title;
 

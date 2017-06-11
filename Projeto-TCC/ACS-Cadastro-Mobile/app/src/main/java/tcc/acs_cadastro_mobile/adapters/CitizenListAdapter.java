@@ -21,7 +21,6 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
 
     public CitizenListAdapter(Context context, List<CitizenModel> citizens) {
         super(context, R.layout.item_list_citizen, citizens);
-
         this.context = context;
         this.citizens = citizens;
     }
@@ -35,15 +34,15 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
 
         TextView txtName = (TextView) convertView.findViewById(R.id.txt_ctz_name);
         TextView txtSusNum = (TextView) convertView.findViewById(R.id.txt_ctz_sus_num);
-        TextView txtAddress = (TextView) convertView.findViewById(R.id.txt_ctz_address);
         TextView txtPhone = (TextView) convertView.findViewById(R.id.txt_ctz_phone);
 
         CitizenModel citizen = citizens.get(position);
 
+        String numSus = "Nº do SUS: " + citizen.getNumSus();
+        String phone = "Telefone: " + citizen.getPhone();
         txtName.setText(citizen.getName());
-        txtSusNum.setText(String.valueOf(citizen.getNumSus()));
-        txtAddress.setText(citizen.getAddress());
-        txtPhone.setText(String.valueOf(citizen.getPhone()));
+        txtSusNum.setText(numSus);
+        txtPhone.setText(phone);
 
         convertView.setOnClickListener(getListener(position));
         return convertView;

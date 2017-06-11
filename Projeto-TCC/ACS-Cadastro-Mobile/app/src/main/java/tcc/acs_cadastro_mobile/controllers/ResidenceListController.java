@@ -15,6 +15,7 @@ import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.ResidenceListAdapter;
 import tcc.acs_cadastro_mobile.interfaces.TextSearchChanged;
 import tcc.acs_cadastro_mobile.models.ResidenceModel;
+import tcc.acs_cadastro_mobile.persistence.ResidencePersistence;
 import tcc.acs_cadastro_mobile.views.ResidenceAddActivity;
 
 public class ResidenceListController {
@@ -26,7 +27,7 @@ public class ResidenceListController {
 
     public ResidenceListController(Context context){
         this.context = context;
-        this.residences = getResidences();
+        this.residences = ResidencePersistence.getAll();
     }
 
     public ListAdapter getAdapter(){
@@ -46,19 +47,6 @@ public class ResidenceListController {
             clickListener = new OnClickListener();
         }
         return clickListener;
-    }
-
-    private List<ResidenceModel> getResidences(){
-        List<ResidenceModel> residences = new ArrayList<>();
-        residences.add(new ResidenceModel("Joao"));
-        residences.add(new ResidenceModel("Maria"));
-        residences.add(new ResidenceModel("André"));
-        residences.add(new ResidenceModel("Marcia"));
-        residences.add(new ResidenceModel("Carlos"));
-        residences.add(new ResidenceModel("Francisco"));
-        residences.add(new ResidenceModel("Erique"));
-        residences.add(new ResidenceModel("Dona Francisca da Silva"));
-        return residences;
     }
 
     private class TextSearch extends TextSearchChanged<ResidenceModel> {

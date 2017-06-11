@@ -7,13 +7,13 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import tcc.acs_cadastro_mobile.interfaces.IRequired;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 
 public class StepsController {
 
     private Fragment fragment;
-    boolean hasError;
+    private boolean hasError;
 
     StepsController(Fragment fragment){
         this.fragment = fragment;
@@ -30,15 +30,23 @@ public class StepsController {
         throw new IllegalArgumentException("Value " + value + " was not founded");
     }
 
-    final boolean applyError(IRequired required){
+    final void startErrors(){
+        hasError = true;
+    }
+
+    final boolean hasError(){
+        return hasError;
+    }
+
+    final boolean applyError(IRequiredView required){
         return applyError(required, "", "");
     }
 
-    final boolean  applyError(IRequired required, String match){
+    final boolean  applyError(IRequiredView required, String match){
         return applyError(required, match, "");
     }
 
-    final boolean  applyError(IRequired required, String match, String msg){
+    final boolean  applyError(IRequiredView required, String match, String msg){
 
         if (required.isInvalid(match)) {
             required.setError(msg);
@@ -51,6 +59,16 @@ public class StepsController {
 
     final boolean isYesGroup(RadioGroup radioGroup, int id) {
         return radioGroup.getCheckedRadioButtonId() == id;
+    }
+
+    final int getInt(EditText edtNumber) {
+        String text = edtNumber.getText().toString();
+        return text.matches("[0-9]+") ? Integer.parseInt(text) : 0;
+    }
+
+    final long getLong(EditText editText) {
+        String text = editText.getText().toString();
+        return text.matches("[0-9]+") ? Long.parseLong(text) : 0;
     }
 
     public String getFields(EditText editText){
@@ -112,8 +130,15 @@ public class StepsController {
     }
 
     public final void fillField(Spinner spinner, String position) {
-
         spinner.setSelection(Integer.parseInt(position));
+    }
+
+    public final void fillField(Spinner spinner, String position, String unmatch){
+        if(position.equals(unmatch)){
+            fillField(spinner, 0);
+        } else {
+            fillField(spinner, position);
+        }
     }
 
     public final void fillField(CheckBox checkBox, boolean checked) {

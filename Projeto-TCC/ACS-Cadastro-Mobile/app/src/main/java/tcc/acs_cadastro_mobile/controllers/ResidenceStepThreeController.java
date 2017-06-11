@@ -1,13 +1,15 @@
 package tcc.acs_cadastro_mobile.controllers;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
-import tcc.acs_cadastro_mobile.views.NewResponsibleActivity;
+import tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity;
 
 public class ResidenceStepThreeController {
 
@@ -34,15 +36,24 @@ public class ResidenceStepThreeController {
         return clickListener;
     }
 
-    public HousingHistoricalModel[] getHousingHistorical(ListView lvwResponsibles) {
-        return new HousingHistoricalModel[0];
+    public static HousingHistoricalModel[] getArray(RealmList<HousingHistoricalModel> housingHistorical){
+        return housingHistorical == null ? null : housingHistorical.toArray(new HousingHistoricalModel[housingHistorical.size()]);
+    }
+
+    public static RealmList<HousingHistoricalModel> getList(Bundle bundle, String key) {
+        HousingHistoricalModel[] objects = (HousingHistoricalModel[]) bundle.getSerializable(key);
+        return objects == null ? null : new RealmList<>(objects);
+    }
+
+    public RealmList<HousingHistoricalModel> getHousingHistorical(ListView lvwResponsibles) {
+        return new RealmList<>();
     }
 
     private class NewResponsibleClickListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(fragment.getContext(), NewResponsibleActivity.class);
+            Intent intent = new Intent(fragment.getContext(), ResidenceNewResponsibleActivity.class);
             fragment.getActivity().startActivity(intent);
         }
     }

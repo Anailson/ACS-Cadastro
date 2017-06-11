@@ -4,10 +4,16 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.Adapter;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
+import tcc.acs_cadastro_mobile.persistence.AddressDataPersistence;
+import tcc.acs_cadastro_mobile.subModels.CityLocation;
+import tcc.acs_cadastro_mobile.subModels.Phones;
+import tcc.acs_cadastro_mobile.subModels.StreetLocation;
 
 public class ResidenceStepOneController extends StepsController {
 
@@ -32,6 +38,34 @@ public class ResidenceStepOneController extends StepsController {
             itemSelectedListener = new ItemSelectedListener();
         }
         return itemSelectedListener;
+    }
+
+    public StreetLocation getStreetLocation(Spinner spnPlaceType, EditText edtPlaceName,EditText edtNumber,
+                                            EditText edtComplement) {
+        return AddressDataPersistence.getStreetLocation(getFields(spnPlaceType), getFields(edtPlaceName),
+                getInt(edtNumber), getFields(edtComplement));
+    }
+
+    public CityLocation getCityLocation(EditText edtNeighborhood, Spinner spnUf, Spinner spnCity,
+                                        EditText edtCep) {
+        return AddressDataPersistence.getCityLocation(getFields(edtNeighborhood), getFields(spnUf),
+                getFields(spnCity), getLong(edtCep));
+    }
+
+    public Phones getPhones(EditText edtHomePhone, EditText edtReferencePhone) {
+        return AddressDataPersistence.getPhones(getFields(edtHomePhone), getFields(edtReferencePhone));
+    }
+
+    public boolean isRequiredFieldsFilled(IRequiredView edtPlaceName, IRequiredView edtNumber,
+                IRequiredView edtNeighborhood, IRequiredView spnUf, IRequiredView spnCity, IRequiredView edtCep) {
+        startErrors();
+        applyError(edtPlaceName);
+        applyError(edtNumber);
+        applyError(edtNeighborhood);
+        applyError(spnUf);
+        applyError(spnCity);
+        applyError(edtCep);
+        return hasError();
     }
 
     public int getCityIndex(int indexUf, String city) {
