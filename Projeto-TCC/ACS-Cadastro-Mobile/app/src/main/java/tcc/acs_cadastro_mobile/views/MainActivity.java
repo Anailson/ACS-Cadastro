@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity
         return id == R.id.menu_settings || super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return selectMenu(item.getItemId());

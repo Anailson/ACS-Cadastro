@@ -1,16 +1,16 @@
 package tcc.acs_cadastro_mobile.controllers;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
@@ -21,7 +21,6 @@ import tcc.acs_cadastro_mobile.views.CitizenStepFourFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepOneFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepThreeFragment;
 import tcc.acs_cadastro_mobile.views.CitizenStepTwoFragment;
-import tcc.acs_cadastro_mobile.views.ConfirmSaveCitizenActivity;
 
 public class CitizenAddController {
 
@@ -33,7 +32,7 @@ public class CitizenAddController {
     private int actualMenu;
     private Fragment actualStep;
     private AppCompatActivity parent;
-    private CtzOnClickListener listener;
+    private Listener listener;
     private PersonalDataModel personalData;
     private SocialDemographicModel socialDemographicData;
     private HealthConditionsModel healthConditions;
@@ -47,7 +46,7 @@ public class CitizenAddController {
     public View.OnClickListener getClickListener(){
 
         if(listener == null){
-            listener = new CtzOnClickListener();
+            listener = new Listener();
         }
         return listener;
     }
@@ -73,20 +72,17 @@ public class CitizenAddController {
     }
 
     private void nextMenu(){
-
-        Log.e("save","Menu: " + actualMenu);
-
         switch (actualMenu) {
             case FIRST_STEP:{
-                if (((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
+                //if (((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepTwo();
-                }
+                //}
                 break;
             }
             case SECOND_STEP:{
-                if (((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
+                //if (((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepThree();
-                }
+                //}
                 break;
             }
             case THIRD_STEP: {
@@ -94,9 +90,9 @@ public class CitizenAddController {
                 break;
             }
             case FOURTH_STEP: {
-                if (((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
+                //if (((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
                     save();
-                }
+                //}
                 break;
             }
         }
@@ -111,9 +107,11 @@ public class CitizenAddController {
     }
 
     private void save(){
-        if(actualMenu == FOURTH_STEP) {
-            actualStep.onDetach();
-            new SaveCitizen().save(personalData, socialDemographicData, healthConditions, streetSituation);
+
+        actualStep.onDetach();
+        CitizenModel saved = CitizenPersistence.save(personalData, socialDemographicData, healthConditions, streetSituation);
+        if(saved != null){
+            showConfirmDialog(saved.getName(), saved.getNumSus());
         }
     }
 
@@ -186,7 +184,16 @@ public class CitizenAddController {
         manager.beginTransaction().replace(R.id.frame_ctz_add, fragment).commit();
     }
 
-    private class CtzOnClickListener implements View.OnClickListener {
+    private void showConfirmDialog(String name, long cpf){
+
+        DefaultAlert alerts = new DefaultAlert(parent);
+        alerts.setTitle(R.string.msg_save_success);
+        alerts.setMessage("Os dados de " + name + ", CPF: " + cpf + ", foram salvos com sucesso");
+        alerts.setPositiveListener(R.string.btn_ok, listener);
+        alerts.show();
+    }
+
+    private class Listener implements View.OnClickListener, DialogInterface.OnClickListener  {
 
         public void onClick(View view) {
             switch (view.getId()){
@@ -194,22 +201,10 @@ public class CitizenAddController {
                 case R.id.btn_ctz_add_progress: nextMenu(); break;
             }
         }
-    }
-    private class SaveCitizen {
 
-        private void save(PersonalDataModel personalData, SocialDemographicModel socialDemographicData,
-                  HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
-
-            CitizenModel saved = CitizenPersistence.save(personalData, socialDemographicData, healthConditions, streetSituation);
-            if(saved != null){
-                showConfirmDialog(saved.getName());
-            }
-        }
-
-        private void showConfirmDialog(String name){
-            Intent intent = new Intent(parent, ConfirmSaveCitizenActivity.class);
-            intent.putExtra(ConfirmSaveCitizenActivity.SAVE_CITIZEN, name);
-            parent.startActivity(intent);
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
             parent.finish();
         }
     }

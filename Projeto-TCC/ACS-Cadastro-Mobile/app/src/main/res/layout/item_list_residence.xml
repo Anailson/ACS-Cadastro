@@ -14,7 +14,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/txt_rsd_address"
@@ -29,12 +29,6 @@
 
         <TextView
             android:id="@+id/txt_rsd_home_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_default" />
-
-        <TextView
-            android:id="@+id/txt_rsd_reference_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_default" />

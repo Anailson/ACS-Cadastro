@@ -25,7 +25,7 @@ public class ResidenceStepOneController extends StepsController {
     private AdapterView.OnItemSelectedListener itemSelectedListener;
 
     public ResidenceStepOneController(Fragment fragment) {
-        super(fragment);
+        super(fragment.getContext());
         this.fragment = fragment;
     }
 

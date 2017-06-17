@@ -153,13 +153,12 @@
     <string name="txt_rsd_breeding">Criação (galinha, porco etc)</string>
     <string name="txt_rsd_pets_total">Quantos?</string>
     <string name="txt_rsd_family_record">Nº prontuário familiar</string>
-    <string name="txt_rsd_resp_num_sus">Numero do SUS do responsável</string>
+    <string name="txt_rsd_resp_num_sus">Nº do SUS do responsável</string>
     <string name="txt_rsd_resp_birth_date">Data de nascimento do responsável</string>
     <string name="txt_rsd_famlily_income">Renda familiar</string>
     <string name="txt_rsd_lives_since">Reside desde </string>
     <string name="txt_rsd_n_members">Número de membros da família</string>
     <string name="txt_rsd_moved">Mudou-se?</string>
-
 
     <!-- Menus -->
     <string name="menu_settings">Settings</string>
@@ -170,6 +169,8 @@
     <string name="menu_update_system">Atualizar o sistema</string>
 
     <!-- Buttons -->
+    <string name="btn_yes">Sim</string>
+    <string name="btn_no">Não</string>
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_save">Salvar</string>
@@ -193,7 +194,9 @@
     <string name="msg_edit_citizen">msg_edit_citizen</string>
     <string name="msg_delete_citizen">msg_delete_citizen</string>
     <string name="msg_save_success">Salvo com sucesso!</string>
-
+    <string name="err_num_sus_not_found_title">Numero do SUS não econtrado</string>
+    <string name="err_num_sus_not_found_message">O número do SUS informado não foi encontado.
+        É aconselhável atualizar sua base de dados. Deseja continuar mesmo assim?</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

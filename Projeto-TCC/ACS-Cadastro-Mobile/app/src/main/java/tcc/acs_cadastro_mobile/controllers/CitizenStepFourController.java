@@ -23,7 +23,7 @@ public class CitizenStepFourController extends StepsController {
     private RadioGroup.OnCheckedChangeListener onChangeListener;
 
     public CitizenStepFourController(Fragment fragment){
-        super(fragment);
+        super(fragment.getContext());
         this.fragment = fragment;
     }
 

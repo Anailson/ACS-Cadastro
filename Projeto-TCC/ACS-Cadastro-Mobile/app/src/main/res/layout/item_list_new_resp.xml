@@ -14,52 +14,25 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/edt_new_family_record"
+            android:id="@+id/txt_new_num_sus_resp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="bottom"
             android:text="@string/txt_default"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <TextView
-            android:id="@+id/edt_new_num_sus_resp"
+            android:id="@+id/txt_new_family_record"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:text="@string/txt_default"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+            android:text="@string/txt_default"/>
+
 
         <TextView
-            android:id="@+id/edt_new_birth_date_resp"
+            android:id="@+id/txt_new_birth_date_resp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_default" />
-
-        <TextView
-            android:id="@+id/edt_new_n_members"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_default" />
-
-        <TextView
-            android:id="@+id/edt_new_family_income"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_default" />
-
-        <TextView
-            android:id="@+id/edt_new_lives_since"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_default" />
-
-        <CheckBox
-            android:id="@+id/chb_new_moved"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:enabled="false"
-            android:text="@string/txt_rsd_moved" />
 
     </LinearLayout>
 

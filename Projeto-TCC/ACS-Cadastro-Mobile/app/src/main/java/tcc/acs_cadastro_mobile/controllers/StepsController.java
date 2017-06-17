@@ -1,6 +1,6 @@
 package tcc.acs_cadastro_mobile.controllers;
 
-import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -12,16 +12,16 @@ import tcc.acs_cadastro_mobile.models.CitizenModel;
 
 public class StepsController {
 
-    private Fragment fragment;
+    private Context context;
     private boolean hasError;
 
-    StepsController(Fragment fragment){
-        this.fragment = fragment;
+    StepsController(Context context){
+        this.context = context;
     }
 
     public int getIndex(String value, int idArray) {
 
-        String[] array = fragment.getResources().getStringArray(idArray);
+        String[] array = context.getResources().getStringArray(idArray);
         for(int i = 0; i < array.length; i++){
             if(value.toUpperCase().equals(array[i].toUpperCase())){
                 return i;
@@ -99,11 +99,15 @@ public class StepsController {
         return new boolean[checkBoxes.length];
     }
 
+    public boolean getFields(CheckBox checkBox){
+        return checkBox.isChecked();
+    }
+
     public boolean[] getFields(CheckBox... checkBoxes) {
 
         boolean[] values = new boolean[checkBoxes.length];
         for (int i = 0; i < checkBoxes.length; i++) {
-            values[i] = checkBoxes[i].isChecked();
+            values[i] = getFields(checkBoxes[i]);
         }
         return values;
     }

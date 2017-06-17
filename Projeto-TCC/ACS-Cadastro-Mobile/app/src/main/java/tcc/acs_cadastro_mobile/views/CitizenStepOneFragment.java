@@ -57,6 +57,7 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
     @Override
     public View onCreateView(LayoutInflater layout, ViewGroup container, Bundle savedInstanceState) {
 
+
         View view = layout.inflate(R.layout.content_ctz_add_1, container, false);
 
         controller = new CitizenStepOneController(this);
@@ -87,12 +88,7 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         spnNationality.setAdapter(controller.getSpinnerAdapter(R.array.nationality));
         spnUf.setAdapter(controller.getSpinnerAdapter(R.array.uf));
         spnCity.setAdapter(controller.getSpinnerAdapter(R.array.se_cities));
-        spnCity.setEnabled(false);
-
-
-        if (personalData != null) {
-            fillFields(personalData);
-        }
+        spnCity.setEnabled(true);
 
         edtBirth.setOnClickListener(controller.getClickListener());
         edtRespBirth.setOnClickListener(controller.getClickListener());
@@ -100,6 +96,10 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         chbMotherUnknown.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
         chbNationBirth.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
         chbResponsible.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
+
+        if (personalData != null) {
+            fillFields(personalData);
+        }
 
         return view;
     }
@@ -141,8 +141,8 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
 
     @Override
     public boolean isRequiredFieldsFilled(){
-        return controller.isRequiredFieldsFilled(edtName, edtMotherName,
-                edtBirth, spnGender, spnRace, spnNationality, spnUf, spnCity);
+        return controller.isRequiredFieldsFilled(edtName, edtMotherName,edtBirth, spnGender,
+                spnRace, spnNationality, spnUf, spnCity);
     }
 
     private void fillFields(PersonalDataModel personalData) {

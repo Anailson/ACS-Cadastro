@@ -36,9 +36,6 @@
         <activity
             android:name=".views.ResidenceNewResponsibleActivity"
             android:theme="@style/AppTheme.FloatingTheme" />
-        <activity
-            android:name=".views.ConfirmSaveCitizenActivity"
-            android:theme="@style/AppTheme.FloatingTheme"/>
     </application>
 
 </manifest>

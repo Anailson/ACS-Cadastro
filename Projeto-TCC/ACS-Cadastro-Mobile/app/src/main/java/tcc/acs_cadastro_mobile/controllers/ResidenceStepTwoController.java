@@ -31,7 +31,7 @@ public class ResidenceStepTwoController extends StepsController {
     private RadioGroup.OnCheckedChangeListener onChangeListener;
 
     public ResidenceStepTwoController(Fragment fragment) {
-        super(fragment);
+        super(fragment.getContext());
         this.fragment = fragment;
     }
 

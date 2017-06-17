@@ -1,9 +1,9 @@
 package tcc.acs_cadastro_mobile.controllers;
 
+import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
@@ -32,18 +33,19 @@ public class ResidenceAddController  {
     private AddressDataModel addressData;
     private HousingConditionsModel housingConditions;
     private RealmList<HousingHistoricalModel> housingHistorical;
-    private View.OnClickListener clickListener;
+    private Listeners listener;
 
     public ResidenceAddController(AppCompatActivity view){
         this.actualMenu = FIRST_STEP;
         this.parent = view;
+        this.housingHistorical = new RealmList<>();
     }
 
     public View.OnClickListener getClickListener() {
-        if(clickListener == null){
-            clickListener = new OnClickListener();
+        if(listener == null){
+            listener = new Listeners();
         }
-        return clickListener;
+        return listener;
     }
 
     public void send(AddressDataModel addressData){
@@ -55,7 +57,6 @@ public class ResidenceAddController  {
     }
 
     public void send(RealmList<HousingHistoricalModel> housingHistorical){
-        Log.e("controller#send", String.valueOf(housingHistorical == null));
         this.housingHistorical = housingHistorical;
     }
 
@@ -67,14 +68,14 @@ public class ResidenceAddController  {
 
         switch (actualMenu){
             case FIRST_STEP:
-                if(((ResidenceStepOneFragment) actualStep).isRequiredFieldsFilled()){
+                //if(((ResidenceStepOneFragment) actualStep).isRequiredFieldsFilled()){
                     shiftToStepTwo();
-                }
+                //}
                 break;
             case SECOND_STEP:
-                if(((ResidenceStepTwoFragment) actualStep).isRequiredFieldsFilled()){
+                //if(((ResidenceStepTwoFragment) actualStep).isRequiredFieldsFilled()){
                     shiftToStepThree();
-                }
+                //}
                 break;
             case THIRD_STEP: save(); break;
         }
@@ -88,9 +89,12 @@ public class ResidenceAddController  {
     }
 
     private void save(){
-        if(actualMenu == SECOND_STEP){
-            actualStep.onDetach();
-            new SaveResidence().save(addressData, housingConditions, housingHistorical);
+
+        actualStep.onDetach();
+        ResidenceModel saved = ResidencePersistence.save(addressData, housingConditions, housingHistorical);
+
+        if(saved != null){
+            showConfirmDialog(saved.getCompleteAddress(), saved.getCep());
         }
     }
 
@@ -112,6 +116,7 @@ public class ResidenceAddController  {
     }
 
     private void shiftToStepThree(){
+
         ((Button) parent.findViewById(R.id.btn_rsd_add_progress)).setText(R.string.btn_save);
 
         actualMenu = THIRD_STEP;
@@ -152,7 +157,15 @@ public class ResidenceAddController  {
         }.start();
     }
 
-    private class OnClickListener implements View.OnClickListener{
+    private void showConfirmDialog(String address, long cep){
+        DefaultAlert alerts = new DefaultAlert(parent);
+        alerts.setTitle(R.string.msg_save_success);
+        alerts.setMessage("Os dados da residência localizada em " + address + ", CEP: " + cep + ", foram salvos com sucesso");
+        alerts.setPositiveListener(R.string.btn_ok, listener);
+        alerts.show();
+    }
+
+    private class Listeners implements View.OnClickListener, DialogInterface.OnClickListener{
 
         @Override
         public void onClick(View view) {
@@ -161,25 +174,11 @@ public class ResidenceAddController  {
                 case R.id.btn_rsd_add_progress: nextMenu(); break;
             }
         }
-    }
 
-    private class SaveResidence {
-        void save(AddressDataModel addressData, HousingConditionsModel housingConditions,
-                         RealmList<HousingHistoricalModel> housingHistorical) {
-            ResidenceModel saved = ResidencePersistence.save(addressData, housingConditions, housingHistorical);
-            if(saved != null){
-                showConfirmDialog(saved.getCompleteAddress());
-            }
-        }
-
-        private void showConfirmDialog(String name){
-
-            /*
-            Intent intent = new Intent(parent, ConfirmSaveCitizenActivity.class);
-            intent.putExtra(ConfirmSaveCitizenActivity.SAVE_CITIZEN, name);
-            parent.startActivity(intent);
-            parent.finish()
-             */
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+            parent.finish();
         }
     }
 }

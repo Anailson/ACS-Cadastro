@@ -276,4 +276,18 @@
         <item>@string/txt_another</item>
     </string-array>
 
+    <string-array name="income">
+        <item>@string/txt_default</item>
+        <item><![CDATA[Menor que &#188; salario mínimo]]></item>
+        <item><![CDATA[Entre &#188; e &#189; salário mínimo]]></item>
+        <item>1 salário mínimo</item>
+        <item>2 salários mínimos</item>
+        <item>3 salários mínimos</item>
+        <item>4 salários mínimos</item>
+        <item>Acima de 4 salários mínimos</item>
+        <item>@string/txt_another</item>
+    </string-array>
+
+
+
 </resources>

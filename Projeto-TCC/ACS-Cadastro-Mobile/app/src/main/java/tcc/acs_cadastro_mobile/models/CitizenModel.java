@@ -19,6 +19,7 @@ public class CitizenModel extends RealmObject {
     private HealthConditionsModel healthConditions;
     private StreetSituationModel streetSituation;
 
+
     public static CitizenModel newInstance(Realm realm, PersonalDataModel personalData,
                                            SocialDemographicModel socialDemographic,
                                            HealthConditionsModel healthConditions,

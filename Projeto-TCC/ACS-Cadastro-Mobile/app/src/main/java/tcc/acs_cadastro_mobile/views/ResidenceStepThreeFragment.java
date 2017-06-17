@@ -1,9 +1,12 @@
 package tcc.acs_cadastro_mobile.views;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,16 @@ import tcc.acs_cadastro_mobile.adapters.HousingHistoricalListAdapter;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepThreeController;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
+import tcc.acs_cadastro_mobile.persistence.HousingHistoricalPersistence;
+
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.BIRTH_DATE;
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.FAMILY_INCOME;
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.FAMILY_RECORD;
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.LIVES_SINCE;
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.MEMBERS;
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.MOVED;
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.NUM_SUS;
+import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.RESULT;
 
 public class ResidenceStepThreeFragment extends Fragment{
 
@@ -48,17 +61,35 @@ public class ResidenceStepThreeFragment extends Fragment{
 
         housingHistorical = ResidenceStepThreeController.getList(getArguments(), HOUSING_HISTORICAL);
 
-        lvwResponsibles = (ListView) view.findViewById(R.id.lvw_responsible);
         Button btnNewResp = (Button) view.findViewById(R.id.btn_rsd_new_resp);
         controller = new ResidenceStepThreeController(this);
+        lvwResponsibles = (ListView) view.findViewById(R.id.lvw_responsible);
 
         //lvwResponsible.setOnItemClickListener(controller.getItemClickListener());
         btnNewResp.setOnClickListener(controller.getClickListener());
 
-        if(housingHistorical != null){
+        fillFields();
+        return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        if(requestCode == RESULT && resultCode == Activity.RESULT_OK){
+
+            long numSus = intent.getLongExtra(NUM_SUS, 0);
+            long record = intent.getLongExtra(FAMILY_RECORD, 0);
+            String birthDate = intent.getStringExtra(BIRTH_DATE);
+            String income = intent.getStringExtra(FAMILY_INCOME);
+            int members = intent.getIntExtra(MEMBERS, 0);
+            String livesSince = intent.getStringExtra(LIVES_SINCE);
+            boolean moved = intent.getBooleanExtra(MOVED, false);
+
+            HousingHistoricalModel historical = HousingHistoricalPersistence.getHousingHistoricalModel(
+                    numSus, record, birthDate, income, members, livesSince, moved);
+            housingHistorical.add(historical);
             fillFields();
         }
-        return view;
     }
 
     @Override
@@ -69,6 +100,6 @@ public class ResidenceStepThreeFragment extends Fragment{
     }
 
     private void fillFields(){
-        lvwResponsibles.setAdapter(new HousingHistoricalListAdapter(getContext(), housingHistorical));
+        lvwResponsibles.setAdapter(controller.getAdapter(getContext(),housingHistorical));
     }
 }

@@ -17,6 +17,7 @@ public class CalendarActivity extends AppCompatActivity {
     public static final int YEAR = 2;
     public static final int BIRTH = 3;
     public static final int RESP_BIRTH = 1;
+    public static final int NEW_RESP_BIRTH = 2;
     public static final String VALUE = "birth_date";
 
     @Override
@@ -39,6 +40,11 @@ public class CalendarActivity extends AppCompatActivity {
 
         btnOk.setOnClickListener(controller.getClickListener());
         btnCancel.setOnClickListener(controller.getClickListener());
+
+        defineFloating();
+    }
+
+    private void defineFloating(){
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);

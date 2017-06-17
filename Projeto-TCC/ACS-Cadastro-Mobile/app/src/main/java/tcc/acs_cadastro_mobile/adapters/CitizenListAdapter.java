@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Formatter;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.R;
@@ -38,11 +39,9 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
 
         CitizenModel citizen = citizens.get(position);
 
-        String numSus = "Nº do SUS: " + citizen.getNumSus();
-        String phone = "Telefone: " + citizen.getPhone();
         txtName.setText(citizen.getName());
-        txtSusNum.setText(numSus);
-        txtPhone.setText(phone);
+        txtSusNum.setText(getText(R.string.txt_ctz_num_sus, citizen.getNumSus()));
+        txtPhone.setText(getText(R.string.txt_ctz_phone, citizen.getPhone()));
 
         convertView.setOnClickListener(getListener(position));
         return convertView;
@@ -56,6 +55,14 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    private String getText(int resource, Object text){
+        return getText(context.getString(resource), text);
+    }
+
+    private String getText(String complement, Object text){
+        return new Formatter().format("%s: %s", complement, text.toString()).toString();
     }
 
 }

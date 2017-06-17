@@ -33,12 +33,10 @@ public class CitizenStepOneController extends StepsController {
     private final int SE = 3;
 
     private Fragment fragment;
-    private View.OnClickListener clickListener;
-    private CompoundButton.OnCheckedChangeListener chbCheckedListener;
-    private AdapterView.OnItemSelectedListener itemSelectedListener;
+    private Listener listener;
 
     public CitizenStepOneController(Fragment fragment) {
-        super(fragment);
+        super(fragment.getContext());
         this.fragment = fragment;
     }
 
@@ -48,30 +46,30 @@ public class CitizenStepOneController extends StepsController {
 
     public View.OnClickListener getClickListener() {
 
-        if (clickListener == null) {
-            clickListener = new OnClickListener();
+        if (listener == null) {
+            listener = new Listener();
         }
-        return clickListener;
+        return listener;
     }
 
     public CompoundButton.OnCheckedChangeListener getCheckBoxChangeListener() {
 
-        if (chbCheckedListener == null) {
-            chbCheckedListener = new OnCheckBoxChangeListener();
+        if (listener == null) {
+            listener = new Listener();
         }
-        return chbCheckedListener;
+        return listener;
     }
 
     public AdapterView.OnItemSelectedListener getItemSelectedListener() {
-        if (itemSelectedListener == null) {
-            itemSelectedListener = new ItemSelectedListener();
+        if (listener == null) {
+            listener = new Listener();
         }
-        return itemSelectedListener;
+        return listener;
     }
 
     public boolean isRequiredFieldsFilled(RequiredEditText edtName, RequiredEditText edtBirthDate,
-                                          RequiredEditText edtMotherName, RequiredSpinner spnGender, RequiredSpinner spnRace,
-                                          RequiredSpinner spnNationality, RequiredSpinner spnUf, RequiredSpinner spnCity) {
+                      RequiredEditText edtMotherName, RequiredSpinner spnGender, RequiredSpinner spnRace,
+                      RequiredSpinner spnNationality, RequiredSpinner spnUf, RequiredSpinner spnCity) {
         startErrors();
         applyError(edtName, "", "Este campo é obrigatório");
         applyError(edtBirthDate, "", "Este campo é obrigatório");
@@ -162,7 +160,7 @@ public class CitizenStepOneController extends StepsController {
     public void fillCity(int uf, Spinner spinner, int position){
         enableView(spinner, true);
         setCities(uf, spinner);
-        spinner.setSelection(position, false);
+        spinner.setSelection(2);
     }
 
     public void setBirth(EditText editText, String[] date) {
@@ -229,47 +227,38 @@ public class CitizenStepOneController extends StepsController {
             request = CalendarActivity.RESP_BIRTH;
         }
 
-        Intent newActivity = new Intent(fragment.getActivity(), CalendarActivity.class);
+        Intent newActivity = new Intent(fragment.getContext(), CalendarActivity.class);
         fragment.startActivityForResult(newActivity, request);
     }
 
-    private class OnClickListener implements View.OnClickListener {
+    private class Listener implements View.OnClickListener, CompoundButton.OnCheckedChangeListener,
+                                    AdapterView.OnItemSelectedListener{
+        //View.OnClickListener
         @Override
         public void onClick(View view) {
             showCalendar(view.getId());
         }
-    }
 
-    private class OnCheckBoxChangeListener implements CompoundButton.OnCheckedChangeListener {
+        //CompoundButton.OnCheckedChangeListener
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
             switch (compoundButton.getId()) {
-                case R.id.chb_ctz_mother_unknow:
-                    fillMotherName(check);
-                    break;
-                case R.id.chb_ctz_nation_birth:
-                    fillNationBirth(check);
-                    break;
-                case R.id.chb_ctz_responsible:
-                    fillResponsible(check);
-                    break;
+                case R.id.chb_ctz_mother_unknow: fillMotherName(check); break;
+                case R.id.chb_ctz_nation_birth: fillNationBirth(check); break;
+                case R.id.chb_ctz_responsible: fillResponsible(check);break;
             }
         }
-    }
 
-    private class ItemSelectedListener implements AdapterView.OnItemSelectedListener {
+        //AdapterView.OnItemSelectedListener
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int index, long l) {
 
             switch (adapterView.getId()) {
-                case R.id.spn_ctz_uf:
-                    setCities(index);
-                    break;
+                case R.id.spn_ctz_uf: setCities(index); break;
             }
         }
 
         @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
-        }
+        public void onNothingSelected(AdapterView<?> adapterView) {}
     }
 }

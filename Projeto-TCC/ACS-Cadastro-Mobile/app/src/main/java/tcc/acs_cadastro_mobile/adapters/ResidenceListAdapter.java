@@ -1,6 +1,7 @@
 package tcc.acs_cadastro_mobile.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Formatter;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.R;
@@ -25,8 +27,9 @@ public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
         this.residences = residences;
     }
 
+    @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
 
         LayoutInflater layout = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = layout.inflate(R.layout.item_list_residence, parent, false);
@@ -34,14 +37,12 @@ public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
         TextView txtAddress = (TextView) convertView.findViewById(R.id.txt_rsd_address);
         TextView txtCep = (TextView) convertView.findViewById(R.id.txt_rsd_cep);
         TextView txtHomePhone = (TextView) convertView.findViewById(R.id.txt_rsd_home_phone);
-        TextView txtReferencePhone = (TextView) convertView.findViewById(R.id.txt_rsd_reference_phone);
 
         ResidenceModel residence = residences.get(position);
 
         txtAddress.setText(residence.getCompleteAddress());
-        txtCep.setText(String.valueOf(residence.getCep()));
-        txtHomePhone.setText(residence.getHomePhone());
-        txtReferencePhone.setText(residence.getReferencePhone());
+        txtCep.setText(getText(R.string.txt_rsd_cep, residence.getCep()));
+        txtHomePhone.setText(getText(R.string.txt_rsd_home_phone, residence.getHomePhone()));
 
         convertView.setOnClickListener(getListener(position));
         return convertView;
@@ -55,5 +56,13 @@ public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    private String getText(int resource, Object text){
+        return getText(context.getString(resource), text);
+    }
+
+    private String getText(String complement, Object text){
+        return new Formatter().format("%s: %s", complement, text.toString()).toString();
     }
 }
