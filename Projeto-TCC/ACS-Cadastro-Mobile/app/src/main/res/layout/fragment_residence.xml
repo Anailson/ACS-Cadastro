@@ -2,35 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
     tools:context=".views.ResidenceListFragment">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
+    <tcc.acs_cadastro_mobile.customViews.SearchingEditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="0dp">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/edt_search_residence"
-            android:hint="@string/hint_search_residence"
-            android:drawableRight="@android:drawable/ic_menu_search"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:layout_weight="11" />
-    </LinearLayout>
+        android:id="@+id/edt_search_residence"
+        android:hint="@string/hint_search_residence"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/lvw_residence"
         android:layout_gravity="left|top"
-        android:layout_below="@+id/linearLayout" />
+        android:layout_below="@+id/edt_search_residence" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_residence"

@@ -66,7 +66,7 @@
                     android:text="@string/txt_ctz_school"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <tcc.acs_cadastro_mobile.required.RequiredRadioGroup
+                <tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup
                     android:id="@+id/rgrp_ctz_school"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -89,7 +89,7 @@
                         android:layout_gravity="right"
                         android:checked="false"
                         android:text="@string/txt_no" />
-                </tcc.acs_cadastro_mobile.required.RequiredRadioGroup>
+                </tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -407,7 +407,7 @@
                         android:text="@string/txt_ctz_deficiency"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <tcc.acs_cadastro_mobile.required.RequiredRadioGroup
+                    <tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup
                         android:id="@+id/rgrp_ctz_deficiency"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -430,7 +430,7 @@
                             android:layout_gravity="right"
                             android:checked="false"
                             android:text="@string/txt_no" />
-                    </tcc.acs_cadastro_mobile.required.RequiredRadioGroup>
+                    </tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup>
                 </LinearLayout>
 
                 <TextView

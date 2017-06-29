@@ -5,15 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.adapters.Adapter;
+import tcc.acs_cadastro_mobile.adapters.SpinnerAdapter;
 import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
+import tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 
@@ -27,7 +27,7 @@ import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.NUM_
 
 public class ResidenceNewResponsibleController extends StepsController{
 
-    private AppCompatActivity activity;
+    private Activity activity;
     private Listeners listener;
 
     public ResidenceNewResponsibleController(AppCompatActivity activity){
@@ -42,7 +42,7 @@ public class ResidenceNewResponsibleController extends StepsController{
         return listener;
     }
 
-    public AdapterView.OnItemClickListener getItemClickListener() {
+    public RequiredAutoComplete.AutoFillListener getItemClickListener() {
         if(listener == null){
             listener = new Listeners();
         }
@@ -51,10 +51,10 @@ public class ResidenceNewResponsibleController extends StepsController{
 
     public ArrayAdapter<String> getNumSusAdapter() {
         String[] numSus = CitizenPersistence.getNumSus();
-        return new Adapter(activity.getBaseContext()).getSpinnerAdapter(numSus);
+        return new SpinnerAdapter(activity.getBaseContext()).getAdapter(numSus);
     }
     public ArrayAdapter<String> getNumSusAdapter(int resource) {
-        return new Adapter(activity.getBaseContext()).getSpinnerAdapter(resource);
+        return new SpinnerAdapter(activity.getBaseContext()).getAdapter(resource);
     }
 
     private void save(){
@@ -83,28 +83,29 @@ public class ResidenceNewResponsibleController extends StepsController{
         activity.finish();
     }
 
-    private void setBirthDate(EditText editText){
+    private void fillBirthDate(String text){
 
-        String text = editText.getText().toString();
-        //TODO: if numSus is changed after to be selected, data base will return a citizen unexpected.
-        // be careful to get a correct citizen
-        CitizenModel citizen = CitizenPersistence.get(text.equals("") ? 0 : Long.parseLong(text));
-        if (citizen == null) {
+        CitizenModel citizen = CitizenPersistence.get(Long.parseLong(text));
+        if (citizen != null) {
 
-            DefaultAlert alert = new DefaultAlert(activity);
-            alert.setTitle(R.string.err_num_sus_not_found_title);
-            alert.setMessage(R.string.err_num_sus_not_found_message);
-            alert.setListeners(listener);
-            alert.show();
-
-        } else {
             EditText birthDate = (EditText) activity.findViewById(R.id.edt_rsd_resp_birth_date);
             birthDate.setText(citizen.getBirthDate());
+            enableView(birthDate, false);
         }
     }
 
-    private class Listeners implements View.OnClickListener, AdapterView.OnItemClickListener, DefaultAlert.DefaultClickListener {
+    private void clearBirthDate(){
+        DefaultAlert alert = new DefaultAlert(activity);
+        alert.setTitle(R.string.err_num_sus_not_found_title);
+        alert.setMessage(R.string.err_num_sus_not_found_message);
+        alert.setListeners(listener);
+        alert.show();
+    }
 
+    private class Listeners implements View.OnClickListener,
+            RequiredAutoComplete.AutoFillListener, DefaultAlert.DefaultClickListener {
+
+        //View.OnClickListener
         @Override
         public void onClick(View v) {
             switch (v.getId()){
@@ -113,11 +114,29 @@ public class ResidenceNewResponsibleController extends StepsController{
             }
         }
 
+        // RequiredAutoComplete.AutoFillListener,
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            setBirthDate((EditText) activity.findViewById(R.id.edt_rsd_resp_num_sus));
+        public void searching(EditText editText) {
+
+            switch (editText.getId()){
+                case R.id.edt_rsd_resp_num_sus: fillBirthDate(editText.getText().toString());
+            }
         }
 
+        @Override
+        public void selectItem(EditText editText) {
+            searching(editText);
+        }
+
+        @Override
+        public void changedAfterSelected(EditText editText) {
+
+            switch (editText.getId()){
+                case R.id.edt_rsd_resp_num_sus: clearBirthDate();
+            }
+        }
+
+        //DefaultAlert.DefaultClickListener
         @Override
         public void positive(DialogInterface dialog, int which) {
             enableView(activity.findViewById(R.id.edt_rsd_resp_birth_date), true);

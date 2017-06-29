@@ -9,10 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Formatter;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.controllers.StepsController;
 import tcc.acs_cadastro_mobile.models.ResidenceModel;
 
 public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
@@ -58,11 +58,11 @@ public class ResidenceListAdapter extends ArrayAdapter<ResidenceModel> {
         };
     }
 
-    private String getText(int resource, Object text){
-        return getText(context.getString(resource), text);
+    private String getText(int resource, long l){
+        return getText(resource, StepsController.getDefaultOrValue(l));
     }
 
-    private String getText(String complement, Object text){
-        return new Formatter().format("%s: %s", complement, text.toString()).toString();
+    private String getText(int resource, String text){
+        return String.format("%s: %s", context.getString(resource), text);
     }
 }

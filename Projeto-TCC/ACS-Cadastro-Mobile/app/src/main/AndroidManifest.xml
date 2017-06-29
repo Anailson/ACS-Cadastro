@@ -31,6 +31,10 @@
             android:label="@string/title_activity_add_residence"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".views.AccompanyAddActivity"
+            android:label="@string/title_activity_add_accompany"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".views.CalendarActivity"
             android:theme="@style/AppTheme.FloatingTheme" />
         <activity

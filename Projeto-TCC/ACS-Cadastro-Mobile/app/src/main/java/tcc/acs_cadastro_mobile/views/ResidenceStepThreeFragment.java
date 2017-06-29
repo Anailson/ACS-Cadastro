@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.ListView;
 
 import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.adapters.HousingHistoricalListAdapter;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepThreeController;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
@@ -90,6 +88,7 @@ public class ResidenceStepThreeFragment extends Fragment{
             housingHistorical.add(historical);
             fillFields();
         }
+        super.onActivityResult(requestCode, resultCode, intent);
     }
 
     @Override

@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.adapters.CitizenListAdapter;
+import tcc.acs_cadastro_mobile.interfaces.ISearcher;
+import tcc.acs_cadastro_mobile.interfaces.ITextSearchListener;
 import tcc.acs_cadastro_mobile.interfaces.TextSearchChanged;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
@@ -21,49 +22,47 @@ public class CitizenListController{
 
     private Context context;
     private List<CitizenModel> citizens;
-    private TextSearch textSearch;
-    private ClickListener clickListener;
+    private Listeners listener;
 
     public CitizenListController(Context context){
         this.context = context;
         this.citizens = CitizenPersistence.getAll();
     }
 
-    public ListAdapter getAdapter(){
+    public ArrayAdapter<CitizenModel> getAdapter(){
         return new CitizenListAdapter(context, citizens);
     }
 
-    public TextWatcher getSearchTextChanged(ListView listView){
-        if(textSearch == null){
-            textSearch = new TextSearch(context, listView);
+    private Listeners getListener(){
+        if(listener == null){
+            listener = new Listeners();
         }
-        return textSearch;
+        return listener;
+    }
+
+    public ITextSearchListener getSearchTextChanged(){
+        return getListener();
     }
 
     public View.OnClickListener getOnClickListener(){
-
-        if(clickListener == null){
-            clickListener = new ClickListener();
-        }
-        return clickListener;
+        return getListener();
     }
 
-    private class TextSearch extends TextSearchChanged<CitizenModel> {
+    private class Listeners  implements View.OnClickListener, ITextSearchListener<CitizenModel>{
 
-        private Context context;
-        TextSearch(Context context, ListView listView) {
-            super(listView);
-            this.context = context;
+
+        //View.OnClickListener
+        @Override
+        public void onClick(View view) {
+            context.startActivity(new Intent(context, CitizenAddActivity.class));
         }
 
-        @Override
-        protected ArrayAdapter<CitizenModel> updateListView(List<CitizenModel> list) {
-            return new CitizenListAdapter(context, list);
-        }
+        //TextSearchChanged<CitizenModel>
 
         @Override
-        protected List<CitizenModel> searchByName(String search){
-            List<CitizenModel> founded = new ArrayList<>();
+        public List<ISearcher> searchByText(String search){
+
+            List<ISearcher> founded = new ArrayList<>();
 
             for (CitizenModel citizen : citizens) {
                 if (citizen.nameContainsKey(search)) {
@@ -74,8 +73,8 @@ public class CitizenListController{
         }
 
         @Override
-        protected List<CitizenModel> searchByNumber(String search) {
-            List<CitizenModel> founded = new ArrayList<>();
+        public List<ISearcher> searchByNumber(String search) {
+            List<ISearcher> founded = new ArrayList<>();
             for (CitizenModel citizen : citizens) {
 
                 if (citizen.susContainsKey(search)) {
@@ -84,12 +83,14 @@ public class CitizenListController{
             }
             return founded;
         }
-    }
 
-    private class ClickListener implements View.OnClickListener{
         @Override
-        public void onClick(View view) {
-            context.startActivity(new Intent(context, CitizenAddActivity.class));
+        public ArrayAdapter<CitizenModel> updateListView(List<ISearcher> list) {
+            List<CitizenModel> citizens = new ArrayList<>();
+            for(ISearcher searcher : list){
+                citizens.add((CitizenModel) searcher);
+            }
+            return new CitizenListAdapter(context, citizens);
         }
     }
 }

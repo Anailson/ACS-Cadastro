@@ -1,4 +1,4 @@
-package tcc.acs_cadastro_mobile.required;
+package tcc.acs_cadastro_mobile.customViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -22,7 +22,7 @@ public class RequiredRadioGroup extends RadioGroup implements IRequiredView {
     }
 
     @Override
-    public boolean isInvalid(String index) {
+    public boolean isInvalid(String... index) {
         return getCheckedRadioButtonId() == -1;
     }
 

@@ -1,7 +1,6 @@
 package tcc.acs_cadastro_mobile.controllers;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,13 +10,11 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.Formatter;
-
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.adapters.Adapter;
+import tcc.acs_cadastro_mobile.adapters.SpinnerAdapter;
+import tcc.acs_cadastro_mobile.interfaces.ICalendarListener;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.persistence.PersonalDataPersistence;
-import tcc.acs_cadastro_mobile.required.RequiredEditText;
-import tcc.acs_cadastro_mobile.required.RequiredSpinner;
 import tcc.acs_cadastro_mobile.subModels.Contact;
 import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
 import tcc.acs_cadastro_mobile.subModels.Mother;
@@ -41,11 +38,10 @@ public class CitizenStepOneController extends StepsController {
     }
 
     public ArrayAdapter<String> getSpinnerAdapter(int arrayResource) {
-        return new Adapter(fragment.getContext()).getSpinnerAdapter(arrayResource);
+        return new SpinnerAdapter(fragment.getContext()).getAdapter(arrayResource);
     }
 
-    public View.OnClickListener getClickListener() {
-
+    private Listener getListener(){
         if (listener == null) {
             listener = new Listener();
         }
@@ -53,23 +49,20 @@ public class CitizenStepOneController extends StepsController {
     }
 
     public CompoundButton.OnCheckedChangeListener getCheckBoxChangeListener() {
-
-        if (listener == null) {
-            listener = new Listener();
-        }
-        return listener;
+        return getListener();
     }
 
     public AdapterView.OnItemSelectedListener getItemSelectedListener() {
-        if (listener == null) {
-            listener = new Listener();
-        }
-        return listener;
+        return getListener();
     }
 
-    public boolean isRequiredFieldsFilled(RequiredEditText edtName, RequiredEditText edtBirthDate,
-                      RequiredEditText edtMotherName, RequiredSpinner spnGender, RequiredSpinner spnRace,
-                      RequiredSpinner spnNationality, RequiredSpinner spnUf, RequiredSpinner spnCity) {
+    public ICalendarListener getCalendarListener() {
+        return getListener();
+    }
+
+    public boolean isRequiredFieldsFilled(IRequiredView edtName, IRequiredView edtBirthDate,
+                      IRequiredView edtMotherName, IRequiredView spnGender, IRequiredView spnRace,
+                      IRequiredView spnNationality, IRequiredView spnUf, IRequiredView spnCity) {
         startErrors();
         applyError(edtName, "", "Este campo é obrigatório");
         applyError(edtBirthDate, "", "Este campo é obrigatório");
@@ -126,15 +119,6 @@ public class CitizenStepOneController extends StepsController {
         fillField(edt, text);
     }
 
-    public void fillMotherName(CheckBox chbMotherUnknown, boolean checked, EditText edtMotherName, String name) {
-        if (checked) {
-            name = fragment.getString(R.string.txt_unknow);
-        }
-        fillField(chbMotherUnknown, checked);
-        fillField(edtMotherName, name);
-        enableView(edtMotherName, !checked);
-    }
-
     public void fillResponsible(CheckBox checkBox, boolean checked, EditText edtRespNumSus,
                                 String respNumSus, EditText edtRespBirth, String respBirth) {
 
@@ -160,22 +144,25 @@ public class CitizenStepOneController extends StepsController {
     public void fillCity(int uf, Spinner spinner, int position){
         enableView(spinner, true);
         setCities(uf, spinner);
-        spinner.setSelection(2);
-    }
-
-    public void setBirth(EditText editText, String[] date) {
-        if (date.length != CalendarActivity.BIRTH) {
-            throw new IllegalArgumentException("The birth date is invalid");
-        }
-        String text = new Formatter().format("%s/%s/%s", date[CalendarActivity.DAY],
-                date[CalendarActivity.MONTH], date[CalendarActivity.YEAR]).toString();
-        fillField(editText, text);
+        spinner.setSelection(position);
     }
 
     private void fillMotherName(boolean checked) {
+
         EditText edtMotherName = (EditText) fragment.getActivity().findViewById(R.id.edt_ctz_mother_name);
         CheckBox chbMotherUnknown = (CheckBox) fragment.getActivity().findViewById(R.id.chb_ctz_mother_unknow);
         fillMotherName(chbMotherUnknown, checked, edtMotherName, "");
+    }
+
+    public void fillMotherName(CheckBox chbMotherUnknown, boolean checked, EditText edtMotherName, String name) {
+        if (checked) {
+            name = fragment.getString(R.string.txt_unknow);
+        }
+        chbMotherUnknown.setOnCheckedChangeListener(null);
+        fillField(chbMotherUnknown, checked);
+        fillField(edtMotherName, name);
+        enableView(edtMotherName, !checked);
+        chbMotherUnknown.setOnCheckedChangeListener(getCheckBoxChangeListener());
     }
 
     private void fillResponsible(boolean checked) {
@@ -220,24 +207,13 @@ public class CitizenStepOneController extends StepsController {
         enableView(spinner, index != 0);
     }
 
-    private void showCalendar(int id) {
-
-        int request = CalendarActivity.BIRTH;
-        if (id == R.id.edt_ctz_respons_birth) {
-            request = CalendarActivity.RESP_BIRTH;
-        }
-
-        Intent newActivity = new Intent(fragment.getContext(), CalendarActivity.class);
-        fragment.startActivityForResult(newActivity, request);
+    private void setBirthDate(int id, String text){
+        EditText editText = (EditText) fragment.getActivity().findViewById(id);
+        fillField(editText, text);
     }
 
-    private class Listener implements View.OnClickListener, CompoundButton.OnCheckedChangeListener,
-                                    AdapterView.OnItemSelectedListener{
-        //View.OnClickListener
-        @Override
-        public void onClick(View view) {
-            showCalendar(view.getId());
-        }
+    private class Listener implements CompoundButton.OnCheckedChangeListener,
+                                    AdapterView.OnItemSelectedListener, ICalendarListener {
 
         //CompoundButton.OnCheckedChangeListener
         @Override
@@ -260,5 +236,17 @@ public class CitizenStepOneController extends StepsController {
 
         @Override
         public void onNothingSelected(AdapterView<?> adapterView) {}
+
+        //ICalendarListener
+        @Override
+        public void onOk(int id, CalendarActivity.Date date) {
+            switch (id){
+                case R.id.edt_ctz_respons_birth: setBirthDate(id, date.formattedDate(fragment.getContext()));
+                case R.id.edt_ctz_birth: setBirthDate(id, date.formattedDate(fragment.getContext()));
+            }
+        }
+
+        @Override
+        public void onCancel() {}
     }
 }

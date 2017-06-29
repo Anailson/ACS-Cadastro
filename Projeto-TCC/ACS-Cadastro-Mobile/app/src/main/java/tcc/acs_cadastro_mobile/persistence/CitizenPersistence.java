@@ -1,8 +1,7 @@
 package tcc.acs_cadastro_mobile.persistence;
 
-import android.util.Log;
-
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
@@ -16,15 +15,19 @@ public class CitizenPersistence {
     private CitizenPersistence() {
     }
 
-    public static CitizenModel getInstance(PersonalDataModel personalData, SocialDemographicModel socialDemographicModel,
-                                           HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
+    public static CitizenModel get(PersonalDataModel personalData, SocialDemographicModel socialDemographicModel,
+                                   HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
         Realm realm = Realm.getDefaultInstance();
-        return CitizenModel.newInstance(realm, personalData, socialDemographicModel, healthConditions, streetSituation);
+        realm.beginTransaction();
+        CitizenModel object = realm.copyToRealmOrUpdate(new CitizenModel(personalData, socialDemographicModel,
+                healthConditions, streetSituation));
+        realm.commitTransaction();
+        return object;
     }
 
     public static CitizenModel save(PersonalDataModel personalData, SocialDemographicModel socialDemographicData,
                                     HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
-        return save(getInstance(personalData, socialDemographicData, healthConditions, streetSituation));
+        return save(get(personalData, socialDemographicData, healthConditions, streetSituation));
     }
 
     public static CitizenModel save(CitizenModel citizen) {
@@ -63,18 +66,25 @@ public class CitizenPersistence {
         return numSus;
     }
 
-    public static long getMinorNumSus(long numSus) {
+    public static long getMinorNumSusIfBlank(long numSus) {
 
-        if (numSus > 0) return numSus;
+        if (numSus > AcsRecordPersistence.DEFAULT_INT) return numSus;
 
-        Realm realm = Realm.getDefaultInstance();
-
-        long minorNumSus = realm.where(CitizenModel.class)
+        RealmQuery<CitizenModel> query = Realm.getDefaultInstance().where(CitizenModel.class);
+        CitizenModel citizen = query
                 .findAllSorted(CitizenModel.NUM_SUS, Sort.ASCENDING)
-                .first().getNumSus();
-        if (numSus == 0) {
-            numSus = minorNumSus > 0 ? 0 : minorNumSus - 1;
+                .first(null);
+
+        if(citizen == null || citizen.getNumSus() > AcsRecordPersistence.DEFAULT_INT){
+
+            return AcsRecordPersistence.DEFAULT_INT;
+
+        } else {
+
+           return query
+                   .lessThanOrEqualTo(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
+                   .findAll()
+                   .size() * -1;
         }
-        return numSus;
     }
 }

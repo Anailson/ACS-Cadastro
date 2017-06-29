@@ -74,15 +74,15 @@ public class CitizenAddController {
     private void nextMenu(){
         switch (actualMenu) {
             case FIRST_STEP:{
-                //if (((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
+                if (((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepTwo();
-                //}
+                }
                 break;
             }
             case SECOND_STEP:{
-                //if (((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
+                if (((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepThree();
-                //}
+                }
                 break;
             }
             case THIRD_STEP: {
@@ -90,9 +90,9 @@ public class CitizenAddController {
                 break;
             }
             case FOURTH_STEP: {
-                //if (((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
+                if (((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
                     save();
-                //}
+                }
                 break;
             }
         }
@@ -118,6 +118,7 @@ public class CitizenAddController {
     private void shiftToStepOne(){
 
         Button btnBack = (Button) parent.findViewById(R.id.btn_ctz_add_back);
+
         btnBack.setEnabled(false);
 
         actualMenu = FIRST_STEP;
@@ -184,11 +185,11 @@ public class CitizenAddController {
         manager.beginTransaction().replace(R.id.frame_ctz_add, fragment).commit();
     }
 
-    private void showConfirmDialog(String name, long cpf){
+    private void showConfirmDialog(String name, long numSus){
 
         DefaultAlert alerts = new DefaultAlert(parent);
         alerts.setTitle(R.string.msg_save_success);
-        alerts.setMessage("Os dados de " + name + ", CPF: " + cpf + ", foram salvos com sucesso");
+        alerts.setMessage("Os dados de " + name + ", Nº do SUS: " + numSus + ", foram salvos com sucesso");
         alerts.setPositiveListener(R.string.btn_ok, listener);
         alerts.show();
     }

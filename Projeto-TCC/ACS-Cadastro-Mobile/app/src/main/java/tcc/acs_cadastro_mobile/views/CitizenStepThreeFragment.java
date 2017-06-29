@@ -98,7 +98,7 @@ public class CitizenStepThreeFragment extends Fragment implements IRequiredField
         edtPlants = (EditText) view.findViewById(R.id.edt_ctz_plants);
         spnWeight = (Spinner) view.findViewById(R.id.spn_ctz_weight);
 
-        spnWeight.setAdapter(controller.getSpinnerAdapter(R.array.weight));
+        spnWeight.setAdapter(controller.getAdapter(R.array.weight));
 
         rgrpPregnant.setOnCheckedChangeListener(controller.getRadioChangeListener());
         rgrpHeartDisease.setOnCheckedChangeListener(controller.getRadioChangeListener());

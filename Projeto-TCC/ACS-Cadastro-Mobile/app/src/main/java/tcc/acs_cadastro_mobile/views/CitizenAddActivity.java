@@ -13,8 +13,7 @@ import tcc.acs_cadastro_mobile.models.PersonalDataModel;
 import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
 import tcc.acs_cadastro_mobile.models.StreetSituationModel;
 
-public class CitizenAddActivity extends AppCompatActivity
-        implements ICitizenData {
+public class CitizenAddActivity extends AppCompatActivity implements ICitizenData {
 
     private CitizenAddController controller;
 

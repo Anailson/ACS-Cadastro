@@ -14,15 +14,17 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepTwoController;
+import tcc.acs_cadastro_mobile.controllers.StepsController;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
 import tcc.acs_cadastro_mobile.persistence.HousingConditionsPersistence;
-import tcc.acs_cadastro_mobile.required.RequiredSpinner;
+import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.subModels.House;
 import tcc.acs_cadastro_mobile.subModels.HousingSituation;
 import tcc.acs_cadastro_mobile.subModels.Pet;
 import tcc.acs_cadastro_mobile.subModels.WaterAndSanitation;
+
 
 public class ResidenceStepTwoFragment extends Fragment implements IRequiredFields{
 
@@ -82,16 +84,16 @@ public class ResidenceStepTwoFragment extends Fragment implements IRequiredField
         rgrpElectricEnergy = (RadioGroup) view.findViewById(R.id.rgrp_rsd_electric_energy);
         rgrpPets = (RadioGroup) view.findViewById(R.id.rgrp_rsd_pets);
 
-        spnHousingSituation.setAdapter(controller.getSpinnerAdapter(R.array.housing_situation));
-        spnLocation.setAdapter(controller.getSpinnerAdapter(R.array.location));
-        spnOwnership.setAdapter(controller.getSpinnerAdapter(R.array.ownership));
-        spnResidenceType.setAdapter(controller.getSpinnerAdapter(R.array.residence_type));
-        spnResidenceAccess.setAdapter(controller.getSpinnerAdapter(R.array.residence_access));
-        spnResidenceConstruction.setAdapter(controller.getSpinnerAdapter(R.array.residence_construction));
-        spnConstructionType.setAdapter(controller.getSpinnerAdapter(R.array.construction_coating));
-        spnWaterSupply.setAdapter(controller.getSpinnerAdapter(R.array.water_supply));
-        spnWaterTreatment.setAdapter(controller.getSpinnerAdapter(R.array.water_treatment));
-        spnBathroom.setAdapter(controller.getSpinnerAdapter(R.array.bathroom));
+        spnHousingSituation.setAdapter(controller.getAdapter(R.array.housing_situation));
+        spnLocation.setAdapter(controller.getAdapter(R.array.location));
+        spnOwnership.setAdapter(controller.getAdapter(R.array.ownership));
+        spnResidenceType.setAdapter(controller.getAdapter(R.array.residence_type));
+        spnResidenceAccess.setAdapter(controller.getAdapter(R.array.residence_access));
+        spnResidenceConstruction.setAdapter(controller.getAdapter(R.array.residence_construction));
+        spnConstructionType.setAdapter(controller.getAdapter(R.array.construction_coating));
+        spnWaterSupply.setAdapter(controller.getAdapter(R.array.water_supply));
+        spnWaterTreatment.setAdapter(controller.getAdapter(R.array.water_treatment));
+        spnBathroom.setAdapter(controller.getAdapter(R.array.bathroom));
 
         spnLocation.setOnItemSelectedListener(controller.getItemSelectedListener());
         spnResidenceConstruction.setOnItemSelectedListener(controller.getItemSelectedListener());
@@ -145,8 +147,8 @@ public class ResidenceStepTwoFragment extends Fragment implements IRequiredField
         controller.fillField(spnOwnership, controller.getOwnershipIndex(locationIndex, housingConditions.getOwnership()));
         controller.fillField(spnResidenceType,
                 controller.getIndex(housingConditions.getResidenceType(), R.array.residence_type));
-        controller.fillField(edtResidents, String.valueOf(housingConditions.getTotalResidents()));
-        controller.fillField(edtRooms, String.valueOf(housingConditions.getTotalRooms()));
+        controller.fillField(edtResidents, StepsController.getEmptyOrValue(housingConditions.getTotalResidents()));
+        controller.fillField(edtRooms, StepsController.getEmptyOrValue(housingConditions.getTotalRooms()));
         controller.fillField(spnResidenceAccess,
                 controller.getIndex(housingConditions.getResidenceAccess(), R.array.residence_access));
         controller.fillField(spnResidenceConstruction, constructionIndex);

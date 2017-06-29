@@ -1,13 +1,36 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tcc.acs_cadastro_mobile.views.AccompanyFragment">
+    android:theme="@style/AppTheme"
+    tools:context=".views.AccompanyListFragment">
 
-    <TextView
+    <tcc.acs_cadastro_mobile.customViews.SearchingEditText
+        android:id="@+id/edt_search_accompany"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_search_accompany"
+        android:inputType="text" />
+
+    <ListView
+        android:id="@+id/lvw_accompanies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/menu_accompany"
+        android:layout_below="@+id/edt_search_accompany"
         android:layout_gravity="left|top" />
-</FrameLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_accompany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/medium_gap"
+        android:layout_marginRight="@dimen/minimum_gap"
+        android:src="@drawable/ic_citizen_add"
+        app:backgroundTint="@color/color_primary_dark" />
+
+</RelativeLayout>

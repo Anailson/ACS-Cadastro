@@ -12,12 +12,13 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepOneController;
+import tcc.acs_cadastro_mobile.controllers.StepsController;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
 import tcc.acs_cadastro_mobile.persistence.AddressDataPersistence;
-import tcc.acs_cadastro_mobile.required.RequiredEditText;
-import tcc.acs_cadastro_mobile.required.RequiredSpinner;
+import tcc.acs_cadastro_mobile.customViews.RequiredEditText;
+import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.subModels.CityLocation;
 import tcc.acs_cadastro_mobile.subModels.Phones;
 import tcc.acs_cadastro_mobile.subModels.StreetLocation;
@@ -68,9 +69,9 @@ public class ResidenceStepOneFragment extends Fragment implements IRequiredField
         spnUf = (RequiredSpinner) view.findViewById(R.id.spn_rsd_uf);
         spnCity = (RequiredSpinner) view.findViewById(R.id.spn_rsd_city);
 
-        spnPlaceType.setAdapter(controller.getSpinnerAdapter(R.array.place_type));
-        spnUf.setAdapter(controller.getSpinnerAdapter(R.array.uf));
-        spnCity.setAdapter(controller.getSpinnerAdapter(R.array.se_cities));
+        spnPlaceType.setAdapter(controller.getAdapter(R.array.place_type));
+        spnUf.setAdapter(controller.getAdapter(R.array.uf));
+        spnCity.setAdapter(controller.getAdapter(R.array.se_cities));
 
         spnUf.setOnItemSelectedListener(controller.getItemSelectedListener());
 
@@ -109,12 +110,12 @@ public class ResidenceStepOneFragment extends Fragment implements IRequiredField
 
         controller.fillField(spnPlaceType, controller.getIndex(addressData.getPlaceType(), R.array.place_type));
         controller.fillField(edtPlaceName, addressData.getPlaceName());
-        controller.fillField(edtNumber, String.valueOf(addressData.getNumber()));
+        controller.fillField(edtNumber, StepsController.getEmptyOrValue(addressData.getNumber()));
         controller.fillField(edtComplement, addressData.getComplement());
         controller.fillField(edtNeighborhood, addressData.getNeighborhood());
         controller.fillField(spnUf, indexUf);
         controller.fillField(spnCity, controller.getCityIndex(indexUf, addressData.getCityName()));
-        controller.fillField(edtCep, String.valueOf(addressData.getCep()));
+        controller.fillField(edtCep, StepsController.getEmptyOrValue(addressData.getCep()));
         controller.fillField(edtHomePhone, addressData.getPhoneHome());
         controller.fillField(edtReferencePhone, addressData.getPhoneReference());
     }

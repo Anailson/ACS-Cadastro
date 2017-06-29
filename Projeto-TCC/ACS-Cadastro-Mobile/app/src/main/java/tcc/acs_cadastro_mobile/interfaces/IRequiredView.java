@@ -4,7 +4,7 @@ import android.widget.TextView;
 
 public interface IRequiredView {
 
-    boolean isInvalid(String index);
+    boolean isInvalid(String... text);
 
     void setTitle(TextView title);
 

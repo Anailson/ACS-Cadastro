@@ -16,6 +16,7 @@
     <string name="app_name">ACS-Cadastro</string>
     <string name="title_activity_add_citizen">Adicionar Ciadadão</string>
     <string name="title_activity_add_residence">Adicionar Domicílio</string>
+    <string name="title_activity_add_accompany">Adicionar Acompanhamento</string>
 
     <!-- Text Views -->
     <!-- Citizen -->
@@ -121,7 +122,6 @@
     <string name="txt_rsd_data_1">Endereço</string>
     <string name="txt_rsd_data_2">Condições de moradia</string>
     <string name="txt_rsd_data_3">Famílias</string>
-
     <string name="txt_rsd_place_type">Tipo do logradouro</string>
     <string name="txt_rsd_place_name">Nome do logradouro</string>
     <string name="txt_rsd_number">Numero</string>
@@ -131,7 +131,6 @@
     <string name="txt_rsd_cep">CEP</string>
     <string name="txt_rsd_home_phone">Telefone residencial</string>
     <string name="txt_rsd_reference_phone">Telefone de referência</string>
-
     <string name="txt_rsd_housing_situation">Situação de moradia/posse da terra</string>
     <string name="txt_rsd_location">Localização</string>
     <string name="txt_rsd_location_if">Em caso de produção rural: condições de posse da terra</string>
@@ -160,6 +159,105 @@
     <string name="txt_rsd_n_members">Número de membros da família</string>
     <string name="txt_rsd_moved">Mudou-se?</string>
 
+    <!-- Accompany -->
+    <string name="txt_acc_data_1">Dados do accompanhamento</string>
+    <string name="txt_acc_data_2">Problema / Condição avaliada</string>
+    <string name="txt_acc_data_3">Exames solicitados e avaliados</string>
+    <string name="txt_acc_data_4">NASF e Conduta</string>
+    <string name="txt_acc_record">Número do prontuário</string>
+    <string name="txt_acc_shift">Turno</string>
+    <string name="txt_acc_place_care">Local de atendimento</string>
+    <string name="txt_acc_type_care">Tipo de atendimento</string>
+    <string name="txt_acc_evaluation">Avaliação Antropométrica</string>
+    <string name="txt_acc_weight">Peso (Kg)</string>
+    <string name="txt_acc_height">Altura (cm)</string>
+    <string name="txt_acc_vaccines">Vacinas em dia?</string>
+    <string name="txt_acc_kids">Criança</string>
+    <string name="txt_acc_pregnant">Gestante</string>
+    <string name="txt_acc_breastfeeding">Aleitamento materno</string>
+    <string name="txt_acc_dum">DUM</string>
+    <string name="txt_acc_planned_pregnancy">Gravidez planejada?</string>
+    <string name="txt_acc_pregnancy_weeks">Idade gestacional (semanas)</string>
+    <string name="txt_acc_previous_pregnancy">Gestas prévias</string>
+    <string name="txt_acc_child_birth">Partos</string>
+    <string name="txt_acc_home_care">Atenção domiciliar</string>
+    <string name="txt_acc_conditions">Problema / Condição Avaliada</string>
+    <string name="txt_acc_malnutrition">Desnutrição</string>
+    <string name="txt_acc_diabetes">Diabetes</string>
+    <string name="txt_acc_dpoc">DPOC</string>
+    <string name="txt_acc_hypertension">Hipertensão arterial</string>
+    <string name="txt_obesity">Obesidade</string>
+    <string name="txt_acc_prenatal">Pré-natal</string>
+    <string name="txt_acc_childcare">Puericultura</string>
+    <string name="txt_acc_puerperium">Puerpério (até 42 dias)</string>
+    <string name="txt_acc_sexual_health">Saúde Sexual e Reprodutiva</string>
+    <string name="txt_acc_smoking">Tabagismo</string>
+    <string name="txt_acc_alcohol">Usuário de álcool</string>
+    <string name="txt_acc_drugs">Usuário de outras drogas</string>
+    <string name="txt_acc_mental_health">Saúde Mental</string>
+    <string name="txt_acc_rehabilitation">Reabilitação</string>
+    <string name="txt_acc_communicable">Doenças Transmissíves</string>
+    <string name="txt_acc_tuberculosis">Tuberculose</string>
+    <string name="txt_acc_leprosy">Hanseníase</string>
+    <string name="txt_acc_dengue">Dengue</string>
+    <string name="txt_acc_dts">DST</string>
+    <string name="txt_acc_tracking">Rastreamento</string>
+    <string name="txt_acc_cervical_cancer">Câncer do Colo do Útero</string>
+    <string name="txt_acc_breast_cancer">Câncer de Mama</string>
+    <string name="txt_acc_cardiovascular">Risco cardiovascular</string>
+    <string name="txt_acc_exam_required">Solicitado</string>
+    <string name="txt_acc_pic">Usou alguma PIC?</string>
+    <string name="txt_acc_exam_evaluated">Avaliado</string>
+    <string name="txt_acc_total_cholesterol">Colesterol total</string>
+    <string name="txt_acc_creatinine">Creatinina</string>
+    <string name="txt_acc_eas_equ">EAS/EQU</string>
+    <string name="txt_acc_electrocardiogram">Eletrocardiograma</string>
+    <string name="txt_acc_hemoglobin">Eletroforese de Hemoglobina</string>
+    <string name="txt_acc_spirometry">Espirometria</string>
+    <string name="txt_acc_sputum">Exame de escarro</string>
+    <string name="txt_acc_glycemia">Glicemia</string>
+    <string name="txt_acc_hdl">HDL</string>
+    <string name="txt_acc_hemoglobin_glycemic">Hemoglobina Glicada</string>
+    <string name="txt_acc_blood_count">Hemograma</string>
+    <string name="txt_acc_ldl">LDL</string>
+    <string name="txt_acc_eyes">Retinografia / Fundo de Olho com oftalmologista</string>
+    <string name="txt_acc_syphilis">Sorologia de Sífilis (VDRL)</string>
+    <string name="txt_acc_dengue_sorology">Sorologia para Dengue</string>
+    <string name="txt_acc_hiv">Sorologia para HIV</string>
+    <string name="txt_acc_human_antiglobulin">Teste indireto de antiglobulina humana (tia)</string>
+    <string name="txt_acc_ear_test">Teste da orelhinha</string>
+    <string name="txt_acc_pregnancy_test">Teste de Gravidez</string>
+    <string name="txt_acc_eye_test">Teste do olhinho</string>
+    <string name="txt_acc_foot_test">Teste do pezinho</string>
+    <string name="txt_acc_ultrasonography">Ultrassonografia obstétrica</string>
+    <string name="txt_acc_uroculture">Urocultura</string>
+    <string name="txt_acc_nasf_polo">NASF / Polo</string>
+    <string name="txt_acc_conduct">Conduta</string>
+    <string name="txt_acc_forwarding">Encaminhamentos</string>
+
+    <string name="txt_acc_observation">Ficou em Observação?</string>
+    <string name="txt_acc_diagnostic">Avaliação / Diagnóstico</string>
+    <string name="txt_acc_procedures">Procedimentos Clínicos / Terapêutico</string>
+    <string name="txt_acc_prescription">Prescrição Terapêutica</string>
+    <string name="txt_acc_scheduled_appointment">Retorno para consulta agendada</string>
+    <string name="txt_acc_scheduled_care">Retorno para cuidado continuado/programado</string>
+    <string name="txt_acc_scheduled_group">Agendamento para Grupos</string>
+    <string name="txt_acc_scheduled_nasf">Agendamento para NASF</string>
+    <string name="txt_acc_release">Alta do episódio</string>
+    <string name="txt_acc_in_day">Encaminhamento Interno no Dia</string>
+    <string name="txt_acc_specialized">Encaminhamento para Serviço Especializado</string>
+    <string name="txt_acc_caps">Encaminhamento para CAPS</string>
+    <string name="txt_acc_hospitalization">Retorno para cuidado continuado/programado</string>
+    <string name="txt_acc_urgency">Encaminhamento para Urgência</string>
+    <string name="txt_acc_home_care_service">Encaminhamento para Serviço de Atenção Domiciliar</string>
+    <string name="txt_acc_intersectoral">Encaminhamento Intersetorial</string>
+
+
+    <string name="txt_acc_code_obs">(separe os códigos por vírgula)</string>
+    <string name="txt_acc_another_ciap_cid">Outro - código CIAP/CID</string>
+    <string name="txt_acc_another_sia">Outro - código SIA</string>
+
+
     <!-- Menus -->
     <string name="menu_settings">Settings</string>
     <string name="menu_citizen">Cidadão</string>
@@ -186,9 +284,12 @@
     <string name="hint_password">Password (optional)</string>
 
     <string name="hint_search_citizen">Digite o nome ou o número do SUS</string>
-    <string name="hint_edit_citizen">Icone de edição para um cidadão</string>
-    <string name="hint_delete_citizen">Icone de edição para um cidadão</string>
     <string name="hint_search_residence">Digite o nome do logradouro ou o CEP</string>
+    <string name="hint_search_accompany">Digite o nº do SUS, o nome ou nº do prontuário</string>
+    <string name="hint_search_visit">Digite um numero.</string>
+    <string name="hint_edit_citizen">Icone de edição para um cidadão</string>
+    <string name="hint_edit_accompany">Icone de edição para um acompanhamento</string>
+    <string name="hint_delete_citizen">Icone de edição para um cidadão</string>
 
     <!-- Messages -->
     <string name="msg_edit_citizen">msg_edit_citizen</string>
@@ -197,6 +298,11 @@
     <string name="err_num_sus_not_found_title">Numero do SUS não econtrado</string>
     <string name="err_num_sus_not_found_message">O número do SUS informado não foi encontado.
         É aconselhável atualizar sua base de dados. Deseja continuar mesmo assim?</string>
+    <string name="err_condition_required_title">Condição avaliada necessária</string>
+    <string name="err_condition_required_message">É necessário preencher ao menos uma condição avaliada.</string>
+    <string name="err_conduct_required_title">Conduta necessária</string>
+    <string name="err_conduct_required_message">É necessário preencher ao menos um campo relacionado
+        a Conduta / Encaminhamento</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

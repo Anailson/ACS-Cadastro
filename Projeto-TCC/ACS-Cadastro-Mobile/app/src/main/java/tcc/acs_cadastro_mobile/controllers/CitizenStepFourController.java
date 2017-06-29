@@ -1,14 +1,12 @@
 package tcc.acs_cadastro_mobile.controllers;
 
 import android.support.v4.app.Fragment;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.adapters.Adapter;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
 import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
@@ -25,10 +23,6 @@ public class CitizenStepFourController extends StepsController {
     public CitizenStepFourController(Fragment fragment){
         super(fragment.getContext());
         this.fragment = fragment;
-    }
-
-    public ArrayAdapter<String> getSpinnerAdapter(int arrayResource){
-        return new Adapter(fragment.getContext()).getSpinnerAdapter(arrayResource);
     }
 
     public RadioGroup.OnCheckedChangeListener getOnChangeListener() {

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepOneController;
+import tcc.acs_cadastro_mobile.customViews.CalendarEditText;
+import tcc.acs_cadastro_mobile.customViews.RequiredCalendarEditText;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.subModels.Contact;
@@ -23,8 +26,8 @@ import tcc.acs_cadastro_mobile.subModels.ParticularData;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
 import tcc.acs_cadastro_mobile.subModels.Responsible;
 import tcc.acs_cadastro_mobile.persistence.PersonalDataPersistence;
-import tcc.acs_cadastro_mobile.required.RequiredEditText;
-import tcc.acs_cadastro_mobile.required.RequiredSpinner;
+import tcc.acs_cadastro_mobile.customViews.RequiredEditText;
+import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 
 public class CitizenStepOneFragment extends Fragment implements IRequiredFields {
 
@@ -34,9 +37,11 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
     private ICitizenData citizenData;
     private PersonalDataModel personalData;
 
-    private RequiredEditText edtName, edtMotherName, edtBirth;
+    private CalendarEditText edtRespBirth;
+    private RequiredCalendarEditText edtBirth;
+    private RequiredEditText edtName, edtMotherName;
     private RequiredSpinner spnGender, spnRace, spnNationality, spnUf, spnCity;
-    private EditText edtNumSus, edtSocialName, edtNumNis, edtRespNumSus, edtRespBirth, edtNationBirth,
+    private EditText edtNumSus, edtSocialName, edtNumNis, edtRespNumSus, edtNationBirth,
             edtPhone, edtEmail;
     private CheckBox chbMotherUnknown, chbResponsible, chbNationBirth;
 
@@ -56,7 +61,7 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
 
     @Override
     public View onCreateView(LayoutInflater layout, ViewGroup container, Bundle savedInstanceState) {
-
+        super.onCreateView(layout, container, savedInstanceState);
 
         View view = layout.inflate(R.layout.content_ctz_add_1, container, false);
 
@@ -68,9 +73,9 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         edtSocialName = (EditText) view.findViewById(R.id.edt_ctz_social_name);
         edtMotherName = (RequiredEditText) view.findViewById(R.id.edt_ctz_mother_name);
         edtNumNis = (EditText) view.findViewById(R.id.edt_ctz_num_nis);
-        edtBirth = (RequiredEditText) view.findViewById(R.id.edt_ctz_birth);
+        edtBirth = (RequiredCalendarEditText) view.findViewById(R.id.edt_ctz_birth);
         edtRespNumSus = (EditText) view.findViewById(R.id.edt_ctz_respon_num_sus);
-        edtRespBirth = (RequiredEditText) view.findViewById(R.id.edt_ctz_respons_birth);
+        edtRespBirth = (CalendarEditText) view.findViewById(R.id.edt_ctz_respons_birth);
         edtNationBirth = (EditText) view.findViewById(R.id.edt_ctz_nation_birth);
         edtPhone = (EditText) view.findViewById(R.id.edt_ctz_phone);
         edtEmail = (EditText) view.findViewById(R.id.edt_ctz_email);
@@ -90,8 +95,9 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         spnCity.setAdapter(controller.getSpinnerAdapter(R.array.se_cities));
         spnCity.setEnabled(true);
 
-        edtBirth.setOnClickListener(controller.getClickListener());
-        edtRespBirth.setOnClickListener(controller.getClickListener());
+
+        edtBirth.setShowCalendarListener(controller.getCalendarListener());
+        edtRespBirth.setShowCalendarListener(controller.getCalendarListener());
         spnUf.setOnItemSelectedListener(controller.getItemSelectedListener());
         chbMotherUnknown.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
         chbNationBirth.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
@@ -112,13 +118,17 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //listener.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            String[] dateBirth = data.getStringArrayExtra(CalendarActivity.VALUE);
+
+            CalendarActivity.Date date = (CalendarActivity.Date) data.getSerializableExtra(CalendarActivity.ID);
+            Log.e("Formatted", date.formattedDate(getContext()) + " " + date.formattedSimpleDate());
+
             switch (requestCode){
-                case CalendarActivity.BIRTH: controller.setBirth(edtBirth, dateBirth); break;
-                case CalendarActivity.RESP_BIRTH: controller.setBirth(edtRespBirth, dateBirth); break;
+                case CalendarActivity.BIRTH: controller.fillField(edtBirth, date.formattedDate(getContext())); break;
+                case CalendarActivity.RESP_BIRTH: controller.fillField(edtRespBirth, date.formattedDate(getContext())); break;
             }
         }
     }
@@ -141,7 +151,7 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
 
     @Override
     public boolean isRequiredFieldsFilled(){
-        return controller.isRequiredFieldsFilled(edtName, edtMotherName,edtBirth, spnGender,
+        return controller.isRequiredFieldsFilled(edtName, edtMotherName, edtBirth, spnGender,
                 spnRace, spnNationality, spnUf, spnCity);
     }
 

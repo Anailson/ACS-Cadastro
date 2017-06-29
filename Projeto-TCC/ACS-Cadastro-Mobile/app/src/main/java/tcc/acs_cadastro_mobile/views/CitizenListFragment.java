@@ -1,6 +1,5 @@
 package tcc.acs_cadastro_mobile.views;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -15,13 +14,15 @@ import android.widget.ListView;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenListController;
+import tcc.acs_cadastro_mobile.customViews.SearchingEditText;
 
 public class CitizenListFragment extends Fragment {
 
     private ListView lvwCitizens;
     private CitizenListController controller;
 
-    public CitizenListFragment() {}
+    public CitizenListFragment() {
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -36,20 +37,16 @@ public class CitizenListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_citizen, container, false);
-        EditText edtSearch = (EditText) view.findViewById(R.id.edt_search_citizen);
+        SearchingEditText edtSearch = (SearchingEditText) view.findViewById(R.id.edt_search_citizen);
         FloatingActionButton btnAddCitizen = (FloatingActionButton) view.findViewById(R.id.fab_add_citizen);
         lvwCitizens = (ListView) view.findViewById(R.id.lvw_citizens);
 
         controller = new CitizenListController(getContext());
 
-        edtSearch.addTextChangedListener(controller.getSearchTextChanged(lvwCitizens));
+        //edtSearch.addTextChangedListener(controller.getSearchTextChanged(lvwCitizens));
+        edtSearch.setSearchListener(lvwCitizens, controller.getSearchTextChanged());
         btnAddCitizen.setOnClickListener(controller.getOnClickListener());
         return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

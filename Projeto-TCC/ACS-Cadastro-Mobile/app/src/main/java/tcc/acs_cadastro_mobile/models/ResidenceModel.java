@@ -7,8 +7,9 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 
-public class ResidenceModel extends RealmObject implements Serializable{
+public class ResidenceModel extends RealmObject implements Serializable, ISearcher {
 
     public static final String CEP = "cep";
     public static final String STREET_NAME = "streetName";

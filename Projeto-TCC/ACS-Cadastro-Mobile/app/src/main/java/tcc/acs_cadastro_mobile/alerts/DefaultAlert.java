@@ -3,7 +3,6 @@ package tcc.acs_cadastro_mobile.alerts;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 
 import tcc.acs_cadastro_mobile.R;
 
@@ -14,9 +13,9 @@ public class DefaultAlert {
     private String title, message;
     private Context context;
 
-    public DefaultAlert(AppCompatActivity activity) {
-        this.context = activity.getBaseContext();
-        this.alert = new AlertDialog.Builder(activity)
+    public DefaultAlert(Context context) {
+        this.context = context;
+        this.alert = new AlertDialog.Builder(context)
                 .setPositiveButton("", positiveListener)
                 .setNegativeButton("", negativeListener);
     }
@@ -37,6 +36,10 @@ public class DefaultAlert {
         setMessage(context.getString(resource));
     }
 
+
+    public void setPositiveListener(DialogInterface.OnClickListener listener) {
+        setPositiveListener(R.string.btn_ok, listener);
+    }
     public void setPositiveListener(String text, DialogInterface.OnClickListener listener) {
         alert.setPositiveButton(text, listener);
     }

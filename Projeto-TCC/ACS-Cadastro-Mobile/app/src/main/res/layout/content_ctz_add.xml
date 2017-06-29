@@ -36,8 +36,6 @@
         android:layout_above="@+id/footer_ctz_add"
         android:id="@+id/frame_ctz_add"
         android:layout_below="@+id/header_rsd_add">
-
-        <!--<include layout="@layout/content_ctz_add_3"/>-->
     </FrameLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

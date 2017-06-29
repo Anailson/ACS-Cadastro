@@ -1,11 +1,15 @@
 package tcc.acs_cadastro_mobile.models;
 
+import java.io.Serializable;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import tcc.acs_cadastro_mobile.interfaces.ISearcher;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 
-public class CitizenModel extends RealmObject {
+public class CitizenModel extends RealmObject implements Serializable, ISearcher {
 
     public static final String STRING_DEFAULT_VALUE = "No value";
     public static final String NAME = "name";
@@ -19,26 +23,23 @@ public class CitizenModel extends RealmObject {
     private HealthConditionsModel healthConditions;
     private StreetSituationModel streetSituation;
 
+    public CitizenModel() {
+        this(new PersonalDataModel(), new SocialDemographicModel(), new HealthConditionsModel(),
+                new StreetSituationModel());
+    }
 
-    public static CitizenModel newInstance(Realm realm, PersonalDataModel personalData,
-                                           SocialDemographicModel socialDemographic,
-                                           HealthConditionsModel healthConditions,
-                                           StreetSituationModel streetSituation){
-
-        long numSus = CitizenPersistence.getMinorNumSus(personalData.getNumSus());
-        realm.beginTransaction();
-        CitizenModel object = realm.createObject(CitizenModel.class, numSus);
-        object.setName(personalData.getName());
-        object.setPersonalData(personalData);
-        object.setSocialDemographicData(socialDemographic);
-        object.setHealthConditions(healthConditions);
-        object.setStreetSituation(streetSituation);
-        realm.commitTransaction();
-        return object;
+    public CitizenModel(PersonalDataModel personalData, SocialDemographicModel socialDemographicData,
+                        HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
+        this.numSus = personalData.getNumSus();
+        this.name = personalData.getName();
+        this.personalData = personalData;
+        this.socialDemographicData = socialDemographicData;
+        this.healthConditions = healthConditions;
+        this.streetSituation = streetSituation;
     }
 
     public long getNumSus() {
-        return numSus <= 0 ? 0 : numSus;
+        return numSus > AcsRecordPersistence.DEFAULT_INT ? numSus : AcsRecordPersistence.DEFAULT_INT ;
     }
 
     public void setNumSus(long numSus) {
@@ -105,8 +106,13 @@ public class CitizenModel extends RealmObject {
         return personalData.getBirth();
     }
 
+    public String getGender() {
+        return getPersonalData().getGender();
+    }
+
     @Override
     public String toString() {
         return "Nome: " + getName() + ", SUS: " + getNumSus();
     }
+
 }

@@ -44,7 +44,7 @@
                     android:text="@string/txt_ctz_name"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <tcc.acs_cadastro_mobile.required.RequiredEditText
+                <tcc.acs_cadastro_mobile.customViews.RequiredEditText
                     android:id="@+id/edt_ctz_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                         android:text="@string/txt_unknow" />
                 </LinearLayout>
 
-                <tcc.acs_cadastro_mobile.required.RequiredEditText
+                <tcc.acs_cadastro_mobile.customViews.RequiredEditText
                     android:id="@+id/edt_ctz_mother_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -136,11 +136,10 @@
                     android:text="@string/txt_ctz_birth_date"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <tcc.acs_cadastro_mobile.required.RequiredEditText
+                <tcc.acs_cadastro_mobile.customViews.RequiredCalendarEditText
                     android:id="@+id/edt_ctz_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@android:drawable/ic_menu_my_calendar"
                     android:inputType="date"
                     android:focusableInTouchMode="false" />
             </LinearLayout>
@@ -202,12 +201,11 @@
                         android:text="@string/txt_ctz_birth_date"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <tcc.acs_cadastro_mobile.required.RequiredEditText
+                    <tcc.acs_cadastro_mobile.customViews.CalendarEditText
                         android:id="@+id/edt_ctz_respons_birth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.9"
-                        android:drawableRight="@android:drawable/ic_menu_my_calendar"
                         android:inputType="date"
                         android:focusableInTouchMode="false" />
                 </LinearLayout>
@@ -227,7 +225,7 @@
                     android:text="@string/txt_ctz_gender"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <tcc.acs_cadastro_mobile.required.RequiredSpinner
+                <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
                     android:id="@+id/spn_ctz_gender"
                     style="@style/Base.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
@@ -249,7 +247,7 @@
                     android:text="@string/txt_ctz_race"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <tcc.acs_cadastro_mobile.required.RequiredSpinner
+                <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
                     android:id="@+id/spn_ctz_race"
                     style="@style/Base.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
@@ -270,7 +268,7 @@
                     android:text="@string/txt_ctz_nation"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <tcc.acs_cadastro_mobile.required.RequiredSpinner
+                <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
                     android:id="@+id/spn_ctz_nationality"
                     style="@style/Base.Widget.AppCompat.Spinner"
                     android:layout_width="match_parent"
@@ -330,7 +328,7 @@
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/minimum_gap">
 
-                    <tcc.acs_cadastro_mobile.required.RequiredSpinner
+                    <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
                         android:id="@+id/spn_ctz_uf"
                         style="@style/Base.Widget.AppCompat.Spinner"
                         android:layout_width="0dp"
@@ -338,7 +336,7 @@
                         android:layout_weight="0.4"
                         android:spinnerMode="dialog" />
 
-                    <tcc.acs_cadastro_mobile.required.RequiredSpinner
+                    <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
                         android:id="@+id/spn_ctz_city"
                         style="@style/Base.Widget.AppCompat.Spinner"
                         android:layout_width="0dp"

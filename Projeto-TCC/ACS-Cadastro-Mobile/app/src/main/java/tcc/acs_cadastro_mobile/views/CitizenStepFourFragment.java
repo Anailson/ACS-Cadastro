@@ -17,7 +17,7 @@ import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.StreetSituationModel;
 import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
-import tcc.acs_cadastro_mobile.required.RequiredRadioGroup;
+import tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup;
 import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
 import tcc.acs_cadastro_mobile.subModels.FamilyVisit;
 import tcc.acs_cadastro_mobile.subModels.Feeding;
@@ -81,8 +81,8 @@ public class CitizenStepFourFragment extends Fragment implements IRequiredFields
         edtInstitutionAnother = (EditText) view.findViewById(R.id.edt_ctz_institution_another);
         edtFamilyVisit = (EditText) view.findViewById(R.id.edt_ctz_family_visit);
 
-        spnStreetTime.setAdapter(controller.getSpinnerAdapter(R.array.street_time));
-        spnFoodPerDay.setAdapter(controller.getSpinnerAdapter(R.array.food_per_day));
+        spnStreetTime.setAdapter(controller.getAdapter(R.array.street_time));
+        spnFoodPerDay.setAdapter(controller.getAdapter(R.array.food_per_day));
 
         rgrpInstitutionAnother.setOnCheckedChangeListener(controller.getOnChangeListener());
         rgrpFamilyVisit.setOnCheckedChangeListener(controller.getOnChangeListener());

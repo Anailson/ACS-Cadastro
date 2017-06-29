@@ -17,7 +17,7 @@ import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.SocialDemographicModel;
 import tcc.acs_cadastro_mobile.persistence.SocialDemographicPersistence;
-import tcc.acs_cadastro_mobile.required.RequiredRadioGroup;
+import tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup;
 import tcc.acs_cadastro_mobile.subModels.CommunityTraditional;
 import tcc.acs_cadastro_mobile.subModels.Deficiency;
 import tcc.acs_cadastro_mobile.subModels.EducationEmployment;
@@ -83,11 +83,11 @@ public class CitizenStepTwoFragment extends Fragment implements IRequiredFields{
         chbPhysical = (CheckBox) view.findViewById(R.id.chb_ctz_deficiency_physical);
         chbAnother = (CheckBox) view.findViewById(R.id.chb_ctz_deficiency_another);
 
-        spnKinship.setAdapter(controller.getSpinnerAdapter(R.array.kinship));
-        spnEducation.setAdapter(controller.getSpinnerAdapter(R.array.education));
-        spnEmployment.setAdapter(controller.getSpinnerAdapter(R.array.employment));
-        spnKids09.setAdapter(controller.getSpinnerAdapter(R.array.kids_0_9));
-        spnSexualOrientation.setAdapter(controller.getSpinnerAdapter(R.array.orientation_sexual));
+        spnKinship.setAdapter(controller.getAdapter(R.array.kinship));
+        spnEducation.setAdapter(controller.getAdapter(R.array.education));
+        spnEmployment.setAdapter(controller.getAdapter(R.array.employment));
+        spnKids09.setAdapter(controller.getAdapter(R.array.kids_0_9));
+        spnSexualOrientation.setAdapter(controller.getAdapter(R.array.orientation_sexual));
 
         rgrpCommunityTraditional.setOnCheckedChangeListener(controller.getCheckedChangeListener());
         rgrpSexualOrientation.setOnCheckedChangeListener(controller.getCheckedChangeListener());

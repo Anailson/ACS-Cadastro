@@ -5,6 +5,7 @@ import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TextSearchChanged<E> implements TextWatcher {
@@ -15,15 +16,20 @@ public abstract class TextSearchChanged<E> implements TextWatcher {
         this.listView = listView;
     }
 
-    protected abstract List<E> searchByName(String search);
+    public void setListView(ListView listView) {
+        if (listView != null){
+            this.listView = listView;
+        }
+    }
+
+    protected abstract List<E> searchByText(String search);
 
     protected abstract List<E> searchByNumber(String search);
 
     protected abstract ArrayAdapter<E> updateListView(List<E> list);
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    }
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -32,7 +38,10 @@ public abstract class TextSearchChanged<E> implements TextWatcher {
         if (s.toString().matches("[0-9]+")) {
             list = searchByNumber(s.toString());
         } else {
-            list = searchByName(s.toString());
+            list = searchByText(s.toString());
+        }
+        if(list == null){
+            list = new ArrayList<>();
         }
         listView.setAdapter(updateListView(list));
     }

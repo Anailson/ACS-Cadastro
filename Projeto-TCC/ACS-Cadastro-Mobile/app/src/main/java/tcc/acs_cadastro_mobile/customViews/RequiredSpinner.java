@@ -1,14 +1,15 @@
-package tcc.acs_cadastro_mobile.required;
+package tcc.acs_cadastro_mobile.customViews;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 
-public class RequiredSpinner extends android.support.v7.widget.AppCompatSpinner implements IRequiredView {
+public class RequiredSpinner extends Spinner implements IRequiredView {
 
     private TextView title;
 
@@ -27,8 +28,17 @@ public class RequiredSpinner extends android.support.v7.widget.AppCompatSpinner 
     }
 
     @Override
-    public boolean isInvalid(String text) {
-        return ((String) getSelectedItem()).toUpperCase().equals(text.toUpperCase()) || getSelectedItemPosition() == 0;
+    public boolean isInvalid(String... text) {
+        if(getSelectedItemPosition() == 0){
+            return true;
+        }
+        String upperCase = ((String) getSelectedItem()).toUpperCase();
+        for(String s : text){
+            if(upperCase.equals(s.toUpperCase())){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

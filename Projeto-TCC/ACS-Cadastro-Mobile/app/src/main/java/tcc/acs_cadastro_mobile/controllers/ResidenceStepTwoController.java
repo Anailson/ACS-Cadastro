@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.adapters.Adapter;
+import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.persistence.HousingConditionsPersistence;
-import tcc.acs_cadastro_mobile.required.RequiredSpinner;
 import tcc.acs_cadastro_mobile.subModels.House;
 import tcc.acs_cadastro_mobile.subModels.HousingSituation;
 import tcc.acs_cadastro_mobile.subModels.Pet;
@@ -33,10 +31,6 @@ public class ResidenceStepTwoController extends StepsController {
     public ResidenceStepTwoController(Fragment fragment) {
         super(fragment.getContext());
         this.fragment = fragment;
-    }
-
-    public ArrayAdapter<String> getSpinnerAdapter(int arrayResource) {
-        return new Adapter(fragment.getContext()).getSpinnerAdapter(arrayResource);
     }
 
     public AdapterView.OnItemSelectedListener getItemSelectedListener() {
@@ -153,9 +147,9 @@ public class ResidenceStepTwoController extends StepsController {
         Spinner spinner = (Spinner) fragment.getActivity().findViewById(R.id.spn_rsd_construction_type);
 
         if (enable = (index == BRICK || index == TAIPA)) {
-            spinner.setAdapter(getSpinnerAdapter(R.array.construction_coating));
+            spinner.setAdapter(getAdapter(R.array.construction_coating));
         } else if (enable = (index == ANOTHER_TYPE)) {
-            spinner.setAdapter(getSpinnerAdapter(R.array.construction_another));
+            spinner.setAdapter(getAdapter(R.array.construction_another));
         } else {
             fillField(spinner, 0);
         }

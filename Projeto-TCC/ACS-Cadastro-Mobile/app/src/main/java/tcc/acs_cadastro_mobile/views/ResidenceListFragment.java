@@ -9,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ListView;
+
+import java.util.List;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceListController;
+import tcc.acs_cadastro_mobile.customViews.SearchingEditText;
+import tcc.acs_cadastro_mobile.models.VisitModel;
 
 
 public class ResidenceListFragment extends Fragment {
@@ -37,13 +40,14 @@ public class ResidenceListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_residence, container, false);
-        EditText edtSearch = (EditText) view.findViewById(R.id.edt_search_residence);
+        SearchingEditText edtSearch = (SearchingEditText) view.findViewById(R.id.edt_search_residence);
         FloatingActionButton btnAddResidence = (FloatingActionButton) view.findViewById(R.id.fab_add_residence);
         lvwResidences = (ListView) view.findViewById(R.id.lvw_residence);
 
         controller = new ResidenceListController(getContext());
 
-        edtSearch.addTextChangedListener(controller.getSearchTextChanged(lvwResidences));
+        //edtSearch.addTextChangedListener((lvwResidences));
+        edtSearch.setSearchListener(lvwResidences, controller.getSearchTextChanged());
         btnAddResidence.setOnClickListener(controller.getClickListener());
 
         return view;

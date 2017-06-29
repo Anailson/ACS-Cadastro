@@ -9,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.Formatter;
-
 import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.controllers.StepsController;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
 
 
@@ -52,7 +51,12 @@ public class HousingHistoricalListAdapter extends ArrayAdapter<HousingHistorical
         return this.historical;
     }
 
-    private String getText(int resource, Object text){
-        return new Formatter().format("%s: %s",context.getString(resource), text.toString()).toString();
+    private String getText(int resource, long l){
+        String text = StepsController.getDefaultOrValue(l);
+        return getText(resource, text);
+    }
+
+    private String getText(int resource, String text){
+        return String.format("%s: %s",context.getString(resource), text);
     }
 }

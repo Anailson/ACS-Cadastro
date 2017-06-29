@@ -2,18 +2,17 @@ package tcc.acs_cadastro_mobile.controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.ResidenceListAdapter;
-import tcc.acs_cadastro_mobile.interfaces.TextSearchChanged;
+import tcc.acs_cadastro_mobile.interfaces.ISearcher;
+import tcc.acs_cadastro_mobile.interfaces.ITextSearchListener;
 import tcc.acs_cadastro_mobile.models.ResidenceModel;
 import tcc.acs_cadastro_mobile.persistence.ResidencePersistence;
 import tcc.acs_cadastro_mobile.views.ResidenceAddActivity;
@@ -22,8 +21,7 @@ public class ResidenceListController {
 
     private Context context;
     private List<ResidenceModel> residences;
-    private TextSearch textSearch;
-    private View.OnClickListener clickListener;
+    private Listeners listener;
 
     public ResidenceListController(Context context){
         this.context = context;
@@ -34,37 +32,28 @@ public class ResidenceListController {
         return new ResidenceListAdapter(context, residences);
     }
 
-    public TextWatcher getSearchTextChanged(ListView listView){
-        if(textSearch == null){
-            textSearch = new TextSearch(context, listView);
+    private Listeners getListener() {
+        if(listener == null){
+            listener = new Listeners();
         }
-        return textSearch;
+        return listener;
+    }
+
+    public ITextSearchListener getSearchTextChanged(){
+        return getListener();
     }
 
     public View.OnClickListener getClickListener() {
-
-        if (clickListener == null) {
-            clickListener = new OnClickListener();
-        }
-        return clickListener;
+        return getListener();
     }
 
-    private class TextSearch extends TextSearchChanged<ResidenceModel> {
+    private class Listeners implements View.OnClickListener, ITextSearchListener<ResidenceModel>{
 
-        private Context context;
-        TextSearch(Context context, ListView listView) {
-            super(listView);
-            this.context = context;
-        }
+        //ITextSearchListener<ResidenceModel>
 
         @Override
-        protected ArrayAdapter<ResidenceModel> updateListView(List<ResidenceModel> list) {
-            return new ResidenceListAdapter(context, list);
-        }
-
-        @Override
-        protected List<ResidenceModel> searchByName(String search){
-            List<ResidenceModel> founded = new ArrayList<>();
+        public List<ISearcher> searchByText(String search){
+            List<ISearcher> founded = new ArrayList<>();
 
             for (ResidenceModel residence : residences) {
                 if (residence.addressContainsKey(search)) {
@@ -75,8 +64,8 @@ public class ResidenceListController {
         }
 
         @Override
-        protected List<ResidenceModel> searchByNumber(String search) {
-            List<ResidenceModel> founded = new ArrayList<>();
+        public List<ISearcher> searchByNumber(String search) {
+            List<ISearcher> founded = new ArrayList<>();
 
             for (ResidenceModel residence : residences) {
                 if (residence.cepContainsKey(search)) {
@@ -85,10 +74,17 @@ public class ResidenceListController {
             }
             return founded;
         }
-    }
 
-    private class OnClickListener implements View.OnClickListener{
+        @Override
+        public ArrayAdapter<ResidenceModel> updateListView(List<ISearcher> list) {
+            List<ResidenceModel> residences = new ArrayList<>();
+            for(ISearcher searcher : list){
+                residences.add((ResidenceModel) searcher);
+            }
+            return new ResidenceListAdapter(context, residences);
+        }
 
+        //View.OnClickListener
         @Override
         public void onClick(View view) {
             switch(view.getId()){

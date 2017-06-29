@@ -7,8 +7,10 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import tcc.acs_cadastro_mobile.adapters.SpinnerAdapter;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class StepsController {
 
@@ -17,6 +19,43 @@ public class StepsController {
 
     StepsController(Context context){
         this.context = context;
+    }
+
+    public static String getDefaultOrValue(long l){
+        return l <= AcsRecordPersistence.DEFAULT_INT ? AcsRecordPersistence.DEFAULT_STR : String.valueOf(l);
+    }
+    public static String getDefaultOrValue(int i){
+        return i <= AcsRecordPersistence.DEFAULT_INT ? AcsRecordPersistence.DEFAULT_STR : String.valueOf(i);
+    }
+    public static String getDefaultOrValue(double d){
+        return d <= AcsRecordPersistence.DEFAULT_INT ? AcsRecordPersistence.DEFAULT_STR : String.valueOf(d);
+    }
+    public static String getDefaultOrValue(float f){
+        return f <= AcsRecordPersistence.DEFAULT_INT ? AcsRecordPersistence.DEFAULT_STR : String.valueOf(f);
+    }
+
+    public static String getEmptyOrValue(int i){
+        return i <= AcsRecordPersistence.DEFAULT_INT ? "" : String.valueOf(i);
+    }
+
+    public static String getEmptyOrValue(float f){
+        return f <= AcsRecordPersistence.DEFAULT_INT ? "" : String.valueOf(f);
+    }
+
+    public static String getEmptyOrValue(long l){
+        return l <= AcsRecordPersistence.DEFAULT_INT ? "" : String.valueOf(l);
+    }
+
+    public static String getEmptyOrValue(double d){
+        return d <= AcsRecordPersistence.DEFAULT_INT ? "" : String.valueOf(d);
+    }
+
+    public final android.widget.SpinnerAdapter getAdapter(String[] array) {
+        return new SpinnerAdapter(context).getAdapter(array);
+    }
+
+    public final android.widget.SpinnerAdapter getAdapter(int ressource) {
+        return new SpinnerAdapter(context).getAdapter(ressource);
     }
 
     public int getIndex(String value, int idArray) {
@@ -63,12 +102,17 @@ public class StepsController {
 
     final int getInt(EditText edtNumber) {
         String text = edtNumber.getText().toString();
-        return text.matches("[0-9]+") ? Integer.parseInt(text) : 0;
+        return text.matches("[0-9]+") ? Integer.parseInt(text) : AcsRecordPersistence.DEFAULT_INT;
     }
 
     final long getLong(EditText editText) {
         String text = editText.getText().toString();
-        return text.matches("[0-9]+") ? Long.parseLong(text) : 0;
+        return text.matches("[0-9]+") ? Long.parseLong(text) : AcsRecordPersistence.DEFAULT_INT;
+    }
+
+    final float getFloat(EditText editText) {
+        String text = editText.getText().toString();
+        return text.matches("[0-9]+") ? Float.parseFloat(text) : AcsRecordPersistence.DEFAULT_INT;
     }
 
     public String getFields(EditText editText){

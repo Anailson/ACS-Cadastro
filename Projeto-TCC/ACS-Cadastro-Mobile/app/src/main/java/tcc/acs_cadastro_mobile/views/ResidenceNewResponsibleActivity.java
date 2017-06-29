@@ -1,20 +1,17 @@
 package tcc.acs_cadastro_mobile.views;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceNewResponsibleController;
-import tcc.acs_cadastro_mobile.interfaces.IResidenceNewResponsible;
-import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
+import tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete;
 
 public class ResidenceNewResponsibleActivity extends AppCompatActivity {
 
@@ -30,10 +27,10 @@ public class ResidenceNewResponsibleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_float_new_responsible);
+        setContentView(R.layout.float_new_responsible_activity);
 
         ResidenceNewResponsibleController controller = new ResidenceNewResponsibleController(this);
-        AutoCompleteTextView edtNumSus = (AutoCompleteTextView) findViewById(R.id.edt_rsd_resp_num_sus);
+        RequiredAutoComplete edtNumSus = (RequiredAutoComplete) findViewById(R.id.edt_rsd_resp_num_sus);
         EditText edtLivesSince = (EditText) findViewById(R.id.edt_rsd_lives_since);
         Spinner spnFamilyIncome = (Spinner) findViewById(R.id.spn_rsd_famlily_income);
         Button btnSave = (Button) findViewById(R.id.btn_new_resp_save);
@@ -43,7 +40,7 @@ public class ResidenceNewResponsibleActivity extends AppCompatActivity {
         edtNumSus.setThreshold(1);
         spnFamilyIncome.setAdapter(controller.getNumSusAdapter(R.array.income));
 
-        edtNumSus.setOnItemClickListener(controller.getItemClickListener());
+        edtNumSus.setAutoFillListener(controller.getItemClickListener());
         edtLivesSince.setOnClickListener(controller.getClickListener());
         btnSave.setOnClickListener(controller.getClickListener());
         btnCancel.setOnClickListener(controller.getClickListener());

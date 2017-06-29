@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".4"
+                android:text="@string/txt_acc_pic"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/spn_acc_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:spinnerMode="dialog" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_total_cholesterol" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_total_cholesterol_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_total_cholesterol_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_creatinine" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_creatinine_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_creatinine_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_eas_equ" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_eas_equ_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_eas_equ_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_electrocardiogram" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_electrocardiogram_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_electrocardiogram_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_hemoglobin" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hemoglobin_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hemoglobin_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_spirometry" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_spirometry_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_spirometry_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_sputum" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_spucutum_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_spucutum_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_glycemia" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_glycemia_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_glycemia_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_hdl" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hdl_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hdl_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_hemoglobin_glycemic" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hemoglobin_glycemic_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hemoglobin_glycemic_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_blood_count" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_blood_count_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_blood_count_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_ldl" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_ldl_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_ldl_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_eyes" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_eyes_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_eyes_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_syphilis" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_syphilis_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_syphilis_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_dengue_sorology" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_dengue_sorology_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_dengue_sorology_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_hiv" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hiv_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_hiv_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_human_antiglobulin" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_human_antiglobulin_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_human_antiglobulin_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_ear_test" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_ear_test_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_ear_test_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_pregnancy_test" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_pregnancy_test_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_pregnancy_test_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_eye_test" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_eye_test_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_eye_test_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_foot_test" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_foot_test_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_foot_test_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_ultrasonography" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_ultrasonography_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_ultrasonography_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:gravity="center_vertical"
+                android:text="@string/txt_acc_uroculture" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_uroculture_e"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_evaluated" />
+
+            <CheckBox
+                android:id="@+id/chb_acc_uroculture_r"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:checked="false"
+                android:text="@string/txt_acc_exam_required" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

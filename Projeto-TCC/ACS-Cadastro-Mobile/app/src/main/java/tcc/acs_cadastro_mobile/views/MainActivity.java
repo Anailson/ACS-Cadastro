@@ -10,13 +10,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.persistence.AcsCadastroPersistence;
+import tcc.acs_cadastro_mobile.models.AgentModel;
+import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        AgentModel agent = AcsRecordPersistence.startDatabase(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -40,16 +47,15 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigation.setNavigationItemSelectedListener(this);
 
-        AcsCadastroPersistence.startDatabase(this);
         TextView txtAgentName = (TextView) headerView.findViewById(R.id.txt_agent_name);
         TextView txtAgentSusNum = (TextView) headerView.findViewById(R.id.txt_agent_sus_num);
         TextView txtArea = (TextView) headerView.findViewById(R.id.txt_area);
         TextView txtEquip = (TextView) headerView.findViewById(R.id.txt_equip);
 
-        txtAgentName.setText("Olivia Siqueira Campos");
-        txtAgentSusNum.setText("846735257");
-        txtArea.setText("120");
-        txtEquip.setText("12");
+        txtAgentName.setText(agent.getName());
+        txtAgentSusNum.setText(String.valueOf(agent.getNumSus()));
+        txtArea.setText(String.valueOf(agent.getArea()));
+        txtEquip.setText(String.valueOf(agent.getEquip()));
         selectMenu(R.id.nav_citizen);
     }
 
@@ -87,8 +93,8 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_citizen: fragment = new CitizenListFragment(); break;
             case R.id.nav_residence: fragment = new ResidenceListFragment();break;
-            case R.id.nav_accompany: fragment = new AccompanyFragment(); break;
-            case R.id.nav_visit: fragment = new VisitFragment(); break;
+            case R.id.nav_accompany: fragment = new AccompanyListFragment(); break;
+            case R.id.nav_visit: fragment = new VisitListFragment(); break;
             case R.id.nav_update_system: fragment = new UpdateSystemFragment(); break;
         }
         return replaceFragment(fragment) > 0;

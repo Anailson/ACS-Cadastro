@@ -68,14 +68,14 @@ public class ResidenceAddController  {
 
         switch (actualMenu){
             case FIRST_STEP:
-                //if(((ResidenceStepOneFragment) actualStep).isRequiredFieldsFilled()){
+                if(((ResidenceStepOneFragment) actualStep).isRequiredFieldsFilled()){
                     shiftToStepTwo();
-                //}
+                }
                 break;
             case SECOND_STEP:
-                //if(((ResidenceStepTwoFragment) actualStep).isRequiredFieldsFilled()){
+                if(((ResidenceStepTwoFragment) actualStep).isRequiredFieldsFilled()){
                     shiftToStepThree();
-                //}
+                }
                 break;
             case THIRD_STEP: save(); break;
         }

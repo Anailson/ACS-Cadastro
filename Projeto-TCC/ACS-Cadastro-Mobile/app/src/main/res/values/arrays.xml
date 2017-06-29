@@ -288,6 +288,61 @@
         <item>@string/txt_another</item>
     </string-array>
 
+    <string-array name="shift">
+        <item>@string/txt_default</item>
+        <item>Manhã</item>
+        <item>Tarde</item>
+        <item>Noite</item>
+    </string-array>
 
+    <string-array name="place_care">
+        <item>@string/txt_default</item>
+        <item>UBS</item>
+        <item>Unidade Móvel</item>
+        <item>Rua</item>
+        <item>Domicílio</item>
+        <item>Escola / Creche</item>
+        <item>@string/txt_another</item>
+        <item>Polo (Academia da saúde)</item>
+        <item>Instituição / Abrigo</item>
+        <item>Unidade prisional ou congêneres</item>
+        <item>Unidade socioeducativa</item>
+    </string-array>
+
+    <string-array name="type_care">
+        <item>@string/txt_default</item>
+        <item>Consulta agendada programada / Cuidado continuado</item>
+        <item>Consulta agendada</item>
+        <item>Escuta inicial / Orientação</item>
+        <item>Consulta no dia</item>
+        <item>Atendimento de urgência</item>
+    </string-array>
+
+    <string-array name="breast_feeding">
+        <item>@string/txt_default</item>
+        <item>Exclusivo</item>
+        <item>Predominante</item>
+        <item>Complementado</item>
+        <item>Inexistente</item>
+    </string-array>
+
+    <string-array name="home_care">
+        <item>@string/txt_default</item>
+        <item>Modalidade AD1</item>
+        <item>Modalidade AD2</item>
+        <item>Modalidade AD3</item>
+    </string-array>
+
+    <string-array name="pic">
+        <item>@string/txt_default</item>
+        <item>Medicina Tradicional Chinesa</item>
+        <item>Antroposofia aplicada à saúde</item>
+        <item>Homeopatia</item>
+        <item>Fitoterapia</item>
+        <item>Termalismo / Crenoterapia</item>
+        <item>Práticas corporais e mentais em PICs</item>
+        <item>Técnicas manuais em PICs</item>
+        <item>@string/txt_another</item>
+    </string-array>
 
 </resources>

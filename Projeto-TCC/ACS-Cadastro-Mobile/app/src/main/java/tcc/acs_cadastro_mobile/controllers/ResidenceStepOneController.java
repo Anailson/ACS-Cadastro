@@ -3,12 +3,10 @@ package tcc.acs_cadastro_mobile.controllers;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
-import tcc.acs_cadastro_mobile.adapters.Adapter;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.persistence.AddressDataPersistence;
 import tcc.acs_cadastro_mobile.subModels.CityLocation;
@@ -27,10 +25,6 @@ public class ResidenceStepOneController extends StepsController {
     public ResidenceStepOneController(Fragment fragment) {
         super(fragment.getContext());
         this.fragment = fragment;
-    }
-
-    public ArrayAdapter<String> getSpinnerAdapter(int arrayResource) {
-        return new Adapter(fragment.getContext()).getSpinnerAdapter(arrayResource);
     }
 
     public AdapterView.OnItemSelectedListener getItemSelectedListener() {
@@ -83,9 +77,9 @@ public class ResidenceStepOneController extends StepsController {
     private void setCities(int index) {
         Spinner spinner = (Spinner) fragment.getActivity().findViewById(R.id.spn_rsd_city);
         switch (index){
-            case AL: spinner.setAdapter(getSpinnerAdapter(R.array.al_cities)); break;
-            case BA: spinner.setAdapter(getSpinnerAdapter(R.array.ba_cities)); break;
-            case SE: spinner.setAdapter(getSpinnerAdapter(R.array.se_cities)); break;
+            case AL: spinner.setAdapter(getAdapter(R.array.al_cities)); break;
+            case BA: spinner.setAdapter(getAdapter(R.array.ba_cities)); break;
+            case SE: spinner.setAdapter(getAdapter(R.array.se_cities)); break;
             default: fillField(spinner, 0); break;
         }
         enableView(spinner, index != 0);
