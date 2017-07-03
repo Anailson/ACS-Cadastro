@@ -8,6 +8,15 @@ public class Pregnant extends RealmObject implements Serializable {
     private boolean isPregnant;
     private String maternity;
 
+    public Pregnant() {
+        this(false, "");
+    }
+
+    public Pregnant(boolean isPregnant, String maternity) {
+        this.isPregnant = isPregnant;
+        this.maternity = maternity;
+    }
+
     public boolean isPregnant() {
         return isPregnant;
     }

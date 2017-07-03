@@ -9,6 +9,19 @@ public class House extends RealmObject implements Serializable {
     private String type, access, contruction, contructionType;
     private int nResident, nRoom;
 
+    public House() {
+        this("", 0, 0, "", "", "");
+    }
+
+    public House(String type, int nResident, int nRoom, String access, String contruction, String contructionType) {
+        this.type = type;
+        this.access = access;
+        this.contruction = contruction;
+        this.contructionType = contructionType;
+        this.nResident = nResident;
+        this.nRoom = nRoom;
+    }
+
     public String getType() {
         return type;
     }

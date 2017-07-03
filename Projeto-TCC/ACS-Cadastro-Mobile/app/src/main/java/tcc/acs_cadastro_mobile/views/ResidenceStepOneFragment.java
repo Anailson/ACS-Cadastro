@@ -13,12 +13,11 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepOneController;
 import tcc.acs_cadastro_mobile.controllers.StepsController;
+import tcc.acs_cadastro_mobile.customViews.RequiredEditText;
+import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
-import tcc.acs_cadastro_mobile.persistence.AddressDataPersistence;
-import tcc.acs_cadastro_mobile.customViews.RequiredEditText;
-import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.subModels.CityLocation;
 import tcc.acs_cadastro_mobile.subModels.Phones;
 import tcc.acs_cadastro_mobile.subModels.StreetLocation;
@@ -73,11 +72,11 @@ public class ResidenceStepOneFragment extends Fragment implements IRequiredField
         spnUf.setAdapter(controller.getAdapter(R.array.uf));
         spnCity.setAdapter(controller.getAdapter(R.array.se_cities));
 
-        spnUf.setOnItemSelectedListener(controller.getItemSelectedListener());
-
         if(addressData != null){
             fillFields();
         }
+
+        spnUf.setOnItemSelectedListener(controller.getItemSelectedListener());
 
         //TODO: use GPS location to fill some fields (...?)
         //DefineLocation defineLocation = new DefineLocation(getContext());
@@ -93,7 +92,7 @@ public class ResidenceStepOneFragment extends Fragment implements IRequiredField
         CityLocation city = controller.getCityLocation(edtNeighborhood, spnUf, spnCity, edtCep);
         Phones phones = controller.getPhones(edtHomePhone, edtReferencePhone);
 
-        addressData = AddressDataPersistence.getInstance(street, city, phones);
+        addressData = controller.get(street, city, phones);
         residenceData.send(addressData);
         super.onDetach();
     }

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme"
     tools:context=".views.ResidenceListFragment">
 
@@ -23,10 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_citizen_add"
-
         android:layout_marginRight="@dimen/minimum_gap"
         android:layout_marginBottom="@dimen/medium_gap"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_residence_add"
+        app:backgroundTint="@color/color_float_button" />
 </RelativeLayout>

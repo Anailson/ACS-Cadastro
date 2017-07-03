@@ -8,10 +8,24 @@ public class KidneyDisease extends RealmObject implements Serializable {
 
     private boolean isKidneyDisease, insuficiency, another, dontKnow;
 
+    public KidneyDisease() {
+        this(false, new boolean[3]);
+    }
+
+    public KidneyDisease(boolean kidneyDiseas, boolean[] diseases) {
+        this(kidneyDiseas, diseases[0], diseases[1], diseases[2]);
+    }
+
+    public KidneyDisease(boolean isKidneyDisease, boolean insuficiency, boolean another, boolean dontKnow) {
+        this.isKidneyDisease = isKidneyDisease;
+        this.insuficiency = insuficiency;
+        this.another = another;
+        this.dontKnow = dontKnow;
+    }
+
     public boolean[] getKidneyDiseases() {
         return new boolean[]{isInsuficiency(), isAnother(), isDontKnow()};
     }
-
 
     public void setDisease(boolean diseases[]){
         if(diseases.length != 3){

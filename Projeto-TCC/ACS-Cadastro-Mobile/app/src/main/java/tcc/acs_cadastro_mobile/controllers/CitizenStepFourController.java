@@ -8,6 +8,7 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
+import tcc.acs_cadastro_mobile.models.StreetSituationModel;
 import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
 import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
 import tcc.acs_cadastro_mobile.subModels.FamilyVisit;
@@ -31,6 +32,11 @@ public class CitizenStepFourController extends StepsController {
             onChangeListener = new OnChangeListener();
         }
         return onChangeListener;
+    }
+
+    public StreetSituationModel get(StreetSituation street, boolean benefit, boolean family, Feeding feeding,
+                                    AnotherInstitution anotherInstitution, FamilyVisit familyVisit, Hygiene hygiene) {
+        return StreetSituationPersistence.get(street, benefit, family, feeding, anotherInstitution, familyVisit, hygiene);
     }
 
     public StreetSituation getStreetSituation(RadioGroup radioGroup, Spinner spinner){

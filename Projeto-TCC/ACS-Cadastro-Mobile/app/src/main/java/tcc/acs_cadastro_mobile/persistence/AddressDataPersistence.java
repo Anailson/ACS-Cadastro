@@ -11,23 +11,35 @@ public class AddressDataPersistence {
 
     private AddressDataPersistence() {}
 
-    public static AddressDataModel getInstance(StreetLocation street, CityLocation city, Phones phones) {
+    public static AddressDataModel get(StreetLocation street, CityLocation city, Phones phones) {
         Realm realm = Realm.getDefaultInstance();
-        return AddressDataModel.newInstance(realm, street, city, phones);
+        realm.beginTransaction();
+        AddressDataModel object = realm.copyToRealm(new AddressDataModel(street, city, phones));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static StreetLocation getStreetLocation(String place, String name, int number, String complement) {
+    public static StreetLocation get(String place, String name, int number, String complement) {
         Realm realm = Realm.getDefaultInstance();
-        return AddressDataModel.getStreetLocation(realm, place, name, number, complement);
+        realm.beginTransaction();
+        StreetLocation object = realm.copyToRealm(new StreetLocation(place, name, number, complement));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static CityLocation getCityLocation(String neighborhood, String uf, String city, long cep) {
+    public static CityLocation get(String neighborhood, String uf, String city, long cep) {
         Realm realm = Realm.getDefaultInstance();
-        return AddressDataModel.getCityLocation(realm, neighborhood, city, uf, cep);
+        realm.beginTransaction();
+        CityLocation object = realm.copyToRealm(new CityLocation(neighborhood, uf, city, cep));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static Phones getPhones(String home, String reference) {
+    public static Phones get(String home, String reference) {
         Realm realm = Realm.getDefaultInstance();
-        return AddressDataModel.getPhones(realm, home,  reference);
+        realm.beginTransaction();
+        Phones object = realm.copyToRealm(new Phones(home, reference));
+        realm.commitTransaction();
+        return object;
     }
 }

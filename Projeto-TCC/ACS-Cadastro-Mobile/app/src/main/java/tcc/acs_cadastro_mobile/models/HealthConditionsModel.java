@@ -24,22 +24,21 @@ public class HealthConditionsModel extends RealmObject implements Serializable {
     private Interment interment;
     private Plant plant;
 
+    public HealthConditionsModel() {
+        this(new Pregnant(), "", new Diseases(), new HeartDisease(), new KidneyDisease(), new RespiratoryDisease(),
+                new Interment(), new Plant());
+    }
 
-    public static HealthConditionsModel newInstance(Realm realm, Pregnant pregnant, String weight,
-                        Diseases diseases, HeartDisease heartDisease, KidneyDisease kidneyDisease,
-                        RespiratoryDisease respiratoryDisease, Interment interment, Plant plant){
-        realm.beginTransaction();
-        HealthConditionsModel object = realm.createObject(HealthConditionsModel.class);
-        object.setPregnant(pregnant);
-        object.setWeight(weight);
-        object.setDiseases(diseases);
-        object.setHeartDisease(heartDisease);
-        object.setKidneyDisease(kidneyDisease);
-        object.setRespiratoryDisease(respiratoryDisease);
-        object.setInterment(interment);
-        object.setPlant(plant);
-        realm.commitTransaction();
-        return object;
+    public HealthConditionsModel(Pregnant pregnant, String weight, Diseases diseases, HeartDisease heartDisease,
+                     KidneyDisease kidneyDisease, RespiratoryDisease respiratoryDisease, Interment interment, Plant plant) {
+        this.pregnant = pregnant;
+        this.weight = weight;
+        this.diseases = diseases;
+        this.heartDisease = heartDisease;
+        this.kidneyDisease = kidneyDisease;
+        this.respiratoryDisease = respiratoryDisease;
+        this.interment = interment;
+        this.plant = plant;
     }
 
     public static Pregnant getPregnant(Realm realm, boolean isPregnant, String maternity) {

@@ -7,6 +7,15 @@ import io.realm.RealmObject;
 public class Contact extends RealmObject  implements Serializable {
     private String phone, email;
 
+    public Contact() {
+        this("", "");
+    }
+
+    public Contact(String phone, String email) {
+        this.phone = phone;
+        this.email = email;
+    }
+
     public String getPhone() {
         return phone;
     }

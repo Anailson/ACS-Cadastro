@@ -65,7 +65,7 @@ public class DefineLocation extends AsyncTask<Void, Void, Address> {
             if(ManagerConection.hasConnection(context)) {
                 Geocoder geocoder = new Geocoder(context);
                 Address address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1).get(0);
-                //Address address = geocoder.getFromLocationName("Rua José Mesquita da Silveira 748, Itabaiana SE", 1).get(0);
+                //Address address = geocoder.getFromLocationName("Rua José Mesquita da Silveira 748, Itabaiana SE", 1).getGenderAndRace(0);
                 Log.e("doInBackground", address.getPostalCode() + " = " + address.getLatitude() + ", " + address.getLongitude());
                 return address;
             }

@@ -14,52 +14,80 @@ public class HealthConditionsPersistence {
 
     private HealthConditionsPersistence() {}
 
-    public static HealthConditionsModel getInstance(Pregnant pregnant, String weight, Diseases diseases,
+    public static HealthConditionsModel get(Pregnant pregnant, String weight, Diseases diseases,
                     HeartDisease heartDisease, KidneyDisease kidneyDisease, RespiratoryDisease respiratoryDisease,
                     Interment interment, Plant plants) {
+
         Realm realm = Realm.getDefaultInstance();
-        return HealthConditionsModel.newInstance(realm, pregnant, weight, diseases, heartDisease,
-                kidneyDisease, respiratoryDisease, interment, plants);
+        realm.beginTransaction();
+        HealthConditionsModel object = realm.copyToRealm(new HealthConditionsModel(pregnant, weight, diseases,
+                heartDisease, kidneyDisease, respiratoryDisease, interment, plants));
+        realm.commitTransaction();
+        return object;
     }
 
     public static Pregnant getPregnant(boolean isPregnant, String maternity) {
+
         Realm realm = Realm.getDefaultInstance();
-        return HealthConditionsModel.getPregnant(realm, isPregnant, maternity);
+        realm.beginTransaction();
+        Pregnant object = realm.copyToRealm(new Pregnant(isPregnant, maternity));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static Diseases getDiseases(boolean smoker, boolean alcohol, boolean drugs, boolean hypertension,
-                    boolean diabetis, boolean avc, boolean heartAttack, boolean leprosy,
-                    boolean tuberculosis, boolean cancer, boolean inBed, boolean domiciled,
-                    boolean otherPractices, boolean mentalHealth) {
+    public static Diseases get(boolean smoker, boolean alcohol, boolean drugs, boolean hypertension,
+                               boolean diabetis, boolean avc, boolean heartAttack, boolean leprosy,
+                               boolean tuberculosis, boolean cancer, boolean inBed, boolean domiciled,
+                               boolean otherPractices, boolean mentalHealth) {
         Realm realm = Realm.getDefaultInstance();
-        boolean [] diseases = new boolean[]{smoker, alcohol, drugs,  hypertension,
-                diabetis, avc, heartAttack, leprosy, tuberculosis, cancer, inBed, domiciled,
-                otherPractices, mentalHealth};
-        return HealthConditionsModel.getDiseases(realm, diseases);
+        realm.beginTransaction();
+        Diseases object = realm.copyToRealm(new Diseases(new boolean[]{smoker, alcohol, drugs, hypertension,
+        diabetis, avc, heartAttack, leprosy, tuberculosis, cancer, inBed, domiciled, otherPractices, mentalHealth}));
+        realm.commitTransaction();
+        return object;
     }
 
     public static HeartDisease getHeartDisease(boolean isHeartDisease, boolean[] diseases) {
         Realm realm = Realm.getDefaultInstance();
-        return HealthConditionsModel.getHeartDisease(realm, isHeartDisease, diseases);
+        realm.beginTransaction();
+        HeartDisease object = realm.copyToRealm(new HeartDisease(isHeartDisease, diseases));
+        realm.commitTransaction();
+        return object;
     }
 
     public static KidneyDisease getKidneyDisease(boolean kidneyDisease, boolean[] diseases) {
+
         Realm realm = Realm.getDefaultInstance();
-        return HealthConditionsModel.getKidneyDisease(realm, kidneyDisease, diseases);
+        realm.beginTransaction();
+        KidneyDisease object = realm.copyToRealm(new KidneyDisease(kidneyDisease, diseases));
+        realm.commitTransaction();
+        return object;
     }
 
     public static RespiratoryDisease getRespiratoryDisease(boolean isRespiratoryDisease, boolean[] diseases) {
+
         Realm realm = Realm.getDefaultInstance();
-        return HealthConditionsModel.getRespiratoryDisease(realm, isRespiratoryDisease, diseases);
+        realm.beginTransaction();
+        RespiratoryDisease object = realm.copyToRealm(new RespiratoryDisease(isRespiratoryDisease, diseases));
+        realm.commitTransaction();
+        return object;
     }
 
     public static Interment getInterment(boolean isInterment, String interment) {
+
         Realm realm = Realm.getDefaultInstance();
-        return HealthConditionsModel.getInterment(realm, isInterment, interment);
+        realm.beginTransaction();
+        Interment object = realm.copyToRealm(new Interment(isInterment, interment));
+        realm.commitTransaction();
+        return object;
     }
 
     public static Plant getPlant(boolean isPlant, String value) {
+
         Realm realm = Realm.getDefaultInstance();
-        return HealthConditionsModel.getPlant(realm, isPlant, value);
+        realm.beginTransaction();
+        Plant object = realm.copyToRealm(new Plant(isPlant, value));
+        realm.commitTransaction();
+        return object;
     }
 }

@@ -11,31 +11,47 @@ public class HousingConditionsPersistence {
 
     private HousingConditionsPersistence() {}
 
-    public static HousingConditionsModel getHousingConditionsModel(HousingSituation housingSituation,
-                   House house, boolean electricEnergy, WaterAndSanitation waterAndSanitation, Pet pet){
+    public static HousingConditionsModel get(HousingSituation housingSituation, House house,
+                             boolean electricEnergy, WaterAndSanitation waterAndSanitation, Pet pet){
         Realm realm = Realm.getDefaultInstance();
-        return HousingConditionsModel.newInstance(realm, housingSituation, house, electricEnergy, waterAndSanitation, pet);
+        realm.beginTransaction();
+        HousingConditionsModel object = realm.copyToRealm(new HousingConditionsModel(housingSituation,
+                house, electricEnergy, waterAndSanitation, pet));
+        realm.commitTransaction();
+        return object;
     }
 
 
     public static HousingSituation getHousingSituation(String situation, String location, String ownership) {
         Realm realm = Realm.getDefaultInstance();
-        return HousingConditionsModel.getHousingSituation(realm, situation, location, ownership);
+        realm.beginTransaction();
+        HousingSituation object = realm.copyToRealm(new HousingSituation(situation, location, ownership));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static House getHouse(String type, int nResidents, int nRooms, String access,
+    public static House get(String type, int nResidents, int nRooms, String access,
                                  String construction, String constructionType) {
         Realm realm = Realm.getDefaultInstance();
-        return HousingConditionsModel.getHouse(realm, type, nResidents, nRooms, access, construction, constructionType);
+        realm.beginTransaction();
+        House object = realm.copyToRealm(new House(type, nResidents, nRooms, access, construction, constructionType));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static WaterAndSanitation getWaterAndSanitation(String waterSupply, String waterTreatment, String bathromm) {
+    public static WaterAndSanitation getWaterAndSanitation(String waterSupply, String waterTreatment, String bathroom) {
         Realm realm = Realm.getDefaultInstance();
-        return HousingConditionsModel.getWaterAndSanitation(realm, waterSupply, waterTreatment, bathromm);
+        realm.beginTransaction();
+        WaterAndSanitation object = realm.copyToRealm(new WaterAndSanitation(waterSupply, waterTreatment, bathroom));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static Pet getPet(boolean hasPet, boolean[] pets, int nPets) {
+    public static Pet get(boolean hasPet, boolean[] pets, int nPets) {
         Realm realm = Realm.getDefaultInstance();
-        return HousingConditionsModel.getPet(realm, hasPet, pets, nPets);
+        realm.beginTransaction();
+        Pet object = realm.copyToRealm(new Pet(hasPet, pets, nPets));
+        realm.commitTransaction();
+        return object;
     }
 }

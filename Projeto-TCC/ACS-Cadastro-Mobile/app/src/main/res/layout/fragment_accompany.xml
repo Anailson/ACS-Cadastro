@@ -30,7 +30,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/medium_gap"
         android:layout_marginRight="@dimen/minimum_gap"
-        android:src="@drawable/ic_citizen_add"
-        app:backgroundTint="@color/color_primary_dark" />
+        android:src="@drawable/ic_accompany_add"
+        app:backgroundTint="@color/color_float_button" />
 
 </RelativeLayout>

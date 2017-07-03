@@ -1,17 +1,22 @@
 package tcc.acs_cadastro_mobile.subModels;
 
-import io.realm.RealmObject;
-
 import java.io.Serializable;
 
-/**
- * Created by anail on 05/06/2017.
- */
+import io.realm.RealmObject;
 
 public class Interment extends RealmObject implements Serializable {
 
     private boolean isInterment;
     private String value;
+
+    public Interment() {
+        this(false, "");
+    }
+
+    public Interment(boolean isInterment, String value) {
+        this.isInterment = isInterment;
+        this.value = value;
+    }
 
     public boolean isInterment() {
         return isInterment;

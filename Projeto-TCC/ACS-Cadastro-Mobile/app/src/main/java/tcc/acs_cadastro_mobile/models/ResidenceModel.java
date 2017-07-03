@@ -8,6 +8,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class ResidenceModel extends RealmObject implements Serializable, ISearcher {
 
@@ -78,8 +79,8 @@ public class ResidenceModel extends RealmObject implements Serializable, ISearch
         return containsKey(getAddressData().getPlaceName(), key);
     }
 
-    public boolean cepContainsKey(String key){
-        return containsKey(String.valueOf(getCep()), key);
+    public boolean cepContainsKey(int key) {
+        return getCep() > AcsRecordPersistence.DEFAULT_INT && containsKey(String.valueOf(getCep()), String.valueOf(key));
     }
 
     private boolean containsKey(String value, String key){
@@ -93,11 +94,11 @@ public class ResidenceModel extends RealmObject implements Serializable, ISearch
     }
 
     public String getCompleteAddress(){
+        String type = getAddressData().getPlaceType().contains("-") ? "" : getAddressData().getPlaceType();
         Formatter out = new Formatter();
-        out.format("%s %s, %d. %s %s-%s, %d", getAddressData().getPlaceType(), getStreetName(),
+        return out.format("%s %s, %d. %s %s-%s. CEP: %d", type, getStreetName(),
                 getAddressData().getNumber(), getAddressData().getNeighborhood(), getAddressData().getCityName(),
-                getAddressData().getUf(), getCep());
-        return out.toString();
+                getAddressData().getUf(), getCep()).toString();
     }
 
     public String getHomePhone() {

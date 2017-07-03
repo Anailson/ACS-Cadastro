@@ -9,6 +9,16 @@ public class HousingSituation extends RealmObject implements Serializable {
 
     private String situation, location, ownership;
 
+    public HousingSituation() {
+        this("", "", "");
+    }
+
+    public HousingSituation(String situation, String location, String ownership) {
+        this.situation = situation;
+        this.location = location;
+        this.ownership = ownership;
+    }
+
     public String getSituation() {
         return situation;
     }

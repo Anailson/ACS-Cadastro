@@ -7,6 +7,11 @@ import android.widget.RadioGroup;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
+import tcc.acs_cadastro_mobile.models.NasfConductModel;
+import tcc.acs_cadastro_mobile.persistence.NasfConductPersistence;
+import tcc.acs_cadastro_mobile.subModels.Conduct;
+import tcc.acs_cadastro_mobile.subModels.Forwarding;
+import tcc.acs_cadastro_mobile.subModels.NASF;
 
 
 public class AccompanyStepFourController extends StepsController {
@@ -49,5 +54,29 @@ public class AccompanyStepFourController extends StepsController {
             }
         });
         alert.show();
+    }
+
+    public NasfConductModel get(boolean observation, NASF nasf, Conduct conduct, Forwarding forwarding) {
+        return NasfConductPersistence.get(observation, nasf, conduct, forwarding);
+    }
+
+    public NASF getNasf(CheckBox chbEvaluation, CheckBox chbProcedures, CheckBox chbPrescription) {
+        boolean [] values = getFields(chbEvaluation, chbProcedures, chbPrescription);
+        return NasfConductPersistence.getNasf(values);
+    }
+
+    public Conduct getConduct(CheckBox chbScheduledAppointment, CheckBox chbScheduledCare, CheckBox chbGroupScheduling,
+                              CheckBox chbNasfScheduling, CheckBox chbRrelsease) {
+        boolean [] values = getFields(chbScheduledAppointment, chbScheduledCare, chbGroupScheduling,
+                chbNasfScheduling, chbRrelsease);
+        return NasfConductPersistence.getConduct(values);
+    }
+
+    public Forwarding getForwarding(CheckBox chbInTheDay, CheckBox chbSpecializedService, CheckBox chbCaps,
+                            CheckBox chbHospitalization, CheckBox chbUrgency, CheckBox chbHomeCareService,
+                            CheckBox chbIntersectoral) {
+        boolean[] values = getFields(chbInTheDay, chbSpecializedService, chbCaps, chbHospitalization,
+                chbUrgency, chbHomeCareService, chbIntersectoral);
+        return NasfConductPersistence.getForwarding(values);
     }
 }

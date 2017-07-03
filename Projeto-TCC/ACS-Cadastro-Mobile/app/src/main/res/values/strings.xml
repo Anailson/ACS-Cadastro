@@ -17,6 +17,7 @@
     <string name="title_activity_add_citizen">Adicionar Ciadadão</string>
     <string name="title_activity_add_residence">Adicionar Domicílio</string>
     <string name="title_activity_add_accompany">Adicionar Acompanhamento</string>
+    <string name="title_activity_add_visit">Adicionar Visita</string>
 
     <!-- Text Views -->
     <!-- Citizen -->
@@ -234,7 +235,6 @@
     <string name="txt_acc_nasf_polo">NASF / Polo</string>
     <string name="txt_acc_conduct">Conduta</string>
     <string name="txt_acc_forwarding">Encaminhamentos</string>
-
     <string name="txt_acc_observation">Ficou em Observação?</string>
     <string name="txt_acc_diagnostic">Avaliação / Diagnóstico</string>
     <string name="txt_acc_procedures">Procedimentos Clínicos / Terapêutico</string>
@@ -251,12 +251,51 @@
     <string name="txt_acc_urgency">Encaminhamento para Urgência</string>
     <string name="txt_acc_home_care_service">Encaminhamento para Serviço de Atenção Domiciliar</string>
     <string name="txt_acc_intersectoral">Encaminhamento Intersetorial</string>
-
-
     <string name="txt_acc_code_obs">(separe os códigos por vírgula)</string>
     <string name="txt_acc_another_ciap_cid">Outro - código CIAP/CID</string>
     <string name="txt_acc_another_sia">Outro - código SIA</string>
 
+    <!-- Visit -->
+    <string name="txt_vst_data_1">Dados da visita</string>
+    <string name="txt_vst_data_2">Motivos da visita</string>
+    <string name="txt_vst_active_search">Busca ativa</string>
+    <string name="txt_vst_following">Acompanahmento</string>
+    <string name="txt_vst_result">Desfcho</string>
+    <string name="txt_vst_another">@string/txt_another</string>
+    <string name="txt_vst_shared">Visita compartilhada com outro profissional</string>
+    <string name="txt_vst_appointment">Consulta</string>
+    <string name="txt_vst_exam">Exame</string>
+    <string name="txt_vst_vaccine">Vacina</string>
+    <string name="txt_vst_vulnerabity">Condições de Vulnerabilidade Social</string>
+    <string name="txt_vst_bolsa_família">Condicionalidades do Bolsa Família</string>
+    <string name="txt_vst_pregnant">Gestante</string>
+    <string name="txt_vst_puerpera">Puérpera</string>
+    <string name="txt_vst_newborn">Recém-nascido</string>
+    <string name="txt_vst_child">Criança</string>
+    <string name="txt_vst_malnutrition">Pessoa com Desnutrição</string>
+    <string name="txt_vst_rehabilitation_deficiency">Pessoa em reabilitação ou com deficiência</string>
+    <string name="txt_vst_hypertension">Pessoa com Hipertensão</string>
+    <string name="txt_vst_diabetes">Pessoa com Diabetes</string>
+    <string name="txt_vst_asthma">Pessoa com Asma</string>
+    <string name="txt_vst_copd_emphysema">Pessoa com DPOC/Enfisema</string>
+    <string name="txt_vst_cancer">Pessoa com Câncer</string>
+    <string name="txt_vst_chronic_diseases">PPessoa com outras Doenças Crônicas</string>
+    <string name="txt_vst_leprosy">Pessoa com Hanseníase</string>
+    <string name="txt_vst_tuberculosis">Pessoa com Tuberculose</string>
+    <string name="txt_vst_respiratory">Sintomáticos Respiratórios</string>
+    <string name="txt_vst_smoker">Tabagista</string>
+    <string name="txt_vst_home_bedding">Domiciliados / Acamados</string>
+    <string name="txt_vst_vulnerability">Condições de Vulnerabilidade Social</string>
+    <string name="txt_vst_mental_health">Saúde Mental</string>
+    <string name="txt_vst_alcohol">Usuário de álcool</string>
+    <string name="txt_vst_drugs">Usuário de outras drogas</string>
+    <string name="txt_vst_record_update">Cadastramento / Atualização</string>
+    <string name="txt_vst_periodic">Visita Periódica</string>
+    <string name="txt_vst_internment">Egresso de Internação</string>
+    <string name="txt_vst_control_environments">Controle de Ambientes / Vetores</string>
+    <string name="txt_vst_collective_activities">Convite Atividades Coletivas / Campanha de Saúde</string>
+    <string name="txt_vst_guidance">Orientação / Prevenção</string>
+    <string name="txt_vst_others">@string/txt_another</string>
 
     <!-- Menus -->
     <string name="menu_settings">Settings</string>
@@ -286,7 +325,7 @@
     <string name="hint_search_citizen">Digite o nome ou o número do SUS</string>
     <string name="hint_search_residence">Digite o nome do logradouro ou o CEP</string>
     <string name="hint_search_accompany">Digite o nº do SUS, o nome ou nº do prontuário</string>
-    <string name="hint_search_visit">Digite um numero.</string>
+    <string name="hint_search_visit">Digite o nº do SUS, o nome ou nº do prontuário</string>
     <string name="hint_edit_citizen">Icone de edição para um cidadão</string>
     <string name="hint_edit_accompany">Icone de edição para um acompanhamento</string>
     <string name="hint_delete_citizen">Icone de edição para um cidadão</string>
@@ -297,12 +336,15 @@
     <string name="msg_save_success">Salvo com sucesso!</string>
     <string name="err_num_sus_not_found_title">Numero do SUS não econtrado</string>
     <string name="err_num_sus_not_found_message">O número do SUS informado não foi encontado.
-        É aconselhável atualizar sua base de dados. Deseja continuar mesmo assim?</string>
+                É aconselhável atualizar sua base de dados. Deseja continuar mesmo assim?</string>
     <string name="err_condition_required_title">Condição avaliada necessária</string>
     <string name="err_condition_required_message">É necessário preencher ao menos uma condição avaliada.</string>
     <string name="err_conduct_required_title">Conduta necessária</string>
     <string name="err_conduct_required_message">É necessário preencher ao menos um campo relacionado
-        a Conduta / Encaminhamento</string>
+                a Conduta / Encaminhamento</string>
+    <string name="err_visit_required_title">Motivo da visita</string>
+    <string name="err_visit_required_message">É necessário preencher ao menos um campo relacionado
+                ao motivo da visita (Busca Ativa, Acompanhamento ou Outro)</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

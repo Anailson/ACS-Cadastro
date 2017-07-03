@@ -8,6 +8,17 @@ public class StreetLocation extends RealmObject implements Serializable {
     private String type, name, complement;
     private int number;
 
+    public StreetLocation() {
+        this("", "", 0, "");
+    }
+
+    public StreetLocation(String type, String name, int number, String complement) {
+        this.type = type;
+        this.name = name;
+        this.complement = complement;
+        this.number = number;
+    }
+
     public int getNumber() {
         return number;
     }

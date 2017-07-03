@@ -13,11 +13,10 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepFourController;
+import tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.StreetSituationModel;
-import tcc.acs_cadastro_mobile.persistence.StreetSituationPersistence;
-import tcc.acs_cadastro_mobile.customViews.RequiredRadioGroup;
 import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
 import tcc.acs_cadastro_mobile.subModels.FamilyVisit;
 import tcc.acs_cadastro_mobile.subModels.Feeding;
@@ -123,8 +122,7 @@ public class CitizenStepFourFragment extends Fragment implements IRequiredFields
         Hygiene hygiene = controller.getHygiene(rgrpHygiene, chbBath,
                 chbSanitary, chbOral, chbHygieneAnother);
 
-        streetSituation = StreetSituationPersistence.getInstance(street, benefit, family, feeding,
-                anotherInstitution, familyVisit, hygiene);
+        streetSituation = controller.get(street, benefit, family, feeding, anotherInstitution, familyVisit, hygiene);
         citizenData.send(streetSituation);
     }
 

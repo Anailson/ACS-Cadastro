@@ -15,11 +15,10 @@ import android.widget.Spinner;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepTwoController;
 import tcc.acs_cadastro_mobile.controllers.StepsController;
+import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
-import tcc.acs_cadastro_mobile.persistence.HousingConditionsPersistence;
-import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.subModels.House;
 import tcc.acs_cadastro_mobile.subModels.HousingSituation;
 import tcc.acs_cadastro_mobile.subModels.Pet;
@@ -95,17 +94,17 @@ public class ResidenceStepTwoFragment extends Fragment implements IRequiredField
         spnWaterTreatment.setAdapter(controller.getAdapter(R.array.water_treatment));
         spnBathroom.setAdapter(controller.getAdapter(R.array.bathroom));
 
-        spnLocation.setOnItemSelectedListener(controller.getItemSelectedListener());
-        spnResidenceConstruction.setOnItemSelectedListener(controller.getItemSelectedListener());
-        rgrpPets.setOnCheckedChangeListener(controller.getOnChangeListener());
-        rgrpPets.setTag(rgrpPets.getId(), controller.getOnChangeListener());
-
         controller.enableView(spnOwnership, false);
         controller.enableView(spnConstructionType, false);
 
         if (housingConditions != null) {
             fillFields();
         }
+        spnLocation.setOnItemSelectedListener(controller.getItemSelectedListener());
+        spnResidenceConstruction.setOnItemSelectedListener(controller.getItemSelectedListener());
+        rgrpPets.setOnCheckedChangeListener(controller.getOnChangeListener());
+        rgrpPets.setTag(rgrpPets.getId(), controller.getOnChangeListener());
+
         return view;
     }
 
@@ -121,18 +120,15 @@ public class ResidenceStepTwoFragment extends Fragment implements IRequiredField
     }
 
     private void getFields() {
-        HousingSituation housingSituation = controller.getHousingSituation(
-                spnHousingSituation, spnLocation, spnOwnership);
-        House house = controller.getHouse(spnResidenceType, edtResidents,
-                edtRooms, spnResidenceAccess, spnResidenceConstruction, spnConstructionType);
+        HousingSituation housingSituation = controller.getHousingSituation(spnHousingSituation, spnLocation, spnOwnership);
+        House house = controller.getHouse(spnResidenceType, edtResidents, edtRooms, spnResidenceAccess,
+                spnResidenceConstruction, spnConstructionType);
         boolean electricEnergy = controller.getElectricEnergy(rgrpElectricEnergy);
-        WaterAndSanitation waterAndSanitation = controller.getWaterAndSanitation(
-                spnWaterSupply, spnWaterTreatment, spnBathroom);
-        Pet pet = controller.getPets(rgrpPets, edtPets, chbCat, chbDog, chbBird,
-                chbBreeding, chbPetsAnother);
+        WaterAndSanitation waterAndSanitation = controller.getWaterAndSanitation(spnWaterSupply,
+                spnWaterTreatment, spnBathroom);
+        Pet pet = controller.getPets(rgrpPets, edtPets, chbCat, chbDog, chbBird, chbBreeding, chbPetsAnother);
 
-        housingConditions = HousingConditionsPersistence.getHousingConditionsModel(housingSituation,
-                house, electricEnergy, waterAndSanitation, pet);
+        housingConditions = controller.get(housingSituation, house, electricEnergy, waterAndSanitation, pet);
         residenceData.send(housingConditions);
     }
 
@@ -161,6 +157,6 @@ public class ResidenceStepTwoFragment extends Fragment implements IRequiredField
         controller.fillPets(rgrpPets, housingConditions.isHasPets(), housingConditions.getPets(),
                 chbCat, chbDog, chbBird, chbBreeding, chbPetsAnother);
         controller.fillField(housingConditions.getPets(), chbCat, chbDog, chbBird, chbBreeding, chbPetsAnother);
-        controller.fillField(edtPets, housingConditions.getTotalPets() + "");
+        controller.fillField(edtPets, StepsController.getEmptyOrValue(housingConditions.getTotalPets()));
     }
 }

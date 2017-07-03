@@ -15,7 +15,6 @@ import tcc.acs_cadastro_mobile.controllers.AccompanyStepFourController;
 import tcc.acs_cadastro_mobile.interfaces.IAccompany;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.NasfConductModel;
-import tcc.acs_cadastro_mobile.persistence.NasfConductPersistence;
 import tcc.acs_cadastro_mobile.subModels.Conduct;
 import tcc.acs_cadastro_mobile.subModels.Forwarding;
 import tcc.acs_cadastro_mobile.subModels.NASF;
@@ -93,18 +92,13 @@ public class AccompanyStepFourFragment extends Fragment implements IRequiredFiel
     private void getFields() {
 
         boolean observation = controller.getObservation(rgrpObservation);
-        boolean[] nasfs = controller.getFields(chbEvaluation, chbProcedures, chbPrescription);
-        NASF nasf = NasfConductPersistence.getNasf(nasfs);
-
-        boolean[] conducts = controller.getFields(chbScheduledAppointment, chbScheduledCare,
+        NASF nasf = controller.getNasf(chbEvaluation, chbProcedures, chbPrescription);
+        Conduct conduct = controller.getConduct(chbScheduledAppointment, chbScheduledCare,
                 chbGroupScheduling, chbNasfScheduling, chbRrelsease);
-        Conduct conduct = NasfConductPersistence.getConduct(conducts);
-
-        boolean[] forwardings = controller.getFields(chbInTheDay, chbSpecializedService,
+        Forwarding forwarding = controller.getForwarding(chbInTheDay, chbSpecializedService,
                 chbCaps, chbHospitalization, chbUrgency, chbHomeCareService, chbIntersectoral);
-        Forwarding forwarding = NasfConductPersistence.getForwarding(forwardings);
 
-        nasfConduct = NasfConductPersistence.get(observation, nasf, conduct, forwarding);
+        nasfConduct = controller.get(observation, nasf, conduct, forwarding);
         accompany.send(nasfConduct);
     }
 

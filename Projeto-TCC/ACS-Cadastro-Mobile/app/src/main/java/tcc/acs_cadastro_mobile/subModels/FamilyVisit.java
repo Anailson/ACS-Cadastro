@@ -9,6 +9,15 @@ public class FamilyVisit extends RealmObject implements Serializable {
     private boolean isFamilyVisit;
     private String value;
 
+    public FamilyVisit() {
+        this(false, "");
+    }
+
+    public FamilyVisit(boolean isFamilyVisit, String value) {
+        this.isFamilyVisit = isFamilyVisit;
+        this.value = value;
+    }
+
     public boolean isFamilyVisit() {
         return isFamilyVisit;
     }

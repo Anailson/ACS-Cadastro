@@ -4,13 +4,19 @@ import io.realm.RealmObject;
 
 import java.io.Serializable;
 
-/**
- * Created by anail on 07/06/2017.
- */
-
 public class WaterAndSanitation extends RealmObject implements Serializable {
 
     private String waterSupply, waterTreatment, bathroom;
+
+    public WaterAndSanitation() {
+        this("", "", "");
+    }
+
+    public WaterAndSanitation(String waterSupply, String waterTreatment, String bathroom) {
+        this.waterSupply = waterSupply;
+        this.waterTreatment = waterTreatment;
+        this.bathroom = bathroom;
+    }
 
     public String getWaterSupply() {
         return waterSupply;

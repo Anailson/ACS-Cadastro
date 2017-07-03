@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.persistence.HealthConditionsPersistence;
 import tcc.acs_cadastro_mobile.subModels.Diseases;
 import tcc.acs_cadastro_mobile.subModels.HeartDisease;
@@ -30,6 +31,13 @@ public class CitizenStepThreeController extends StepsController {
             listener = new OnClickListener();
         }
         return listener;
+    }
+
+    public HealthConditionsModel get(Pregnant pregnant, String weight, Diseases diseases, HeartDisease heartDisease,
+                                KidneyDisease kidneyDisease, RespiratoryDisease respiratoryDisease,
+                                 Interment interment, Plant plants) {
+        return HealthConditionsPersistence.get(pregnant, weight, diseases, heartDisease, kidneyDisease,
+                respiratoryDisease, interment, plants);
     }
 
     public Pregnant getPregnant(RadioGroup radioGroup, EditText editText) {
@@ -58,7 +66,7 @@ public class CitizenStepThreeController extends StepsController {
         boolean otherPractices = isYesGroup(rgrpOtherPractices, R.id.rgrp_ctz_other_practices_y);
         boolean mentalHealth = isYesGroup(rgrpMentalHealth, R.id.rgrp_ctz_mental_health_y);
 
-        return HealthConditionsPersistence.getDiseases(smoker, alcohol, drugs, hypertension, diabetis, avc,
+        return HealthConditionsPersistence.get(smoker, alcohol, drugs, hypertension, diabetis, avc,
                 heartAttack, leprosy, tuberculosis, cancer, inBed, domiciled, otherPractices, mentalHealth);
     }
 

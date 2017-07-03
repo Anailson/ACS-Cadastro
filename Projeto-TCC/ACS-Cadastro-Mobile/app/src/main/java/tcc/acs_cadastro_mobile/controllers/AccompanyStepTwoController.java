@@ -2,19 +2,18 @@ package tcc.acs_cadastro_mobile.controllers;
 
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
+import tcc.acs_cadastro_mobile.models.ConditionsModel;
 import tcc.acs_cadastro_mobile.models.RealmInt;
+import tcc.acs_cadastro_mobile.persistence.ConditionPersistence;
+import tcc.acs_cadastro_mobile.subModels.CommunicableDisease;
+import tcc.acs_cadastro_mobile.subModels.ConditionDiseases;
+import tcc.acs_cadastro_mobile.subModels.TrackingDiseases;
 
 public class AccompanyStepTwoController extends StepsController {
 
@@ -25,19 +24,46 @@ public class AccompanyStepTwoController extends StepsController {
         this.fragment = fragment;
     }
 
-    public RealmInt[] getAnotherCids(EditText edtAnothers) {
+    public ConditionsModel get(ConditionDiseases condition, CommunicableDisease communicable,
+                               TrackingDiseases tracking, RealmList<RealmInt> anothers) {
+        return ConditionPersistence.get(condition, communicable, tracking, anothers);
+    }
 
-        String [] lines = edtAnothers.getText().toString().split(",");
-        if(lines.length == 0) return new RealmInt[0];
+    public ConditionDiseases getConditionDiseases(CheckBox chbAsthma, CheckBox chbMalnutrition,
+                  CheckBox chbDiabetes, CheckBox chbDpoc, CheckBox chbHypertension, CheckBox chbObesity,
+                  CheckBox chbPrenatal, CheckBox chbChildcare, CheckBox chbPuerperium, CheckBox chbSexualHealth,
+                  CheckBox chbSmoking, CheckBox chbAlcohol, CheckBox chbDrugs, CheckBox chbMentalHealth,
+                  CheckBox chbRehabilitation) {
+        boolean[] values = getFields(chbAsthma, chbMalnutrition, chbDiabetes, chbDpoc, chbHypertension,
+                chbObesity, chbPrenatal, chbChildcare, chbPuerperium, chbSexualHealth, chbSmoking,
+                chbAlcohol, chbDrugs, chbMentalHealth, chbRehabilitation);
+        return ConditionPersistence.getConditionDiseases(values);
+    }
 
-        ArrayList<RealmInt> cids = new ArrayList<>();
+    public CommunicableDisease getCommunicableDisease(CheckBox chbTuberculosis, CheckBox chbLeprosy,
+                                                      CheckBox chbDengue, CheckBox chbDst) {
+        boolean[]values = getFields(chbTuberculosis, chbLeprosy, chbDengue, chbDst);
+        return ConditionPersistence.getCommunicableDisease(values);
+    }
+
+    public TrackingDiseases getTrackingDiseases(CheckBox chbCervicalCancer, CheckBox chbBreastCancer,
+                                                CheckBox chbCardiovascular) {
+        boolean[] values = getFields(chbCervicalCancer, chbBreastCancer, chbCardiovascular);
+        return ConditionPersistence.getTrackingDiseases(values);
+    }
+
+    public RealmList<RealmInt> getAnotherCids(EditText editText){
+        String [] lines = editText.getText().toString().split(",");
+        if(lines.length == 0) return new RealmList<>();
+
+        RealmList<RealmInt> cids = new RealmList<>();
         for (String line : lines) {
             String cid = line.replaceAll(" ", "");
             if (cid.matches("[0-9]+")) {
                 cids.add(new RealmInt(Integer.parseInt(cid)));
             }
         }
-        return cids.toArray(new RealmInt[cids.size()]);
+        return cids;
     }
 
     public void fillCids(RealmList<RealmInt> anothers, EditText edtAnothers) {

@@ -8,6 +8,16 @@ public class HealthAndGroup extends RealmObject implements Serializable {
 
     private boolean caregiver, communityGroup, healthPlan;
 
+    public HealthAndGroup() {
+        this(false, false, false);
+    }
+
+    public HealthAndGroup(boolean caregiver, boolean communityGroup, boolean healthPlan) {
+        this.caregiver = caregiver;
+        this.communityGroup = communityGroup;
+        this.healthPlan = healthPlan;
+    }
+
     public boolean isCaregiver() {
         return caregiver;
     }

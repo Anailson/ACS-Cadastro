@@ -10,18 +10,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.models.AgentModel;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class MainActivity extends AppCompatActivity
@@ -34,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         AgentModel agent = AcsRecordPersistence.startDatabase(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.bar_vst);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
         View headerView = navigation.getHeaderView(0);
@@ -101,8 +96,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private int replaceFragment(Fragment fragment){
-        if(fragment == null)
-            return -1;
+        if(fragment == null) return -1;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

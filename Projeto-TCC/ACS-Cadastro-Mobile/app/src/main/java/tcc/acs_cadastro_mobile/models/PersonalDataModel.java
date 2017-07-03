@@ -21,89 +21,18 @@ public class PersonalDataModel extends RealmObject implements Serializable {
     private Contact contact;
 
     public PersonalDataModel() {
-        this.particularData = new ParticularData();
-        this.mother = new Mother();
-        this.responsible = new Responsible();
-        this.genderNRace = new GenderAndRace();
-        this.nationality = new Nationality();
-        this.contact = new Contact();
+        this(new ParticularData(), new Mother(), new Responsible(), new GenderAndRace(), new Nationality(),
+                new Contact());
     }
 
-    public static PersonalDataModel newInstance(Realm realm, ParticularData particularData, Mother mother,
-                        Responsible responsible, GenderAndRace genderNRace, Nationality nationality, Contact contact) {
-        realm.beginTransaction();
-        PersonalDataModel data = realm.createObject(PersonalDataModel.class);
-        data.setParticularData(particularData);
-        data.setMother(mother);
-        data.setResponsible(responsible);
-        data.setGenderNRace(genderNRace);
-        data.setNationality(nationality);
-        data.setContact(contact);
-        realm.commitTransaction();
-        return data;
-    }
-
-    public static ParticularData getParticularData(Realm realm, long sus, String name,
-                                   String socialName, long nis, String birth) {
-        realm.beginTransaction();
-        ParticularData object = realm.createObject(ParticularData.class);
-        object.setNumSus(sus);
-        object.setName(name);
-        object.setSocialName(socialName);
-        object.setNumNis(nis);
-        object.setBirthDate(birth);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Mother getMother(Realm realm, boolean isKnown, String name){
-        realm.beginTransaction();
-        Mother object = realm.createObject(Mother.class);
-        object.setKnown(isKnown);
-        object.setName(name);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Responsible getResponsible(Realm realm, boolean isResponsible, long numSus,
-                                             String birthDate){
-        realm.beginTransaction();
-        Responsible object = realm.createObject(Responsible.class);
-        object.setResponsible(isResponsible);
-        object.setNumSus(numSus);
-        object.setBirthDate(birthDate);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static GenderAndRace getGenderAndRace(Realm realm, String gender, String race){
-        realm.beginTransaction();
-        GenderAndRace object = realm.createObject(GenderAndRace.class);
-        object.setGender(gender);
-        object.setRace(race);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Nationality getNationality(Realm realm,String nationality, String nationBirth,
-                                             String uf, String city){
-        realm.beginTransaction();
-        Nationality object = realm.createObject(Nationality.class);
-        object.setNationality(nationality);
-        object.setNationBirth(nationBirth);
-        object.setUf(uf);
-        object.setCity(city);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Contact getContact(Realm realm, String phone, String email){
-        realm.beginTransaction();
-        Contact object = realm.createObject(Contact.class);
-        object.setPhone(phone);
-        object.setEmail(email);
-        realm.commitTransaction();
-        return object;
+    public PersonalDataModel(ParticularData particularData, Mother mother, Responsible responsible,
+                             GenderAndRace genderNRace, Nationality nationality, Contact contact) {
+        this.particularData = particularData;
+        this.mother = mother;
+        this.responsible = responsible;
+        this.genderNRace = genderNRace;
+        this.nationality = nationality;
+        this.contact = contact;
     }
 
 

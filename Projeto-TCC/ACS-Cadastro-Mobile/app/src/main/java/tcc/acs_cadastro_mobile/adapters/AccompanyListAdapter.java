@@ -23,7 +23,7 @@ public class AccompanyListAdapter  extends ArrayAdapter<AccompanyModel> {
     public AccompanyListAdapter(Context context, List<AccompanyModel> accompanies) {
         super(context, R.layout.item_list_accompany, accompanies);
         this.context = context;
-        this.accompanies = accompanies;
+         this.accompanies = accompanies;
     }
 
     @NonNull

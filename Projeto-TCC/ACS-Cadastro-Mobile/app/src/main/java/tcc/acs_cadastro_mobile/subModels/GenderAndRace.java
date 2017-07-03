@@ -7,6 +7,15 @@ import io.realm.RealmObject;
 public class GenderAndRace extends RealmObject  implements Serializable {
     private String gender, race;
 
+    public GenderAndRace() {
+        this("", "");
+    }
+
+    public GenderAndRace(String gender, String race) {
+        this.gender = gender;
+        this.race = race;
+    }
+
     public String getGender() {
         return gender;
     }

@@ -10,12 +10,16 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.List;
+
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.SpinnerAdapter;
 import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
-import tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete;
+import tcc.acs_cadastro_mobile.interfaces.IAutoFillListener;
+import tcc.acs_cadastro_mobile.interfaces.ICalendarListener;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
+import tcc.acs_cadastro_mobile.views.CalendarActivity;
 
 import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.BIRTH_DATE;
 import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.FAMILY_INCOME;
@@ -35,22 +39,28 @@ public class ResidenceNewResponsibleController extends StepsController{
         this.activity = activity;
     }
 
+    private Listeners getListener(){
+        if(listener == null){
+            listener = new Listeners();
+        }
+        return listener;
+    }
+
+
     public View.OnClickListener getClickListener(){
-        if(listener == null){
-            listener = new Listeners();
-        }
-        return listener;
+        return getListener();
     }
 
-    public RequiredAutoComplete.AutoFillListener getItemClickListener() {
-        if(listener == null){
-            listener = new Listeners();
-        }
-        return listener;
+    public IAutoFillListener getItemClickListener() {
+        return getListener();
     }
 
-    public ArrayAdapter<String> getNumSusAdapter() {
-        String[] numSus = CitizenPersistence.getNumSus();
+    public ICalendarListener getCalendarListener() {
+        return getListener();
+    }
+
+    public ArrayAdapter<Long> getNumSusAdapter() {
+        List<Long> numSus = CitizenPersistence.getNumSusAsList();
         return new SpinnerAdapter(activity.getBaseContext()).getAdapter(numSus);
     }
     public ArrayAdapter<String> getNumSusAdapter(int resource) {
@@ -103,7 +113,7 @@ public class ResidenceNewResponsibleController extends StepsController{
     }
 
     private class Listeners implements View.OnClickListener,
-            RequiredAutoComplete.AutoFillListener, DefaultAlert.DefaultClickListener {
+            IAutoFillListener, DefaultAlert.DefaultClickListener, ICalendarListener {
 
         //View.OnClickListener
         @Override
@@ -114,7 +124,7 @@ public class ResidenceNewResponsibleController extends StepsController{
             }
         }
 
-        // RequiredAutoComplete.AutoFillListener,
+        // RequiredAutoComplete.IAutoFillListener,
         @Override
         public void searching(EditText editText) {
 
@@ -146,5 +156,18 @@ public class ResidenceNewResponsibleController extends StepsController{
         public void negative(DialogInterface dialog, int which) {
             activity.finish();
         }
+
+        // ICalendarListener
+        @Override
+        public void onOk(int id, CalendarActivity.Date date) {
+            switch (id){
+                case R.id.edt_rsd_lives_since:
+                    fillField((EditText) activity.findViewById(R.id.edt_rsd_lives_since), date.formattedDate(activity));
+                    break;
+            }
+        }
+
+        @Override
+        public void onCancel() {}
     }
 }

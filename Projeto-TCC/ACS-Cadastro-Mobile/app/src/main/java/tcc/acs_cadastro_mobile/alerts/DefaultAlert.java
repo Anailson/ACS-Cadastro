@@ -15,8 +15,12 @@ public class DefaultAlert {
 
     public DefaultAlert(Context context) {
         this.context = context;
+        this.positiveListener = this.negativeListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which){}
+        };
         this.alert = new AlertDialog.Builder(context)
-                .setPositiveButton("", positiveListener)
+                .setPositiveButton(R.string.btn_ok, positiveListener)
                 .setNegativeButton("", negativeListener);
     }
 
@@ -50,6 +54,10 @@ public class DefaultAlert {
 
     public void setNegativeListener(String text, DialogInterface.OnClickListener listener) {
         alert.setNegativeButton(text, listener);
+    }
+
+    public void setNegativeListener(DialogInterface.OnClickListener listener) {
+        setNegativeListener(R.string.btn_cancel, listener);
     }
 
     public void setNegativeListener(int resource, DialogInterface.OnClickListener listener) {

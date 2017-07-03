@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ITextSearchListener<E>{
 
-    List<ISearcher> searchByText(String search);
+    List<ISearcher> search(String search);
 
-    List<ISearcher> searchByNumber(String search);
+    List<ISearcher> search(int search);
 
     ArrayAdapter<E> updateListView(List<ISearcher> list);
 }

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
+import tcc.acs_cadastro_mobile.persistence.AccompanyPersistence;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class AccompanyModel extends RealmObject implements Serializable, ISearcher {
@@ -87,12 +88,14 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
         this.nasfConduct = nasfConduct;
     }
 
-    public boolean recordContainsKey(String search){
-        return containsKey(String.valueOf(getRecord()), search);
+    public boolean recordContainsKey(int search) {
+        return getRecord() > AcsRecordPersistence.DEFAULT_INT
+                && containsKey(String.valueOf(getRecord()), String.valueOf(search));
     }
 
-    public boolean numSusContainsKey(String search){
-        return containsKey(String.valueOf(getNumSus()), search);
+    public boolean numSusContainsKey(int search) {
+        return getNumSus() > AcsRecordPersistence.DEFAULT_INT
+                && containsKey(String.valueOf(getNumSus()), String.valueOf(search));
     }
 
     public boolean nameContainsKey(String search) {

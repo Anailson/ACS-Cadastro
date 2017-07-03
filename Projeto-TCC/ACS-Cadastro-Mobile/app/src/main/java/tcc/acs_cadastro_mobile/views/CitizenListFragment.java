@@ -43,7 +43,6 @@ public class CitizenListFragment extends Fragment {
 
         controller = new CitizenListController(getContext());
 
-        //edtSearch.addTextChangedListener(controller.getSearchTextChanged(lvwCitizens));
         edtSearch.setSearchListener(lvwCitizens, controller.getSearchTextChanged());
         btnAddCitizen.setOnClickListener(controller.getOnClickListener());
         return view;

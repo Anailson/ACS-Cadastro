@@ -9,6 +9,15 @@ public class Phones extends RealmObject implements Serializable {
 
     private String home, reference;
 
+    public Phones() {
+        this("", "");
+    }
+
+    public Phones(String home, String reference) {
+        this.home = home;
+        this.reference = reference;
+    }
+
     public String getHome() {
         return home;
     }

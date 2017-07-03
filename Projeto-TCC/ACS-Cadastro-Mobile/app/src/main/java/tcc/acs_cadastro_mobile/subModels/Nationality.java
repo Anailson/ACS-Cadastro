@@ -6,6 +6,17 @@ import io.realm.RealmObject;
 public class Nationality extends RealmObject  implements Serializable {
     private String nationality, nationBirth, uf, city;
 
+    public Nationality() {
+        this("", "", "", "");
+    }
+
+    public Nationality(String nationality, String nationBirth, String uf, String city) {
+        this.nationality = nationality;
+        this.nationBirth = nationBirth;
+        this.uf = uf;
+        this.city = city;
+    }
+
     public String getNationality() {
         return nationality;
     }

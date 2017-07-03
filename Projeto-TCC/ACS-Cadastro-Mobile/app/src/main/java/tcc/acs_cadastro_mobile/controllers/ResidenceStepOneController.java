@@ -8,6 +8,7 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
+import tcc.acs_cadastro_mobile.models.AddressDataModel;
 import tcc.acs_cadastro_mobile.persistence.AddressDataPersistence;
 import tcc.acs_cadastro_mobile.subModels.CityLocation;
 import tcc.acs_cadastro_mobile.subModels.Phones;
@@ -34,20 +35,24 @@ public class ResidenceStepOneController extends StepsController {
         return itemSelectedListener;
     }
 
+    public AddressDataModel get(StreetLocation street, CityLocation city, Phones phones) {
+        return AddressDataPersistence.get(street, city, phones);
+    }
+
     public StreetLocation getStreetLocation(Spinner spnPlaceType, EditText edtPlaceName,EditText edtNumber,
                                             EditText edtComplement) {
-        return AddressDataPersistence.getStreetLocation(getFields(spnPlaceType), getFields(edtPlaceName),
+        return AddressDataPersistence.get(getFields(spnPlaceType), getFields(edtPlaceName),
                 getInt(edtNumber), getFields(edtComplement));
     }
 
     public CityLocation getCityLocation(EditText edtNeighborhood, Spinner spnUf, Spinner spnCity,
                                         EditText edtCep) {
-        return AddressDataPersistence.getCityLocation(getFields(edtNeighborhood), getFields(spnUf),
+        return AddressDataPersistence.get(getFields(edtNeighborhood), getFields(spnUf),
                 getFields(spnCity), getLong(edtCep));
     }
 
     public Phones getPhones(EditText edtHomePhone, EditText edtReferencePhone) {
-        return AddressDataPersistence.getPhones(getFields(edtHomePhone), getFields(edtReferencePhone));
+        return AddressDataPersistence.get(getFields(edtHomePhone), getFields(edtReferencePhone));
     }
 
     public boolean isRequiredFieldsFilled(IRequiredView edtPlaceName, IRequiredView edtNumber,

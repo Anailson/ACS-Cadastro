@@ -12,12 +12,12 @@ public class RecordVisitModel extends RealmObject implements Serializable {
     private RecordDetails details;
 
     public RecordVisitModel() {
-        this(false, new RecordDetails());
+        this(new RecordDetails(), false);
     }
 
-    public RecordVisitModel(boolean isShared, RecordDetails details) {
-        this.isShared = isShared;
+    public RecordVisitModel(RecordDetails details, boolean isShared) {
         this.details = details;
+        this.isShared = isShared;
     }
 
     public long getRecord(){
@@ -26,6 +26,10 @@ public class RecordVisitModel extends RealmObject implements Serializable {
 
     public long getNumSus(){
         return getDetails().getNumSus();
+    }
+
+    public String getName(){
+        return getDetails().getName();
     }
 
     public boolean isShared() {

@@ -149,8 +149,7 @@ public class CitizenStepThreeFragment extends Fragment implements IRequiredField
         Interment interment = controller.getInterment(rgrpInterment, edtInterment);
         Plant plants = controller.getPlant(rgrpPlants, edtPlants);
 
-
-        healthConditions = HealthConditionsPersistence.getInstance(pregnant, weight, diseases, heartDisease,
+        healthConditions = controller.get(pregnant, weight, diseases, heartDisease,
                 kidneyDisease, respiratoryDisease, interment, plants);
 
         citizenData.send(healthConditions);

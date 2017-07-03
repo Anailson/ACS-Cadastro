@@ -30,6 +30,7 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
 
     public CitizenModel(PersonalDataModel personalData, SocialDemographicModel socialDemographicData,
                         HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
+
         this.numSus = personalData.getNumSus();
         this.name = personalData.getName();
         this.personalData = personalData;
@@ -90,16 +91,17 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
         return containsKey(personalData.getName(), key);
     }
 
-    public boolean susContainsKey(String key) {
-        return containsKey(String.valueOf(personalData.getNumSus()), key);
+    public boolean susContainsKey(int key) {
+        return personalData.getNumSus() > AcsRecordPersistence.DEFAULT_INT
+                && containsKey(String.valueOf(personalData.getNumSus()), String.valueOf(key));
     }
 
     private boolean containsKey(String value, String key) {
         return value.toUpperCase().contains(key.toUpperCase().trim());
     }
 
-    public long getPhone() {
-        return getNumSus();
+    public String getPhone() {
+        return personalData.getPhone();
     }
 
     public String getBirthDate() {

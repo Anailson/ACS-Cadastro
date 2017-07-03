@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
@@ -28,6 +30,7 @@ public class CitizenAddController {
     private final int SECOND_STEP = 2;
     private final int THIRD_STEP = 3;
     private final int FOURTH_STEP = 4;
+    private final int N_STEPS = FOURTH_STEP;
 
     private int actualMenu;
     private Fragment actualStep;
@@ -74,23 +77,25 @@ public class CitizenAddController {
     private void nextMenu(){
         switch (actualMenu) {
             case FIRST_STEP:{
-                if (((CitizenStepOneFragment) actualStep).isRequiredFieldsFilled()) {
+                if (((IRequiredFields) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepTwo();
                 }
                 break;
             }
             case SECOND_STEP:{
-                if (((CitizenStepTwoFragment) actualStep).isRequiredFieldsFilled()) {
+                if (((IRequiredFields) actualStep).isRequiredFieldsFilled()) {
                     shiftToStepThree();
                 }
                 break;
             }
             case THIRD_STEP: {
-                shiftToStepFour();
+                if(((IRequiredFields) actualStep).isRequiredFieldsFilled()){
+                    shiftToStepFour();
+                }
                 break;
             }
             case FOURTH_STEP: {
-                if (((CitizenStepFourFragment) actualStep).isRequiredFieldsFilled()) {
+                if (((IRequiredFields) actualStep).isRequiredFieldsFilled()) {
                     save();
                 }
                 break;
@@ -107,9 +112,9 @@ public class CitizenAddController {
     }
 
     private void save(){
-
         actualStep.onDetach();
         CitizenModel saved = CitizenPersistence.save(personalData, socialDemographicData, healthConditions, streetSituation);
+        Log.e("Save.Citizen", String.valueOf(saved == null));
         if(saved != null){
             showConfirmDialog(saved.getName(), saved.getNumSus());
         }
@@ -117,9 +122,7 @@ public class CitizenAddController {
 
     private void shiftToStepOne(){
 
-        Button btnBack = (Button) parent.findViewById(R.id.btn_ctz_add_back);
-
-        btnBack.setEnabled(false);
+        parent.findViewById(R.id.btn_ctz_add_back).setEnabled(false);
 
         actualMenu = FIRST_STEP;
         actualStep = CitizenStepOneFragment.newInstance(personalData);
@@ -130,8 +133,7 @@ public class CitizenAddController {
 
     private void shiftToStepTwo(){
 
-        Button btnBack = (Button) parent.findViewById(R.id.btn_ctz_add_back);
-        btnBack.setEnabled(true);
+        parent.findViewById(R.id.btn_ctz_add_back).setEnabled(true);
 
         actualMenu = SECOND_STEP;
         actualStep = CitizenStepTwoFragment.newInstance(socialDemographicData);
@@ -170,7 +172,7 @@ public class CitizenAddController {
             @Override
             public void run() {
                 super.run();
-                pBar.setProgress(progress);
+                pBar.setProgress(progress * pBar.getMax() / N_STEPS);
             }
         }.start();
     }
@@ -190,7 +192,7 @@ public class CitizenAddController {
         DefaultAlert alerts = new DefaultAlert(parent);
         alerts.setTitle(R.string.msg_save_success);
         alerts.setMessage("Os dados de " + name + ", Nº do SUS: " + numSus + ", foram salvos com sucesso");
-        alerts.setPositiveListener(R.string.btn_ok, listener);
+        alerts.setPositiveListener(listener);
         alerts.show();
     }
 

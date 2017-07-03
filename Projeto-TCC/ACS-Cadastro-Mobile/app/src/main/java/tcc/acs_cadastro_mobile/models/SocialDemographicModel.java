@@ -19,22 +19,21 @@ public class SocialDemographicModel extends RealmObject implements Serializable 
     private SexualOrientation sexualOrientation;
     private Deficiency deficiency;
 
+    public SocialDemographicModel() {
+        this("", new EducationEmployment(), new HealthAndGroup(), "", new CommunityTraditional(),
+                new SexualOrientation(), new Deficiency());
+    }
 
-    public static SocialDemographicModel newInstance(Realm realm, String kinship, EducationEmployment educationEmployment,
-            HealthAndGroup healthAndGroup, String kids09, CommunityTraditional communityTraditional,
-             SexualOrientation sexualOrientation, Deficiency deficiency){
-
-        realm.beginTransaction();
-        SocialDemographicModel model = realm.createObject(SocialDemographicModel.class);
-        model.setKinship(kinship);
-        model.setEducationEmployment(educationEmployment);
-        model.setHealthAndGroup(healthAndGroup);
-        model.setKids09(kids09);
-        model.setCommunityTraditional(communityTraditional);
-        model.setSexualOrientation(sexualOrientation);
-        model.setDeficiency(deficiency);
-        realm.commitTransaction();
-        return model;
+    public SocialDemographicModel(String kinship, EducationEmployment educationEmployment,
+                                  HealthAndGroup healthAndGroup, String kids09, CommunityTraditional communityTraditional,
+                                  SexualOrientation sexualOrientation, Deficiency deficiency) {
+        this.kinship = kinship;
+        this.kids09 = kids09;
+        this.educationEmployment = educationEmployment;
+        this.healthAndGroup = healthAndGroup;
+        this.communityTraditional = communityTraditional;
+        this.sexualOrientation = sexualOrientation;
+        this.deficiency = deficiency;
     }
 
     public static EducationEmployment getEducationEmployment(Realm realm, String occupation,

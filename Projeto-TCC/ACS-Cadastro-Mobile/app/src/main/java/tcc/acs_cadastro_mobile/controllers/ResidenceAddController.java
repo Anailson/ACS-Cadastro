@@ -12,6 +12,7 @@ import android.widget.TextView;
 import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.AddressDataModel;
 import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
@@ -68,16 +69,20 @@ public class ResidenceAddController  {
 
         switch (actualMenu){
             case FIRST_STEP:
-                if(((ResidenceStepOneFragment) actualStep).isRequiredFieldsFilled()){
+                if(((IRequiredFields) actualStep).isRequiredFieldsFilled()){
                     shiftToStepTwo();
                 }
                 break;
             case SECOND_STEP:
-                if(((ResidenceStepTwoFragment) actualStep).isRequiredFieldsFilled()){
+                if(((IRequiredFields) actualStep).isRequiredFieldsFilled()){
                     shiftToStepThree();
                 }
                 break;
-            case THIRD_STEP: save(); break;
+            case THIRD_STEP:
+                if(((IRequiredFields) actualStep).isRequiredFieldsFilled()){
+                    save();
+                }
+                break;
         }
     }
 
@@ -92,7 +97,6 @@ public class ResidenceAddController  {
 
         actualStep.onDetach();
         ResidenceModel saved = ResidencePersistence.save(addressData, housingConditions, housingHistorical);
-
         if(saved != null){
             showConfirmDialog(saved.getCompleteAddress(), saved.getCep());
         }

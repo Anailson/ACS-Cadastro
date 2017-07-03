@@ -2,18 +2,14 @@ package tcc.acs_cadastro_mobile.controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.adapters.CitizenListAdapter;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.interfaces.ITextSearchListener;
-import tcc.acs_cadastro_mobile.interfaces.TextSearchChanged;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 import tcc.acs_cadastro_mobile.views.CitizenAddActivity;
@@ -60,7 +56,7 @@ public class CitizenListController{
         //TextSearchChanged<CitizenModel>
 
         @Override
-        public List<ISearcher> searchByText(String search){
+        public List<ISearcher> search(String search){
 
             List<ISearcher> founded = new ArrayList<>();
 
@@ -73,7 +69,7 @@ public class CitizenListController{
         }
 
         @Override
-        public List<ISearcher> searchByNumber(String search) {
+        public List<ISearcher> search(int search) {
             List<ISearcher> founded = new ArrayList<>();
             for (CitizenModel citizen : citizens) {
 

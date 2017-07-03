@@ -9,6 +9,15 @@ public class AnotherInstitution extends RealmObject implements Serializable {
     private boolean isAnotherInstitution;
     private String value;
 
+    public AnotherInstitution() {
+        this(false, "");
+    }
+
+    public AnotherInstitution(boolean isAnotherInstitution, String value) {
+        this.isAnotherInstitution = isAnotherInstitution;
+        this.value = value;
+    }
+
     public boolean isAnotherInstitution() {
         return isAnotherInstitution;
     }

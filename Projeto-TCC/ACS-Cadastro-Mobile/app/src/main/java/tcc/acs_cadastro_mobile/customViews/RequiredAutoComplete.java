@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.interfaces.IAutoFillListener;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 
 
@@ -19,7 +20,7 @@ public class RequiredAutoComplete extends AppCompatAutoCompleteTextView
          implements IRequiredView, TextWatcher, AdapterView.OnItemClickListener{
 
     boolean clicked;
-    private AutoFillListener listener;
+    private IAutoFillListener listener;
 
     public RequiredAutoComplete(Context context) {
         super(context);
@@ -36,7 +37,7 @@ public class RequiredAutoComplete extends AppCompatAutoCompleteTextView
         setAutoFillListener(getListener());
     }
 
-    public void setAutoFillListener(AutoFillListener listener) {
+    public void setAutoFillListener(IAutoFillListener listener) {
         if(listener != null) {
             addTextChangedListener(this);
             setOnItemClickListener(this);
@@ -46,8 +47,8 @@ public class RequiredAutoComplete extends AppCompatAutoCompleteTextView
         }
     }
 
-    private AutoFillListener getListener(){
-        return new AutoFillListener() {
+    private IAutoFillListener getListener(){
+        return new IAutoFillListener() {
             @Override
             public void searching(EditText editText) {}
 
@@ -108,14 +109,5 @@ public class RequiredAutoComplete extends AppCompatAutoCompleteTextView
             clicked = true;
             listener.selectItem(this);
         }
-    }
-
-    public interface AutoFillListener {
-
-        void searching(EditText editText);
-
-        void selectItem(EditText editText);
-
-        void changedAfterSelected(EditText editText);
     }
 }

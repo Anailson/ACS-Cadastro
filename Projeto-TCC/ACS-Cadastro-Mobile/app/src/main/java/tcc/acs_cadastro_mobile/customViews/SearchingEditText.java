@@ -54,9 +54,9 @@ public class SearchingEditText extends AppCompatEditText implements TextWatcher 
         }
         List list;
         if (s.toString().matches("[0-9]+")) {
-            list = listener.searchByNumber(s.toString());
+            list = listener.search(Integer.valueOf(s.toString()));
         } else {
-            list = listener.searchByText(s.toString());
+            list = listener.search(s.toString());
         }
 
         ArrayAdapter adapter = getArrayAdapter(list);
@@ -80,7 +80,8 @@ public class SearchingEditText extends AppCompatEditText implements TextWatcher 
             try {
                 founded.add((ISearcher) obj);
             }catch (ClassCastException e){
-                e.initCause(new Throwable("You must implements ISearcher interface on you object " + obj.getClass().getName() + "."));
+                e.initCause(new Throwable("You must implements ISearcher interface on you object "
+                        + obj.getClass().getName() + "."));
             }
         }
         return listener.updateListView(founded);
@@ -89,12 +90,12 @@ public class SearchingEditText extends AppCompatEditText implements TextWatcher 
     private ITextSearchListener getListener(){
         return new ITextSearchListener() {
             @Override
-            public List<ISearcher> searchByText(String search) {
+            public List<ISearcher> search(String search) {
                 return null;
             }
 
             @Override
-            public List<ISearcher> searchByNumber(String search) {
+            public List<ISearcher> search(int search) {
                 return null;
             }
 

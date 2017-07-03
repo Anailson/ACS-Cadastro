@@ -9,6 +9,22 @@ public class Hygiene extends RealmObject implements Serializable {
 
     private boolean isHygiene, bath, sanitary, oral, another;
 
+    public Hygiene() {
+        this(false, new boolean[4]);
+    }
+
+    public Hygiene(boolean isHygiene, boolean []hygienes) {
+        this(isHygiene, hygienes[0], hygienes[1], hygienes[2], hygienes[3]);
+    }
+
+    public Hygiene(boolean isHygiene, boolean bath, boolean sanitary, boolean oral, boolean another) {
+        this.isHygiene = isHygiene;
+        this.bath = bath;
+        this.sanitary = sanitary;
+        this.oral = oral;
+        this.another = another;
+    }
+
     public boolean[] getHygienes(){
         return new boolean[]{bath, sanitary, oral, another};
     }

@@ -50,9 +50,8 @@ public class ResidenceListController {
     private class Listeners implements View.OnClickListener, ITextSearchListener<ResidenceModel>{
 
         //ITextSearchListener<ResidenceModel>
-
         @Override
-        public List<ISearcher> searchByText(String search){
+        public List<ISearcher> search(String search){
             List<ISearcher> founded = new ArrayList<>();
 
             for (ResidenceModel residence : residences) {
@@ -64,7 +63,7 @@ public class ResidenceListController {
         }
 
         @Override
-        public List<ISearcher> searchByNumber(String search) {
+        public List<ISearcher> search(int search) {
             List<ISearcher> founded = new ArrayList<>();
 
             for (ResidenceModel residence : residences) {

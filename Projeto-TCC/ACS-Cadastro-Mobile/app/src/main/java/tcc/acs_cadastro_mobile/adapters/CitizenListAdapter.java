@@ -64,5 +64,4 @@ public class CitizenListAdapter extends ArrayAdapter<CitizenModel> {
     private String getText(int resource, String text){
         return String.format("%s: %s", context.getString(resource), text);
     }
-
 }

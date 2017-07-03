@@ -332,7 +332,7 @@
                         <CheckBox
                             android:id="@+id/chb_rsd_cat"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:checked="false"
                             android:text="@string/txt_rsd_cat" />
@@ -340,7 +340,7 @@
                         <CheckBox
                             android:id="@+id/chb_rsd_dog"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:checked="false"
                             android:text="@string/txt_rsd_dog" />
@@ -355,7 +355,7 @@
                         <CheckBox
                             android:id="@+id/chb_rsd_bird"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:checked="false"
                             android:text="@string/txt_rsd_bird" />
@@ -363,7 +363,7 @@
                         <CheckBox
                             android:id="@+id/chb_rsd_breeding"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:checked="false"
                             android:text="@string/txt_rsd_breeding" />
@@ -377,14 +377,14 @@
                         <CheckBox
                             android:id="@+id/chb_rsd_pet_another"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:checked="false"
                             android:text="@string/txt_another" />
 
                         <CheckBox
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:checked="false"
                             android:visibility="invisible" />

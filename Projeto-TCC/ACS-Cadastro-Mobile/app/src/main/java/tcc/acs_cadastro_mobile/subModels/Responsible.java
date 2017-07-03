@@ -9,6 +9,16 @@ public class Responsible extends RealmObject  implements Serializable {
     private long numSus;
     private String birthDate;
 
+    public Responsible() {
+        this(false, 0, "");
+    }
+
+    public Responsible(boolean isResponsible, long numSus, String birthDate) {
+        this.isResponsible = isResponsible;
+        this.numSus = numSus;
+        this.birthDate = birthDate;
+    }
+
     public boolean isResponsible() {
         return isResponsible;
     }

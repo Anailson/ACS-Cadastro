@@ -1,5 +1,8 @@
 package tcc.acs_cadastro_mobile.persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -19,7 +22,7 @@ public class CitizenPersistence {
                                    HealthConditionsModel healthConditions, StreetSituationModel streetSituation) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        CitizenModel object = realm.copyToRealmOrUpdate(new CitizenModel(personalData, socialDemographicModel,
+        CitizenModel object = realm.copyToRealm(new CitizenModel(personalData, socialDemographicModel,
                 healthConditions, streetSituation));
         realm.commitTransaction();
         return object;
@@ -39,8 +42,7 @@ public class CitizenPersistence {
     }
 
     public static RealmResults<CitizenModel> getAll() {
-        Realm realm = Realm.getDefaultInstance();
-        return realm.where(CitizenModel.class).findAll();
+        return Realm.getDefaultInstance().where(CitizenModel.class).findAll();
     }
 
     public static CitizenModel get(String name) {
@@ -56,13 +58,28 @@ public class CitizenPersistence {
                 .findAll().first(null);
     }
 
-    public static String[] getNumSus() {
-        RealmResults<CitizenModel> list = getAll().where()
-                .greaterThan(CitizenModel.NUM_SUS, 0).findAll();
+    public static String[] getNumSus(int j) {
+        RealmResults<CitizenModel> list = getAll()
+                .where()
+                .greaterThan(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
+                .findAll();
         String[] numSus = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
             numSus[i] = String.valueOf(list.get(i).getNumSus());
         }
+        return numSus;
+    }
+
+    public static List<Long> getNumSusAsList() {
+        List<Long> numSus = new ArrayList<>();
+        RealmResults<CitizenModel> list = getAll()
+                .where()
+                .greaterThan(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
+                .findAll();
+        for(CitizenModel citizen : list){
+            numSus.add(citizen.getNumSus());
+        }
+
         return numSus;
     }
 
@@ -81,8 +98,7 @@ public class CitizenPersistence {
 
         } else {
 
-           return query
-                   .lessThanOrEqualTo(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
+           return query.lessThanOrEqualTo(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
                    .findAll()
                    .size() * -1;
         }

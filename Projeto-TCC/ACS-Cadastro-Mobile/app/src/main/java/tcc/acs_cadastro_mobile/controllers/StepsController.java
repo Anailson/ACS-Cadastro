@@ -66,7 +66,7 @@ public class StepsController {
                 return i;
             }
         }
-        throw new IllegalArgumentException("Value " + value + " was not founded");
+        throw new IllegalArgumentException("Value '" + value + "' was not founded");
     }
 
     final void startErrors(){
@@ -96,21 +96,21 @@ public class StepsController {
         return hasError;
     }
 
-    final boolean isYesGroup(RadioGroup radioGroup, int id) {
-        return radioGroup.getCheckedRadioButtonId() == id;
+    final boolean isYesGroup(RadioGroup radioGroup, int yes) {
+        return radioGroup.getCheckedRadioButtonId() == yes;
     }
 
-    final int getInt(EditText edtNumber) {
+    public final int getInt(EditText edtNumber) {
         String text = edtNumber.getText().toString();
         return text.matches("[0-9]+") ? Integer.parseInt(text) : AcsRecordPersistence.DEFAULT_INT;
     }
 
-    final long getLong(EditText editText) {
+    public final long getLong(EditText editText) {
         String text = editText.getText().toString();
         return text.matches("[0-9]+") ? Long.parseLong(text) : AcsRecordPersistence.DEFAULT_INT;
     }
 
-    final float getFloat(EditText editText) {
+    public final float getFloat(EditText editText) {
         String text = editText.getText().toString();
         return text.matches("[0-9]+") ? Float.parseFloat(text) : AcsRecordPersistence.DEFAULT_INT;
     }
@@ -173,6 +173,10 @@ public class StepsController {
         editText.setText(text);
     }
 
+    public void fillField(EditText editText, long l) {
+        editText.setText(getDefaultOrValue(l));
+    }
+
     public final void fillField(Spinner spinner, int position) {
         spinner.setSelection(position);
     }
@@ -194,6 +198,10 @@ public class StepsController {
     }
 
     public final void fillField(boolean[] values, CheckBox... checkBoxes){
+        if(values.length != checkBoxes.length){
+            throw new IllegalArgumentException("The lenght of boolen[] values and CheckBox[] checkboxes " +
+                    "must be equals: values = " + values.length + " checkboxes = " + checkBoxes.length);
+        }
         for(int i = 0; i < checkBoxes.length; i++){
             fillField(checkBoxes[i], values[i]);
         }

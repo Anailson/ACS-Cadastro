@@ -15,6 +15,7 @@ import android.widget.ListView;
 import io.realm.RealmList;
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceStepThreeController;
+import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.interfaces.IResidenceData;
 import tcc.acs_cadastro_mobile.models.HousingHistoricalModel;
 import tcc.acs_cadastro_mobile.persistence.HousingHistoricalPersistence;
@@ -28,7 +29,7 @@ import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.MOVE
 import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.NUM_SUS;
 import static tcc.acs_cadastro_mobile.views.ResidenceNewResponsibleActivity.RESULT;
 
-public class ResidenceStepThreeFragment extends Fragment{
+public class ResidenceStepThreeFragment extends Fragment implements IRequiredFields{
 
     private static final String HOUSING_HISTORICAL = "HOUSING_HISTORICAL";
 
@@ -100,5 +101,10 @@ public class ResidenceStepThreeFragment extends Fragment{
 
     private void fillFields(){
         lvwResponsibles.setAdapter(controller.getAdapter(getContext(),housingHistorical));
+    }
+
+    @Override
+    public boolean isRequiredFieldsFilled() {
+        return true;
     }
 }

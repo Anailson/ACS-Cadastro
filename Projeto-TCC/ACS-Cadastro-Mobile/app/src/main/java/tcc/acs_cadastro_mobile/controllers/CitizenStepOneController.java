@@ -14,6 +14,8 @@ import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.SpinnerAdapter;
 import tcc.acs_cadastro_mobile.interfaces.ICalendarListener;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
+import tcc.acs_cadastro_mobile.models.PersonalDataModel;
+import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 import tcc.acs_cadastro_mobile.persistence.PersonalDataPersistence;
 import tcc.acs_cadastro_mobile.subModels.Contact;
 import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
@@ -84,19 +86,25 @@ public class CitizenStepOneController extends StepsController {
         }
     }
 
+    public PersonalDataModel get(ParticularData particular, Mother mother, Responsible responsible,
+                                 GenderAndRace genderAndRace, Nationality nationality, Contact contact) {
+        return PersonalDataPersistence.get(particular, mother, responsible, genderAndRace, nationality, contact);
+    }
+
     public ParticularData getParticularData(EditText edtNumSus, EditText edtName, EditText edtSocialName,
                                             EditText edtNumNis, EditText edtBirth) {
 
-        return PersonalDataPersistence.getParticularData(getLong(edtNumSus), getFields(edtName),
+        long numSus = CitizenPersistence.getMinorNumSusIfBlank(getLong(edtNumSus));
+        return PersonalDataPersistence.get(numSus, getFields(edtName),
                 getFields(edtSocialName), getLong(edtNumNis), getFields(edtBirth));
     }
     public Mother getMother(CheckBox chbMotherUnknown, EditText edtMotherName) {
-        return PersonalDataPersistence.getMother(chbMotherUnknown.isChecked(), getFields(edtMotherName));
+        return PersonalDataPersistence.get(chbMotherUnknown.isChecked(), getFields(edtMotherName));
     }
 
     public Responsible getResponsible(CheckBox chbResponsible,
                                       EditText edtRespNumSus, EditText edtRespBirth) {
-        return PersonalDataPersistence.getResponsible(chbResponsible.isChecked(), getLong(edtRespNumSus),
+        return PersonalDataPersistence.get(chbResponsible.isChecked(), getLong(edtRespNumSus),
                 getFields(edtRespBirth));
     }
 
@@ -104,9 +112,8 @@ public class CitizenStepOneController extends StepsController {
         return PersonalDataPersistence.getGenderAndRace(getFields(spnGender), getFields(spnRace));
     }
 
-    public Nationality getNationality(Spinner spnNationality,
-                                      EditText edtNationBirth, Spinner spnUf, Spinner spnCity) {
-        return PersonalDataPersistence.getNationality(getFields(spnNationality), getFields(edtNationBirth),
+    public Nationality getNationality(Spinner spnNationality, EditText edtNationBirth, Spinner spnUf, Spinner spnCity) {
+        return PersonalDataPersistence.get(getFields(spnNationality), getFields(edtNationBirth),
                 getFields(spnUf), getFields(spnCity));
     }
 
@@ -120,9 +127,9 @@ public class CitizenStepOneController extends StepsController {
     }
 
     public void fillResponsible(CheckBox checkBox, boolean checked, EditText edtRespNumSus,
-                                String respNumSus, EditText edtRespBirth, String respBirth) {
+                                long respNumSus, EditText edtRespBirth, String respBirth) {
 
-        fillField(edtRespNumSus, respNumSus);
+        fillField(edtRespNumSus, getEmptyOrValue(respNumSus));
         fillField(edtRespBirth, respBirth);
         fillField(checkBox, checked);
         enableView(edtRespNumSus, !checked);
@@ -168,14 +175,14 @@ public class CitizenStepOneController extends StepsController {
     private void fillResponsible(boolean checked) {
         Activity activity = fragment.getActivity();
 
-        String numSus = "";
+        long numSus = 0;
         String birth = "";
         CheckBox chbResponsible = (CheckBox) activity.findViewById(R.id.chb_ctz_responsible);
         EditText edtRespNumSus = (EditText) activity.findViewById(R.id.edt_ctz_respon_num_sus);
         EditText edtRespBirth = (EditText) activity.findViewById(R.id.edt_ctz_respons_birth);
 
         if (checked) {
-            numSus = ((EditText) activity.findViewById(R.id.edt_ctz_num_sus)).getText().toString();
+            numSus = getLong((EditText) activity.findViewById(R.id.edt_ctz_num_sus));
             birth = ((EditText) activity.findViewById(R.id.edt_ctz_birth)).getText().toString();
         }
 

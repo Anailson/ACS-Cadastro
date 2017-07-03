@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.ResidenceNewResponsibleController;
+import tcc.acs_cadastro_mobile.customViews.CalendarEditText;
 import tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete;
 
 public class ResidenceNewResponsibleActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class ResidenceNewResponsibleActivity extends AppCompatActivity {
 
         ResidenceNewResponsibleController controller = new ResidenceNewResponsibleController(this);
         RequiredAutoComplete edtNumSus = (RequiredAutoComplete) findViewById(R.id.edt_rsd_resp_num_sus);
-        EditText edtLivesSince = (EditText) findViewById(R.id.edt_rsd_lives_since);
+        CalendarEditText edtLivesSince = (CalendarEditText) findViewById(R.id.edt_rsd_lives_since);
         Spinner spnFamilyIncome = (Spinner) findViewById(R.id.spn_rsd_famlily_income);
         Button btnSave = (Button) findViewById(R.id.btn_new_resp_save);
         Button btnCancel = (Button) findViewById(R.id.btn_new_resp_cancel);
@@ -41,7 +42,7 @@ public class ResidenceNewResponsibleActivity extends AppCompatActivity {
         spnFamilyIncome.setAdapter(controller.getNumSusAdapter(R.array.income));
 
         edtNumSus.setAutoFillListener(controller.getItemClickListener());
-        edtLivesSince.setOnClickListener(controller.getClickListener());
+        edtLivesSince.setShowCalendarListener(controller.getCalendarListener());
         btnSave.setOnClickListener(controller.getClickListener());
         btnCancel.setOnClickListener(controller.getClickListener());
 

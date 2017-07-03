@@ -9,6 +9,15 @@ public class Plant extends RealmObject implements Serializable {
     private boolean isPlants;
     private String value;
 
+    public Plant() {
+        this(false, "");
+    }
+
+    public Plant(boolean isPlants, String value) {
+        this.isPlants = isPlants;
+        this.value = value;
+    }
+
     public boolean isPlants() {
         return isPlants;
     }

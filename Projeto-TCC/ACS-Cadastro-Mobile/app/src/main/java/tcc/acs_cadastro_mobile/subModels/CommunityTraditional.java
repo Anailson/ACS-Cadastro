@@ -9,7 +9,9 @@ public class CommunityTraditional extends RealmObject implements Serializable {
     private boolean isCommunityTraditional;
     private String value;
 
-    public CommunityTraditional() {}
+    public CommunityTraditional() {
+        this(false, "");
+    }
 
     public CommunityTraditional(boolean isCommunityTraditional, String value) {
         this.isCommunityTraditional = isCommunityTraditional;

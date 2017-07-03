@@ -11,42 +11,67 @@ import tcc.acs_cadastro_mobile.subModels.Responsible;
 
 public class PersonalDataPersistence {
 
-
-    public static PersonalDataModel getInstance(ParticularData particular, Mother mother, Responsible responsible,
-                                GenderAndRace genderAndRace, Nationality nationality, Contact contact) {
-
-        return PersonalDataModel.newInstance(Realm.getDefaultInstance(), particular, mother,
-                responsible, genderAndRace, nationality, contact);
-    }
-
-    public static ParticularData getParticularData(long sus, String name, String socialName,
-                                                   long nis, String birth){
-        Realm realm = Realm.getDefaultInstance();
-        return PersonalDataModel.getParticularData(realm, sus, name, socialName, nis, birth);
-    }
-    public static Mother getMother(boolean isKnown, String name){
+    public static PersonalDataModel get(ParticularData particular, Mother mother, Responsible responsible,
+                                        GenderAndRace genderAndRace, Nationality nationality, Contact contact) {
 
         Realm realm = Realm.getDefaultInstance();
-        return PersonalDataModel.getMother(realm, isKnown, name);
+        realm.beginTransaction();
+        PersonalDataModel object = realm.copyToRealm(new PersonalDataModel(particular, mother,
+                responsible, genderAndRace, nationality, contact));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static Responsible getResponsible(boolean checked, long aLong, String fields) {
+    public static ParticularData get(long sus, String name, String socialName,
+                                     long nis, String birth){
         Realm realm = Realm.getDefaultInstance();
-        return PersonalDataModel.getResponsible(realm, checked, aLong, fields);
+        realm.beginTransaction();
+        ParticularData object = realm.copyToRealm(new ParticularData(sus, nis, name, socialName, birth));
+        realm.commitTransaction();
+        return object;
+    }
+
+    public static Mother get(boolean isKnown, String name){
+
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Mother object = realm.copyToRealm(new Mother(isKnown, name));
+        realm.commitTransaction();
+        return object;
+    }
+
+    public static Responsible get(boolean responsible, long numSus, String birthDate) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Responsible object = realm.copyToRealm(new Responsible(responsible, numSus, birthDate));
+        realm.commitTransaction();
+        return object;
     }
 
     public static GenderAndRace getGenderAndRace(String gender, String race) {
+
         Realm realm = Realm.getDefaultInstance();
-        return PersonalDataModel.getGenderAndRace(realm, gender, race);
+        realm.beginTransaction();
+        GenderAndRace object = realm.copyToRealm(new GenderAndRace(gender, race));
+        realm.commitTransaction();
+        return object;
     }
 
-    public static Nationality getNationality(String nationality, String nationBirth, String uf, String city) {
+    public static Nationality get(String nationality, String nationBirth, String uf, String city) {
+
         Realm realm = Realm.getDefaultInstance();
-        return PersonalDataModel.getNationality(realm, nationality, nationBirth, uf, city);
+        realm.beginTransaction();
+        Nationality object = realm.copyToRealm(new Nationality(nationality, nationBirth, uf, city));
+        realm.commitTransaction();
+        return object;
     }
 
     public static Contact getContact(String phone, String email) {
+
         Realm realm = Realm.getDefaultInstance();
-        return PersonalDataModel.getContact(realm, phone, email);
+        realm.beginTransaction();
+        Contact object = realm.copyToRealm(new Contact(phone, email));
+        realm.commitTransaction();
+        return object;
     }
 }

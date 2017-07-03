@@ -13,36 +13,54 @@ public class StreetSituationPersistence {
 
     private StreetSituationPersistence() {}
 
-    public static StreetSituationModel getInstance(StreetSituation street, boolean benefit,
-                           boolean family, Feeding feeding, AnotherInstitution anotherInstitution,
-                           FamilyVisit familyVisit, Hygiene hygiene) {
+    public static StreetSituationModel get(StreetSituation street, boolean benefit,
+                       boolean family, Feeding feeding, AnotherInstitution anotherInstitution,
+                       FamilyVisit familyVisit, Hygiene hygiene) {
         Realm realm = Realm.getDefaultInstance();
-        return StreetSituationModel.newInstance(realm, street, benefit, family, feeding, anotherInstitution,
-                familyVisit, hygiene);
+        realm.beginTransaction();
+        StreetSituationModel object = realm.copyToRealm(new StreetSituationModel(street, benefit, family, feeding, anotherInstitution,
+                familyVisit, hygiene));
+        realm.commitTransaction();
+        return object;
     }
 
     public static StreetSituation getStreetSituation(boolean isStreetSituation, String fields) {
         Realm realm = Realm.getDefaultInstance();
-        return StreetSituationModel.getStreetSituation(realm, isStreetSituation, fields);
+        realm.beginTransaction();
+        StreetSituation object = realm.copyToRealm(new StreetSituation(isStreetSituation, fields));
+        realm.commitTransaction();
+        return object;
     }
 
     public static Feeding getFeeding(String fields, boolean[] fields1) {
         Realm realm = Realm.getDefaultInstance();
-        return StreetSituationModel.getFeeding(realm, fields, fields1);
+        realm.beginTransaction();
+        Feeding object = realm.copyToRealm(new Feeding(fields, fields1));
+        realm.commitTransaction();
+        return object;
     }
 
     public static AnotherInstitution getAnotherInstitution(boolean isAnotherInstitution, String fields) {
         Realm realm = Realm.getDefaultInstance();
-        return StreetSituationModel.getAnotherInstitution(realm, isAnotherInstitution, fields);
+        realm.beginTransaction();
+        AnotherInstitution object = realm.copyToRealm(new AnotherInstitution(isAnotherInstitution, fields));
+        realm.commitTransaction();
+        return object;
     }
 
     public static FamilyVisit getFamilyVisit(boolean isFamilyVisit, String fields) {
         Realm realm = Realm.getDefaultInstance();
-        return StreetSituationModel.getFamilyVisit(realm, isFamilyVisit, fields);
+        realm.beginTransaction();
+        FamilyVisit object = realm.copyToRealm(new FamilyVisit(isFamilyVisit, fields));
+        realm.commitTransaction();
+        return object;
     }
 
     public static Hygiene getHygiene(boolean isHygiene, boolean[] fields) {
         Realm realm = Realm.getDefaultInstance();
-        return StreetSituationModel.getHygiene(realm, isHygiene, fields);
+        realm.beginTransaction();
+        Hygiene object = realm.copyToRealm(new Hygiene(isHygiene, fields));
+        realm.commitTransaction();
+        return object;
     }
 }

@@ -61,7 +61,7 @@ public class CitizenStepTwoFragment extends Fragment implements IRequiredFields{
         controller = new CitizenStepTwoController(this);
         socialDemographicData = (SocialDemographicModel) getArguments().getSerializable(SOCIAL_DEMOGRAPHIC_DATA);
 
-        //TODO what if screen to rotation to horizontal/vertical, how to get values???
+        //TODO what if screen to rotation to horizontal/vertical, how to getGenderAndRace values???
 
         edtOccupation = (EditText) view.findViewById(R.id.edt_ctz_occupation);
         edtCommunityTraditional = (EditText) view.findViewById(R.id.edt_ctz_community_traditional);
@@ -89,17 +89,13 @@ public class CitizenStepTwoFragment extends Fragment implements IRequiredFields{
         spnKids09.setAdapter(controller.getAdapter(R.array.kids_0_9));
         spnSexualOrientation.setAdapter(controller.getAdapter(R.array.orientation_sexual));
 
-        rgrpCommunityTraditional.setOnCheckedChangeListener(controller.getCheckedChangeListener());
-        rgrpSexualOrientation.setOnCheckedChangeListener(controller.getCheckedChangeListener());
-        rgrpDeficiency.setOnCheckedChangeListener(controller.getCheckedChangeListener());
-
-        rgrpCommunityTraditional.setTag(rgrpCommunityTraditional.getId(), controller.getCheckedChangeListener());
-        rgrpSexualOrientation.setTag(rgrpSexualOrientation.getId(), controller.getCheckedChangeListener());
-        rgrpDeficiency.setTag(rgrpDeficiency.getId(), controller.getCheckedChangeListener());
-
         if (socialDemographicData != null) {
             fillFields();
         }
+
+        rgrpCommunityTraditional.setOnCheckedChangeListener(controller.getCheckedChangeListener());
+        rgrpSexualOrientation.setOnCheckedChangeListener(controller.getCheckedChangeListener());
+        rgrpDeficiency.setOnCheckedChangeListener(controller.getCheckedChangeListener());
 
         return view;
     }
@@ -116,15 +112,20 @@ public class CitizenStepTwoFragment extends Fragment implements IRequiredFields{
 
     private void getFields(){
         String kinship = controller.getFields(spnKinship);
-        EducationEmployment educationEmployment = controller.getEducationEmployment(edtOccupation, rgrpSchool, spnEducation, spnEmployment);
-        HealthAndGroup healthAndGroup = controller.getHealthAndGroup(rgrpCaregiver, rgrpCommunityGroup, rgrpHealthPlan);
+        EducationEmployment educationEmployment = controller.getEducationEmployment(edtOccupation,
+                        rgrpSchool, spnEducation, spnEmployment);
+        HealthAndGroup healthAndGroup = controller.getHealthAndGroup(rgrpCaregiver, rgrpCommunityGroup,
+                        rgrpHealthPlan);
         String kids09 = controller.getFields(spnKids09);
-        CommunityTraditional communityTraditional = controller.getCommunityTraditional(rgrpCommunityTraditional, edtCommunityTraditional);
-        SexualOrientation sexualOrientation = controller.getSexualOrientation(rgrpSexualOrientation, spnSexualOrientation);
-        Deficiency deficiency = controller.getDeficiency(rgrpDeficiency,chbHearing, chbVisual, chbIntellectual, chbPhysical, chbAnother);
+        CommunityTraditional communityTraditional = controller.getCommunityTraditional(rgrpCommunityTraditional,
+                        edtCommunityTraditional);
+        SexualOrientation sexualOrientation = controller.getSexualOrientation(rgrpSexualOrientation,
+                        spnSexualOrientation);
+        Deficiency deficiency = controller.getDeficiency(rgrpDeficiency,chbHearing, chbVisual,
+                        chbIntellectual, chbPhysical, chbAnother);
 
-        socialDemographicData = SocialDemographicPersistence.getInstance(kinship, educationEmployment,
-                healthAndGroup, kids09, communityTraditional, sexualOrientation, deficiency);
+        socialDemographicData = controller.get(kinship, educationEmployment, healthAndGroup, kids09,
+                communityTraditional, sexualOrientation, deficiency);
         sendCitizenData.send(socialDemographicData);
     }
 

@@ -9,6 +9,17 @@ public class EducationEmployment extends RealmObject implements Serializable {
     private boolean school;
     private String occupation, education, employment;
 
+    public EducationEmployment() {
+        this(false, "", "", "");
+    }
+
+    public EducationEmployment(boolean school, String occupation, String education, String employment) {
+        this.school = school;
+        this.occupation = occupation;
+        this.education = education;
+        this.employment = employment;
+    }
+
     public boolean isSchool() {
         return school;
     }

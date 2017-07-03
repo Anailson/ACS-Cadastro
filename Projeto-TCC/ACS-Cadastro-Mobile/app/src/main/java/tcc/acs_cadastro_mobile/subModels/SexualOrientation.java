@@ -10,7 +10,9 @@ public class SexualOrientation extends RealmObject implements Serializable {
     private boolean isSexualOrientation;
     private String value;
 
-    public SexualOrientation() {}
+    public SexualOrientation() {
+        this(false, "");
+    }
 
     public SexualOrientation(boolean isSexualOrientation, String value) {
         this.isSexualOrientation = isSexualOrientation;

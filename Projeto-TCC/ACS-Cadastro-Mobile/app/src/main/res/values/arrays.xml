@@ -345,4 +345,10 @@
         <item>@string/txt_another</item>
     </string-array>
 
+    <string-array name="visit_result">
+        <item>@string/txt_default</item>
+        <item>Visita Realizada</item>
+        <item>Visita Recusada</item>
+        <item>Ausente</item>
+    </string-array>
 </resources>

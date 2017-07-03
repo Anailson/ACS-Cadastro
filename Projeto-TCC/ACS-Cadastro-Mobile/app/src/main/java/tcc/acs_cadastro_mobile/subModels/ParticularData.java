@@ -8,6 +8,18 @@ public class ParticularData extends RealmObject implements Serializable {
     private long numSus, numNis;
     private String name, socialName, birthDate;
 
+    public ParticularData() {
+        this(0, 0, "", "", "");
+    }
+
+    public ParticularData(long numSus, long numNis, String name, String socialName, String birthDate) {
+        this.numSus = numSus;
+        this.numNis = numNis;
+        this.name = name;
+        this.socialName = socialName;
+        this.birthDate = birthDate;
+    }
+
     public long getNumSus() {
         return numSus;
     }

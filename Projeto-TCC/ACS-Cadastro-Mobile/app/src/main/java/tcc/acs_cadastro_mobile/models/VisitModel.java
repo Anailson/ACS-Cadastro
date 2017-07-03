@@ -6,31 +6,32 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
+import tcc.acs_cadastro_mobile.persistence.VisitPersistence;
 
 public class VisitModel extends RealmObject implements Serializable, ISearcher {
+
+    public static final String RECORD = "record";
+    public static final String NUM_SUS = "numSus";
 
     @PrimaryKey
     private long record;
     private long numSus;
-    //private RecordDetails details;
-    //private boolean isShared;
     private RecordVisitModel details;
-    //private ActiveSearch active
-    //private Following following
-    //private AnotherReasons another
     private ReasonsVisitModel reasons;
-    private String result;
 
     public VisitModel() {
-        this(new RecordVisitModel(), new ReasonsVisitModel(), AcsRecordPersistence.DEFAULT_STR);
+        this(new RecordVisitModel(), new ReasonsVisitModel());
     }
 
-    public VisitModel(RecordVisitModel details, ReasonsVisitModel reasons, String result) {
+    public VisitModel(RecordVisitModel details, ReasonsVisitModel reasons) {
         this.record = details.getRecord();
         this.numSus = details.getNumSus();
         this.details = details;
         this.reasons = reasons;
-        this.result = result;
+    }
+
+    public String getName() {
+        return getDetails().getName();
     }
 
     public boolean[] getActiveSearchs(){
@@ -77,11 +78,21 @@ public class VisitModel extends RealmObject implements Serializable, ISearcher {
         this.reasons = reasons;
     }
 
-    public String getResult() {
-        return result;
+    public boolean recordContainsKey(int key){
+        return getRecord() > AcsRecordPersistence.DEFAULT_INT
+                && containsKey(String.valueOf(getRecord()), String.valueOf(key));
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public boolean numSusContainsKey(int key){
+        return getNumSus() > AcsRecordPersistence.DEFAULT_INT
+                && containsKey(String.valueOf(getNumSus()), String.valueOf(key));
+    }
+
+    public boolean nameContainsKey(String key){
+        return containsKey(getName(), key);
+    }
+
+    private boolean containsKey(String value, String key){
+        return value.trim().toUpperCase().contains(key.toUpperCase());
     }
 }

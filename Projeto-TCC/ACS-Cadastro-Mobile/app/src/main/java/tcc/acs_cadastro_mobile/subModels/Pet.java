@@ -9,6 +9,24 @@ public class Pet extends RealmObject implements Serializable {
     private boolean hasPet, cat, dog, bird, criation, another;
     private int nPets;
 
+    public Pet() {
+        this(false, new boolean[5], 0);
+    }
+
+    public Pet(boolean hasPet, boolean[] pets, int nPets) {
+        this(hasPet, pets[0], pets[1], pets[2], pets[3], pets[4], nPets);
+    }
+
+    public Pet(boolean hasPet, boolean cat, boolean dog, boolean bird, boolean criation, boolean another, int nPets) {
+        this.hasPet = hasPet;
+        this.cat = cat;
+        this.dog = dog;
+        this.bird = bird;
+        this.criation = criation;
+        this.another = another;
+        this.nPets = nPets;
+    }
+
     public void setPets(boolean[] pets){
         setCat(pets[0]);
         setDog(pets[1]);

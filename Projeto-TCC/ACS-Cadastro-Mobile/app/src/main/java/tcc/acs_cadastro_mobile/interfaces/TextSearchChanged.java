@@ -12,7 +12,7 @@ public abstract class TextSearchChanged<E> implements TextWatcher {
 
     private ListView listView;
 
-    public TextSearchChanged(ListView listView) {
+    public TextSearchChanged(int i, ListView listView) {
         this.listView = listView;
     }
 

@@ -129,12 +129,11 @@
                     android:text="@string/txt_rsd_lives_since"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <EditText
+                <tcc.acs_cadastro_mobile.customViews.CalendarEditText
                     android:id="@+id/edt_rsd_lives_since"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight=".4"
-                    android:drawableRight="@android:drawable/ic_menu_my_calendar"
                     android:inputType="date" />
 
             </LinearLayout>

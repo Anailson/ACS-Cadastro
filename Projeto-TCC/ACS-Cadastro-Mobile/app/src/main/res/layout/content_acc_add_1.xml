@@ -1,236 +1,349 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/minimum_gap">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/minimum_gap">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_acc_record"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/edt_acc_record"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:inputType="number" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".4"
-                        android:gravity="center_vertical"
-                        android:text="@string/txt_acc_place_care"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
-                        android:id="@+id/spn_acc_place_care"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6"
-                        android:spinnerMode="dialog" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".4"
-                        android:text="@string/txt_acc_type_care"
-                        android:gravity="center_vertical"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
-                        android:id="@+id/spn_acc_type_care"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6"
-                        android:spinnerMode="dialog" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".4"
-                        android:text="@string/txt_acc_shift"
-                        android:gravity="center_vertical"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <Spinner
-                        android:id="@+id/spn_acc_shift"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:spinnerMode="dialog" />
-
-                </LinearLayout>
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/txt_num_sus"
+                    android:layout_weight=".5"
+                    android:text="@string/txt_acc_record"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete
-                    android:id="@+id/edt_acc_num_sus"
-                    android:layout_width="match_parent"
+                <EditText
+                    android:id="@+id/edt_acc_record"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".5"
                     android:inputType="number" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_ctz_birth_date"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <tcc.acs_cadastro_mobile.customViews.RequiredCalendarEditText
-                        android:id="@+id/edt_acc_birth_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:enabled="false"
-                        android:inputType="date" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:text="@string/txt_ctz_gender"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
-                        android:id="@+id/spn_acc_gender"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".6"
-                        android:enabled="false"
-                        android:spinnerMode="dialog" />
-
-                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/txt_acc_evaluation"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/txt_acc_place_care"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_acc_height"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/edt_acc_height"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:ems="10"
-                        android:inputType="number" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
+                    android:id="@+id/spn_acc_place_care"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:layout_weight=".6"
+                    android:spinnerMode="dialog" />
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_acc_weight"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/edt_acc_weight"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:inputType="numberDecimal"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-                </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/txt_acc_type_care"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
+                    android:id="@+id/spn_acc_type_care"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".6"
+                    android:spinnerMode="dialog" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/txt_acc_shift"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/spn_acc_shift"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:spinnerMode="dialog" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:text="@string/txt_num_sus"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete
+                    android:id="@+id/edt_acc_num_sus"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/txt_ctz_birth_date"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <tcc.acs_cadastro_mobile.customViews.RequiredCalendarEditText
+                    android:id="@+id/edt_acc_birth_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:inputType="date" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:text="@string/txt_ctz_gender"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <tcc.acs_cadastro_mobile.customViews.RequiredSpinner
+                    android:id="@+id/spn_acc_gender"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".6"
+                    android:spinnerMode="dialog" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/txt_acc_evaluation"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/txt_acc_height"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/edt_acc_height"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:ems="10"
+                    android:inputType="number" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/txt_acc_weight"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/edt_acc_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:inputType="numberDecimal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/minimum_gap">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:text="@string/txt_acc_vaccines"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <RadioGroup
+                android:id="@+id/rgrp_acc_vaccines"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight="0.4"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rgrp_acc_vaccines_y"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/txt_yes" />
+
+                <RadioButton
+                    android:id="@+id/rgrp_acc_vaccines_n"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:checked="false"
+                    android:text="@string/txt_no" />
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/minimum_gap">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_acc_kids"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".4"
+                    android:gravity="center_vertical"
+                    android:text="@string/txt_acc_breastfeeding"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/spn_acc_breastfeeding"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:spinnerMode="dialog" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/minimum_gap">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".4"
+                android:text="@string/txt_acc_pregnant"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:text="@string/txt_acc_dum"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/edt_acc_dum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:inputType="date"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".4"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/minimum_gap">
 
@@ -238,11 +351,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"
-                    android:text="@string/txt_acc_vaccines"
+                    android:text="@string/txt_acc_planned_pregnancy"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioGroup
-                    android:id="@+id/rgrp_acc_vaccines"
+                    android:id="@+id/rgrp_acc_planned_pregnancy"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
@@ -251,14 +364,14 @@
                     android:orientation="horizontal">
 
                     <RadioButton
-                        android:id="@+id/rgrp_acc_vaccines_y"
+                        android:id="@+id/rgrp_acc_planned_pregnancy_y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:text="@string/txt_yes" />
 
                     <RadioButton
-                        android:id="@+id/rgrp_acc_vaccines_n"
+                        android:id="@+id/rgrp_acc_planned_pregnancy_n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
@@ -271,207 +384,92 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/minimum_gap">
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_acc_kids"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+                    android:layout_weight=".6"
+                    android:text="@string/txt_acc_pregnancy_weeks"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".4"
-                        android:text="@string/txt_acc_breastfeeding"
-                        android:gravity="center_vertical"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <Spinner
-                        android:id="@+id/spn_acc_breastfeeding"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:spinnerMode="dialog" />
-
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/edt_acc_pregnancy_weeks"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:text="@string/txt_acc_previous_pregnancy"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/edt_acc_previous_pregnancy"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".6"
+                    android:text="@string/txt_acc_child_birth"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/edt_acc_child_birth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".4"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:paddingBottom="@dimen/minimum_gap">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="center_vertical"
+                    android:text="@string/txt_acc_home_care"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Spinner
+                    android:id="@+id/spn_acc_home_care"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".4"
-                    android:text="@string/txt_acc_pregnant"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+                    android:layout_weight="0.6"
+                    android:spinnerMode="dialog" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".4"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_acc_dum"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/edt_acc_dum"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:inputType="date"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".4"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/minimum_gap">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.8"
-                        android:text="@string/txt_acc_planned_pregnancy"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <RadioGroup
-                        android:id="@+id/rgrp_acc_planned_pregnancy"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="right"
-                        android:layout_weight="0.4"
-                        android:gravity="right"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rgrp_acc_planned_pregnancy_y"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            android:text="@string/txt_yes" />
-
-                        <RadioButton
-                            android:id="@+id/rgrp_acc_planned_pregnancy_n"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:checked="false"
-                            android:text="@string/txt_no" />
-
-                    </RadioGroup>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_acc_pregnancy_weeks"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/edt_acc_pregnancy_weeks"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:inputType="number"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_acc_previous_pregnancy"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/edt_acc_previous_pregnancy"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:inputType="number"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".6"
-                        android:text="@string/txt_acc_child_birth"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                        android:id="@+id/edt_acc_child_birth"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:inputType="number"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/minimum_gap">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.4"
-                        android:text="@string/txt_acc_home_care"
-                        android:gravity="center_vertical"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <Spinner
-                        android:id="@+id/spn_acc_home_care"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:spinnerMode="dialog" />
-
-                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
-    </ScrollView>
 
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>

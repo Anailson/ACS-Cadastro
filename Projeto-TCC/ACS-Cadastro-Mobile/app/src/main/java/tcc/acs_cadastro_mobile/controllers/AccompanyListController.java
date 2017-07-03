@@ -61,7 +61,7 @@ public class AccompanyListController {
 
         //ITextSearchListener
         @Override
-        public List<ISearcher> searchByText(String search) {
+        public List<ISearcher> search(String search) {
 
             List<ISearcher> founded = new ArrayList<>();
             for (AccompanyModel accompany : accompanies) {
@@ -73,7 +73,7 @@ public class AccompanyListController {
         }
 
         @Override
-        public List<ISearcher> searchByNumber(String search) {
+        public List<ISearcher> search(int search) {
 
             List<ISearcher> founded = new ArrayList<>();
             for (AccompanyModel accompany : accompanies) {

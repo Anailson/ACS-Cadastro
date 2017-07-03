@@ -19,10 +19,7 @@ import tcc.acs_cadastro_mobile.customViews.RequiredCalendarEditText;
 import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
 import tcc.acs_cadastro_mobile.interfaces.IAccompany;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.RecordDataModel;
-import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
-import tcc.acs_cadastro_mobile.persistence.RecordDataPersistence;
 import tcc.acs_cadastro_mobile.subModels.Anthropometric;
 import tcc.acs_cadastro_mobile.subModels.KidAndPregnant;
 import tcc.acs_cadastro_mobile.subModels.RecordDetails;
@@ -50,7 +47,7 @@ public class AccompanyStepOneFragment extends Fragment implements IRequiredField
         fragment.setArguments(bundle);
         return fragment;
     }
-
+    //TODO Porque não tá salvando mais de um acompanhamento? tá sobrescrevendo? Retorna o primeiro?
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -93,6 +90,7 @@ public class AccompanyStepOneFragment extends Fragment implements IRequiredField
         spnBreastFeeding.setAdapter(controller.getAdapter(R.array.breast_feeding));
         spnHomeCare.setAdapter(controller.getAdapter(R.array.home_care));
 
+
         if(recordData != null){
             fillFields();
         }
@@ -114,29 +112,12 @@ public class AccompanyStepOneFragment extends Fragment implements IRequiredField
     }
 
     private void getFields(){
-        long record = controller.getRecord(edtRecord);
-        String placeCare = controller.getFields(spnPlaceCare);
-        String typeCare = controller.getFields(spnTypeCare);
-        String shift = controller.getFields(spnShift);
-        CitizenModel citizen = CitizenPersistence.get(controller.getNumSus(edtNumSus));
-        RecordDetails details = RecordDataPersistence.get(record, placeCare, typeCare, shift, citizen);
+        RecordDetails details = controller.getDetails(edtRecord, edtNumSus, spnPlaceCare, spnTypeCare, spnShift);
+        Anthropometric anthropometric = controller.getAnthropometric(edtWeight, edtHeight, rgrpVaccinates);
+        KidAndPregnant kidAndPregnant = controller.getKidAndPregnant(spnBreastFeeding, edtDum,
+                rgrpPlannedPregnancy, edtPregnancyWeeks, edtPreviousPregnancy, edtChildBirth, spnHomeCare);
 
-        float weight = controller.getWeight(edtWeight);
-        int height = controller.getHeight(edtHeight);
-        boolean vaccinates = controller.getVaccinates(rgrpVaccinates);
-        Anthropometric anthropometric = RecordDataPersistence.get(weight, height, vaccinates);
-
-        String breastFeeding = controller.getFields(spnBreastFeeding);
-        String dum = controller.getFields(edtDum);
-        boolean plannedPregnancy = controller.getPlannedPregnancy(rgrpPlannedPregnancy);
-        int weeks = controller.getWeeks(edtPregnancyWeeks);
-        int previous = controller.getPrevious(edtPreviousPregnancy);
-        int childBirth = controller.getChildBirth(edtChildBirth);
-        String homeCare = controller.getFields(spnHomeCare);
-        KidAndPregnant kidAndPregnant = RecordDataPersistence.get(breastFeeding, dum, plannedPregnancy, weeks,
-                previous, childBirth, homeCare);
-
-        recordData = RecordDataPersistence.get(details, anthropometric, kidAndPregnant);
+        recordData = controller.get(details, anthropometric, kidAndPregnant);
         accompany.send(recordData);
     }
 

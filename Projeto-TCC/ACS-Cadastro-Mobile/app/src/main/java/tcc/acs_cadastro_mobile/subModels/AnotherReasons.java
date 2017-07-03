@@ -5,17 +5,21 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 
 public class AnotherReasons extends RealmObject implements Serializable {
-    private boolean internment, controlEnvironments, collectiveActivities, guidance, others;
+    private boolean recordUpdate, periodicVisit, internment, controlEnvironments, collectiveActivities,
+            guidance, others;
 
     public AnotherReasons() {
-        this(new boolean[5]);
+        this(new boolean[7]);
     }
 
     public AnotherReasons(boolean[] reasons) {
-        this(reasons[0], reasons[1], reasons[2], reasons[3], reasons[4]);
+        this(reasons[0], reasons[1], reasons[2], reasons[3], reasons[4], reasons[5], reasons[6]);
     }
 
-    public AnotherReasons(boolean internment, boolean controlEnvironments, boolean collectiveActivities, boolean guidance, boolean others) {
+    public AnotherReasons(boolean record, boolean periodic, boolean internment, boolean controlEnvironments,
+                          boolean collectiveActivities, boolean guidance, boolean others) {
+        this.recordUpdate = record;
+        this.periodicVisit = periodic;
         this.internment = internment;
         this.controlEnvironments = controlEnvironments;
         this.collectiveActivities = collectiveActivities;
@@ -23,8 +27,25 @@ public class AnotherReasons extends RealmObject implements Serializable {
         this.others = others;
     }
 
-    public boolean[] getValues(){
-        return new boolean[]{internment, controlEnvironments, collectiveActivities, guidance, others};
+    public boolean[] getValues() {
+        return new boolean[]{recordUpdate, periodicVisit, internment, controlEnvironments,
+                collectiveActivities, guidance, others};
+    }
+
+    public boolean isRecordUpdate() {
+        return recordUpdate;
+    }
+
+    public void setRecordUpdate(boolean recordUpdate) {
+        this.recordUpdate = recordUpdate;
+    }
+
+    public boolean isPeriodicVisit() {
+        return periodicVisit;
+    }
+
+    public void setPeriodicVisit(boolean periodicVisit) {
+        this.periodicVisit = periodicVisit;
     }
 
     public boolean isInternment() {

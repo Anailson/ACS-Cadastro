@@ -9,6 +9,24 @@ public class Feeding extends RealmObject implements Serializable{
     private String foodPerDay;
     private boolean restaurant, restaurantDonation, religiousGroup, popular, another;
 
+    public Feeding() {
+        this("", new boolean[5]);
+    }
+
+    public Feeding(String foodPerDay, boolean [] feedings) {
+        this(foodPerDay, feedings[0], feedings[1], feedings[2], feedings[3], feedings[4]);
+    }
+
+    public Feeding(String foodPerDay, boolean restaurant, boolean restaurantDonation, boolean religiousGroup,
+                   boolean popular, boolean another) {
+        this.foodPerDay = foodPerDay;
+        this.restaurant = restaurant;
+        this.restaurantDonation = restaurantDonation;
+        this.religiousGroup = religiousGroup;
+        this.popular = popular;
+        this.another = another;
+    }
+
     public boolean[] getFeedings() {
         return new boolean[]{restaurant, restaurantDonation, religiousGroup, popular, another};
     }

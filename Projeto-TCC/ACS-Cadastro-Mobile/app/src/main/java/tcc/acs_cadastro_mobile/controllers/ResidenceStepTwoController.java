@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.customViews.RequiredSpinner;
+import tcc.acs_cadastro_mobile.models.HousingConditionsModel;
 import tcc.acs_cadastro_mobile.persistence.HousingConditionsPersistence;
 import tcc.acs_cadastro_mobile.subModels.House;
 import tcc.acs_cadastro_mobile.subModels.HousingSituation;
@@ -55,8 +56,11 @@ public class ResidenceStepTwoController extends StepsController {
         return hasError();
     }
 
-    public HousingSituation getHousingSituation(Spinner spnHousingSituation,
-                                                Spinner spnLocation, Spinner spnLocationIf) {
+    public HousingConditionsModel get(HousingSituation housingSituation, House house, boolean electricEnergy, WaterAndSanitation waterAndSanitation, Pet pet) {
+        return HousingConditionsPersistence.get(housingSituation, house, electricEnergy, waterAndSanitation, pet);
+    }
+
+    public HousingSituation getHousingSituation(Spinner spnHousingSituation, Spinner spnLocation, Spinner spnLocationIf) {
         return HousingConditionsPersistence.getHousingSituation(getFields(spnHousingSituation),
                 getFields(spnLocation), getFields(spnLocationIf));
     }
@@ -69,7 +73,7 @@ public class ResidenceStepTwoController extends StepsController {
         String access = getFields(spnResidenceAccess);
         String construction = getFields(spnResidenceConstruction);
         String constructionType = getFields(spnConstructionType);
-        return HousingConditionsPersistence.getHouse(type, nResidents, nRooms, access, construction, constructionType);
+        return HousingConditionsPersistence.get(type, nResidents, nRooms, access, construction, constructionType);
     }
 
     public WaterAndSanitation getWaterAndSanitation(Spinner spnWaterSupply, Spinner spnWaterTreatment,
@@ -88,7 +92,7 @@ public class ResidenceStepTwoController extends StepsController {
         boolean hasPet = isYesGroup(radioGroup, R.id.rgrp_rsd_pets_y);
         boolean pets[] = getFields(checkboxes);
         int nPets = getInt(edtPets);
-        return HousingConditionsPersistence.getPet(hasPet, pets, nPets);
+        return HousingConditionsPersistence.get(hasPet, pets, nPets);
     }
 
     public int getOwnershipIndex(int locationIndex, String ownership) {
@@ -117,15 +121,18 @@ public class ResidenceStepTwoController extends StepsController {
     }
 
     public void fillWaterSupply(Spinner spnWaterSupply, String waterSupply) {
-        fillField(spnWaterSupply, waterSupply, fragment.getString(R.string.txt_default));
+        int index = getIndex(waterSupply, R.array.water_supply);
+        fillField(spnWaterSupply, index);
     }
 
     public void fillWaterConditions(Spinner spnWaterTreatment, String waterTreatment) {
-        fillField(spnWaterTreatment, waterTreatment, fragment.getString(R.string.txt_default));
+        int index = getIndex(waterTreatment, R.array.water_treatment);
+        fillField(spnWaterTreatment, index);
     }
 
     public void fillBathroom(Spinner spnBathroom, String bathroom) {
-        fillField(spnBathroom, bathroom, fragment.getString(R.string.txt_default));
+        int index = getIndex(bathroom, R.array.bathroom);
+        fillField(spnBathroom, index);
     }
 
     public void fillPets(RadioGroup rgrpPets, boolean hasPets, boolean[] values, CheckBox... checkBoxes) {
@@ -167,7 +174,7 @@ public class ResidenceStepTwoController extends StepsController {
         EditText edtPetsTotal = (EditText) view.findViewById(R.id.edt_rsd_pets_total);
 
         if (!enable) {
-            fillField(new boolean[6], chbCat, chbDog, chbBird, chbBreeding, chbAnother);
+            fillField(new boolean[5], chbCat, chbDog, chbBird, chbBreeding, chbAnother);
             fillField(edtPetsTotal, "");
         }
         enableView(enable, chbCat, chbDog, chbBird, chbBreeding, chbAnother);

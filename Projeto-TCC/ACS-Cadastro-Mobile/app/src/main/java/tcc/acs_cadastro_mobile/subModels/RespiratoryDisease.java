@@ -12,6 +12,22 @@ public class RespiratoryDisease extends RealmObject implements Serializable {
         return new boolean[]{asthma, emphysema, another, dontKnow};
     }
 
+    public RespiratoryDisease() {
+        this(false, new boolean[4]);
+    }
+
+    public RespiratoryDisease(boolean isRespiratoryDisease, boolean[] diseases) {
+        this(isRespiratoryDisease, diseases[0], diseases[1], diseases[2], diseases[3]);
+    }
+
+    public RespiratoryDisease(boolean isRespiratoryDisease, boolean asthma, boolean emphysema, boolean another, boolean dontKnow) {
+        this.isRespiratoryDisease = isRespiratoryDisease;
+        this.asthma = asthma;
+        this.emphysema = emphysema;
+        this.another = another;
+        this.dontKnow = dontKnow;
+    }
+
     public void setRespiratoryDisease(boolean [] diseases){
 
         if(diseases.length != 4){

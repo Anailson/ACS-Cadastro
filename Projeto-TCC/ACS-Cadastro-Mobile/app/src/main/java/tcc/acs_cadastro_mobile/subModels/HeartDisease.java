@@ -9,6 +9,21 @@ public class HeartDisease extends RealmObject implements Serializable {
 
     private boolean isHeartDisease, insuficiency, another, dontKnow;
 
+    public HeartDisease() {
+        this(false, new boolean[3]);
+    }
+
+    public HeartDisease(boolean isHearthDisease, boolean [] heartDiseases) {
+        this(isHearthDisease, heartDiseases[0], heartDiseases[1], heartDiseases[2]);
+    }
+
+    public HeartDisease(boolean isHeartDisease, boolean insuficiency, boolean another, boolean dontKnow) {
+        this.isHeartDisease = isHeartDisease;
+        this.insuficiency = insuficiency;
+        this.another = another;
+        this.dontKnow = dontKnow;
+    }
+
     public void setDisease(boolean diseases[]){
         if(diseases.length != 3){
             throw new IllegalArgumentException("Array length must be equals at 3. Length = " + diseases.length + ".");

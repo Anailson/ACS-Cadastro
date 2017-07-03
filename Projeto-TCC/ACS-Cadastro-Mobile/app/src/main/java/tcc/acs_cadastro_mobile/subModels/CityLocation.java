@@ -10,6 +10,17 @@ public class CityLocation extends RealmObject implements Serializable {
     private String neighborhood, name, uf;
     private long cep;
 
+    public CityLocation() {
+        this("", "", "", 0);
+    }
+
+    public CityLocation(String neighborhood, String uf, String name, long cep) {
+        this.neighborhood = neighborhood;
+        this.name = name;
+        this.uf = uf;
+        this.cep = cep;
+    }
+
     public String getNeighborhood() {
         return neighborhood;
     }

@@ -8,14 +8,24 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import java.util.List;
+
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.SpinnerAdapter;
+import tcc.acs_cadastro_mobile.alerts.DefaultAlert;
 import tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete;
-import tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete.AutoFillListener;
+import tcc.acs_cadastro_mobile.interfaces.IAutoFillListener;
 import tcc.acs_cadastro_mobile.interfaces.ICalendarListener;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.models.RecordDataModel;
+import tcc.acs_cadastro_mobile.persistence.AccompanyPersistence;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
+import tcc.acs_cadastro_mobile.persistence.RecordDataPersistence;
+import tcc.acs_cadastro_mobile.subModels.Anthropometric;
+import tcc.acs_cadastro_mobile.subModels.KidAndPregnant;
+import tcc.acs_cadastro_mobile.subModels.RecordDetails;
 import tcc.acs_cadastro_mobile.views.CalendarActivity;
 
 public class AccompanyStepOneController extends StepsController {
@@ -34,7 +44,7 @@ public class AccompanyStepOneController extends StepsController {
         return listener;
     }
 
-    public AutoFillListener getSearchListener() {
+    public IAutoFillListener getSearchListener() {
         return getListener();
     }
 
@@ -44,6 +54,8 @@ public class AccompanyStepOneController extends StepsController {
 
     public boolean isRequiredFieldsFilled(IRequiredView spnPlaceCare, IRequiredView spnTypeCare,
                                           IRequiredView edtNumSus, IRequiredView spnGender, IRequiredView edtBirthDate) {
+        //TODO: Is required NumSus? Ever? isValidNumSus((EditText) edtNumSus);
+
         startErrors();
         applyError(spnPlaceCare);
         applyError(spnTypeCare);
@@ -53,8 +65,32 @@ public class AccompanyStepOneController extends StepsController {
         return hasError();
     }
 
+    public RecordDataModel get(RecordDetails details, Anthropometric anthropometric, KidAndPregnant kidAndPregnant) {
+        return RecordDataPersistence.get(details, anthropometric, kidAndPregnant);
+    }
+
+    public RecordDetails getDetails(EditText edtRecord, EditText edtNumSus, Spinner spnPlaceCare,
+                        Spinner spnTypeCare, Spinner spnShift) {
+        long record = AccompanyPersistence.getRecordIfBlack(getLong(edtRecord));
+        CitizenModel citizen = CitizenPersistence.get(getLong(edtNumSus));
+        return RecordDataPersistence.get(record, getFields(spnPlaceCare), getFields(spnTypeCare), getFields(spnShift), citizen);
+    }
+
+    public Anthropometric getAnthropometric(EditText edtWeight, EditText edtHeight, RadioGroup rgrpVaccinates) {
+        boolean vaccinate = isYesGroup(rgrpVaccinates, R.id.rgrp_acc_vaccines_y);
+        return RecordDataPersistence.get(getFloat(edtWeight), getInt(edtHeight), vaccinate);
+    }
+
+    public KidAndPregnant getKidAndPregnant(Spinner spnBreastFeeding, EditText edtDum,
+                        RadioGroup rgrpPlannedPregnancy, EditText edtPregnancyWeeks, EditText edtPrevious,
+                        EditText edtChildBirth, Spinner spnHomeCare) {
+        boolean planned = isYesGroup(rgrpPlannedPregnancy, R.id.rgrp_acc_planned_pregnancy_y);
+        return RecordDataPersistence.get(getFields(spnBreastFeeding), getFields(edtDum), planned, getInt(edtPregnancyWeeks),
+                getInt(edtPrevious), getInt(edtChildBirth), getFields(spnHomeCare));
+    }
+
     public ArrayAdapter getNumSusAdapter() {
-        String[] numSus = CitizenPersistence.getNumSus();
+        List<Long> numSus = CitizenPersistence.getNumSusAsList();
         return new SpinnerAdapter(fragment.getContext()).getAdapter(numSus);
     }
 
@@ -64,34 +100,6 @@ public class AccompanyStepOneController extends StepsController {
 
     public long getNumSus(AutoCompleteTextView edtNumSus) {
         return getLong(edtNumSus);
-    }
-
-    public float getWeight(EditText edtWeight) {
-        return getFloat(edtWeight);
-    }
-
-    public int getHeight(EditText edtHeight) {
-        return getInt(edtHeight);
-    }
-
-    public boolean getVaccinates(RadioGroup rgrpVaccinates) {
-        return isYesGroup(rgrpVaccinates, R.id.rgrp_acc_vaccines_y);
-    }
-
-    public boolean getPlannedPregnancy(RadioGroup rgrpPlannedPregnancy) {
-        return isYesGroup(rgrpPlannedPregnancy, R.id.rgrp_acc_planned_pregnancy_y);
-    }
-
-    public int getWeeks(EditText edtPregnanacyWeeks) {
-        return getInt(edtPregnanacyWeeks);
-    }
-
-    public int getPrevious(EditText edtPreviousPregnancym) {
-        return getInt(edtPreviousPregnancym);
-    }
-
-    public int getChildBirth(EditText edtChildBirth) {
-        return getInt(edtChildBirth);
     }
 
     public void fillPlaceCare(Spinner spnPlaceCare, String placeCare) {
@@ -168,9 +176,9 @@ public class AccompanyStepOneController extends StepsController {
         fillField(edtBirthDate, "");
     }
 
-    private class Listeners implements AutoFillListener, ICalendarListener {
+    private class Listeners implements IAutoFillListener, ICalendarListener {
 
-        //RequiredAutoComplete.AutoFillListener
+        //RequiredAutoComplete.IAutoFillListener
         @Override
         public void searching(EditText editText) {
             fillCitizenData(editText.getText().toString());

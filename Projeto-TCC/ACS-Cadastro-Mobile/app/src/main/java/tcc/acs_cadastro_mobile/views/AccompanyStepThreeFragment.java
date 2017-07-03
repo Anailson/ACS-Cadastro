@@ -15,7 +15,6 @@ import tcc.acs_cadastro_mobile.controllers.AccompanyStepThreeController;
 import tcc.acs_cadastro_mobile.interfaces.IAccompany;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.ExamsModel;
-import tcc.acs_cadastro_mobile.persistence.ExamsPersistence;
 import tcc.acs_cadastro_mobile.subModels.EvaluatedExams;
 import tcc.acs_cadastro_mobile.subModels.RequestExams;
 
@@ -133,21 +132,18 @@ public class AccompanyStepThreeFragment extends Fragment implements IRequiredFie
     private void getFields() {
 
         String pic = controller.getFields(spnPic);
-        boolean[] requests = controller.getFields(chbTotalCholesterolR, chbCreatinineR, chbEasEquR,
+        RequestExams request = controller.getRequestExams(chbTotalCholesterolR, chbCreatinineR, chbEasEquR,
                 chbElectrocardiogramR, chbHemoglobinR, chbSpirometryR, chbSputumR, chbGlycemiaR, chbHdlR,
                 chbGlycemicR, chbBloodCountR, chbLdlR, chbEyesR, chbSyphilisR, chbDengueR, chbHivR,
                 chbHumanAntiglobulinR, chbEarTestR, chbTestPregnancyR, chbEyeTestR, chbTestFootR,
                 chbUltrasonographyR, chbUrocultureR);
-        RequestExams request = ExamsPersistence.getRequestExams(requests);
-
-        boolean[] evaluateds = controller.getFields(chbTotalCholesterolE, chbCreatinineE, chbEasEquE,
+        EvaluatedExams evaluated = controller.getEvaluatedExams(chbTotalCholesterolE, chbCreatinineE, chbEasEquE,
                 chbElectrocardiogramE, chbHemoglobinE, chbSpirometryE, chbSputumE, chbGlycemiaE, chbHdlE,
                 chbGlycemicE, chbBloodCountE, chbLdlE, chbEyesE, chbSyphilisE, chbDengueE, chbHivE,
                 chbHumanAntiglobulinE, chbEarTestE, chbTestPregnancyE, chbEyeTestE, chbTestFootE,
                 chbUltrasonographyE, chbUrocultureE);
-        EvaluatedExams evaluated = ExamsPersistence.getEvaluatedExams(evaluateds);
 
-        exams = ExamsPersistence.get(pic, request, evaluated, null);
+        exams = controller.get(pic, request, evaluated);
         accompany.send(exams);
     }
 

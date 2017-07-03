@@ -1,5 +1,7 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import android.util.Log;
+
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 
@@ -12,7 +14,7 @@ public class RecordDetails extends RealmObject implements Serializable {
     private CitizenModel citizen;
 
     public RecordDetails() {
-        this(-1, "", "", "", null);
+        this(-1, "", "", "", new CitizenModel());
     }
 
     public RecordDetails(long record, String placeCare, String typeCare, String shift, CitizenModel citizen) {

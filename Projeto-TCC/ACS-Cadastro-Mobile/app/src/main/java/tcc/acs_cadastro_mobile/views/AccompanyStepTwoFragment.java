@@ -17,7 +17,6 @@ import tcc.acs_cadastro_mobile.interfaces.IAccompany;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredFields;
 import tcc.acs_cadastro_mobile.models.ConditionsModel;
 import tcc.acs_cadastro_mobile.models.RealmInt;
-import tcc.acs_cadastro_mobile.persistence.ConditionPersistence;
 import tcc.acs_cadastro_mobile.subModels.CommunicableDisease;
 import tcc.acs_cadastro_mobile.subModels.ConditionDiseases;
 import tcc.acs_cadastro_mobile.subModels.TrackingDiseases;
@@ -105,19 +104,14 @@ public class AccompanyStepTwoFragment extends Fragment implements IRequiredField
 
     private void getFields(){
 
-        boolean[] diseases = controller.getFields(chbAsthma, chbMalnutrition, chbDiabetes, chbDpoc,
+        ConditionDiseases condition = controller.getConditionDiseases(chbAsthma, chbMalnutrition, chbDiabetes, chbDpoc,
                 chbHypertension, chbObesity, chbPrenatal, chbChildcare, chbPuerperium, chbSexualHealth,
                 chbSmoking, chbAlcohol, chbDrugs, chbMentalHealth, chbRehabilitation);
-        boolean[] communicables = controller.getFields(chbTuberculosis, chbLeprosy, chbDengue, chbDst);
-        boolean[] trackings = controller.getFields(chbCervicalCancer, chbBreastCancer, chbCardiovascular);
-        RealmInt[] cids = controller.getAnotherCids(edtAnothers);
+        CommunicableDisease communicable = controller.getCommunicableDisease(chbTuberculosis, chbLeprosy, chbDengue, chbDst);
+        TrackingDiseases tracking = controller.getTrackingDiseases(chbCervicalCancer, chbBreastCancer, chbCardiovascular);
+        RealmList<RealmInt> anothers = controller.getAnotherCids(edtAnothers);
 
-        ConditionDiseases condition = ConditionPersistence.getConditionDiseases(diseases);
-        CommunicableDisease communicable = ConditionPersistence.getCommunicableDisease(communicables);
-        TrackingDiseases tracking = ConditionPersistence.getTrackingDiseases(trackings);
-        RealmList<RealmInt> anothers = ConditionPersistence.getAnotherCids(cids);
-
-        conditions = ConditionPersistence.get(condition, communicable, tracking, anothers);
+        conditions = controller.get(condition, communicable, tracking, anothers);
         accompany.send(conditions);
     }
 

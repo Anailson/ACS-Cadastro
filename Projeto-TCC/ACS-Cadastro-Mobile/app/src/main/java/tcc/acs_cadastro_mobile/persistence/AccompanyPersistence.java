@@ -1,8 +1,9 @@
 package tcc.acs_cadastro_mobile.persistence;
 
 import io.realm.Realm;
-import io.realm.RealmList;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import tcc.acs_cadastro_mobile.models.AccompanyModel;
 import tcc.acs_cadastro_mobile.models.ConditionsModel;
 import tcc.acs_cadastro_mobile.models.ExamsModel;
@@ -52,5 +53,20 @@ public class AccompanyPersistence {
         AccompanyModel object = realm.copyToRealmOrUpdate(accompany);
         realm.commitTransaction();
         return object;
+    }
+
+    public static long getRecordIfBlack(long record ){
+
+        if(record > AcsRecordPersistence.DEFAULT_INT) return record;
+
+        RealmQuery<AccompanyModel> query = Realm.getDefaultInstance().where(AccompanyModel.class);
+        AccompanyModel accompany = query.findAllSorted(AccompanyModel.RECORD, Sort.ASCENDING)
+                .first(null);
+        if(accompany == null || accompany.getRecord() > AcsRecordPersistence.DEFAULT_INT){
+            return AcsRecordPersistence.DEFAULT_INT;
+        } else {
+            return query.lessThanOrEqualTo(AccompanyModel.RECORD, AcsRecordPersistence.DEFAULT_INT)
+                    .findAll().size() * -1;
+        }
     }
 }

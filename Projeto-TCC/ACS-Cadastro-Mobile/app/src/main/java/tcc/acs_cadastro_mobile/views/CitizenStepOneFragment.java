@@ -14,6 +14,7 @@ import android.widget.EditText;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.CitizenStepOneController;
+import tcc.acs_cadastro_mobile.controllers.StepsController;
 import tcc.acs_cadastro_mobile.customViews.CalendarEditText;
 import tcc.acs_cadastro_mobile.customViews.RequiredCalendarEditText;
 import tcc.acs_cadastro_mobile.interfaces.ICitizenData;
@@ -95,6 +96,9 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         spnCity.setAdapter(controller.getSpinnerAdapter(R.array.se_cities));
         spnCity.setEnabled(true);
 
+        if (personalData != null) {
+            fillFields(personalData);
+        }
 
         edtBirth.setShowCalendarListener(controller.getCalendarListener());
         edtRespBirth.setShowCalendarListener(controller.getCalendarListener());
@@ -102,10 +106,6 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         chbMotherUnknown.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
         chbNationBirth.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
         chbResponsible.setOnCheckedChangeListener(controller.getCheckBoxChangeListener());
-
-        if (personalData != null) {
-            fillFields(personalData);
-        }
 
         return view;
     }
@@ -143,7 +143,7 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         Nationality nationality = controller.getNationality(spnNationality, edtNationBirth, spnUf, spnCity);
         Contact contact = controller.getContact(edtPhone, edtEmail);
 
-        personalData = PersonalDataPersistence.getInstance(particular, mother, responsible,genderAndRace, nationality, contact);
+        personalData = controller.get(particular, mother, responsible,genderAndRace, nationality, contact);
         citizenData.send(personalData);
 
         super.onDetach();
@@ -159,7 +159,7 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         int ufIndex = controller.getIndex(personalData.getUf(), R.array.uf);
 
         //TODO: Set spinner city according personalData value (whats wrong?)
-        controller.fillField(edtNumSus, personalData.getNumSus());
+        controller.fillField(edtNumSus, StepsController.getEmptyOrValue(personalData.getNumSus()));
         controller.fillField(edtName, personalData.getName());
         controller.fillField(edtSocialName, personalData.getSocialName());
         controller.fillMotherName(chbMotherUnknown, personalData.isMotherUnknown(), edtMotherName,
@@ -167,7 +167,7 @@ public class CitizenStepOneFragment extends Fragment implements IRequiredFields 
         controller.fillField(edtNumNis, personalData.getNumNis());
         controller.fillField(edtBirth, personalData.getBirth());
         controller.fillResponsible(chbResponsible, personalData.isResponsible(), edtRespNumSus,
-                personalData.getRespNumSus() + "", edtRespBirth, personalData.getRespBirth());
+                personalData.getRespNumSus(), edtRespBirth, personalData.getRespBirth());
         controller.fillField(spnGender, controller.getIndex(personalData.getGender(), R.array.gender));
         controller.fillField(spnRace, controller.getIndex(personalData.getRace(), R.array.race));
         controller.fillField(spnNationality, controller.getIndex(personalData.getNation(), R.array.nationality));

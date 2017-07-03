@@ -10,6 +10,15 @@ public class StreetSituation extends RealmObject implements Serializable {
     private boolean isStreetSituation;
     private String value;
 
+    public StreetSituation() {
+        this(false, "");
+    }
+
+    public StreetSituation(boolean isStreetSituation, String value) {
+        this.isStreetSituation = isStreetSituation;
+        this.value = value;
+    }
+
     public boolean isStreetSituation() {
         return isStreetSituation;
     }

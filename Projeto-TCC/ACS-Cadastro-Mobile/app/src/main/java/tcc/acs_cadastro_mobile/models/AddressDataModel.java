@@ -2,7 +2,6 @@ package tcc.acs_cadastro_mobile.models;
 
 import java.io.Serializable;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.subModels.CityLocation;
 import tcc.acs_cadastro_mobile.subModels.Phones;
@@ -14,45 +13,14 @@ public class AddressDataModel extends RealmObject implements Serializable {
     private CityLocation city;
     private Phones phones;
 
-    public static AddressDataModel newInstance(Realm realm, StreetLocation street, CityLocation city, Phones phones) {
-        realm.beginTransaction();
-        AddressDataModel object = realm.createObject(AddressDataModel.class);
-        object.setStreet(street);
-        object.setCity(city);
-        object.setPhones(phones);
-        realm.commitTransaction();
-        return object;
+    public AddressDataModel() {
+        this(new StreetLocation(), new CityLocation(), new Phones());
     }
 
-    public static StreetLocation getStreetLocation(Realm realm, String type, String name, int number, String complement){
-        realm.beginTransaction();
-        StreetLocation object = realm.createObject(StreetLocation.class);
-        object.setType(type);
-        object.setName(name);
-        object.setNumber(number);
-        object.setComplement(complement);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static CityLocation getCityLocation(Realm realm, String neighborhood, String city, String uf, long cep){
-        realm.beginTransaction();
-        CityLocation object = realm.createObject(CityLocation.class);
-        object.setNeighborhood(neighborhood);
-        object.setName(city);
-        object.setUf(uf);
-        object.setCep(cep);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Phones getPhones(Realm realm, String home, String reference){
-        realm.beginTransaction();
-        Phones object = realm.createObject(Phones.class);
-        object.setHome(home);
-        object.setReference(reference);
-        realm.commitTransaction();
-        return object;
+    public AddressDataModel(StreetLocation street, CityLocation city, Phones phones) {
+        this.street = street;
+        this.city = city;
+        this.phones = phones;
     }
 
     public StreetLocation getStreet() {

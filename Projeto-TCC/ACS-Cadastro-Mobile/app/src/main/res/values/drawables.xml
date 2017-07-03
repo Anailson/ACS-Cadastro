@@ -2,7 +2,10 @@
     <item name="ic_citizen" type="drawable">@mipmap/ic_citizen</item>
     <item name="ic_citizen_add" type="drawable">@mipmap/ic_citizen_add</item>
     <item name="ic_residence" type="drawable">@mipmap/ic_residence</item>
+    <item name="ic_residence_add" type="drawable">@mipmap/ic_residence_add</item>
     <item name="ic_accompany" type="drawable">@mipmap/ic_accompany</item>
+    <item name="ic_accompany_add" type="drawable">@mipmap/ic_accompany_add</item>
     <item name="ic_visit" type="drawable">@mipmap/ic_visit</item>
+    <item name="ic_visit_add" type="drawable">@mipmap/ic_visit_add</item>
     <item name="ic_upload" type="drawable">@mipmap/ic_upload_sys</item>
 </resources>

@@ -19,63 +19,20 @@ public class StreetSituationModel extends RealmObject implements Serializable {
     private FamilyVisit familyVisit;
     private Hygiene hygiene;
 
-    public static StreetSituationModel newInstance(Realm realm, StreetSituation streetSituation,
-                       boolean benefit, boolean family, Feeding feeding, AnotherInstitution anotherInstitution,
-                       FamilyVisit familyVisit, Hygiene hygiene) {
-        realm.beginTransaction();
-        StreetSituationModel object = realm.createObject(StreetSituationModel.class);
-        object.setStreetSituation(streetSituation);
-        object.setBenefit(benefit);
-        object.setFamily(family);
-        object.setFeeding(feeding);
-        object.setAnotherInstitution(anotherInstitution);
-        object.setFamilyVisit(familyVisit);
-        object.setHygiene(hygiene);
-        realm.commitTransaction();
-        return object;
+    public StreetSituationModel() {
+        this(new StreetSituation(), false, false, new Feeding(), new AnotherInstitution(), new FamilyVisit(),
+                new Hygiene());
     }
 
-    public static StreetSituation getStreetSituation(Realm realm, boolean isStreet, String value){
-        realm.beginTransaction();
-        StreetSituation object = realm.createObject(StreetSituation.class);
-        object.setStreetSituation(isStreet);
-        object.setValue(value);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Feeding getFeeding(Realm realm, String foodPerDay, boolean feedings[]){
-        realm.beginTransaction();
-        Feeding object = realm.createObject(Feeding.class);
-        object.setFoodPerDay(foodPerDay);
-        object.setFeedings(feedings);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static AnotherInstitution getAnotherInstitution(Realm realm, boolean isAnother, String value){
-        realm.beginTransaction();
-        AnotherInstitution object = realm.createObject(AnotherInstitution.class);
-        object.setAnotherInstitution(isAnother);
-        object.setValue(value);
-        realm.commitTransaction();
-        return object;
-    }
-    public static FamilyVisit getFamilyVisit (Realm realm, boolean isFamily, String value){
-        realm.beginTransaction();
-        FamilyVisit object = realm.createObject(FamilyVisit.class);
-        object.setFamilyVisit(isFamily);
-        object.setValue(value);
-        realm.commitTransaction();
-        return object;
-    }
-    public static Hygiene getHygiene (Realm realm, boolean isHygiene, boolean hygienes[]){
-        realm.beginTransaction();
-        Hygiene object = realm.createObject(Hygiene.class);
-        object.setHygiene(isHygiene);
-        object.setHygienes(hygienes);
-        realm.commitTransaction();
-        return object;
+    public StreetSituationModel(StreetSituation streetSituation, boolean benefit, boolean family, Feeding feeding,
+                                AnotherInstitution anotherInstitution, FamilyVisit familyVisit, Hygiene hygiene) {
+        this.streetSituation = streetSituation;
+        this.benefit = benefit;
+        this.family = family;
+        this.feeding = feeding;
+        this.anotherInstitution = anotherInstitution;
+        this.familyVisit = familyVisit;
+        this.hygiene = hygiene;
     }
 
     public StreetSituation getStreetSituation() {return streetSituation;}
