@@ -29,5 +29,4 @@
         <item name="colorControlActivated">@color/background</item>
         <item name="colorControlHighlight">@color/ex_03</item>
     </style>
-
 </resources>

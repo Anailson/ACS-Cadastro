@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorAccent">#036fa6</color>
-
+    <color name="colorAccent">#ff9d00</color>
     <color name="color_default">@android:color/primary_text_light_nodisable</color>
     <color name="color_primary">@color/colorAccent</color>
-    <color name="color_primary_light">#0899e2</color>
-    <color name="color_primary_dark">#014a70</color>
+    <color name="color_primary_light">#f5fdc426</color>
+    <color name="color_primary_dark">#ca7d01</color>
     <color name="color_float_button">#040cef</color>
 
     <color name="background">#a7b6f9</color>

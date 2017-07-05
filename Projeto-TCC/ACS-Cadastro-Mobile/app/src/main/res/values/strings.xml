@@ -20,7 +20,8 @@
     <string name="title_activity_add_visit">Adicionar Visita</string>
 
     <!-- Text Views -->
-    <!-- Citizen -->
+    <string name="txt_agt_remember">Lembrar dados</string>
+    <string name="txt_agent_pic">Foto do agente de saúde</string>
     <string name="txt_brazil">Brasil</string>
     <string name="txt_another">Outro</string>
     <string name="txt_unknow">Não sabe</string>
@@ -35,6 +36,8 @@
     <string name="txt_day">Dia</string>
     <string name="txt_month">Mês</string>
     <string name="txt_year">Ano</string>
+
+    <!-- Citizen -->
     <string name="txt_ctz_data_1">Dados pessoais</string>
     <string name="txt_ctz_data_2">Informações sociodemográficas</string>
     <string name="txt_ctz_data_3">Condiçoes gerais de saúde</string>
@@ -316,11 +319,11 @@
     <string name="btn_add_citizen">Adicionar novo cidadão</string>
     <string name="btn_add_residence">Adicionar nova residência</string>
     <string name="btn_new_resp">Adicionar novo responsável</string>
-    <string name="btn_sign_in">Sign in or register</string>
+    <string name="btn_sign_in">Acessar os sitema</string>
 
     <!-- Edit Text Hints -->
-    <string name="hint_email">Email</string>
-    <string name="hint_password">Password (optional)</string>
+    <string name="hint_agt_num_sus">Digite seu número do SUS</string>
+    <string name="hint_agt_password">Password (optional)</string>
 
     <string name="hint_search_citizen">Digite o nome ou o número do SUS</string>
     <string name="hint_search_residence">Digite o nome do logradouro ou o CEP</string>
@@ -350,7 +353,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_residence">ResidenceActivity</string>
     <string name="title_activity_citizend_edit_acitivity">CitizendEditAcitivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
 </resources>
 
 

@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,55 +9,81 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/color_primary_light"
     tools:context="tcc.acs_cadastro_mobile.views.LoginActivity">
 
     <!-- Login progress -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/minimum_gap"
+        android:paddingBottom="@dimen/large_gap">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/ic_main"
+            android:contentDescription="@string/txt_agent_pic"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/email_login_form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/minimum_gap"
+        android:paddingLeft="@dimen/medium_gap"
+        android:paddingRight="@dimen/medium_gap">
 
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <AutoCompleteTextView
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/minimum_gap"
+                android:text="@string/txt_num_sus"
+                style="@style/Base.TextAppearance.AppCompat.Body2"/>
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/edt_agt_sus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/hint_search_citizen"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1" />
+                android:hint="@string/hint_agt_num_sus"
+                android:inputType="number"
+                android:textAllCaps="false" />
+        </LinearLayout>
 
-        </android.support.design.widget.TextInputLayout>
+        <CheckBox
 
-        <Button
-            android:id="@+id/email_sign_in_button"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
+            android:id="@+id/chb_agt_remember"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/btn_sign_in"
-            android:textStyle="bold" />
+            android:text="@string/txt_agt_remember" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/large_gap">
+
+            <Button
+                android:id="@+id/btn_sign_in"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/minimum_gap"
+                android:layout_weight="1"
+                android:background="@drawable/button_login"
+                android:text="@string/btn_sign_in" />
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>
