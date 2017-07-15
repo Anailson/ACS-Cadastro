@@ -11,42 +11,42 @@
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/><!-- Bootstrap core CSS     -->
 
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
 
-    <!-- Animation library for notifications   -->
+    <!-- Animation library for notifications-->
     <link href="assets/css/animate.min.css" rel="stylesheet"/>
 
     <!--  Light Bootstrap Table core CSS    -->
     <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
 
+    <!-- DataTable for paged tables -->
+    <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" >
+
     <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet"/>
-    <link href="assets/css/themify-icons.css" rel="stylesheet"/>
 
 </head>
 
 <body>
 <div class="wrapper">
 
-    <?php include "main_menu.php"; ?>
+    <?php include "main-menu.php"; ?>
     <div class="main-panel">
 
         <?php include "header.php" ?>
         <div class="content">
             <div class="container-fluid">
+                <ul id="submenu" class="card breadcrumb">
 
-                <ul class="breadcrumb card">
                     <li><a href="home.php">Home</a></li>
-                    <li><a id="sub-title" href=""></a></li>
                 </ul>
                 <div class="row">
-                    <div id="main_content" class="col-md-12"></div>
+                    <div id="main_content" class="col-md-12">
                     <!-- All views will be inserted here via Javascript/JQuery -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,8 +71,12 @@
 <!--  Google Maps Plugin    -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
+<!-- DataTable for paged tables -->
+<script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 
+
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project!
-<script src="assets/js/demo.js"></script> -->
+<script src="assets/js/demo.js"></script>-->

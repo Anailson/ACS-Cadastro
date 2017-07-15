@@ -1,6 +1,5 @@
 package tcc.acs_cadastro_mobile.views;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -11,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.controllers.LoginController;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class LoginActivity extends AppCompatActivity{
 
@@ -20,26 +21,22 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.btn_sign_in);
-        EditText edtNumSus = (EditText) findViewById(R.id.edt_agt_sus);
+        AcsRecordPersistence.startDatabase(this);
 
-        edtNumSus.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+        final LoginController controller = new LoginController(this);
+        Button mEmailSignInButton = (Button) findViewById(R.id.btn_sign_in);
+        final EditText edtNumSus = (EditText) findViewById(R.id.edt_agt_sus);
+
+
+        edtNumSus.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
+
+                controller.validateData(edtNumSus.getText().toString());
             }
         });
-    }
-
-    private boolean isEmailValid(String email) {
-        return email.contains("@");
-    }
-
-    private boolean isPasswordValid(String password) {
-        return password.length() > 4;
     }
 }
 

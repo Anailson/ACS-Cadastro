@@ -1,15 +1,22 @@
 package tcc.acs_cadastro_mobile.models;
 
-import io.realm.RealmObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class AgentModel extends RealmObject {
+import java.io.Serializable;
+
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
+
+public class AgentModel extends RealmObject implements Serializable{
 
     private String name;
     private long numSus;
     private int area, equip;
 
     public AgentModel() {
-        this("Maria Joaquina", 3243423, 1111, 22);
+        name = AcsRecordPersistence.DEFAULT_STR;
+        numSus = area = equip = AcsRecordPersistence.DEFAULT_INT;
     }
 
     public AgentModel(String name, long numSus, int area, int equip) {
@@ -17,6 +24,17 @@ public class AgentModel extends RealmObject {
         this.numSus = numSus;
         this.area = area;
         this.equip = equip;
+    }
+
+
+    public static AgentModel get(JSONObject object) throws JSONException {
+        if(object == null) return null;
+
+        return new AgentModel(
+                object.getString("NAME"),
+                object.getLong("NUM_SUS"),
+                object.getInt("AREA"),
+                object.getInt("EQUIP"));
     }
 
     public String getName() {

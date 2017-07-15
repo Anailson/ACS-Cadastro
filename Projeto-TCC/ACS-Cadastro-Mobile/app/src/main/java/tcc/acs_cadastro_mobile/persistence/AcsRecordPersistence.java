@@ -9,7 +9,6 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
 import io.realm.exceptions.RealmMigrationNeededException;
-import tcc.acs_cadastro_mobile.models.AgentModel;
 
 public class AcsRecordPersistence {
 
@@ -19,22 +18,22 @@ public class AcsRecordPersistence {
 
     public static long version = 0;
 
-    public static AgentModel startDatabase(Context context) {
+    public static void startDatabase(Context context) {
 
         SharedPreferences preferences = context.getSharedPreferences(DB_VERSION, Context.MODE_PRIVATE);
         delete(false, preferences);
 
         try {
 
-            return init(preferences, context);
+            init(preferences, context);
 
         } catch (RealmMigrationNeededException exception) {
 
-            return migrate(preferences);
+            migrate(preferences);
         }
     }
 
-    private static AgentModel init(SharedPreferences preferences, Context context){
+    private static void init(SharedPreferences preferences, Context context){
         version = preferences.getLong(DB_VERSION, 0);
 
         Realm.init(context);
@@ -42,8 +41,6 @@ public class AcsRecordPersistence {
                 .schemaVersion(version)
                 .build();
         Realm.setDefaultConfiguration(config);
-
-        return Realm.getInstance(config).where(AgentModel.class).findAll().first(new AgentModel());
     }
 
     private static void delete(boolean flag, SharedPreferences preferences){
@@ -53,7 +50,7 @@ public class AcsRecordPersistence {
         }
     }
 
-    private static AgentModel migrate(SharedPreferences preferences){
+    private static void migrate(SharedPreferences preferences){
 
         RealmConfiguration newConfig = new RealmConfiguration.Builder()
                 .migration(migration())
@@ -62,8 +59,6 @@ public class AcsRecordPersistence {
         preferences.edit().putLong(DB_VERSION, version).apply();
 
         Realm.setDefaultConfiguration(newConfig);
-        Realm realm = Realm.getDefaultInstance();
-        return realm.where(AgentModel.class).findAll().first(new AgentModel());
     }
 
     private static RealmMigration migration() {

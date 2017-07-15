@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.models.AgentModel;
-import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
+import tcc.acs_cadastro_mobile.persistence.AgentPersistence;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        AgentModel agent = AcsRecordPersistence.startDatabase(this);
+        AgentModel agent = AgentPersistence.get();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.bar_vst);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

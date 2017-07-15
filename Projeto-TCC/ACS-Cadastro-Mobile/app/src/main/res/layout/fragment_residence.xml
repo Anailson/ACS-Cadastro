@@ -29,5 +29,5 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_residence_add"
-        app:backgroundTint="@color/color_float_button" />
+        app:backgroundTint="@color/color_primary_dark" />
 </RelativeLayout>

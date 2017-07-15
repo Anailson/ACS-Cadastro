@@ -1,11 +1,11 @@
-<?php include "container_menus.php" ?>
+<?php include "template.php" ?>
 <script>
     $(function () {
         $(".nav li").removeClass("active");
-        $("#menu_citizens").addClass("active");
+        $("#menu_visits").addClass("active");
         $("#main_content").html($("#content"));
-        $("#title_menu").text("Cidadão");
-        $("#sub-title").text("Cidadão").attr("href", "cidadao.php");
+        $("#title_menu").html("<i class='fa fa-clock-o'></i>&emsp;Visitas");
+        $("#submenu").append("<li>Visitas</li>");
     });
 </script>
 
