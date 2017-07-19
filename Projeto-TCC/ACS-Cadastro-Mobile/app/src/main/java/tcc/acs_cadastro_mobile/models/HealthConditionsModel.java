@@ -1,9 +1,13 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.Diseases;
 import tcc.acs_cadastro_mobile.subModels.HeartDisease;
 import tcc.acs_cadastro_mobile.subModels.Interment;
@@ -39,69 +43,6 @@ public class HealthConditionsModel extends RealmObject implements Serializable {
         this.respiratoryDisease = respiratoryDisease;
         this.interment = interment;
         this.plant = plant;
-    }
-
-    public static Pregnant getPregnant(Realm realm, boolean isPregnant, String maternity) {
-        realm.beginTransaction();
-        Pregnant object = realm.createObject(Pregnant.class);
-        object.setPregnant(isPregnant);
-        object.setMaternity(maternity);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Diseases getDiseases(Realm realm, boolean[] diseases) {
-        realm.beginTransaction();
-        Diseases object = realm.createObject(Diseases.class);
-        object.setDiseases(diseases);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static HeartDisease getHeartDisease(Realm realm, boolean isHeartDisease, boolean[] diseases) {
-        realm.beginTransaction();
-        HeartDisease object = realm.createObject(HeartDisease.class);
-        object.setHeartDisease(isHeartDisease);
-        object.setDisease(diseases);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static KidneyDisease getKidneyDisease(Realm realm, boolean kidneyDisease, boolean[] diseases) {
-        realm.beginTransaction();
-        KidneyDisease object = realm.createObject(KidneyDisease.class);
-        object.setKidneyDisease(kidneyDisease);
-        object.setDisease(diseases);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static RespiratoryDisease getRespiratoryDisease(Realm realm, boolean isRespiratoryDisease,
-                                                           boolean[] diseases) {
-        realm.beginTransaction();
-        RespiratoryDisease object = realm.createObject(RespiratoryDisease.class);
-        object.setRespiratoryDisease(isRespiratoryDisease);
-        object.setRespiratoryDisease(diseases);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Interment getInterment(Realm realm, boolean isInterment, String interment) {
-        realm.beginTransaction();
-        Interment object = realm.createObject(Interment.class);
-        object.setInterment(isInterment);
-        object.setValue(interment);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Plant getPlant(Realm realm, boolean isPlant, String value) {
-        realm.beginTransaction();
-        Plant object = realm.createObject(Plant.class);
-        object.setPlants(isPlant);
-        object.setValue(value);
-        realm.commitTransaction();
-        return object;
     }
 
     public Pregnant getPregnant() {
@@ -270,6 +211,20 @@ public class HealthConditionsModel extends RealmObject implements Serializable {
 
     public boolean isOtherPractices() {
         return getDiseases().isOtherPractices();
+    }
+
+    public JSONObject asJson() throws JSONException {
+
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.TB_PREGNANT.name(), pregnant.getAsJson());
+        json.put(Constants.Citizen.WEIGHT.name(), weight);
+        json.put(Constants.Citizen.TB_DISEASES.name(), diseases.getAsJson());
+        json.put(Constants.Citizen.TB_HEART_DISEASE.name(), heartDisease.getAsJson());
+        json.put(Constants.Citizen.TB_KIDNEY_DISEASE.name(), kidneyDisease.getAsJson());
+        json.put(Constants.Citizen.TB_RESPIRATORY_DISEASE.name(), respiratoryDisease.getAsJson());
+        json.put(Constants.Citizen.TB_INTERMENT.name(), interment.getAsJson());
+        json.put(Constants.Citizen.TB_PLANT.name(), plant.getAsJson());
+        return json;
     }
 }
 

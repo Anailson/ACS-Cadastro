@@ -1,6 +1,10 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
 
@@ -31,5 +35,12 @@ public class Pregnant extends RealmObject implements Serializable {
 
     public void setMaternity(String maternity) {
         this.maternity = maternity;
+    }
+
+    public JSONObject getAsJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.PREGNANT.name(), isPregnant);
+        json.put(Constants.Citizen.DESCRIPTION.name(), maternity);
+        return json;
     }
 }

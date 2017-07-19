@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class Responsible extends RealmObject  implements Serializable {
     private boolean isResponsible;
@@ -41,5 +45,13 @@ public class Responsible extends RealmObject  implements Serializable {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.RESPONSIBLE.name(), isResponsible);
+        json.put(Constants.Citizen.NUM_SUS.name(), numSus);
+        json.put(Constants.Citizen.BIRTH_DATE.name(), birthDate);
+        return json;
     }
 }

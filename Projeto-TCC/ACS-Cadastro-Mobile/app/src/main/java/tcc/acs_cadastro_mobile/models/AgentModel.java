@@ -1,14 +1,17 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
-public class AgentModel extends RealmObject implements Serializable{
+public class AgentModel extends RealmObject implements Serializable {
 
     private String name;
     private long numSus;
@@ -26,15 +29,39 @@ public class AgentModel extends RealmObject implements Serializable{
         this.equip = equip;
     }
 
+    public AgentModel(JSONObject json) throws JSONException {
+        if (json != null) {
 
-    public static AgentModel get(JSONObject object) throws JSONException {
-        if(object == null) return null;
+            this.name = json.getString("NAME");
+            this.numSus = json.getLong("NUM_SUS");
+            this.area = json.getInt("AREA");
+            this.equip = json.getInt("EQUIP");
+        } else {
+            name = AcsRecordPersistence.DEFAULT_STR;
+            numSus = area = equip = AcsRecordPersistence.DEFAULT_INT;
+        }
+    }
 
-        return new AgentModel(
-                object.getString("NAME"),
-                object.getLong("NUM_SUS"),
-                object.getInt("AREA"),
-                object.getInt("EQUIP"));
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+
+        try {
+            json.put("NAME", name);
+            json.put("NUM_SUS", numSus);
+            json.put("AREA", area);
+            json.put("EQUIP", equip);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    public static List<AgentModel> getList(JSONArray array) throws JSONException {
+        List<AgentModel> list = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            list.add(new AgentModel(array.getJSONObject(i)));
+        }
+        return list;
     }
 
     public String getName() {

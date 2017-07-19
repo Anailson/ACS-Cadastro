@@ -1,15 +1,18 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import tcc.acs_cadastro_mobile.Constants;
+import tcc.acs_cadastro_mobile.interfaces.IJsonParser;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
-import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 
-public class CitizenModel extends RealmObject implements Serializable, ISearcher {
+public class CitizenModel extends RealmObject implements Serializable, ISearcher, IJsonParser {
 
     public static final String STRING_DEFAULT_VALUE = "No value";
     public static final String NAME = "name";
@@ -39,8 +42,17 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
         this.streetSituation = streetSituation;
     }
 
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.TB_PARTICULAR_DATA.name(), personalData.asJson());
+        json.put(Constants.Citizen.TB_SOCIAL_DEMOGRAPHIC.name(), socialDemographicData.asJson());
+        json.put(Constants.Citizen.TB_HEALTH_CONDITIONS.name(), healthConditions.asJson());
+        json.put(Constants.Citizen.TB_STREET_SITUATION.name(), streetSituation.asJson());
+        return json;
+    }
+
     public long getNumSus() {
-        return numSus > AcsRecordPersistence.DEFAULT_INT ? numSus : AcsRecordPersistence.DEFAULT_INT ;
+        return numSus > AcsRecordPersistence.DEFAULT_INT ? numSus : AcsRecordPersistence.DEFAULT_INT;
     }
 
     public void setNumSus(long numSus) {

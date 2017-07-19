@@ -1,11 +1,13 @@
 package tcc.acs_cadastro_mobile.subModels;
 
-import android.util.Log;
-
-import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.models.AccompanyModel;
+import tcc.acs_cadastro_mobile.models.CitizenModel;
 
 public class RecordDetails extends RealmObject implements Serializable {
 
@@ -23,6 +25,15 @@ public class RecordDetails extends RealmObject implements Serializable {
         this.typeCare = typeCare;
         this.shift = shift;
         this.citizen = citizen;
+    }
+
+    public JSONObject getAsJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(AccompanyModel.DB_VALUES.RECORD_DATA.name(), record);
+        json.put(AccompanyModel.DB_VALUES.PLACE_CARE.name(), placeCare);
+        json.put(AccompanyModel.DB_VALUES.TYPE_CARE.name(), typeCare);
+        json.put(AccompanyModel.DB_VALUES.SHIFT.name(), shift);
+        return json;
     }
 
     public String getName(){

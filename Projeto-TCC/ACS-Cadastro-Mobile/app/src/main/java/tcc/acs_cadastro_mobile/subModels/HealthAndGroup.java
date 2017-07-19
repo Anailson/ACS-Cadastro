@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class HealthAndGroup extends RealmObject implements Serializable {
 
@@ -40,5 +44,13 @@ public class HealthAndGroup extends RealmObject implements Serializable {
 
     public void setHealthPlan(boolean healthPlan) {
         this.healthPlan = healthPlan;
+    }
+
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.CAREGIVER.name(), caregiver);
+        json.put(Constants.Citizen.COMMUNITY_GROUP.name(), communityGroup);
+        json.put(Constants.Citizen.HEALTH_PLAN.name(), healthPlan);
+        return json;
     }
 }

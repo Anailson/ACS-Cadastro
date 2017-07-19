@@ -2,6 +2,10 @@
 
 class AcsDataBase
 {
+    const GET = "GET";
+    const PUT = "PUT";
+    const DELETE = "DELETE";
+    const POST = "POST";
 
     const DB_NAME = "tcc_bd";
 
@@ -18,8 +22,10 @@ class AcsDataBase
     private function openConnection()
     {
         try {
-
-            $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=". $this->dbName, "root", "");
+            $options = array(
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
+            );
+            $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, "root", "", $options);
             $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -39,7 +45,7 @@ class AcsDataBase
         $this->openConnection();
         $prepare = $this->connection->prepare($query);
 
-        if($prepare) {
+        if ($prepare) {
 
             $params ? $prepare->execute($params) : $prepare->execute();
 
@@ -47,7 +53,23 @@ class AcsDataBase
             $this->closeConnection();
             return $agents;
 
-        }else{
+        } else {
+            $this->closeConnection();
+            return false;
+        }
+    }
+
+    public function insert($query, $params)
+    {
+        $this->openConnection();
+        $stmt = $this->connection->prepare($query);
+        if ($stmt) {
+
+            $stmt->execute($params);
+            $id = $this->connection->lastInsertId();
+            $this->closeConnection();
+            return $id;
+        } else {
             $this->closeConnection();
             return false;
         }

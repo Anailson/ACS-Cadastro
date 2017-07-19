@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
-import io.realm.RealmObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class EducationEmployment extends RealmObject implements Serializable {
 
@@ -50,5 +54,14 @@ public class EducationEmployment extends RealmObject implements Serializable {
 
     public void setEmployment(String employment) {
         this.employment = employment;
+    }
+
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.SCHOOL.name(), school);
+        json.put(Constants.Citizen.OCCUPATION.name(), occupation);
+        json.put(Constants.Citizen.EDUCATION.name(), education);
+        json.put(Constants.Citizen.EMPLOYMENT.name(), employment);
+        return json;
     }
 }

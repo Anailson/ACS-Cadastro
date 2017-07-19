@@ -1,8 +1,13 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
+
 public class Nationality extends RealmObject  implements Serializable {
     private String nationality, nationBirth, uf, city;
 
@@ -48,4 +53,14 @@ public class Nationality extends RealmObject  implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.NATIONALITY.name(), nationality);
+        json.put(Constants.Citizen.NATION_BIRTH.name(), nationBirth);
+        json.put(Constants.Citizen.UF.name(), uf);
+        json.put(Constants.Citizen.CITY.name(), city);
+        return json;
+    }
+
 }

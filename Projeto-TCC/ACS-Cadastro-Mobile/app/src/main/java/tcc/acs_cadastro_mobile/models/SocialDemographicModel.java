@@ -1,9 +1,12 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.CommunityTraditional;
 import tcc.acs_cadastro_mobile.subModels.Deficiency;
 import tcc.acs_cadastro_mobile.subModels.EducationEmployment;
@@ -34,57 +37,6 @@ public class SocialDemographicModel extends RealmObject implements Serializable 
         this.communityTraditional = communityTraditional;
         this.sexualOrientation = sexualOrientation;
         this.deficiency = deficiency;
-    }
-
-    public static EducationEmployment getEducationEmployment(Realm realm, String occupation,
-                                                             String education, String employment) {
-        realm.beginTransaction();
-        EducationEmployment object = realm.createObject(EducationEmployment.class);
-        object.setOccupation(occupation);
-        object.setEducation(education);
-        object.setEmployment(employment);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static HealthAndGroup getHealthAndGroup(Realm realm, boolean caregiver, boolean communityGroup,
-                                                   boolean healthPlan) {
-        realm.beginTransaction();
-        HealthAndGroup object = realm.createObject(HealthAndGroup.class);
-        object.setCaregiver(caregiver);
-        object.setCommunityGroup(communityGroup);
-        object.setHealthPlan(healthPlan);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static CommunityTraditional getCommunityTraditional(Realm realm, boolean isCommunityTraditional,
-                                                               String value) {
-        realm.beginTransaction();
-        CommunityTraditional object = realm.createObject(CommunityTraditional.class);
-        object.setCommunityTraditional(isCommunityTraditional);
-        object.setValue(value);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static SexualOrientation getSexualOrientation(Realm realm, boolean isOrientation,
-                                                         String value) {
-        realm.beginTransaction();
-        SexualOrientation object = realm.createObject(SexualOrientation.class);
-        object.setSexualOrientation(isOrientation);
-        object.setValue(value);
-        realm.commitTransaction();
-        return object;
-    }
-
-    public static Deficiency getDeficiency(Realm realm, boolean isDeficiency, boolean[] deficiencys) {
-        realm.beginTransaction();
-        Deficiency object = realm.createObject(Deficiency.class);
-        object.setDeficiency(isDeficiency);
-        object.setDeficiencys(deficiencys);
-        realm.commitTransaction();
-        return object;
     }
 
 
@@ -198,5 +150,17 @@ public class SocialDemographicModel extends RealmObject implements Serializable 
 
     public boolean[] getDeficiencys(){
         return getDeficiency().getDeficiencys();
+    }
+
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.KINSHIP.name(), kinship);
+        json.put(Constants.Citizen.KIDS_09.name(), kids09);
+        json.put(Constants.Citizen.TB_EDUCATION_EMPLOYMENT.name(), educationEmployment.asJson());
+        json.put(Constants.Citizen.TB_HEALTH_GROUP.name(), healthAndGroup.asJson());
+        json.put(Constants.Citizen.TB_COMMUNITY_TRADITIONAL.name(), communityTraditional.asJson());
+        json.put(Constants.Citizen.TB_SEXUAL_ORIENTATION.name(), sexualOrientation.asJson());
+        json.put(Constants.Citizen.TB_DEFICIENCY.name(), deficiency.asJson());
+        return json;
     }
 }

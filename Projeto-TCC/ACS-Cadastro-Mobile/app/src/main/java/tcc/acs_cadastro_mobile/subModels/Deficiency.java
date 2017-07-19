@@ -1,6 +1,10 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
 
@@ -77,5 +81,16 @@ public class Deficiency extends RealmObject implements Serializable {
 
     public void setAnother(boolean another) {
         this.another = another;
+    }
+
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.DEFICIENCY.name(), isDeficiency);
+        json.put(Constants.Citizen.HEARING.name(), hearing);
+        json.put(Constants.Citizen.VISUAL.name(), visual);
+        json.put(Constants.Citizen.INTELLECTUAL.name(), intellectual);
+        json.put(Constants.Citizen.PHISICAL.name(), phisical);
+        json.put(Constants.Citizen.ANOTHER.name(), another);
+        return json;
     }
 }

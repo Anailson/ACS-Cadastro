@@ -5,7 +5,6 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
-import tcc.acs_cadastro_mobile.persistence.AccompanyPersistence;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class AccompanyModel extends RealmObject implements Serializable, ISearcher {
@@ -20,8 +19,6 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
     private ConditionsModel conditions;
     private ExamsModel exams;
     private NasfConductModel nasfConduct;
-
-
     public AccompanyModel() {
         this.record = this.numSus = AcsRecordPersistence.DEFAULT_INT;
         this.recordData = new RecordDataModel();
@@ -29,6 +26,7 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
         this.exams = new ExamsModel();
         this.nasfConduct = new NasfConductModel();
     }
+
 
     public AccompanyModel(RecordDataModel recordData, ConditionsModel conditions, ExamsModel exams,
                           NasfConductModel nasfConduct) {
@@ -40,11 +38,11 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
         this.nasfConduct = nasfConduct;
     }
 
-    public String getName(){
+    public String getName() {
         return getRecordData().getName();
     }
 
-    public long getNumSus(){
+    public long getNumSus() {
         return numSus;
     }
 
@@ -102,7 +100,11 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
         return containsKey(getName(), search);
     }
 
-    private boolean containsKey(String value, String search){
+    private boolean containsKey(String value, String search) {
         return value.trim().toUpperCase().contains(search.toUpperCase());
+    }
+
+    public enum DB_VALUES {
+        NUM_SUS, RECORD_DATA, PLACE_CARE, TYPE_CARE, SHIFT, ID_CITIZEN
     }
 }

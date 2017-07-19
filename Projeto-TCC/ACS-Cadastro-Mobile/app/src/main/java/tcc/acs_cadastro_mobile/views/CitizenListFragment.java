@@ -21,8 +21,7 @@ public class CitizenListFragment extends Fragment {
     private ListView lvwCitizens;
     private CitizenListController controller;
 
-    public CitizenListFragment() {
-    }
+    public CitizenListFragment() {}
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

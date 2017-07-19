@@ -1,18 +1,19 @@
 package tcc.acs_cadastro_mobile.controllers;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import tcc.acs_cadastro_mobile.httpRequest.AgentHttpRequests;
+import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
 import tcc.acs_cadastro_mobile.models.AgentModel;
 import tcc.acs_cadastro_mobile.persistence.AgentPersistence;
 import tcc.acs_cadastro_mobile.views.MainActivity;
 
-public class LoginController {
+public class LoginController implements IAsyncTaskResponse<AgentModel>{
 
     private Context context;
 
@@ -20,51 +21,47 @@ public class LoginController {
         this.context = context;
     }
 
-    public void validateData(String numSus) {
-        if (numSus.isEmpty()) {
+    public void validateData(String text) {
+        if (text.isEmpty()) {
+
             Toast.makeText(context, "O numero do SUS deve ser informado", Toast.LENGTH_LONG).show();
-        } else if (numSus.matches("[0]+")) {
+
+        } else if (text.matches("[0]+")) {
+
             AgentPersistence.save(new AgentModel());
             ((Activity) context).finish();
             context.startActivity(new Intent(context, MainActivity.class));
+
         } else {
-            new GetConnection().execute(numSus);
+            AgentHttpRequests httpRequests = new AgentHttpRequests(this, context);
+            httpRequests.get(Long.parseLong(text));
         }
     }
 
-    private class GetConnection extends AsyncTask<String, Void, AgentModel> {
+    @Override
+    public void get(AgentModel agentModel) {
+        AgentPersistence.save(agentModel);
+        ((Activity) context).finish();
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
 
-        private ProgressDialog dialog;
+    @Override
+    public void getAll(ArrayList<AgentModel> list) {
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog = new ProgressDialog(context);
-            dialog.setMessage("Validando o número do SUS...");
-            dialog.setTitle("Numero do SUS");
-            dialog.show();
-        }
+    }
 
-        @Override
-        protected AgentModel doInBackground(String... strings) {
-            long numSus = Long.parseLong(strings[0]);
-            return AgentHttpRequests.get(numSus);
-        }
+    @Override
+    public void insert(int id) {
 
-        @Override
-        protected void onPostExecute(AgentModel agent) {
+    }
 
-            dialog.dismiss();
-            if(agent != null){
+    @Override
+    public void update(AgentModel object) {
 
-                AgentPersistence.save(agent);
-                ((Activity) context).finish();
-                context.startActivity(new Intent(context, MainActivity.class));
-            }else{
-                Toast.makeText(context, "O numero do SUS é invalido", Toast.LENGTH_LONG).show();
-            }
+    }
 
-            super.onPostExecute(agent);
-        }
+    @Override
+    public void delete(AgentModel object) {
+
     }
 }

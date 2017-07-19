@@ -1,9 +1,12 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.Contact;
 import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
 import tcc.acs_cadastro_mobile.subModels.Mother;
@@ -158,5 +161,16 @@ public class PersonalDataModel extends RealmObject implements Serializable {
 
     public boolean isNationBirth() {
         return getNationBirth().equals("Brasil");
+    }
+
+    public JSONObject asJson() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(Constants.Citizen.TB_PARTICULAR.name(), particularData.asJson());
+        json.put(Constants.Citizen.TB_MOTHER.name(), mother.asJson());
+        json.put(Constants.Citizen.TB_RESPONSIBLE.name(), responsible.asJson());
+        json.put(Constants.Citizen.TB_GENDER_RACE.name(), genderNRace.asJson());
+        json.put(Constants.Citizen.TB_NATIONALITY.name(), nationality.asJson());
+        json.put(Constants.Citizen.TB_CONTACT.name(), contact.asJson());
+        return json;
     }
 }

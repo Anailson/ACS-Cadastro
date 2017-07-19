@@ -1,29 +1,49 @@
-<?php
+﻿<?php
 include "../persistences/AgentsPersistence.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if ($method == "GET") {
-
+if ($method == AcsDataBase::GET) {
     if (isset($_GET['f']) && function_exists($_GET['f']) && $_GET['f'] == "get") {
 
         $value = isset($_GET['d']) ? $_GET['d'] : 0;
         if ($value) {
             get($value);
+        } else {
+            getAll();
         }
     }
+} else if ($method === AcsDataBase::POST) {
+
+    $list = isset($_GET['o']) ? $_GET['o'] : false;
+    $json = $_POST['JSON'];
+    insert($json);
 }
 
 function get($numSus)
 {
-
-    //var_dump(AgentsPersistence::getAll());
-    //echo "<br><br>";
-
     $agent = AgentsPersistence::get($numSus);
     if ($agent) {
         echo json_encode(getAgentData($agent));
     }
+}
+
+function getAll()
+{
+    $list = AgentsPersistence::getAll();
+    $agents = array();
+    foreach ($list as $l) {
+        array_push($agents, getAgentData($l));
+
+    }
+    echo json_encode($agents);
+}
+
+function insert($json)
+{
+    $array = json_decode($json, true);
+    $array = array("id" => AgentsPersistence::insert($array));
+    echo json_encode($array);
 }
 
 function getAgentData($array)
