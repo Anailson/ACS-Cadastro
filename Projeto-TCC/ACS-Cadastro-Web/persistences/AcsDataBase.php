@@ -7,7 +7,7 @@ class AcsDataBase
     const DELETE = "DELETE";
     const POST = "POST";
 
-    const DB_NAME = "tcc_bd";
+    const DB_NAME = "acs_bd";
 
     private $host;
     private $dbName;
@@ -19,12 +19,31 @@ class AcsDataBase
         $this->dbName = $dbName;
     }
 
+    public function beginTransaction()
+    {
+        if($this->connection) $this->connection->beginTransaction();
+    }
+
+    public function commit()
+    {
+        if($this->connection) $this->connection->commit();
+    }
+
+    public function rollback()
+    {
+        if($this->connection) {
+            $this->connection->rollBack();
+            $this->closeConnection();
+        };
+    }
+
     private function openConnection()
     {
         try {
             $options = array(
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
             );
+
             $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, "root", "", $options);
             $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -59,15 +78,19 @@ class AcsDataBase
         }
     }
 
-    public function insert($query, $params)
+    public function insert($query, array $params)
     {
         $this->openConnection();
         $stmt = $this->connection->prepare($query);
-        if ($stmt) {
 
+        echo "<b>Query </b> -> "; var_dump($query);echo "<br>";
+        echo "<b>Params </b> -> "; var_dump($params);echo "<br>";
+        if ($stmt) {
             $stmt->execute($params);
             $id = $this->connection->lastInsertId();
             $this->closeConnection();
+
+            echo "<b>ID </b> -> "; var_dump($id);echo "<br>";
             return $id;
         } else {
             $this->closeConnection();

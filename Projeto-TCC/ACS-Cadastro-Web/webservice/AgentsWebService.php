@@ -3,7 +3,7 @@ include "../persistences/AgentsPersistence.php";
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if ($method == AcsDataBase::GET) {
+if ($method === AcsDataBase::GET) {
     if (isset($_GET['f']) && function_exists($_GET['f']) && $_GET['f'] == "get") {
 
         $value = isset($_GET['d']) ? $_GET['d'] : 0;
@@ -15,9 +15,11 @@ if ($method == AcsDataBase::GET) {
     }
 } else if ($method === AcsDataBase::POST) {
 
-    $list = isset($_GET['o']) ? $_GET['o'] : false;
-    $json = $_POST['JSON'];
-    insert($json);
+    $list = isset($_GET['m']) ? $_GET['m'] : false;
+    if($list) {
+        $json = $_POST['JSON'];
+        insert($json);
+    }
 }
 
 function get($numSus)
