@@ -6,7 +6,11 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.Constants;
+
+import static tcc.acs_cadastro_mobile.Constants.Citizen.CITY;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NATIONALITY;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NATION_BIRTH;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.UF;
 
 public class Nationality extends RealmObject  implements Serializable {
     private String nationality, nationBirth, uf, city;
@@ -56,10 +60,10 @@ public class Nationality extends RealmObject  implements Serializable {
 
     public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.NATIONALITY.name(), nationality);
-        json.put(Constants.Citizen.NATION_BIRTH.name(), nationBirth);
-        json.put(Constants.Citizen.UF.name(), uf);
-        json.put(Constants.Citizen.CITY.name(), city);
+        json.put(NATIONALITY.name(), nationality);
+        json.put(NATION_BIRTH.name(), nationBirth);
+        json.put(UF.name(), uf);
+        json.put(CITY.name(), city);
         return json;
     }
 

@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.Constants;
-import tcc.acs_cadastro_mobile.models.CitizenModel;
 
 import java.io.Serializable;
 
@@ -41,7 +40,7 @@ public class AnotherInstitution extends RealmObject implements Serializable {
 
     public JSONObject getAsJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.ANOTHER_INSTITUATION.name(), isAnotherInstitution);
+        json.put(Constants.Citizen.ANOTHER_INSTITUTION.name(), isAnotherInstitution);
         json.put(Constants.Citizen.DESCRIPTION.name(), value);
         return json;
     }

@@ -7,10 +7,14 @@ import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.interfaces.IJsonParser;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
+
+import static tcc.acs_cadastro_mobile.Constants.Citizen.HEALTH_CONDITIONS;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.PERSONAL_DATA;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.SOCIAL_DEMOGRAPHIC;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.STREET_SITUATION;
 
 public class CitizenModel extends RealmObject implements Serializable, ISearcher, IJsonParser {
 
@@ -42,17 +46,21 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
         this.streetSituation = streetSituation;
     }
 
-    public JSONObject asJson() throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.TB_PARTICULAR_DATA.name(), personalData.asJson());
-        json.put(Constants.Citizen.TB_SOCIAL_DEMOGRAPHIC.name(), socialDemographicData.asJson());
-        json.put(Constants.Citizen.TB_HEALTH_CONDITIONS.name(), healthConditions.asJson());
-        json.put(Constants.Citizen.TB_STREET_SITUATION.name(), streetSituation.asJson());
-        return json;
-    }
-
     public long getNumSus() {
         return numSus > AcsRecordPersistence.DEFAULT_INT ? numSus : AcsRecordPersistence.DEFAULT_INT;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(PERSONAL_DATA.name(), personalData.asJson());
+            json.put(SOCIAL_DEMOGRAPHIC.name(), socialDemographicData.asJson());
+            json.put(HEALTH_CONDITIONS.name(), healthConditions.asJson());
+            json.put(STREET_SITUATION.name(), streetSituation.asJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     public void setNumSus(long numSus) {

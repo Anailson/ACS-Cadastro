@@ -6,12 +6,20 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.AnotherInstitution;
 import tcc.acs_cadastro_mobile.subModels.FamilyVisit;
 import tcc.acs_cadastro_mobile.subModels.Feeding;
 import tcc.acs_cadastro_mobile.subModels.Hygiene;
 import tcc.acs_cadastro_mobile.subModels.StreetSituation;
+
+import static tcc.acs_cadastro_mobile.Constants.Citizen.ANOTHER_INSTITUTION;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.BENEFIT;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.FAMILY;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.FAMILY_VISIT;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.FEEDING;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.HYGIENE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.STREET;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.STREET_SITUATION;
 
 public class StreetSituationModel extends RealmObject implements Serializable {
 
@@ -100,13 +108,13 @@ public class StreetSituationModel extends RealmObject implements Serializable {
     public JSONObject asJson() throws JSONException {
 
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.TB_STREET_SITUATION.name(), streetSituation.getAsJson());
-        json.put(Constants.Citizen.BENEFIT.name(), benefit);
-        json.put(Constants.Citizen.FAMILY.name(), family);
-        json.put(Constants.Citizen.TB_FEEDING.name(), feeding.getAsJson());
-        json.put(Constants.Citizen.TB_ANOTHER_INSTITUATION.name(), anotherInstitution.getAsJson());
-        json.put(Constants.Citizen.TB_FAMILY_VISIT.name(), familyVisit.getAsJson());
-        json.put(Constants.Citizen.TB_HYGIENE.name(), hygiene.getAsJson());
+        json.put(STREET.name(), streetSituation.getAsJson());
+        json.put(BENEFIT.name(), benefit);
+        json.put(FAMILY.name(), family);
+        json.put(FEEDING.name(), feeding.getAsJson());
+        json.put(ANOTHER_INSTITUTION.name(), anotherInstitution.getAsJson());
+        json.put(FAMILY_VISIT.name(), familyVisit.getAsJson());
+        json.put(HYGIENE.name(), hygiene.getAsJson());
         return json;
     }
 }

@@ -186,8 +186,9 @@ public class Diseases extends RealmObject implements Serializable {
         JSONObject json = new JSONObject();
         json.put(Constants.Citizen.SMOKER.name(), isSmoker);
         json.put(Constants.Citizen.ALCOHOL.name(), isAlcohol);
+        json.put(Constants.Citizen.DRUGS.name(), isDrugs);
         json.put(Constants.Citizen.HYPERTENSION.name(), isHypertension);
-        json.put(Constants.Citizen.DIABETIS.name(), isDiabetes);
+        json.put(Constants.Citizen.DIABETES.name(), isDiabetes);
         json.put(Constants.Citizen.AVC.name(), isAvc);
         json.put(Constants.Citizen.HEART_ATTACK.name(), isHeartAttack);
         json.put(Constants.Citizen.LEPROSY.name(), isLeprosy);
@@ -195,7 +196,7 @@ public class Diseases extends RealmObject implements Serializable {
         json.put(Constants.Citizen.CANCER.name(), isCancer);
         json.put(Constants.Citizen.IN_BED.name(), isInBend);
         json.put(Constants.Citizen.DOMICILED.name(), isDomiciled);
-        json.put(Constants.Citizen.OTHER_PRATICES.name(), otherPractices);
+        json.put(Constants.Citizen.OTHER_PRACTICES.name(), otherPractices);
         json.put(Constants.Citizen.MENTAL_HEALTH.name(), isMentalHealth);
         return json;
     }

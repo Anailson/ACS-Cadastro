@@ -1,11 +1,21 @@
 package tcc.acs_cadastro_mobile.subModels;
 
-import io.realm.RealmObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 
-public class KidAndPregnant extends RealmObject implements Serializable {
+import io.realm.RealmObject;
 
+import static tcc.acs_cadastro_mobile.Constants.Accompany.BREAST_FEEDING;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.CHILD_BIRTH;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.DUM;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.HOME_CARE;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.PLANNED_PREGNANCY;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.PREVIOUS;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.WEEKS;
+
+public class KidAndPregnant extends RealmObject implements Serializable {
 
     private String breastFeeding, dum;
     private boolean plannedPregnancy;
@@ -25,6 +35,18 @@ public class KidAndPregnant extends RealmObject implements Serializable {
         this.previous = previous;
         this.childBirth = childBirth;
         this.homeCare = homeCare;
+    }
+
+    public JSONObject asJson() throws JSONException{
+        JSONObject json = new JSONObject();
+        json.put(BREAST_FEEDING.name(), breastFeeding);
+        json.put(DUM.name(), dum);
+        json.put(PLANNED_PREGNANCY.name(), plannedPregnancy);
+        json.put(WEEKS.name(), weeks);
+        json.put(PREVIOUS.name(), previous);
+        json.put(CHILD_BIRTH.name(), childBirth);
+        json.put(HOME_CARE.name(), homeCare);
+        return json;
     }
 
     public String getBreastFeeding() {

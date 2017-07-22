@@ -8,6 +8,9 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.Constants;
 
+import static tcc.acs_cadastro_mobile.Constants.Citizen.EMAIL;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.PHONE;
+
 public class Contact extends RealmObject  implements Serializable {
     private String phone, email;
 
@@ -38,8 +41,8 @@ public class Contact extends RealmObject  implements Serializable {
 
     public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.PHONE.name(), phone);
-        json.put(Constants.Citizen.EMAIL.name(), email);
+        json.put(PHONE.name(), phone);
+        json.put(EMAIL.name(), email);
         return json;
     }
 }

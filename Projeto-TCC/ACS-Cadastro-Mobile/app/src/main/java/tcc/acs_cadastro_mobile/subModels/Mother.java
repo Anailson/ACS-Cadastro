@@ -8,6 +8,9 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.Constants;
 
+import static tcc.acs_cadastro_mobile.Constants.Citizen.KNOWN;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NAME;
+
 public class Mother extends RealmObject  implements Serializable {
     private boolean known;
     private String name;
@@ -31,8 +34,8 @@ public class Mother extends RealmObject  implements Serializable {
 
     public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.KNOWN.name(), known);
-        json.put(Constants.Citizen.NAME.name(), name);
+        json.put(KNOWN.name(), known);
+        json.put(NAME.name(), name);
         return json;
     }
 }

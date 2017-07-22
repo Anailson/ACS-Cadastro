@@ -89,7 +89,7 @@ public class Deficiency extends RealmObject implements Serializable {
         json.put(Constants.Citizen.HEARING.name(), hearing);
         json.put(Constants.Citizen.VISUAL.name(), visual);
         json.put(Constants.Citizen.INTELLECTUAL.name(), intellectual);
-        json.put(Constants.Citizen.PHISICAL.name(), phisical);
+        json.put(Constants.Citizen.PHYSICAL.name(), phisical);
         json.put(Constants.Citizen.ANOTHER.name(), another);
         return json;
     }

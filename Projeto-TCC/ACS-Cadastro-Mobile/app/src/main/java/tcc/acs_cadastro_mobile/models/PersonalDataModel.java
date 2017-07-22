@@ -6,13 +6,19 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.Contact;
 import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
 import tcc.acs_cadastro_mobile.subModels.Mother;
 import tcc.acs_cadastro_mobile.subModels.Nationality;
 import tcc.acs_cadastro_mobile.subModels.ParticularData;
 import tcc.acs_cadastro_mobile.subModels.Responsible;
+
+import static tcc.acs_cadastro_mobile.Constants.Citizen.CONTACT;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.GENDER_RACE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.MOTHER;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NATIONALITY;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.PARTICULAR;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.RESPONSIBLE;
 
 public class PersonalDataModel extends RealmObject implements Serializable {
 
@@ -163,14 +169,14 @@ public class PersonalDataModel extends RealmObject implements Serializable {
         return getNationBirth().equals("Brasil");
     }
 
-    public JSONObject asJson() throws JSONException {
+    public JSONObject   asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.TB_PARTICULAR.name(), particularData.asJson());
-        json.put(Constants.Citizen.TB_MOTHER.name(), mother.asJson());
-        json.put(Constants.Citizen.TB_RESPONSIBLE.name(), responsible.asJson());
-        json.put(Constants.Citizen.TB_GENDER_RACE.name(), genderNRace.asJson());
-        json.put(Constants.Citizen.TB_NATIONALITY.name(), nationality.asJson());
-        json.put(Constants.Citizen.TB_CONTACT.name(), contact.asJson());
+        json.put(PARTICULAR.name(), particularData.asJson());
+        json.put(MOTHER.name(), mother.asJson());
+        json.put(RESPONSIBLE.name(), responsible.asJson());
+        json.put(GENDER_RACE.name(), genderNRace.asJson());
+        json.put(NATIONALITY.name(), nationality.asJson());
+        json.put(CONTACT.name(), contact.asJson());
         return json;
     }
 }

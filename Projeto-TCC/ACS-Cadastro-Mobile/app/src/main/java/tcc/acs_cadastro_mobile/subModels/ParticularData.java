@@ -6,7 +6,12 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.Constants;
+
+import static tcc.acs_cadastro_mobile.Constants.Citizen.BIRTH_DATE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NAME;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NUM_NIS;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NUM_SUS;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.SOCIAL_NAME;
 
 public class ParticularData extends RealmObject implements Serializable {
     private long numSus, numNis;
@@ -66,11 +71,11 @@ public class ParticularData extends RealmObject implements Serializable {
 
     public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.NUM_SUS.name(), numSus);
-        json.put(Constants.Citizen.NUM_NIS.name(), numNis);
-        json.put(Constants.Citizen.NAME.name(), name);
-        json.put(Constants.Citizen.SOCIAL_NAME.name(), socialName);
-        json.put(Constants.Citizen.BIRTH_DATE.name(), birthDate);
+        json.put(NUM_SUS.name(), numSus);
+        json.put(NUM_NIS.name(), numNis);
+        json.put(NAME.name(), name);
+        json.put(SOCIAL_NAME.name(), socialName);
+        json.put(BIRTH_DATE.name(), birthDate);
         return json;
     }
 }

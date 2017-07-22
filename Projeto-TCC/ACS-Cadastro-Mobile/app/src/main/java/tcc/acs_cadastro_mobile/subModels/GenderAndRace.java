@@ -8,6 +8,9 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.Constants;
 
+import static tcc.acs_cadastro_mobile.Constants.Citizen.GENDER;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.RACE;
+
 public class GenderAndRace extends RealmObject  implements Serializable {
     private String gender, race;
 
@@ -38,8 +41,8 @@ public class GenderAndRace extends RealmObject  implements Serializable {
 
     public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.GENDER.name(), gender);
-        json.put(Constants.Citizen.RACE.name(), race);
+        json.put(GENDER.name(), gender);
+        json.put(RACE.name(), race);
         return json;
     }
 }

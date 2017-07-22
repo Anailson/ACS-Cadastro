@@ -5,9 +5,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.Diseases;
 import tcc.acs_cadastro_mobile.subModels.HeartDisease;
 import tcc.acs_cadastro_mobile.subModels.Interment;
@@ -15,6 +13,15 @@ import tcc.acs_cadastro_mobile.subModels.KidneyDisease;
 import tcc.acs_cadastro_mobile.subModels.Plant;
 import tcc.acs_cadastro_mobile.subModels.Pregnant;
 import tcc.acs_cadastro_mobile.subModels.RespiratoryDisease;
+
+import static tcc.acs_cadastro_mobile.Constants.Citizen.DISEASES;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.HEART_DISEASE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.INTERMENT;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.KIDNEY_DISEASE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.PLANT;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.PREGNANT;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.RESPIRATORY_DISEASE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.WEIGHT;
 
 
 public class HealthConditionsModel extends RealmObject implements Serializable {
@@ -216,14 +223,14 @@ public class HealthConditionsModel extends RealmObject implements Serializable {
     public JSONObject asJson() throws JSONException {
 
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.TB_PREGNANT.name(), pregnant.getAsJson());
-        json.put(Constants.Citizen.WEIGHT.name(), weight);
-        json.put(Constants.Citizen.TB_DISEASES.name(), diseases.getAsJson());
-        json.put(Constants.Citizen.TB_HEART_DISEASE.name(), heartDisease.getAsJson());
-        json.put(Constants.Citizen.TB_KIDNEY_DISEASE.name(), kidneyDisease.getAsJson());
-        json.put(Constants.Citizen.TB_RESPIRATORY_DISEASE.name(), respiratoryDisease.getAsJson());
-        json.put(Constants.Citizen.TB_INTERMENT.name(), interment.getAsJson());
-        json.put(Constants.Citizen.TB_PLANT.name(), plant.getAsJson());
+        json.put(PREGNANT.name(), pregnant.getAsJson());
+        json.put(WEIGHT.name(), weight);
+        json.put(DISEASES.name(), diseases.getAsJson());
+        json.put(HEART_DISEASE.name(), heartDisease.getAsJson());
+        json.put(KIDNEY_DISEASE.name(), kidneyDisease.getAsJson());
+        json.put(RESPIRATORY_DISEASE.name(), respiratoryDisease.getAsJson());
+        json.put(INTERMENT.name(), interment.getAsJson());
+        json.put(PLANT.name(), plant.getAsJson());
         return json;
     }
 }

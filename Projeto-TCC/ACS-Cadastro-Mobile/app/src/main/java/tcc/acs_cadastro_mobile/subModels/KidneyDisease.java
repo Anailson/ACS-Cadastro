@@ -75,7 +75,7 @@ public class KidneyDisease extends RealmObject implements Serializable {
     public JSONObject getAsJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(Constants.Citizen.KIDNEY_DISEASE.name(), isKidneyDisease);
-        json.put(Constants.Citizen.INSUFICIENCY.name(), insuficiency);
+        json.put(Constants.Citizen.INSUFFICIENCY.name(), insuficiency);
         json.put(Constants.Citizen.ANOTHER.name(), another);
         json.put(Constants.Citizen.DONT_KNOWN.name(), dontKnow);
         return json;

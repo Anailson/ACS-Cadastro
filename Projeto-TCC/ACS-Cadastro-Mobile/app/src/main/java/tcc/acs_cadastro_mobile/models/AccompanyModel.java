@@ -1,9 +1,13 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
@@ -27,7 +31,6 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
         this.nasfConduct = new NasfConductModel();
     }
 
-
     public AccompanyModel(RecordDataModel recordData, ConditionsModel conditions, ExamsModel exams,
                           NasfConductModel nasfConduct) {
         this.record = recordData.getRecordDetails().getRecord();
@@ -36,6 +39,16 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
         this.conditions = conditions;
         this.exams = exams;
         this.nasfConduct = nasfConduct;
+    }
+
+    public JSONObject asJson(){
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Accompany.RECORD_DATA.name(), recordData.asJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     public String getName() {
@@ -102,9 +115,5 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
 
     private boolean containsKey(String value, String search) {
         return value.trim().toUpperCase().contains(search.toUpperCase());
-    }
-
-    public enum DB_VALUES {
-        NUM_SUS, RECORD_DATA, PLACE_CARE, TYPE_CARE, SHIFT, ID_CITIZEN
     }
 }

@@ -1,13 +1,20 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
 
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.models.AccompanyModel;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
+
+import static tcc.acs_cadastro_mobile.Constants.Accompany.PLACE_CARE;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.RECORD;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.SHIFT;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.TYPE_CARE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NUM_SUS;
 
 public class RecordDetails extends RealmObject implements Serializable {
 
@@ -27,12 +34,13 @@ public class RecordDetails extends RealmObject implements Serializable {
         this.citizen = citizen;
     }
 
-    public JSONObject getAsJson() throws JSONException {
+    public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(AccompanyModel.DB_VALUES.RECORD_DATA.name(), record);
-        json.put(AccompanyModel.DB_VALUES.PLACE_CARE.name(), placeCare);
-        json.put(AccompanyModel.DB_VALUES.TYPE_CARE.name(), typeCare);
-        json.put(AccompanyModel.DB_VALUES.SHIFT.name(), shift);
+        json.put(RECORD.name(), record);
+        json.put(PLACE_CARE.name(), placeCare);
+        json.put(TYPE_CARE.name(), typeCare);
+        json.put(SHIFT.name(), shift);
+        json.put(NUM_SUS.name(), citizen.getNumSus());
         return json;
     }
 

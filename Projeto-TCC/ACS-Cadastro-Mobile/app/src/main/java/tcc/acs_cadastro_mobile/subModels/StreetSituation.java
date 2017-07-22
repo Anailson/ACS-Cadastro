@@ -9,6 +9,9 @@ import tcc.acs_cadastro_mobile.models.CitizenModel;
 
 import java.io.Serializable;
 
+import static tcc.acs_cadastro_mobile.Constants.Citizen.DESCRIPTION;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.STREET;
+
 
 public class StreetSituation extends RealmObject implements Serializable {
 
@@ -42,8 +45,8 @@ public class StreetSituation extends RealmObject implements Serializable {
 
     public JSONObject getAsJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.STREET_STIUATION.name(), isStreetSituation);
-        json.put(Constants.Citizen.DESCRIPTION.name(), value);
+        json.put(STREET.name(), isStreetSituation);
+        json.put(DESCRIPTION.name(), value);
         return json;
     }
 }

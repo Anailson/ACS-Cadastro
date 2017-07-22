@@ -8,6 +8,10 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import tcc.acs_cadastro_mobile.Constants;
 
+import static tcc.acs_cadastro_mobile.Constants.Citizen.BIRTH_DATE;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.NUM_SUS;
+import static tcc.acs_cadastro_mobile.Constants.Citizen.RESPONSIBLE;
+
 public class Responsible extends RealmObject  implements Serializable {
     private boolean isResponsible;
     private long numSus;
@@ -49,9 +53,9 @@ public class Responsible extends RealmObject  implements Serializable {
 
     public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(Constants.Citizen.RESPONSIBLE.name(), isResponsible);
-        json.put(Constants.Citizen.NUM_SUS.name(), numSus);
-        json.put(Constants.Citizen.BIRTH_DATE.name(), birthDate);
+        json.put(RESPONSIBLE.name(), isResponsible);
+        json.put(NUM_SUS.name(), numSus);
+        json.put(BIRTH_DATE.name(), birthDate);
         return json;
     }
 }

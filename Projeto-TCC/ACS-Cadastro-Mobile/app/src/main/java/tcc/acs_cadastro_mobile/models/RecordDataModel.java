@@ -1,11 +1,21 @@
 package tcc.acs_cadastro_mobile.models;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.Anthropometric;
 import tcc.acs_cadastro_mobile.subModels.KidAndPregnant;
 import tcc.acs_cadastro_mobile.subModels.RecordDetails;
 
 import java.io.Serializable;
+
+import static tcc.acs_cadastro_mobile.Constants.Accompany.ANTHROPOMETRIC;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.KID_PREGNANT;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.RECORD_DETAILS;
 
 public class RecordDataModel extends RealmObject implements Serializable {
 
@@ -65,5 +75,17 @@ public class RecordDataModel extends RealmObject implements Serializable {
 
     public void setKidsPregnant(KidAndPregnant kidsPregnant) {
         this.kidsPregnant = kidsPregnant;
+    }
+
+    public JSONObject asJson() throws JSONException{
+        JSONObject json = new JSONObject();
+        json.put(RECORD_DETAILS.name(), recordDetails.asJson());
+        json.put(ANTHROPOMETRIC.name(), anthropometric.asJson());
+        json.put(KID_PREGNANT.name(), kidsPregnant.asJson());
+        Log.e("RECORD_DETAILS", recordDetails.asJson().toString());
+        Log.e("ANTHROPOMETRIC", anthropometric.asJson().toString());
+        Log.e("KID_PREGNANT", kidsPregnant.asJson().toString());
+        Log.e("RecordDataModel", json.toString());
+        return json;
     }
 }

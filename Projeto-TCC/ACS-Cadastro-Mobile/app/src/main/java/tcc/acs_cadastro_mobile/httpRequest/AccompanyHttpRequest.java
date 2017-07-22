@@ -1,9 +1,14 @@
 package tcc.acs_cadastro_mobile.httpRequest;
 
-import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
-import tcc.acs_cadastro_mobile.interfaces.IHttpRequest;
-import tcc.acs_cadastro_mobile.models.AccompanyModel;
+import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskRequest;
 
-public class AccompanyHttpRequest {
+public class AccompanyHttpRequest implements IAsyncTaskRequest {
 
+    @Override
+    public void onRequest(WebServiceConnection.Request request) {
+
+        if(request.getStatus() == WebServiceConnection.Status.OK){
+
+        }
+    }
 }
