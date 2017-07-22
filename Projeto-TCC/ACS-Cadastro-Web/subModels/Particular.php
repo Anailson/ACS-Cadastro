@@ -2,6 +2,7 @@
 
 class Particular
 {
+    const PARTICULAR = "PARTICULAR";
     const NUM_SUS = "NUM_SUS";
     const NUM_NIS = "NUM_NIS";
     const NAME = "NAME";

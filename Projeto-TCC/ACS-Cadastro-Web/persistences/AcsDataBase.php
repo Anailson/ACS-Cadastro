@@ -19,31 +19,12 @@ class AcsDataBase
         $this->dbName = $dbName;
     }
 
-    public function beginTransaction()
-    {
-        if($this->connection) $this->connection->beginTransaction();
-    }
-
-    public function commit()
-    {
-        if($this->connection) $this->connection->commit();
-    }
-
-    public function rollback()
-    {
-        if($this->connection) {
-            $this->connection->rollBack();
-            $this->closeConnection();
-        };
-    }
-
     private function openConnection()
     {
         try {
             $options = array(
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
             );
-
             $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, "root", "", $options);
             $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -62,6 +43,7 @@ class AcsDataBase
     public function select($query, $params = false)
     {
         $this->openConnection();
+
         $prepare = $this->connection->prepare($query);
 
         if ($prepare) {
@@ -81,20 +63,28 @@ class AcsDataBase
     public function insert($query, array $params)
     {
         $this->openConnection();
-        $stmt = $this->connection->prepare($query);
+        try {
+            $stmt = $this->connection->prepare($query);
 
-        echo "<b>Query </b> -> "; var_dump($query);echo "<br>";
-        echo "<b>Params </b> -> "; var_dump($params);echo "<br>";
-        if ($stmt) {
-            $stmt->execute($params);
-            $id = $this->connection->lastInsertId();
-            $this->closeConnection();
+            echo "<b>Query </b> -> "; var_dump($query); echo "<br>";
+            echo "<b>Params </b> -> "; var_dump($params);echo "<br>";
 
-            echo "<b>ID </b> -> "; var_dump($id);echo "<br>";
-            return $id;
-        } else {
-            $this->closeConnection();
-            return false;
+            if ($stmt) {
+
+                $this->connection->beginTransaction();
+                $stmt->execute($params);
+                $id = $this->connection->lastInsertId();
+                $this->connection->commit();
+                $this->closeConnection();
+
+                echo "<b>ID: </b> -> ";var_dump($id); echo "<br><br>";
+                return $id;
+            }
+
+        } catch (PDOException $e) {
+            echo "<b>" . $e->getMessage() . "</b><br><br>";
         }
+        $this->closeConnection();
+        return false;
     }
 }

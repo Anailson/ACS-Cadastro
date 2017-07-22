@@ -4,6 +4,7 @@ class Contact
 {
     const PHONE = "PHONE";
     const EMAIL = "EMAIL";
+    const CONTACT = "CONTACT";
 
     private $phone, $email;
 

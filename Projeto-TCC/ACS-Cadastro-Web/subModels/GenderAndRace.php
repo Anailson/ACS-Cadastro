@@ -4,6 +4,7 @@ class GenderAndRace
 {
     const GENDER = "GENDER";
     const RACE = "RACE";
+    const GENDER_RACE = "GENDER_RACE";
 
     private $gender, $race;
 

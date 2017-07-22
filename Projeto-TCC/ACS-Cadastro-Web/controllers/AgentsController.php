@@ -1,5 +1,5 @@
 <?php
-include "models/AgentModel.php";
+include "models/AgentModel.class.php";
 include "persistences/AgentsPersistence.php";
 
 class AgentsController

@@ -5,6 +5,7 @@ class HealthGroup
     const CAREGIVER = "CAREGIVER";
     const COMMUNITY_GROUP = "COMMUNITY_GROUP";
     const HEALTH_PLAN = "HEALTH_PLAN";
+    const HEALTH_GROUP = "HEALTH_GROUP";
 
     private $caregiver, $communityGroup, $healthPlan;
 

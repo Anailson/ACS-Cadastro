@@ -23,7 +23,7 @@ if ($method === AcsDataBase::GET) {
 function insert($json)
 {
     $array = json_decode($json, true);
-    $array = array("id" => CitizenPersistence::insert($array));
+    $array = array("id" => CitizenPersistence::insertJson($array));
     echo json_encode($array);
 }
 

@@ -6,6 +6,7 @@ class EducationEmployment
     const OCCUPATION = "OCCUPATION";
     const EDUCATION = "EDUCATION";
     const EMPLOYMENT = "EMPLOYMENT";
+    const EDUCATION_EMPLOYMENT = "EDUCATION_EMPLOYMENT";
 
     private $school, $occupation, $education, $employment;
 

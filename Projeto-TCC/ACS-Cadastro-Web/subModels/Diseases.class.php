@@ -2,6 +2,8 @@
 
 class Diseases
 {
+
+    const DISEASES = "DISEASES";
     const SMOKER = "SMOKER";
     const ALCOHOL = "ALCOHOL";
     const DRUGS = "DRUGS";

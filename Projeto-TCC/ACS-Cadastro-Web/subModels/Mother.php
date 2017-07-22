@@ -2,6 +2,7 @@
 
 class Mother
 {
+    const MOTHER = "MOTHER";
     const KNOWN = "KNOWN";
     const NAME = "NAME";
 

@@ -1,15 +1,6 @@
 <?php
-if (!@include "persistences/Persistence.php") {
-    include "../persistences/Persistence.php";
-};
-if (!@include "persistences/AcsDataBase.php") {
-    include "../persistences/AcsDataBase.php";
-};
-if (!@include "persistences/RecordDataPersistence.php") {
-    include "../persistences/RecordDataPersistence.php";
-};
 
-class AccompanyPersistence extends Persistence
+class AccompanyPersistence
 {
     static function insert($json)
     {
