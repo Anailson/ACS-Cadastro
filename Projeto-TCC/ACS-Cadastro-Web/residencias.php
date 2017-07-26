@@ -1,4 +1,7 @@
-<?php include "template.php" ?>
+<?php
+include "template.php";
+include "views/ResidenceView.php";
+?>
 <script>
     $(function () {
         $(".nav li").removeClass("active");
@@ -8,10 +11,3 @@
         $("#submenu").append("<li>Residências</li>");
     });
 </script>
-
-<div id="content" class="card">
-    <div class="header">
-        <h4 class="title">Striped Table with Hover</h4>
-        <p class="category">Here is a subtitle for this table</p>
-    </div>
-</div>

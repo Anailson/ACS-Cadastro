@@ -1,4 +1,26 @@
 <?php
+if(!@include "../subModels/Pregnant.class.php"){
+    include "subModels/Pregnant.class.php";
+}
+if(!@include "../subModels/Diseases.class.php"){
+    include "subModels/Diseases.class.php";
+}
+if(!@include "../subModels/HeartDisease.class.php"){
+    include "subModels/HeartDisease.class.php";
+}
+if(!@include "../subModels/KidneyDisease.class.php"){
+    include "subModels/KidneyDisease.class.php";
+}
+if(!@include "../subModels/RespiratoryDisease.class.php"){
+    include "subModels/RespiratoryDisease.class.php";
+}
+if(!@include "../subModels/Interment.class.php"){
+    include "subModels/Interment.class.php";
+}
+if(!@include "../subModels/Plant.class.php"){
+    include "subModels/Plant.class.php";
+}
+
 
 class HealthConditionsModel
 {

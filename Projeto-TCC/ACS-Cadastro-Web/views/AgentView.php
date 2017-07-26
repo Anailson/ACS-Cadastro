@@ -3,7 +3,6 @@
 include "controllers/AgentsController.php";
 $controller = new AgentsController();
 $buttons = $controller->crudButtons("");
-
 ?>
 
 <div id="content" class="card">

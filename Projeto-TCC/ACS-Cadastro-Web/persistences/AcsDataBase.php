@@ -45,14 +45,12 @@ class AcsDataBase
         $this->openConnection();
 
         $prepare = $this->connection->prepare($query);
-
         if ($prepare) {
+            $params ? $prepare->execute ($params) : $prepare->execute();
 
-            $params ? $prepare->execute($params) : $prepare->execute();
-
-            $agents = $prepare->fetchAll();
+            $rows = $prepare->fetchAll();
             $this->closeConnection();
-            return $agents;
+            return $rows;
 
         } else {
             $this->closeConnection();
@@ -66,8 +64,8 @@ class AcsDataBase
         try {
             $stmt = $this->connection->prepare($query);
 
-            echo "<b>Query </b> -> "; var_dump($query); echo "<br>";
-            echo "<b>Params </b> -> "; var_dump($params);echo "<br>";
+            //echo "<b>Query </b> -> "; var_dump($query); echo "<br>";
+            //echo "<b>Params </b> -> "; var_dump($params);echo "<br>";
 
             if ($stmt) {
 
@@ -77,7 +75,7 @@ class AcsDataBase
                 $this->connection->commit();
                 $this->closeConnection();
 
-                echo "<b>ID: </b> -> ";var_dump($id); echo "<br><br>";
+                //echo "<b>ID: </b> -> ";var_dump($id); echo "<br><br>";
                 return $id;
             }
 

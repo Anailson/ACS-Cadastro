@@ -2,9 +2,28 @@
 
 class PersonalDataPersistence
 {
+    static function getById(AcsDataBase $db, $id)
+    {
+        $query = "SELECT P.NUM_SUS, P.NUM_NIS, P.NAME, P.SOCIAL_NAME, P.BIRTH_DATE,
+                    M.KNOWN, M.NAME AS MOTHER_NAME,
+                    R.RESPONSIBLE, R.NUM_SUS AS RESP_NUM_SUS, R.BIRTH_DATE AS RESP_BIRTH_DATE,
+                    G.GENDER, G.RACE,
+                    N.NATIONALITY, N.NATION_BIRTH, N.UF, N.CITY,
+                    C.PHONE, C.EMAIL
+                FROM tb_personal_data PD
+                INNER JOIN tb_particular AS P ON PD.ID_PARTICULAR = P.PARTICULAR_ID
+                INNER JOIN tb_mother AS M ON PD.ID_MOTHER = M.MOTHER_ID
+                INNER JOIN tb_responsible AS R ON PD.ID_RESPONSIBLE = R.RESPONSIBLE_ID
+                INNER JOIN tb_gender_race AS G ON PD.ID_GENDER_RACE = G.GENDER_RACE_ID
+                INNER JOIN tb_nationality AS N ON PD.ID_NATIONALITY = N.NATIONALITY_ID
+                INNER JOIN tb_contact AS C ON PD.ID_CONTACT = C.CONTACT_ID
+                WHERE PD.PERSONAL_DATA_ID = :PERSONAL_DATA";
+        $param = array(":" . PersonalDataModel::PERSONAL_DATA => $id);
+        return $db->select($query, $param);
+    }
+
     static function insert(AcsDataBase $db, PersonalDataModel $personalData)
     {
-
         $query = array(PersonalDataModel::PERSONAL_DATA => self::queryPersonal(),
             Particular::PARTICULAR => self::queryParticular(),
             Mother::MOTHER => self::queryMother(),

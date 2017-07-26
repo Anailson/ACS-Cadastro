@@ -1,18 +1,15 @@
 <?php
+if (!@include "persistences/AcsDataBase.php") {
+    include "../persistences/AcsDataBase.php";
+}
 
 class AccompanyPersistence
 {
-    static function insert($json)
+    static function insert(AccompanyMoodel $accompay)
     {
-        $accompanyData = json_decode($json, true);
-        $recordData = $accompanyData['RECORD_DATA'];
+        $db = new AcsDataBase(AcsDataBase::DB_NAME);
 
-        $recordDetails = parent::prepareValues($recordData['RECORD_DETAILS']);
-        $anthropometric = parent::prepareValues($recordData['ANTHROPOMETRIC']);
-        $kidAndPregnant = parent::prepareValues($recordData['KID_PREGNANT']);
 
-        $idRecordData = RecordDataPersistence::insert($recordDetails, $anthropometric, $kidAndPregnant);
-        return array("ID_RECORD_DATA" => $idRecordData);
     }
 
     static function update($record)

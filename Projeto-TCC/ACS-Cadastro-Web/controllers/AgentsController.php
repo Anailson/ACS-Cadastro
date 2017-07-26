@@ -9,15 +9,15 @@ class AgentsController
     const EDIT = "Editar";
     const DELETE = "Remover";
 
-    private $agents;
+    //private $agents;
 
     function __construct()
     {
-        $this->agents = array();
     }
 
     public function getAll()
     {
+        $agents = array();
         $arrays = AgentsPersistence::getAll();
         foreach ($arrays as $array)
         {
@@ -25,9 +25,9 @@ class AgentsController
                 $array[AgentsPersistence::NUM_SUS],
                 $array[AgentsPersistence::AREA],
                 $array[AgentsPersistence::EQUIP]);
-            array_push($this->agents, $agent);
+            array_push($agents, $agent);
         }
-        return $this->agents;
+        return $agents;
     }
 
     public function crudButtons($numSus)
@@ -38,7 +38,5 @@ class AgentsController
             self::EDIT => "<button type='button' class='btn btn-warning btn-fill'><i class='fa fa-pencil-square-o'></i>&nbsp;". self::EDIT ."</button>",
             self::DELETE => "<button type='button' class='btn btn-danger btn-fill'><i class='fa fa-trash-o'></i>&nbsp;". self::DELETE ."</button>",
         );
-
-
     }
 }

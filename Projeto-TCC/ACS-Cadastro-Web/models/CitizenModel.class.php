@@ -1,4 +1,31 @@
 <?php
+if(!@include "models/PersonalDataModel.class.php") {
+    include "../models/PersonalDataModel.class.php";
+}
+if(!@include "models/SocialDemographicModel.class.php"){
+    include "../models/SocialDemographicModel.class.php";
+}
+if(!@include "models/HealthConditionsModel.class.php"){
+    include "../models/HealthConditionsModel.class.php";
+}
+if(!@include "models/StreetSituationModel.class.php"){
+    include "../models/StreetSituationModel.class.php";
+}
+if(!@include "persistences/PersonalDataPersistence.php"){
+    include "../persistences/PersonalDataPersistence.php";
+}
+if(!@include "persistences/SocialDemographicPersistence.php"){
+    include "../persistences/SocialDemographicPersistence.php";
+}
+
+if(!@include "persistences/HealthConditionsPersistence.php"){
+    include "../persistences/HealthConditionsPersistence.php";
+}
+
+if(!@include "persistences/StreetSituationPersistence.php"){
+    include "../persistences/StreetSituationPersistence.php";
+}   
+
 
 class CitizenModel
 {

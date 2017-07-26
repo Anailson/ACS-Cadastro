@@ -1,4 +1,9 @@
-<?php include "template.php" ?>
+<?php
+include "template.php";
+include "views/CitizenView.php"
+?>
+
+<script src="assets/js/datatable-config.js"></script>
 <script>
     $(function () {
         $(".nav li").removeClass("active");
@@ -8,10 +13,3 @@
         $("#submenu").append("<li>Cidadãos</li>");
     });
 </script>
-
-<div id="content" class="card">
-    <div class="header">
-        <h4 class="title">Striped Table with Hover</h4>
-        <p class="category">Here is a subtitle for this table</p>
-    </div>
-</div>

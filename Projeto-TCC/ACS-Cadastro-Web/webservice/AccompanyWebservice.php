@@ -1,12 +1,15 @@
 <?php
+if(!@include "persistences/AccompanyPersistence.php") {
+    include "../persistences/AccompanyPersistence.php";
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === AcsDataBase::POST) {
 
-    $list = isset($_GET['o']) ? $_GET['o'] : false;
+    $option = isset($_GET['o']) ? $_GET['o'] : false;
     $json = $_POST['JSON'];
-    if ($list) {
+    if ($option) {
         insertAll($json);
     } else {
         insert($json);

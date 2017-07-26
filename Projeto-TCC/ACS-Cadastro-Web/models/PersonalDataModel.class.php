@@ -1,5 +1,24 @@
 <?php
 
+if(!@include "../subModels/Particular.php") {
+    include "subModels/Particular.php";
+}
+if(!@include "../subModels/Mother.php") {
+    include "subModels/Mother.php";
+}
+if(!@include "../subModels/Responsible.php") {
+    include "subModels/Responsible.php";
+}
+if(!@include "../subModels/GenderAndRace.php") {
+    include "subModels/GenderAndRace.php";
+}
+if(!@include "../subModels/Nationality.php") {
+    include "subModels/Nationality.php";
+}
+if(!@include "../subModels/Contact.php") {
+    include "subModels/Contact.php";
+}
+
 class PersonalDataModel
 {
     const PERSONAL_DATA = "PERSONAL_DATA";

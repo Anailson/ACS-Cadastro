@@ -2,6 +2,11 @@
 
 class HealthConditionsPersistence
 {
+    public static function getById(AcsDataBase $db, $id)
+    {
+        return null;
+    }
+
     static function insert(AcsDataBase $db, HealthConditionsModel $healthConditions)
     {
         $query[HealthConditionsModel::HEALTH_CONDITIONS] = self::queryHealthConditions();

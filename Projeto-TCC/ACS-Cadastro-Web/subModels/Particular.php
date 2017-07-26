@@ -19,6 +19,14 @@ class Particular
         $this->socialName = $socialName;
         $this->birthDate = $birthDate;
     }
+    public function getNumSus()
+    {
+        return $this->numSus;
+    }
+    public function getName()
+    {
+        return $this->name;
+    }
 
     public static function getFromArray(array $array)
     {

@@ -1,4 +1,20 @@
 <?php
+if(!@include "../subModels/StreetSituation.php") {
+    include "subModels/StreetSituation.php";
+}
+if(!@include "../subModels/Feeding.php") {
+    include "subModels/Feeding.php";
+}
+if(!@include "../subModels/AnotherInstitution.php") {
+    include "subModels/AnotherInstitution.php";
+}
+if(!@include "../subModels/FamilyVisit.php") {
+    include "subModels/FamilyVisit.php";
+}
+if(!@include "../subModels/Hygiene.php") {
+    include "subModels/Hygiene.php";
+}
+
 
 class StreetSituationModel
 {

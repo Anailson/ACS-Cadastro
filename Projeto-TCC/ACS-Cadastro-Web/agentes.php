@@ -1,6 +1,6 @@
 <?php
 include "template.php";
-include "views/AgentsView.php";
+include "views/AgentView.php";
 ?>
 
 <script src="assets/js/datatable-config.js"></script>
