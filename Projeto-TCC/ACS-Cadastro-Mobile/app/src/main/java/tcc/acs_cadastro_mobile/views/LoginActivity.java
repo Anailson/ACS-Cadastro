@@ -21,12 +21,9 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        AcsRecordPersistence.startDatabase(this);
-
         final LoginController controller = new LoginController(this);
         Button mEmailSignInButton = (Button) findViewById(R.id.btn_sign_in);
         final EditText edtNumSus = (EditText) findViewById(R.id.edt_agt_sus);
-
 
         edtNumSus.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 

@@ -17,60 +17,46 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskRequest;
+import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
 
 public class WebServiceConnection {
 
+    //private final String HOST = "http://10.0.0.7/";
     private final String HOST = "http://10.11.162.4/";
     private final String ROOT = HOST + "ACS-Cadastro-Web/webservice/";
     private final String F_GET = "?f=get";
 
     private Context context;
-    private IAsyncTaskRequest callback;
+    private IAsyncTaskResponse callback;
 
-    WebServiceConnection(Context context, IAsyncTaskRequest callback) {
-
+    WebServiceConnection(Context context, IAsyncTaskResponse callback) {
         this.context = context;
         this.callback = callback;
     }
 
-    public void get(String path, long value) {
+    void makeRequest(String path){
+        makeRequest(Method.GET_ALL, path, -1, null, null);
+    }
 
-        String url = ROOT + path + F_GET + "&d=" + value;
-        MakeConnection connection = new MakeConnection(url, Method.GET, null);
+    void makeRequest(String path, long param) {
+        makeRequest(Method.GET, path, param, null, null);
+    }
+
+    void makeRequest(String path, JSONObject param) {
+        makeRequest(Method.POST, path, -1, param, null);
+    }
+
+    void makeRequest(String path, JSONArray param) {
+        makeRequest(Method.POST_ALL, path, -1, null, param);
+    }
+
+    private void makeRequest(Method method, String path, long l, JSONObject object, JSONArray array) {
+        MakeConnection connection = new MakeConnection(path, l, object, array);
         connection.setCallback(callback);
-        connection.execute();
+        connection.execute(method);
     }
 
-    public void getAll(String path) {
-        String url = ROOT + path + F_GET;
-        MakeConnection connection = new MakeConnection(url, Method.GET, null);
-        connection.setCallback(callback);
-        connection.execute();
-    }
-
-    public void insert(String path, JSONObject json) {
-        String url = ROOT + path;
-        MakeConnection connection = new MakeConnection(url, Method.POST, json);
-        connection.setCallback(callback);
-        connection.execute();
-    }
-/*
-    public enum Table {
-        AGENT("AgentsWebService.php"), ACCOMPANY("AccompanyWebService.php"), CITIZEN("CitizenWebService.php");
-
-        private String value;
-
-        Table(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-*/
-    enum Status {
+    public enum Status {
         OK, READ_DATA_OK, ERROR_READ_DATA,
         WRITE_DATA_OK, ERROR_WRITE_DATA,
         OK_CONNECTION, CONNECTION_ERROR,
@@ -78,76 +64,86 @@ public class WebServiceConnection {
     }
 
     enum Method {
-        GET, GET_ALL, POST, PUT, DELETE
+        GET, GET_ALL, POST, POST_ALL, PUT, DELETE
     }
 
-    private class MakeConnection extends AsyncTask<Void, Void, Request> {
+    private class MakeConnection extends AsyncTask<Method, Void, Request> {
         private String path;
-        private Method method;
+        private long param;
         private JSONObject json;
+        private JSONArray array;
         private ProgressDialog dialog;
-        private IAsyncTaskRequest callBack;
+        private IAsyncTaskResponse callback;
 
-        private MakeConnection(String path, Method method, JSONObject json) {
+        private MakeConnection(String path, long l, JSONObject object, JSONArray array) {
             this.path = path;
-            this.method = method;
-            this.json = json;
-            this.callBack = null;
+            this.callback = null;
+            this.json = object;
+            this.array = array;
+            this.param = l;
         }
 
-        private void setCallback(IAsyncTaskRequest callback) {
-            this.callBack = callback;
+        private void setCallback(IAsyncTaskResponse callback) {
+            this.callback = callback;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             dialog = new ProgressDialog(context);
-            dialog.setTitle("Buscando");
-            dialog.setMessage("Buscando dados no sistema...");
+            //dialog.setTitle("Buscando");
+            dialog.setMessage("Acessando dados do sistema...");
             dialog.setCancelable(false);
             dialog.show();
         }
 
         @Override
-        protected Request doInBackground(Void... voids) {
-
-            if (method == Method.GET) {
-
-                return get(path);
-
-            } else if (method == Method.GET_ALL) {
-
-                return getAll(path);
-
-            } else if (method == Method.POST) {
-
-                return post(path, json);
-
-            } else if (method == Method.PUT) {
-
-                return put();
-
-            } else if (method == Method.DELETE) {
-
-                return delete();
+        protected Request doInBackground(Method... methods) {
+            Method method = methods[0];
+            switch (method) {
+                case GET: return get(method, path, param);
+                case GET_ALL: return getAll(method, path);
+                case POST: return post(method, path, json);
+                case POST_ALL: return postAll(method, path, array);
+                case PUT: return put(method);
+                case DELETE: return delete(method);
             }
-            return null;
+            return new Request(method);
         }
 
         @Override
         protected void onPostExecute(Request request) {
             super.onPostExecute(request);
 
-            if (request == null) {
-                request = new Request(method);
+            switch (request.getMethod()) {
+                case GET: callback.get(request, request.getObject()); break;
+                case GET_ALL: callback.getAll(request, request.getArray()); break;
+                case PUT: callback.update(request, request.getObject()); break;
+                case DELETE: callback.delete(request, request.getObject()); break;
+                case POST:
+                    try {
+                        callback.insert(request, request.getObject().getInt("id"));
+                    } catch (JSONException e) {
+                        callback.insert(request, -1);
+                    }
+                    break;
+                case POST_ALL:
+                    try {
+                        callback.insertAll(request, request.getObject().getInt("rows"));
+                    } catch (JSONException e) {
+                        callback.insertAll(request, -1);
+                    }
+                break;
             }
-
-            callBack.onRequest(request);
             dialog.dismiss();
         }
 
-        private Request get(String path) {
+        private Request get(Method method, String path, long param) {
+            if (param <= 0) {
+                throw new IllegalArgumentException("You must inserts long param > 0 to GET http-method on makeRequest");
+            }
+
+            path = ROOT + path + F_GET + "&d=" + param;
             Request request = new Request(method);
             HttpURLConnection connection = connect(request, path, method.name());
 
@@ -159,7 +155,6 @@ public class WebServiceConnection {
                     try {
                         request.setObject(new JSONObject(json));
                     } catch (JSONException e) {
-                        Log.e("json", json);
                         Log.e("httpMethod.get", WebServiceConnection.Status.JSON_ERROR + " " + e.getMessage());
                         request.setStatus(WebServiceConnection.Status.JSON_ERROR);
                     }
@@ -169,7 +164,8 @@ public class WebServiceConnection {
             return request;
         }
 
-        private Request getAll(String path) {
+        private Request getAll(Method method, String path) {
+            path = ROOT + path + F_GET;
             Request request = new Request(method);
             HttpURLConnection connection = connect(request, path, method.name());
 
@@ -182,7 +178,6 @@ public class WebServiceConnection {
                         request.setArray(new JSONArray(json));
                     } catch (JSONException e) {
                         request.setStatus(WebServiceConnection.Status.JSON_ERROR);
-                        Log.e("json", json);
                         Log.e("httpMethod.getAll", WebServiceConnection.Status.JSON_ERROR.name() + " " + e.getMessage());
                     }
                 }
@@ -191,25 +186,26 @@ public class WebServiceConnection {
             return request;
         }
 
-        private Request post(String path, JSONObject json) {
+        private Request post(Method method, String path, JSONObject json) {
+
+            path = ROOT + path;
             Request request = new Request(method);
             HttpURLConnection connection = connect(request, path, Method.POST.name());
             if (connection != null) {
 
-                writeData(request, connection, json);
+                writeData(request, connection, json.toString());
                 if (request.getStatus() == WebServiceConnection.Status.WRITE_DATA_OK) {
 
                     String data = readData(request, connection);
                     if (request.getStatus() == WebServiceConnection.Status.READ_DATA_OK) {
 
-                        request.setStatus(WebServiceConnection.Status.OK);
                         try {
                             request.setObject(new JSONObject(data));
+                            request.setStatus(WebServiceConnection.Status.OK);
 
                         } catch (JSONException e) {
                             request.setStatus(WebServiceConnection.Status.JSON_ERROR);
-                            Log.e("json", "[" + json + "]");
-                            Log.e("httpMethod.post", WebServiceConnection.Status.JSON_ERROR.name() + " " + e.getMessage());
+                            Log.e("httpMethod.postAll", WebServiceConnection.Status.JSON_ERROR.name() + " " + e.getMessage());
                         }
                     }
                 }
@@ -218,12 +214,41 @@ public class WebServiceConnection {
             return request;
         }
 
-        private Request put() {
-            return null;
+        private Request postAll(Method method, String path, JSONArray array) {
+
+            path = ROOT + path + "?o=" + true;
+            Request request = new Request(method);
+            HttpURLConnection connection = connect(request, path, Method.POST.name());
+
+            if (connection != null) {
+
+                writeData(request, connection, array.toString());
+                if (request.getStatus() == WebServiceConnection.Status.WRITE_DATA_OK) {
+
+                    String data = readData(request, connection);
+                    if (request.getStatus() == WebServiceConnection.Status.READ_DATA_OK) {
+
+                        try {
+                            request.setObject(new JSONObject(data));
+                            request.setStatus(WebServiceConnection.Status.OK);
+
+                        } catch (JSONException e) {
+                            request.setStatus(WebServiceConnection.Status.JSON_ERROR);
+                            Log.e("httpMethod.postAll", WebServiceConnection.Status.JSON_ERROR.name() + " " + e.getMessage());
+                        }
+                    }
+                }
+                connection.disconnect();
+            }
+            return request;
         }
 
-        private Request delete() {
-            return null;
+        private Request put(Method method) {
+            return new Request(method);
+        }
+
+        private Request delete(Method method) {
+            return new Request(method);
         }
 
         private HttpURLConnection connect(Request request, String path, String method) {
@@ -256,7 +281,7 @@ public class WebServiceConnection {
                 while ((json = reader.readLine()) != null) {
                     builder.append(json).append("\n");
                 }
-                Log.e("readData", builder.toString());
+
                 reader.close();
                 input.close();
                 connection.disconnect();
@@ -270,50 +295,39 @@ public class WebServiceConnection {
             return "";
         }
 
-        private void writeData(Request request, HttpURLConnection connection, JSONObject json) {
+        private void writeData(Request request, HttpURLConnection connection, String data) {
             try {
                 OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
-                Log.e("writeData", "JSON=" + json.toString());
-                writer.write("JSON=" + json.toString());
+                writer.write("JSON=" + data);
                 writer.flush();
                 writer.close();
                 request.setStatus(WebServiceConnection.Status.WRITE_DATA_OK);
             } catch (IOException e) {
                 request.setStatus(WebServiceConnection.Status.ERROR_WRITE_DATA);
-                Log.e("writeData", WebServiceConnection.Status.ERROR_WRITE_DATA.name() + " " + e.getMessage());
+                Log.e("writeData.error", WebServiceConnection.Status.ERROR_WRITE_DATA.name() + " " + e.getMessage());
             }
         }
     }
 
     public class Request {
 
-        private JSONArray jArray;
-        private JSONObject jObject;
         private Status status;
         private Method method;
+        private JSONObject object;
+        private JSONArray array;
 
         Request(Method method) {
             this.status = Status.GENERAL_ERROR;
             this.method = method;
-            this.jArray = null;
-            this.jObject = null;
-        }
-
-        private void setArray(JSONArray json) {
-            jObject = null;
-            jArray = json;
-        }
-
-        private void setObject(JSONObject object) {
-            jArray = null;
-            jObject = object;
+            this.object = null;
+            this.array = null;
         }
 
         Method getMethod() {
             return method;
         }
 
-        Status getStatus() {
+        public Status getStatus() {
             return status;
         }
 
@@ -321,11 +335,22 @@ public class WebServiceConnection {
             this.status = status;
         }
 
-        JSONObject getJsonObject() {
-            return jObject;
+        private JSONObject getObject() {
+            return object;
         }
-        JSONArray getJsonArray() {
-            return jArray;
+
+        private void setObject(JSONObject object) {
+            this.array = null;
+            this.object = object;
+        }
+
+        private JSONArray getArray() {
+            return array;
+        }
+
+        private void setArray(JSONArray array) {
+            this.object = null;
+            this.array = array;
         }
     }
 }

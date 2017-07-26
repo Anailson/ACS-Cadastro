@@ -114,7 +114,6 @@ public class CitizenAddController {
     private void save(){
         actualStep.onDetach();
         CitizenModel saved = CitizenPersistence.save(personalData, socialDemographicData, healthConditions, streetSituation);
-        Log.e("Save.Citizen", String.valueOf(saved == null));
         if(saved != null){
             showConfirmDialog(saved.getName(), saved.getNumSus());
         }

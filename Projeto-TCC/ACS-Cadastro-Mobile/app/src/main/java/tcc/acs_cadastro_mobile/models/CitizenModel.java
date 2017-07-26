@@ -29,6 +29,7 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
     private SocialDemographicModel socialDemographicData;
     private HealthConditionsModel healthConditions;
     private StreetSituationModel streetSituation;
+    private int status;
 
     public CitizenModel() {
         this(new PersonalDataModel(), new SocialDemographicModel(), new HealthConditionsModel(),
@@ -44,10 +45,15 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
         this.socialDemographicData = socialDemographicData;
         this.healthConditions = healthConditions;
         this.streetSituation = streetSituation;
+        setStatus(AcsRecordPersistence.INSERT);
     }
 
     public long getNumSus() {
         return numSus > AcsRecordPersistence.DEFAULT_INT ? numSus : AcsRecordPersistence.DEFAULT_INT;
+    }
+
+    public void setNumSus(long numSus) {
+        this.numSus = numSus;
     }
 
     public JSONObject asJson() {
@@ -63,8 +69,32 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
         return json;
     }
 
-    public void setNumSus(long numSus) {
-        this.numSus = numSus;
+    public int getStatus() {
+        if (status != AcsRecordPersistence.OK
+                && status != AcsRecordPersistence.INSERT
+                && status != AcsRecordPersistence.UPDATE) {
+            throw new IllegalArgumentException("Status invalid");
+        }
+        return status;
+    }
+
+    public String getStatusValue(){
+        switch (getStatus()){
+            case AcsRecordPersistence.OK: return AcsRecordPersistence.Status.OK.name();
+            case AcsRecordPersistence.INSERT: return AcsRecordPersistence.Status.INSERT.name();
+            case AcsRecordPersistence.UPDATE: return AcsRecordPersistence.Status.UPDATE.name();
+        }
+        return null;
+    }
+
+    public void setStatus(int status) {
+
+        if (status != AcsRecordPersistence.INSERT
+                && status != AcsRecordPersistence.UPDATE
+                && status != AcsRecordPersistence.OK) {
+            throw new IllegalArgumentException("Use AcsRecordPersistence constants (INSERT, UPDATE, OK).");
+        }
+        this.status = status;
     }
 
     public String getName() {

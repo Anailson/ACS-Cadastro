@@ -1,85 +1,51 @@
 package tcc.acs_cadastro_mobile.httpRequest;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskRequest;
 import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
-import tcc.acs_cadastro_mobile.models.AgentModel;
 
-public class AgentHttpRequests implements IAsyncTaskRequest {
+public class AgentHttpRequests {
 
     private final String PATH = "AgentsWebService.php";
 
-    private IAsyncTaskResponse<AgentModel> response;
-    private Context context;
+    private IAsyncTaskResponse.Responses response;
     private WebServiceConnection webService;
 
-    public AgentHttpRequests(IAsyncTaskResponse<AgentModel> response, Context context) {
-        this.response = response;
-        this.context = context;
-        this.webService = new WebServiceConnection(context, this);
+    public AgentHttpRequests(Context context) {
+
+        this.response = new IAsyncTaskResponse.Responses();
+        this.webService = new WebServiceConnection(context, response);
     }
 
-    @Override
-    public void onRequest(WebServiceConnection.Request request) {
-        if (request.getStatus() == WebServiceConnection.Status.OK) {
+    public void get(long value, IAsyncTaskResponse.Get get){
+        this.response.get = get;
+        webService.makeRequest(PATH, value);
+    }/*
 
-            if (request.getStatus() == WebServiceConnection.Status.OK) {
-
-                if (request.getMethod() == WebServiceConnection.Method.GET) {
-                    response.get(getAsJson(request.getJsonObject()));
-                } else if (request.getMethod() == WebServiceConnection.Method.GET_ALL) {
-                    response.getAll(getAsJsonArray(request.getJsonArray()));
-                } else if (request.getMethod() == WebServiceConnection.Method.POST) {
-                    response.insert(getId(request.getJsonObject()));
-                } else if (request.getMethod() == WebServiceConnection.Method.PUT) {
-                    response.update(getAsJson(request.getJsonObject()));
-                } else if (request.getMethod() == WebServiceConnection.Method.DELETE) {
-                    response.delete(getAsJson(request.getJsonObject()));
-                }
-            }
-
-        } else if (request.getStatus() == WebServiceConnection.Status.JSON_ERROR) {
-
-            Toast.makeText(context, "O numero do SUS é invalido", Toast.LENGTH_LONG).show();
-
-        } else if (request.getStatus() == WebServiceConnection.Status.CONNECTION_ERROR) {
-
-            Toast.makeText(context, "Erro na conexão com o servidor.", Toast.LENGTH_LONG).show();
-        }
+    public void getAll(IAsyncTaskResponse.GetAll getAll){
+        this.response.getAll = getAll;
+        webService.makeRequest(WebServiceConnection.Method.GET_ALL, PATH);
     }
 
-    public void get(long l) {
-        webService.get(PATH, l);
+    public void insert(AgentModel agent, IAsyncTaskResponse.Insert insert){
+        this.response.insert = insert;
+        webService.makeRequest(WebServiceConnection.Method.POST, PATH, agent.asJson());
     }
 
-    public void insert(AgentModel agent) {
-        webService.insert(PATH, agent.asJson());
+    public void insert(ArrayList<AgentModel> agents, IAsyncTaskResponse.Insert insert){
+        this.response.insert = insert;
+        webService.makeRequest(WebServiceConnection.Method.POST, PATH, convertFrom(agents));
     }
 
-
-
-    private AgentModel getAsJson(JSONObject json) {
-        try {
-            return new AgentModel(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private AgentModel convertFrom(JSONObject json) {
+        return new AgentModel(json);
     }
 
-    private ArrayList<AgentModel> getAsJsonArray(JSONArray array) {
+    private ArrayList<AgentModel> convertFrom(JSONArray array) {
         ArrayList<AgentModel> list = new ArrayList<>();
-        for(int i = 0; i < array.length(); i++){
+        for (int i = 0; i < array.length(); i++) {
             try {
-                list.add(getAsJson(array.getJSONObject(i)));
+                list.add(convertFrom(array.getJSONObject(i)));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -87,12 +53,11 @@ public class AgentHttpRequests implements IAsyncTaskRequest {
         return list;
     }
 
-    private int getId(JSONObject json) {
-        try {
-            return json.getInt("id");
-        } catch (JSONException e) {
-            e.printStackTrace();
+    private JSONArray convertFrom(ArrayList<AgentModel> list) {
+        JSONArray array = new JSONArray();
+        for (AgentModel agent: list) {
+            array.put(agent.asJson());
         }
-        return -1;
-    }
+        return array;
+    }*/
 }

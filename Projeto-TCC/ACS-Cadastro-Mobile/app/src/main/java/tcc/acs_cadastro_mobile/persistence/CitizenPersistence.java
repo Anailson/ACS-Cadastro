@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import io.realm.Sort;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.HealthConditionsModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
@@ -36,6 +34,7 @@ public class CitizenPersistence {
     public static CitizenModel save(CitizenModel citizen) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
+        citizen.setStatus(AcsRecordPersistence.INSERT);
         CitizenModel saved = realm.copyToRealmOrUpdate(citizen);
         realm.commitTransaction();
         return saved;
@@ -58,7 +57,7 @@ public class CitizenPersistence {
                 .findAll().first(null);
     }
 
-    public static String[] getNumSus(int j) {
+    public static String[] getNumSus() {
         RealmResults<CitizenModel> list = getAll()
                 .where()
                 .greaterThan(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
@@ -76,31 +75,10 @@ public class CitizenPersistence {
                 .where()
                 .greaterThan(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
                 .findAll();
-        for(CitizenModel citizen : list){
+        for (CitizenModel citizen : list) {
             numSus.add(citizen.getNumSus());
         }
 
         return numSus;
-    }
-
-    public static long getMinorNumSusIfBlank(long numSus) {
-
-        if (numSus > AcsRecordPersistence.DEFAULT_INT) return numSus;
-
-        RealmQuery<CitizenModel> query = Realm.getDefaultInstance().where(CitizenModel.class);
-        CitizenModel citizen = query
-                .findAllSorted(CitizenModel.NUM_SUS, Sort.ASCENDING)
-                .first(null);
-
-        if(citizen == null || citizen.getNumSus() > AcsRecordPersistence.DEFAULT_INT){
-
-            return AcsRecordPersistence.DEFAULT_INT;
-
-        } else {
-
-           return query.lessThanOrEqualTo(CitizenModel.NUM_SUS, AcsRecordPersistence.DEFAULT_INT)
-                   .findAll()
-                   .size() * -1;
-        }
     }
 }

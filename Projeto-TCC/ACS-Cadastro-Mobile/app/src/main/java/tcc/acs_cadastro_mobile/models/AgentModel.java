@@ -29,17 +29,27 @@ public class AgentModel extends RealmObject implements Serializable {
         this.equip = equip;
     }
 
-    public AgentModel(JSONObject json) throws JSONException {
-        if (json != null) {
+    public AgentModel(JSONObject json) {
 
+        try {
             this.name = json.getString("NAME");
             this.numSus = json.getLong("NUM_SUS");
             this.area = json.getInt("AREA");
             this.equip = json.getInt("EQUIP");
-        } else {
+        } catch (JSONException | NullPointerException e) {
+
             name = AcsRecordPersistence.DEFAULT_STR;
             numSus = area = equip = AcsRecordPersistence.DEFAULT_INT;
         }
+
+    }
+
+    public static List<AgentModel> getList(JSONArray array) throws JSONException {
+        List<AgentModel> list = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            list.add(new AgentModel(array.getJSONObject(i)));
+        }
+        return list;
     }
 
     public JSONObject asJson() {
@@ -54,14 +64,6 @@ public class AgentModel extends RealmObject implements Serializable {
             e.printStackTrace();
         }
         return json;
-    }
-
-    public static List<AgentModel> getList(JSONArray array) throws JSONException {
-        List<AgentModel> list = new ArrayList<>();
-        for (int i = 0; i < array.length(); i++) {
-            list.add(new AgentModel(array.getJSONObject(i)));
-        }
-        return list;
     }
 
     public String getName() {

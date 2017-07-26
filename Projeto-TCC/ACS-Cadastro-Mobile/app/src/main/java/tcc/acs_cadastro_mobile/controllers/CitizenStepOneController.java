@@ -14,8 +14,9 @@ import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.adapters.SpinnerAdapter;
 import tcc.acs_cadastro_mobile.interfaces.ICalendarListener;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
+import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.PersonalDataModel;
-import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.PersonalDataPersistence;
 import tcc.acs_cadastro_mobile.subModels.Contact;
 import tcc.acs_cadastro_mobile.subModels.GenderAndRace;
@@ -94,7 +95,8 @@ public class CitizenStepOneController extends StepsController {
     public ParticularData getParticularData(EditText edtNumSus, EditText edtName, EditText edtSocialName,
                                             EditText edtNumNis, EditText edtBirth) {
 
-        long numSus = CitizenPersistence.getMinorNumSusIfBlank(getLong(edtNumSus));
+        long numSus = getLong(edtNumSus);
+        numSus = AcsRecordPersistence.getMinorValueIfBlank(CitizenModel.class, CitizenModel.NUM_SUS, numSus);
         return PersonalDataPersistence.get(numSus, getFields(edtName),
                 getFields(edtSocialName), getLong(edtNumNis), getFields(edtBirth));
     }
