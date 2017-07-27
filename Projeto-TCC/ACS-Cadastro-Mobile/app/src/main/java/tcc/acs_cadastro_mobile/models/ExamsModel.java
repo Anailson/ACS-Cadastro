@@ -1,9 +1,13 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.EvaluatedExams;
 import tcc.acs_cadastro_mobile.subModels.RequestExams;
 
@@ -64,5 +68,18 @@ public class ExamsModel extends RealmObject implements Serializable{
 
     public void setAnothers(RealmList<RealmInt> anothers) {
         this.anothers = anothers;
+    }
+
+    public JSONObject asJson() {
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Accompany.PIC.name(), pic);
+            json.put(Constants.Accompany.REQUEST_EXAMS.name(), request.asJson());
+            json.put(Constants.Accompany.EVALUATED_EXAMS.name(), evaluate.asJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

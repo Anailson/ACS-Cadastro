@@ -1,8 +1,35 @@
 package tcc.acs_cadastro_mobile.subModels;
 
-import io.realm.RealmObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+
+import io.realm.RealmObject;
+
+import static tcc.acs_cadastro_mobile.Constants.Accompany.BLOOD_COUNT;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.CREATINE;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.DENGUE;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.EAR_TEST;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.EAS_EQU;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.ELECTROCARDIOGRAM;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.EYES;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.EYE_TEST;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.FOOT_TEST;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.GLYCEMIA;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.GLYCEMIC_HEMOGLIBIN;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.HDL;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.HEMOGLOBIN;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.HIV;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.HUMAN_ANTIGLOBULIN;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.LDL;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.PREGNANCY_TEST;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.SPIROMETRY;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.SPUTUM;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.SYPHILIS;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.TOTAL_CHOLESTEROL;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.ULTRASONOGRAPHY;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.UROCULTURE;
 
 public class RequestExams extends RealmObject implements Serializable {
 
@@ -242,5 +269,39 @@ public class RequestExams extends RealmObject implements Serializable {
 
     public void setUroculture(boolean uroculture) {
         this.uroculture = uroculture;
+    }
+
+    public JSONObject asJson() {
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put(TOTAL_CHOLESTEROL.name(), totalCholesterol);
+            json.put(CREATINE.name(), creatinine);
+            json.put(EAS_EQU.name(), easEqu);
+            json.put(ELECTROCARDIOGRAM.name(), electrocardiogram);
+            json.put(HEMOGLOBIN.name(), hemoglobin);
+            json.put(SPIROMETRY.name(), spirometry);
+            json.put(SPUTUM.name(), sputum);
+            json.put(GLYCEMIA.name(), glycemia);
+            json.put(HDL.name(), hdl);
+            json.put(GLYCEMIC_HEMOGLIBIN.name(), glycemic);
+            json.put(BLOOD_COUNT.name(), bloodCount);
+            json.put(LDL.name(), ldl);
+            json.put(EYES.name(), eyes);
+            json.put(SYPHILIS.name(), syphilis);
+            json.put(DENGUE.name(), dengue);
+            json.put(HIV.name(), hiv);
+            json.put(HUMAN_ANTIGLOBULIN.name(), humanAntiglobulin);
+            json.put(EAR_TEST.name(), earTest);
+            json.put(PREGNANCY_TEST.name(), testPregnancy);
+            json.put(EYE_TEST.name(), eyeTest);
+            json.put(FOOT_TEST.name(), testFoot);
+            json.put(ULTRASONOGRAPHY.name(), ultrasonography);
+            json.put(UROCULTURE.name(), uroculture);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

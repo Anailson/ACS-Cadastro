@@ -82,10 +82,6 @@ public class RecordDataModel extends RealmObject implements Serializable {
         json.put(RECORD_DETAILS.name(), recordDetails.asJson());
         json.put(ANTHROPOMETRIC.name(), anthropometric.asJson());
         json.put(KID_PREGNANT.name(), kidsPregnant.asJson());
-        Log.e("RECORD_DETAILS", recordDetails.asJson().toString());
-        Log.e("ANTHROPOMETRIC", anthropometric.asJson().toString());
-        Log.e("KID_PREGNANT", kidsPregnant.asJson().toString());
-        Log.e("RecordDataModel", json.toString());
         return json;
     }
 }

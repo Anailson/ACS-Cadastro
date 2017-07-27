@@ -2,7 +2,11 @@ package tcc.acs_cadastro_mobile.models;
 
 import android.widget.RadioGroup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.Conduct;
 import tcc.acs_cadastro_mobile.subModels.Forwarding;
 import tcc.acs_cadastro_mobile.subModels.NASF;
@@ -69,5 +73,18 @@ public class NasfConductModel extends RealmObject implements Serializable {
 
     public void setForwarding(Forwarding forwarding) {
         this.forwarding = forwarding;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Accompany.NASF_CONDUCT.name(), observation);
+            json.put(Constants.Accompany.NASF.name(), nasf.asJson());
+            json.put(Constants.Accompany.CONDUCT.name(), conduct.asJson());
+            json.put(Constants.Accompany.FORWARDING.name(), forwarding.asJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

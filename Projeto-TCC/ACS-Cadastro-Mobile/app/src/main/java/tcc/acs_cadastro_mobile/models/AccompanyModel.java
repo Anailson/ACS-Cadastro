@@ -7,9 +7,13 @@ import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
+
+import static tcc.acs_cadastro_mobile.Constants.Accompany.CONDITIONS;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.EXAMS;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.NASF_CONDUCT;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.RECORD_DATA;
 
 public class AccompanyModel extends RealmObject implements Serializable, ISearcher {
 
@@ -44,7 +48,10 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
     public JSONObject asJson(){
         JSONObject json = new JSONObject();
         try {
-            json.put(Constants.Accompany.RECORD_DATA.name(), recordData.asJson());
+            json.put(RECORD_DATA.name(), recordData.asJson());
+            json.put(CONDITIONS.name(), conditions.asJson());
+            json.put(EXAMS.name(), exams.asJson());
+            json.put(NASF_CONDUCT.name(), nasfConduct.asJson());
         } catch (JSONException e) {
             e.printStackTrace();
         }

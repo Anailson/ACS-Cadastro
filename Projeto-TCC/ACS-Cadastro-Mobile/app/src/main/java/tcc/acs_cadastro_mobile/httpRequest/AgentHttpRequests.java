@@ -19,22 +19,22 @@ public class AgentHttpRequests {
 
     public void get(long value, IAsyncTaskResponse.Get get){
         this.response.get = get;
-        webService.makeRequest(PATH, value);
+        webService.get(PATH, value);
     }/*
 
     public void getAll(IAsyncTaskResponse.GetAll getAll){
         this.response.getAll = getAll;
-        webService.makeRequest(WebServiceConnection.Method.GET_ALL, PATH);
+        webService.post(WebServiceConnection.Method.GET_ALL, PATH);
     }
 
     public void insert(AgentModel agent, IAsyncTaskResponse.Insert insert){
         this.response.insert = insert;
-        webService.makeRequest(WebServiceConnection.Method.POST, PATH, agent.asJson());
+        webService.post(WebServiceConnection.Method.POST, PATH, agent.asJson());
     }
 
     public void insert(ArrayList<AgentModel> agents, IAsyncTaskResponse.Insert insert){
         this.response.insert = insert;
-        webService.makeRequest(WebServiceConnection.Method.POST, PATH, convertFrom(agents));
+        webService.post(WebServiceConnection.Method.POST, PATH, convertFrom(agents));
     }
 
     private AgentModel convertFrom(JSONObject json) {

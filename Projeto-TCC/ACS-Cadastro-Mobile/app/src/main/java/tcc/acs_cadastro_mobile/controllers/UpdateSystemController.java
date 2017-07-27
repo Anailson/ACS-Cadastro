@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import tcc.acs_cadastro_mobile.httpRequest.AccompanyHttpRequest;
 import tcc.acs_cadastro_mobile.httpRequest.CitizenHttpRequest;
 import tcc.acs_cadastro_mobile.httpRequest.WebServiceConnection;
 import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
@@ -24,12 +25,12 @@ public class UpdateSystemController {
     }
 
     public void updateSystem() {
-        new UpdateCitizenModel().update();
+        new UpdateCitizenModel().updateAccompanies();
     }
 
     private class UpdateCitizenModel {
 
-        public void update() {
+        private void updateCitizen() {
             List<CitizenModel> citizens = CitizenPersistence.getAll();
             List<CitizenModel> sendToBD = new ArrayList<>();
 
@@ -48,23 +49,26 @@ public class UpdateSystemController {
                 }
             });
 
-
-
-            citizenRequest.insert(sendToBD.get(sendToBD.size() - 1), new IAsyncTaskResponse.Insert() {
-                @Override
-                public void insert(WebServiceConnection.Request request, int id) {
-                    if (request.getStatus() == WebServiceConnection.Status.OK) {
-                        //CitizenPersistence.updateStatus()
-                    }
-                }
-            });
-
             //AgentHttpRequests httpRequests = new AgentHttpRequests(fragment.getContext());
             //httpRequests.setInsertResponse(this);
             //httpRequests.makeRequest(WebServiceConnection.Method.GET, );
 
+            //CitizenModel citizen = CitizenPersistence.get(197970454);
+        }
+
+        private void updateAccompanies(){
+
             AccompanyModel accompany = AccompanyPersistence.getAll().first();
-            CitizenModel citizen = CitizenPersistence.get(197970454);
+            AccompanyHttpRequest httpRequest = new AccompanyHttpRequest(fragment.getContext());
+            httpRequest.insert(accompany, new IAsyncTaskResponse.Insert(){
+
+                @Override
+                public void insert(WebServiceConnection.Request request, int id) {
+                    Log.e("INSERT", "ID: " + id);
+                }
+            });
+
+            //Log.e("Accompany", accompany.asJson().toString());
         }
     }
 }

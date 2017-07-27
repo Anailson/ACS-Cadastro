@@ -1,6 +1,10 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
 
@@ -51,5 +55,18 @@ public class NASF extends RealmObject implements Serializable {
 
     public void setPrescription(boolean prescription) {
         this.prescription = prescription;
+    }
+
+    public JSONObject asJson() {
+
+        JSONObject json = new JSONObject();
+        try{
+            json.put(Constants.Accompany.EVALUATION.name(), evaluation);
+            json.put(Constants.Accompany.PROCEDURES.name(), procedures);
+            json.put(Constants.Accompany.PRESCRIPTION.name(), prescription);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

@@ -1,8 +1,17 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
+
+import static tcc.acs_cadastro_mobile.Constants.Accompany.DENGUE;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.DST;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.LEPROSY;
+import static tcc.acs_cadastro_mobile.Constants.Accompany.TUBERCULOSIS;
 
 public class CommunicableDisease extends RealmObject implements Serializable {
 
@@ -61,5 +70,18 @@ public class CommunicableDisease extends RealmObject implements Serializable {
 
     public void setDst(boolean dst) {
         this.dst = dst;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(TUBERCULOSIS.name(), tuberculosis);
+            json.put(LEPROSY.name(), leprosy);
+            json.put(DENGUE.name(), dengue);
+            json.put(DST.name(), dst);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

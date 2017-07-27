@@ -21,8 +21,8 @@ import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
 
 public class WebServiceConnection {
 
-    //private final String HOST = "http://10.0.0.7/";
-    private final String HOST = "http://10.11.162.4/";
+    private final String HOST = "http://10.0.0.7/";
+    //private final String HOST = "http://10.11.162.4/";
     private final String ROOT = HOST + "ACS-Cadastro-Web/webservice/";
     private final String F_GET = "?f=get";
 
@@ -34,19 +34,19 @@ public class WebServiceConnection {
         this.callback = callback;
     }
 
-    void makeRequest(String path){
-        makeRequest(Method.GET_ALL, path, -1, null, null);
-    }
-
-    void makeRequest(String path, long param) {
+    void get(String path, long param) {
         makeRequest(Method.GET, path, param, null, null);
     }
 
-    void makeRequest(String path, JSONObject param) {
+    void getAll(String path){
+        makeRequest(Method.GET_ALL, path, -1, null, null);
+    }
+
+    void post(String path, JSONObject param) {
         makeRequest(Method.POST, path, -1, param, null);
     }
 
-    void makeRequest(String path, JSONArray param) {
+    void postAll(String path, JSONArray param) {
         makeRequest(Method.POST_ALL, path, -1, null, param);
     }
 
@@ -140,7 +140,7 @@ public class WebServiceConnection {
 
         private Request get(Method method, String path, long param) {
             if (param <= 0) {
-                throw new IllegalArgumentException("You must inserts long param > 0 to GET http-method on makeRequest");
+                throw new IllegalArgumentException("You must inserts long param > 0 to GET http-method on post");
             }
 
             path = ROOT + path + F_GET + "&d=" + param;
@@ -205,7 +205,8 @@ public class WebServiceConnection {
 
                         } catch (JSONException e) {
                             request.setStatus(WebServiceConnection.Status.JSON_ERROR);
-                            Log.e("httpMethod.postAll", WebServiceConnection.Status.JSON_ERROR.name() + " " + e.getMessage());
+                            Log.e("data", data);
+                            Log.e("httpMethod.post", WebServiceConnection.Status.JSON_ERROR.name() + " " + e.getMessage());
                         }
                     }
                 }
@@ -319,8 +320,8 @@ public class WebServiceConnection {
         Request(Method method) {
             this.status = Status.GENERAL_ERROR;
             this.method = method;
-            this.object = null;
-            this.array = null;
+            this.object = new JSONObject();
+            this.array = new JSONArray();
         }
 
         Method getMethod() {
@@ -340,7 +341,6 @@ public class WebServiceConnection {
         }
 
         private void setObject(JSONObject object) {
-            this.array = null;
             this.object = object;
         }
 
@@ -349,7 +349,6 @@ public class WebServiceConnection {
         }
 
         private void setArray(JSONArray array) {
-            this.object = null;
             this.array = array;
         }
     }

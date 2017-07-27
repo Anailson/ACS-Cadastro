@@ -4,7 +4,6 @@ import android.content.Context;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
@@ -23,17 +22,17 @@ public class CitizenHttpRequest {
 
     public void get(long value, IAsyncTaskResponse.Get get){
         response.get = get;
-        webService.makeRequest(PATH, value);
+        webService.get(PATH, value);
     }
 
     public void insert(CitizenModel citizen, IAsyncTaskResponse.Insert insert){
         response.insert = insert;
-        webService.makeRequest(PATH, citizen.asJson());
+        webService.post(PATH, citizen.asJson());
     }
 
     public void insertAll(List<CitizenModel> list, IAsyncTaskResponse.InsertAll insertAll){
         response.insertAll = insertAll;
-        webService.makeRequest(PATH, convertFrom(list));
+        webService.postAll(PATH, convertFrom(list));
     }
 
     private JSONArray convertFrom(List<CitizenModel> list) {

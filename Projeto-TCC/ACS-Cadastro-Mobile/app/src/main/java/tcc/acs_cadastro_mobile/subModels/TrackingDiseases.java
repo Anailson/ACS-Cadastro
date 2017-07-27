@@ -1,6 +1,10 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
 
@@ -52,5 +56,19 @@ public class TrackingDiseases extends RealmObject implements Serializable {
 
     public void setCardiovascular(boolean cardiovascular) {
         this.cardiovascular = cardiovascular;
+    }
+
+    public JSONObject asJson() {
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Accompany.CARDIOVASCULAR.name(), cardiovascular);
+            json.put(Constants.Accompany.BREAST_CANCER.name(), breastCancer);
+            json.put(Constants.Accompany.CERVICAL_CANCER.name(), cervicalCancer);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return json;
     }
 }

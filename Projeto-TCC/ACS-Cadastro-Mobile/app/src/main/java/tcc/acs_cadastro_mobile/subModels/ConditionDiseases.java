@@ -1,8 +1,14 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import com.google.api.client.json.Json;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class ConditionDiseases extends RealmObject implements Serializable {
 
@@ -168,5 +174,30 @@ public class ConditionDiseases extends RealmObject implements Serializable {
 
     public void setRehabilitation(boolean rehabilitation) {
         this.rehabilitation = rehabilitation;
+    }
+
+    public JSONObject asJson() {
+
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Accompany.ASTHMA.name(), asthma);
+            json.put(Constants.Accompany.MALNUTRITION.name(), malnutrition);
+            json.put(Constants.Accompany.DIABETES.name(), diabetes);
+            json.put(Constants.Accompany.DPOC.name(), dpoc);
+            json.put(Constants.Accompany.HYPERTENSION.name(), hypertension);
+            json.put(Constants.Accompany.OBESITY.name(), obesity);
+            json.put(Constants.Accompany.PRENATAL.name(), prenatal);
+            json.put(Constants.Accompany.CHILD_CARE.name(), childcare);
+            json.put(Constants.Accompany.PUERPERIUM.name(), puerperium);
+            json.put(Constants.Accompany.SEXUAL_HEALTH.name(), sexualHealth);
+            json.put(Constants.Accompany.SMOKING.name(), smoking);
+            json.put(Constants.Accompany.ALCOHOL.name(), alcohol);
+            json.put(Constants.Accompany.DRUGS.name(), drugs);
+            json.put(Constants.Accompany.MENTAL_HEALTH.name(), mentalHealth);
+            json.put(Constants.Accompany.REHABILITATION.name(), rehabilitation);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

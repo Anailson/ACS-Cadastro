@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 
 public class Conduct extends RealmObject implements Serializable {
@@ -71,5 +75,19 @@ public class Conduct extends RealmObject implements Serializable {
 
     public void setRelsease(boolean relsease) {
         this.relsease = relsease;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Accompany.SCHEDULE_APPOINTMENT.name(),scheduledAppointment );
+            json.put(Constants.Accompany.SCHEDULE_CARE.name(), scheduledCare);
+            json.put(Constants.Accompany.GROUPS_SCHEDULE.name(), groupScheduling);
+            json.put(Constants.Accompany.NASF_SCHEDULE.name(), nasfScheduling);
+            json.put(Constants.Accompany.RELEASES.name(), relsease);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class Forwarding extends RealmObject implements Serializable{
 
@@ -89,5 +93,22 @@ public class Forwarding extends RealmObject implements Serializable{
 
     public void setIntersectoral(boolean intersectoral) {
         this.intersectoral = intersectoral;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        //, , , , , ,
+        try {
+            json.put(Constants.Accompany.IN_DAY.name(), inTheDay);
+            json.put(Constants.Accompany.SPECIALIZED_SERVICE.name(), specializedService);
+            json.put(Constants.Accompany.CAPS.name(), caps);
+            json.put(Constants.Accompany.HOSPITALIZATION.name(), hospitalization);
+            json.put(Constants.Accompany.URGENCY.name(), urgency);
+            json.put(Constants.Accompany.HOME_CARE_SERVICE.name(), homeCareService);
+            json.put(Constants.Accompany.INTER_SECTORAL.name(), intersectoral);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

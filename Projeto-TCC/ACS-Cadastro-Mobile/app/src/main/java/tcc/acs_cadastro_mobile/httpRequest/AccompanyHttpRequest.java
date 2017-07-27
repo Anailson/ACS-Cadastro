@@ -1,14 +1,23 @@
 package tcc.acs_cadastro_mobile.httpRequest;
 
-import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskRequest;
+import android.content.Context;
 
-public class AccompanyHttpRequest implements IAsyncTaskRequest {
+import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
+import tcc.acs_cadastro_mobile.models.AccompanyModel;
 
-    @Override
-    public void onRequest(WebServiceConnection.Request request) {
+public class AccompanyHttpRequest {
 
-        if(request.getStatus() == WebServiceConnection.Status.OK){
+    private final String PATH = "AccompanyWebService.php";
+    private IAsyncTaskResponse.Responses response;
+    private WebServiceConnection webService;
 
-        }
+    public AccompanyHttpRequest(Context context) {
+        response = new IAsyncTaskResponse.Responses();
+        webService = new WebServiceConnection(context, response);
+    }
+
+    public void insert(AccompanyModel accompany, IAsyncTaskResponse.Insert insert){
+        response.insert = insert;
+        webService.post(PATH, accompany.asJson());
     }
 }
