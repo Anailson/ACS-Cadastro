@@ -14,8 +14,8 @@ class RecordDataPersistence
 
     private static function queryRecordData()
     {
-        return "INSERT INTO TB_RECORD_DATA (ID_RECORD_DETAILS, ID_ANTROPOMETRIC, ID_KID_PREGNANT)
-                  VALUES(:ID_RECORD_DETAILS, :ID_ANTROPOMETRIC, :ID_KID_PREGNANT)";
+        return "INSERT INTO TB_RECORD_DATA (ID_RECORD_DETAILS, ID_ANTHROPOMETRIC, ID_KID_PREGNANT)
+                  VALUES(:ID_RECORD_DETAILS, :ID_ANTHROPOMETRIC, :ID_KID_PREGNANT)";
     }
 
     private static function queryRecordDetails()

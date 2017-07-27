@@ -24,11 +24,19 @@ class NasfConductModel
         $this->forwarding = $forwarding;
     }
 
+    public static function getFromArray(array $array)
+    {
+        return new NasfConductModel($array[self::NASF_CONDUCT],
+            Nasf::getFromArray($array[Nasf::NASF]),
+            Conduct::getFromArray($array[Conduct::CONDUCT]),
+            Forwarding::getFromArray($array[Forwarding::FORWARDING]));
+    }
+
     public function save(AcsDataBase $db, $query)
     {
-        $params = array(":" . Nasf::NASF => $this->nasf->save($db, $query[Nasf::NASF]),
-            ":" . Conduct::CONDUCT => $this->conduct->save($db, $query[Conduct::CONDUCT]),
-            ":" . Forwarding::FORWARDING => $this->forwarding->save($db, $query[Forwarding::FORWARDING]));
+        $params = array(":ID_" . Nasf::NASF => $this->nasf->save($db, $query[Nasf::NASF]),
+            ":ID_" . Conduct::CONDUCT => $this->conduct->save($db, $query[Conduct::CONDUCT]),
+            ":ID_" . Forwarding::FORWARDING => $this->forwarding->save($db, $query[Forwarding::FORWARDING]));
         if (in_array(false, $params)) {
             return false;
         }

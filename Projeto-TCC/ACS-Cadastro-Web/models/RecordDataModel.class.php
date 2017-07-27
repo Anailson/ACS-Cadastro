@@ -35,4 +35,12 @@ class RecordDataModel
         return $db->insert($querys[self::RECORD_DATA], $params);
     }
 
+
+    public static function getFromArray(array $array)
+    {
+        return new RecordDataModel(RecordDetails::getFromArray($array[RecordDetails::RECORD_DETAILS]),
+            Anthropometric::getFromArray($array[Anthropometric::ANTHROPOMETRIC]),
+            KidAndPregnant::getFromArray($array[KidAndPregnant::KID_PREGNANT]));
+    }
+
 }

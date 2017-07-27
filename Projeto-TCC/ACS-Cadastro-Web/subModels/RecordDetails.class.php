@@ -7,7 +7,7 @@ class RecordDetails
     const PLACE_CARE = "PLACE_CARE";
     const TYPE_CARE = "TYPE_CARE";
     const SHIFT = "SHIFT";
-    const CITIZEN = "CITIZEN";
+    const NUM_SUS = "NUM_SUS";
 
     private $record, $placeCare, $typeCare, $shift, $numSusCitizen;
 
@@ -22,12 +22,12 @@ class RecordDetails
 
     public function save(AcsDataBase $db, $query)
     {
-        $id = 1; //CitizenPersistence::getByNumSus($this->numSusCitizen);
+        $id = CitizenPersistence::getId($this->numSusCitizen);
         $params = array(":" . self::RECORD => $this->record,
             ":" . self::PLACE_CARE => $this->placeCare,
             ":" . self::TYPE_CARE => $this->typeCare,
             ":" . self::SHIFT => $this->shift,
-            ":" . self::CITIZEN => $id);
+            ":ID_CITIZEN" => $id);
 
         return $db->insert($query, $params);
     }
@@ -38,7 +38,7 @@ class RecordDetails
             $array[self::PLACE_CARE],
             $array[self::TYPE_CARE],
             $array[self::SHIFT],
-            $array[self::CITIZEN]);
+            $array[self::NUM_SUS]);
     }
 
 }

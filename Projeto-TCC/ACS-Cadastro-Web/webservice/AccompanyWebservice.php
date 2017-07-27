@@ -18,9 +18,8 @@ if ($method === AcsDataBase::POST) {
 
 function insert($json)
 {
-    $arrayIds = AccompanyPersistence::insert($json);
-    var_dump($arrayIds);
-    echo $arrayIds["ID_ACCOMPANY"];
+    $accompany = AccompanyModel::getFromArray(json_decode($json, true));
+    echo json_encode(array ("id" => AccompanyPersistence::insert($accompany)));
 }
 
 function insertAll($array)

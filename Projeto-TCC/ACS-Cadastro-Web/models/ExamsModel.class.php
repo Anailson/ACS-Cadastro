@@ -23,12 +23,19 @@ class ExamsModel
     public function save(AcsDataBase $db, $query)
     {
         $params = array(":ID_" . RequestExams::REQUEST_EXAMS => $this->request->save($db, $query[RequestExams::REQUEST_EXAMS]),
-            ":ID_" . EvaluatedExams::EVALUATED_EXAMS => $this->evaluated->save($db, EvaluatedExams::EVALUATED_EXAMS));
+            ":ID_" . EvaluatedExams::EVALUATED_EXAMS => $this->evaluated->save($db, $query[EvaluatedExams::EVALUATED_EXAMS]));
         if(in_array(false, $params)){
             return false;
         }
         $params[":" . self::PIC] = $this->pic;
         return $db->insert($query[self::EXAMS], $params);
+    }
+
+    public static function getFromArray(array $array)
+    {
+        return new ExamsModel($array[self::PIC],
+            RequestExams::getFromArray($array[RequestExams::REQUEST_EXAMS]),
+            EvaluatedExams::getFromArray($array[EvaluatedExams::EVALUATED_EXAMS]));
     }
 
 }

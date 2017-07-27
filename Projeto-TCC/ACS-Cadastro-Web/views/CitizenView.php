@@ -12,7 +12,6 @@ $buttons = $controller->crudButtons();
         <div class="col-md-4">
             <a href="#" style="float: right;">
                 <?php
-                $buttons = $controller->crudButtons();
                 echo $buttons[CitizenController::ADD];
                 ?>
             </a>

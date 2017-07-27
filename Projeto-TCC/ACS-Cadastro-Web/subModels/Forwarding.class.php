@@ -9,11 +9,11 @@ class Forwarding
     const HOSPITALIZATION = "HOSPITALIZATION";
     const URGENCY = "URGENCY";
     const HOME_CARE_SERVICE = "HOME_CARE_SERVICE";
-    const INTERSECTORAL = "INTERSECTORAL";
+    const INTER_SECTORAL = "INTER_SECTORAL";
 
-    private $inDay, $specializedService, $caps, $hospitalization, $urgency, $homeCareService, $intersectorial;
+    private $inDay, $specializedService, $caps, $hospitalization, $urgency, $homeCareService, $interSectoral;
 
-    public function __construct($inDay, $specializedService, $caps, $hospitalization, $urgency, $homeCareService, $intersectorial)
+    public function __construct($inDay, $specializedService, $caps, $hospitalization, $urgency, $homeCareService, $interSectoral)
     {
         $this->inDay = $inDay;
         $this->specializedService = $specializedService;
@@ -21,7 +21,7 @@ class Forwarding
         $this->hospitalization = $hospitalization;
         $this->urgency = $urgency;
         $this->homeCareService = $homeCareService;
-        $this->intersectorial = $intersectorial;
+        $this->interSectoral = $interSectoral;
     }
 
     public function save(AcsDataBase $db, $query)
@@ -32,14 +32,14 @@ class Forwarding
             self::HOSPITALIZATION => $this->hospitalization,
             self::URGENCY => $this->urgency,
             self::HOME_CARE_SERVICE => $this->homeCareService,
-            self::INTERSECTORAL => $this->intersectorial);
+            self::INTER_SECTORAL => $this->interSectoral);
         return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)
     {
         return new Forwarding($array[self::IN_DAY], $array[self::SPECIALIZED_SERVICE], $array[self::CAPS],
-            $array[self::HOSPITALIZATION], $array[self::URGENCY], $array[self::HOME_CARE_SERVICE], $array[self::INTERSECTORAL]);
+            $array[self::HOSPITALIZATION], $array[self::URGENCY], $array[self::HOME_CARE_SERVICE], $array[self::INTER_SECTORAL]);
     }
 
 }

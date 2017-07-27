@@ -8,6 +8,30 @@ if (!@include "persistences/AcsDataBase.php") {
 class CitizenPersistence
 {
 
+    public static function getId($numSus)
+    {
+        $db = new AcsDataBase(AcsDataBase::DB_NAME);
+        $query = "SELECT CZ.CITIZEN_ID
+              FROM TB_CITIZEN AS CZ 
+              INNER JOIN TB_PERSONAL_DATA AS PD ON CZ.ID_PERSONAL_DATA = PD.PERSONAL_DATA_ID
+              INNER JOIN TB_PARTICULAR AS P ON PD.ID_PARTICULAR = P.PARTICULAR_ID 
+              WHERE P.NUM_SUS = :NUM_SUS
+              LIMIT 1";
+        return $db->select($query, array(":NUM_SUS" => $numSus));
+    }
+
+    public static function getParticularData($numSus)
+    {
+        $db = new AcsDataBase(AcsDataBase::DB_NAME);
+        $query = "SELECT P.NUM_SUS, P.NUM_NIS, P.NAME, P.SOCIAL_NAME, P.BIRTH_DATE
+              FROM TB_CITIZEN AS CZ 
+              INNER JOIN TB_PERSONAL_DATA AS PD ON CZ.ID_PERSONAL_DATA = PD.PERSONAL_DATA_ID
+              INNER JOIN TB_PARTICULAR AS P ON PD.ID_PARTICULAR = P.PARTICULAR_ID 
+              WHERE P.NUM_SUS = :NUM_SUS
+              LIMIT 1";
+        return $db->select($query, array(":NUM_SUS" => $numSus));
+    }
+
     public static function getAllParticularInfo()
     {
         $db = new AcsDataBase(AcsDataBase::DB_NAME);
