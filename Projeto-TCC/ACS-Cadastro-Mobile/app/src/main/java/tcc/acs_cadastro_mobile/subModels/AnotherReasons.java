@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class AnotherReasons extends RealmObject implements Serializable {
     private boolean recordUpdate, periodicVisit, internment, controlEnvironments, collectiveActivities,
@@ -86,5 +90,21 @@ public class AnotherReasons extends RealmObject implements Serializable {
 
     public void setOthers(boolean others) {
         this.others = others;
+    }
+
+    public JSONObject asJson(){
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Visit.RECORD_UPDATE.name(), recordUpdate);
+            json.put(Constants.Visit.PERIODIC_VISIT.name(), periodicVisit);
+            json.put(Constants.Visit.INTERMENT.name(), internment);
+            json.put(Constants.Visit.CONTROL_ENVIRONMENTS.name(), controlEnvironments);
+            json.put(Constants.Visit.COLLECTIVE_ACTIVITIES.name(), collectiveActivities);
+            json.put(Constants.Visit.GUIDANCE.name(), guidance);
+            json.put(Constants.Visit.OTHERS.name(), others);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

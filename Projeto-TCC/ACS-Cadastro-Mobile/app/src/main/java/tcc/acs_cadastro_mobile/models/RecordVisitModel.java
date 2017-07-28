@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.RecordDetails;
 
 
@@ -46,5 +50,16 @@ public class RecordVisitModel extends RealmObject implements Serializable {
 
     public void setDetails(RecordDetails details) {
         this.details = details;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Visit.IS_SHARED.name(), isShared);
+            json.put(Constants.Visit.RECORD_DETAILS.name(), details.asJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

@@ -1,9 +1,13 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.VisitPersistence;
@@ -90,6 +94,17 @@ public class VisitModel extends RealmObject implements Serializable, ISearcher {
 
     public boolean nameContainsKey(String key){
         return containsKey(getName(), key);
+    }
+
+    public JSONObject asJson(){
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Visit.RECORD_VISIT.name(), details.asJson());
+            json.put(Constants.Visit.REASONS_VISIT.name(), reasons.asJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 
     private boolean containsKey(String value, String key){

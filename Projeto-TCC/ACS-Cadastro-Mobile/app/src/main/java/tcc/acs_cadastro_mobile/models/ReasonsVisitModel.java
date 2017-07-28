@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.subModels.ActiveSearch;
 import tcc.acs_cadastro_mobile.subModels.AnotherReasons;
@@ -68,5 +72,18 @@ public class ReasonsVisitModel extends RealmObject implements Serializable{
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public JSONObject asJson(){
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Visit.RESULT.name(),result);
+            json.put(Constants.Visit.ACTIVE_SEARCH.name(), active.asJson());
+            json.put(Constants.Visit.FOLLOWING.name(), following.asJson());
+            json.put(Constants.Visit.ANOTHER_REASONS.name(), another.asJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

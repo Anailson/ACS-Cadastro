@@ -2,19 +2,23 @@ package tcc.acs_cadastro_mobile.controllers;
 
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tcc.acs_cadastro_mobile.httpRequest.AccompanyHttpRequest;
 import tcc.acs_cadastro_mobile.httpRequest.CitizenHttpRequest;
+import tcc.acs_cadastro_mobile.httpRequest.VisitHttpRequest;
 import tcc.acs_cadastro_mobile.httpRequest.WebServiceConnection;
 import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
 import tcc.acs_cadastro_mobile.models.AccompanyModel;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.models.VisitModel;
 import tcc.acs_cadastro_mobile.persistence.AccompanyPersistence;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
+import tcc.acs_cadastro_mobile.persistence.VisitPersistence;
 
 public class UpdateSystemController {
 
@@ -25,7 +29,7 @@ public class UpdateSystemController {
     }
 
     public void updateSystem() {
-        new UpdateCitizenModel().updateAccompanies();
+        new UpdateCitizenModel().updateVisit();
     }
 
     private class UpdateCitizenModel {
@@ -69,6 +73,20 @@ public class UpdateSystemController {
             });
 
             //Log.e("Accompany", accompany.asJson().toString());
+        }
+
+        private void updateVisit(){
+            VisitModel visit = VisitPersistence.getAll().first();
+            VisitHttpRequest httpRequest = new VisitHttpRequest(fragment.getContext());
+            //Log.e("VISIT", visit.asJson().toString());
+
+            httpRequest.insert(visit, new IAsyncTaskResponse.Insert(){
+
+                @Override
+                public void insert(WebServiceConnection.Request request, int id) {
+                    Toast.makeText(fragment.getContext(), "ID: " + id, Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }

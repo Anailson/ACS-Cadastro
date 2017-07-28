@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class Following extends RealmObject implements Serializable {
     private boolean pregnant, puerpera, newborn, child, malnutrition, rehabilitationDeficiency,
@@ -50,7 +54,7 @@ public class Following extends RealmObject implements Serializable {
         this.drugs = drugs;
     }
 
-    public boolean[] getValues(){
+    public boolean[] getValues() {
         return new boolean[]{pregnant, puerpera, newborn, child, malnutrition, rehabilitationDeficiency,
                 hypertension, diabetes, asthma, copdEmphysema, cancer, chronicDiseases, leprosy, tuberculosis,
                 respiratory, smoker, homeBedding, vulnerability, bolsaFamília, mentalHealth, alcohol, drugs};
@@ -230,5 +234,36 @@ public class Following extends RealmObject implements Serializable {
 
     public void setDrugs(boolean drugs) {
         this.drugs = drugs;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Visit.PREGNANT.name(), pregnant);
+            json.put(Constants.Visit.PUERPERA.name(), puerpera);
+            json.put(Constants.Visit.NEW_BORN.name(), newborn);
+            json.put(Constants.Visit.CHILD.name(), child);
+            json.put(Constants.Visit.MALNUTRITION.name(), malnutrition);
+            json.put(Constants.Visit.REHABILITATION.name(), rehabilitationDeficiency);
+            json.put(Constants.Visit.HYPERTENSION.name(), hypertension);
+            json.put(Constants.Visit.DIABETES.name(), diabetes);
+            json.put(Constants.Visit.ASTHMA.name(), asthma);
+            json.put(Constants.Visit.COPD_EMPHYSEMA.name(), copdEmphysema);
+            json.put(Constants.Visit.CANCER.name(), cancer);
+            json.put(Constants.Visit.CHRONIC_DISEASE.name(), chronicDiseases);
+            json.put(Constants.Visit.LEPROSY.name(), leprosy);
+            json.put(Constants.Visit.TUBERCULOSIS.name(), tuberculosis);
+            json.put(Constants.Visit.RESPIRATORY.name(), respiratory);
+            json.put(Constants.Visit.SMOKER.name(), smoker);
+            json.put(Constants.Visit.HOME_BEDDING.name(), homeBedding);
+            json.put(Constants.Visit.VULNERABILITY.name(), vulnerability);
+            json.put(Constants.Visit.BOLSA_FAMILIA.name(), bolsaFamília);
+            json.put(Constants.Visit.MENTAL_HEALTH.name(), mentalHealth);
+            json.put(Constants.Visit.ALCOHOL.name(), alcohol);
+            json.put(Constants.Visit.DRUGS.name(), drugs);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }
