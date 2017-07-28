@@ -38,13 +38,13 @@ class HousingConditionsModel
             return false;
         }
         $params[":" . self::ELECTRICITY] = $this->electricity;
-        return $db->insert($query, $params);
+        return $db->insert($query[self::HOUSING_CONDITIONS], $params);
     }
 
     public static function getFromArray(array $array)
     {
         return new HousingConditionsModel(HousingSituation::getFromArray($array[HousingSituation::HOUSING_SITUATION]),
             House::getFromArray($array[House::HOUSE]), $array[self::ELECTRICITY],
-            WaterAndSanitation::getFromArray(WaterAndSanitation::WATER_SANITATION), Pet::getFromArray($array[Pet::PET]));
+            WaterAndSanitation::getFromArray($array[WaterAndSanitation::WATER_SANITATION]), Pet::getFromArray($array[Pet::PET]));
     }
 }

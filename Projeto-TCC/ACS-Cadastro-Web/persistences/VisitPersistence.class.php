@@ -1,10 +1,10 @@
 <?php
 
-if (!@include_once "persistences/AcsDataBase.php") {
-    include_once "../persistences/AcsDataBase.php";
-}
 if (!@include "models/VisitModel.class.php") {
     include "../models/VisitModel.class.php";
+}
+if (!@include_once "persistences/AcsDataBase.php") {
+    include_once "../persistences/AcsDataBase.php";
 }
 
 class VisitPersistence

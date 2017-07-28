@@ -1,4 +1,10 @@
 <?php
+if (!@include_once "persistences/AcsDataBase.php") {
+    include_once "../persistences/AcsDataBase.php";
+}
+if (!@include_once "models/ResidenceModel.class.php") {
+    include_once "../models/ResidenceModel.class.php";
+}
 
 class ResidencePersistence
 {
