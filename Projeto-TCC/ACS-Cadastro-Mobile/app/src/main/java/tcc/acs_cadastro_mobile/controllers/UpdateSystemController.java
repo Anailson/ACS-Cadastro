@@ -9,15 +9,18 @@ import java.util.List;
 
 import tcc.acs_cadastro_mobile.httpRequest.AccompanyHttpRequest;
 import tcc.acs_cadastro_mobile.httpRequest.CitizenHttpRequest;
+import tcc.acs_cadastro_mobile.httpRequest.ResidenceHttpRequest;
 import tcc.acs_cadastro_mobile.httpRequest.VisitHttpRequest;
 import tcc.acs_cadastro_mobile.httpRequest.WebServiceConnection;
 import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
 import tcc.acs_cadastro_mobile.models.AccompanyModel;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
+import tcc.acs_cadastro_mobile.models.ResidenceModel;
 import tcc.acs_cadastro_mobile.models.VisitModel;
 import tcc.acs_cadastro_mobile.persistence.AccompanyPersistence;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
+import tcc.acs_cadastro_mobile.persistence.ResidencePersistence;
 import tcc.acs_cadastro_mobile.persistence.VisitPersistence;
 
 public class UpdateSystemController {
@@ -29,7 +32,7 @@ public class UpdateSystemController {
     }
 
     public void updateSystem() {
-        new UpdateCitizenModel().updateVisit();
+        new UpdateCitizenModel().updateResidence();
     }
 
     private class UpdateCitizenModel {
@@ -81,6 +84,19 @@ public class UpdateSystemController {
             //Log.e("VISIT", visit.asJson().toString());
 
             httpRequest.insert(visit, new IAsyncTaskResponse.Insert(){
+
+                @Override
+                public void insert(WebServiceConnection.Request request, int id) {
+                    Toast.makeText(fragment.getContext(), "ID: " + id, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
+        private void updateResidence(){
+            ResidenceModel residence = ResidencePersistence.get(144747174);
+            Log.e("Residence", residence.asJson().toString());
+            ResidenceHttpRequest httpRequest = new ResidenceHttpRequest(fragment.getContext());
+            httpRequest.insert(residence, new IAsyncTaskResponse.Insert(){
 
                 @Override
                 public void insert(WebServiceConnection.Request request, int id) {

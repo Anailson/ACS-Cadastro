@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 
 public class Phones extends RealmObject implements Serializable {
@@ -32,5 +36,16 @@ public class Phones extends RealmObject implements Serializable {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try{
+            json.put(Constants.Residence.HOME.name(), home);
+            json.put(Constants.Residence.REFERENCE.name(), reference);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

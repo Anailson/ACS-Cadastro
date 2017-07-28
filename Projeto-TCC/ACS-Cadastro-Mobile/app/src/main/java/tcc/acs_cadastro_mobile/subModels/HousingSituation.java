@@ -1,6 +1,10 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
 
@@ -41,5 +45,17 @@ public class HousingSituation extends RealmObject implements Serializable {
 
     public void setOwnership(String ownership) {
         this.ownership = ownership;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Residence.SITUATION.name(), situation);
+            json.put(Constants.Residence.LOCATION.name(), location);
+            json.put(Constants.Residence.OWNERSHIP.name(), ownership);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

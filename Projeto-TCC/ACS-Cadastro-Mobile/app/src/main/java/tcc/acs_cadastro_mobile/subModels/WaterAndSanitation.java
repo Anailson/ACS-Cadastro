@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.subModels;
 
-import io.realm.RealmObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
+
+import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 public class WaterAndSanitation extends RealmObject implements Serializable {
 
@@ -40,5 +44,17 @@ public class WaterAndSanitation extends RealmObject implements Serializable {
 
     public void setBathroom(String bathroom) {
         this.bathroom = bathroom;
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put(Constants.Residence.WATER_SUPPLY.name(), waterSupply);
+            json.put(Constants.Residence.WATER_TREATMENT.name(), waterTreatment);
+            json.put(Constants.Residence.BATHROOM.name(), bathroom);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

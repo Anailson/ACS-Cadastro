@@ -1,6 +1,10 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
 
@@ -49,6 +53,20 @@ public class StreetLocation extends RealmObject implements Serializable {
 
     public void setComplement(String complement) {
         this.complement = complement;
+    }
+
+    //String type, String name, int number, String complement
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try{
+            json.put(Constants.Residence.TYPE.name(), type);
+            json.put(Constants.Residence.NAME.name(), name);
+            json.put(Constants.Residence.NUMBER.name(), number);
+            json.put(Constants.Residence.COMPLEMENT.name(), complement);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }
 

@@ -1,5 +1,8 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.Formatter;
 
@@ -7,6 +10,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
@@ -107,5 +111,16 @@ public class ResidenceModel extends RealmObject implements Serializable, ISearch
 
     public String getReferencePhone() {
         return getAddressData().getPhoneReference();
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try{
+            json.put(Constants.Residence.ADDRESS_DATA.name(), addressData.asJson());
+            json.put(Constants.Residence.HOUSING_CONDITIONS.name(), housingConditions.asJson());
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

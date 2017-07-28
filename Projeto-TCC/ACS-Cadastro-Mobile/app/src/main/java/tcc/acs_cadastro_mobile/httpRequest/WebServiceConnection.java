@@ -21,8 +21,8 @@ import tcc.acs_cadastro_mobile.interfaces.IAsyncTaskResponse;
 
 public class WebServiceConnection {
 
-    private final String HOST = "http://10.0.0.7/";
-    //private final String HOST = "http://10.11.162.4/";
+    //private final String HOST = "http://10.0.0.7/";
+    private final String HOST = "http://10.11.162.4/";
     private final String ROOT = HOST + "ACS-Cadastro-Web/webservice/";
     private final String F_GET = "?f=get";
 

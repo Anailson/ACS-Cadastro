@@ -1,6 +1,10 @@
 package tcc.acs_cadastro_mobile.subModels;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 
 import java.io.Serializable;
 
@@ -93,5 +97,21 @@ public class Pet extends RealmObject implements Serializable {
 
     public boolean[] getPets(){
         return new boolean[]{cat, dog, bird, criation, another};
+    }
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try{
+            json.put(Constants.Residence.HAS_PET.name(), hasPet);
+            json.put(Constants.Residence.CAT.name(), cat);
+            json.put(Constants.Residence.DOG.name(), dog);
+            json.put(Constants.Residence.BIRD.name(), bird);
+            json.put(Constants.Residence.CREATION.name(), criation);
+            json.put(Constants.Residence.ANOTHER.name(), another);
+            json.put(Constants.Residence.PETS.name(), nPets);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
     }
 }

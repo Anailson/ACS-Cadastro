@@ -1,8 +1,12 @@
 package tcc.acs_cadastro_mobile.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.CityLocation;
 import tcc.acs_cadastro_mobile.subModels.Phones;
 import tcc.acs_cadastro_mobile.subModels.StreetLocation;
@@ -68,4 +72,16 @@ public class AddressDataModel extends RealmObject implements Serializable {
     public String getPhoneHome() {return getPhones().getHome();}
 
     public String getPhoneReference() {return getPhones().getReference();}
+
+    public JSONObject asJson() {
+        JSONObject json = new JSONObject();
+        try{
+            json.put(Constants.Residence.STREET_LOCATION.name(), street.asJson());
+            json.put(Constants.Residence.CITY_LOCATION.name(), city.asJson());
+            json.put(Constants.Residence.PHONES.name(), phones.asJson());
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
+    }
 }
