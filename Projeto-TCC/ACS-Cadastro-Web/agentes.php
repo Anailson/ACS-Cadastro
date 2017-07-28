@@ -3,8 +3,6 @@ include "template.php";
 include "views/AgentView.php";
 ?>
 
-<script src="assets/js/datatable-config.js"></script>
-
 <script>
     $(function () {
         $(".nav li").removeClass("active");

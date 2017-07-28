@@ -15,7 +15,7 @@ $(function () {
             "info": "Exibindo _PAGE_ de _PAGES_ páginas",
             "infoEmpty": "Nenhum registro encontrado",
             "infoFiltered": "num total de _MAX_ registros",
-            "search": "<strong>Pesquisar por&emsp;_INPUT_</strong>",
+            "search": "<strong>Pesquisar <por></por>&emsp;_INPUT_</strong>",
             "paginate": {
                 "previous": "<strong>Anterior</strong>",
                 "next": "<strong>Próxima</strong>"

@@ -26,7 +26,6 @@ class AccompanyPersistence
         $db = new AcsDataBase(AcsDataBase::DB_NAME);
         $query = "INSERT INTO TB_ACCOMPANY(ID_RECORD_DATA, ID_CONDITIONS, ID_EXAMS, ID_NASF_CONDUCT) 
                   VALUES (:ID_RECORD_DATA, :ID_CONDITIONS, :ID_EXAMS, :ID_NASF_CONDUCT)";
-
         return $accompany->save($db, $query);
     }
 

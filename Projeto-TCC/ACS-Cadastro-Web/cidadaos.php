@@ -3,7 +3,6 @@ include "template.php";
 include "views/CitizenView.php"
 ?>
 
-<script src="assets/js/datatable-config.js"></script>
 <script>
     $(function () {
         $(".nav li").removeClass("active");
