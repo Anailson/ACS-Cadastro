@@ -2,13 +2,11 @@
 if (!@include_once "persistences/AcsDataBase.php") {
     include_once "../persistences/AcsDataBase.php";
 }
-if (!@include "models/CitizenModel.class.php") {
-    include "../models/CitizenModel.class.php";
+if (!@include_once "models/CitizenModel.class.php") {
+    include_once "../models/CitizenModel.class.php";
 }
-//if (!@include "persistences/PersonalDataPersistence.php") {include "../persistences/PersonalDataPersistence.php";}
-//if (!@include_once "models/CitizenModel.class.php") {include_once "../models/CitizenModel.class.php";}
 
-class CitizenPersistence
+class   CitizenPersistence
 {
 
     public static function getId($numSus)

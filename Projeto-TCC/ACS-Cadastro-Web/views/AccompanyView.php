@@ -30,8 +30,8 @@ $buttons = $controller->crudButtons();
                 $recordInfo = $controller->getAllSimpleInfoAccompany();
                 foreach ($recordInfo as $info) {
                     echo "<tr><td>" . $info[RecordDetails::RECORD] . "</td>"
-                        . "<td> " . $info[Particular::NAME] . "</td>"
-                        . "<td> " . $info[Particular::NUM_SUS] . "</td>"
+                        . "<td>" . $info[Particular::NAME] . "</td>"
+                        . "<td>" . $info[Particular::NUM_SUS] . "</td>"
                         . "<td>" . $buttons[AccompanyController::DETAILS] . "</td>"
                         . "<td>" . $buttons[AccompanyController::EDIT] . "</td>"
                         . "<td>" . $buttons[AccompanyController::DELETE] . "</td></tr>";

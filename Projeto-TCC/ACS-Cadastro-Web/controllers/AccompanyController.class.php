@@ -2,11 +2,11 @@
 if (!@include "persistences/AccompanyPersistence.php") {
     include "../persistences/AccompanyPersistence.php";
 }
-if (!@include "models/AccompanyModel.class.php") {
-    include "../models/AccompanyModel.class.php";
+if (!@include_once "models/AccompanyModel.class.php") {
+    include_once "../models/AccompanyModel.class.php";
 }
-if (!@include "models/CitizenModel.class.php") {
-    include "../models/CitizenModel.class.php";
+if (!@include_once "models/CitizenModel.class.php") {
+    include_once "../models/CitizenModel.class.php";
 }
 
 
