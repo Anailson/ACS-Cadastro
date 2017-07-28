@@ -35,4 +35,10 @@ class ReasonsVisitModel
         $params[":" . self::RESULT] = $this->result;
         return $db->insert($query[self::REASONS_VISIT], $params);
     }
+
+    public static function getFromArray(array $array)
+    {
+        return new ReasonsVisitModel($array[self::RESULT], ActiveSearch::getFromArray($array[ActiveSearch::ACTIVE_SEARCH]),
+            Following::getFromArray($array[Following::FOLLOWING]), AnotherReasons::getFromArray($array[AnotherReasons::ANOTHER_REASONS]));
+    }
 }

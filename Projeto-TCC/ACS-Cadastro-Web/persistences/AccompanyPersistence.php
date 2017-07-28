@@ -2,7 +2,7 @@
 if (!@include "persistences/AcsDataBase.php") {
     include "../persistences/AcsDataBase.php";
 }
-if (!@include "persistences/AccompanyModel.class.php") {
+if (!@include "models/AccompanyModel.class.php") {
     include "../models/AccompanyModel.class.php";
 }
 

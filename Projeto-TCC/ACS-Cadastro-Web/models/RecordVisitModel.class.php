@@ -29,6 +29,8 @@ class RecordVisitModel
 
     public static function getFromArray(array $array)
     {
+        $array[RecordDetails::RECORD_DETAILS][RecordDetails::PLACE_CARE] = "- - -";
+        $array[RecordDetails::RECORD_DETAILS][RecordDetails::TYPE_CARE] = "- - -";
         return new RecordVisitModel($array[self::IS_SHARED],
             RecordDetails::getFromArray($array[RecordDetails::RECORD_DETAILS]));
     }

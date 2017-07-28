@@ -5,8 +5,8 @@ if (!@include "models/RecordVisitModel.class.php") {
 if (!@include "models/ReasonsVisitModel.class.php") {
     include "../models/ReasonsVisitModel.class.php";
 }
-if(!@include "persistences/RecordDataPersistence.class.php") {
-    include "../persistences/RecordDataPersistence.class.php";
+if(!@include "persistences/RecordVisitPersistence.class.php") {
+    include "../persistences/RecordVisitPersistence.class.php";
 }
 if(!@include "persistences/ReasonsVisitPersistence.class.php") {
     include "../persistences/ReasonsVisitPersistence.class.php";
@@ -30,5 +30,11 @@ class VisitModel
             return false;
         }
         return $db->insert($query, $params);
+    }
+
+    public static function getFromArray(array $array)
+    {
+        return new VisitModel(RecordVisitModel::getFromArray($array[RecordVisitModel::RECORD_VISIT]),
+            ReasonsVisitModel::getFromArray($array[ReasonsVisitModel::REASONS_VISIT]));
     }
 }

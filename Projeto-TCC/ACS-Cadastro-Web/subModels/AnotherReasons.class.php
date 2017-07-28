@@ -43,5 +43,4 @@ class AnotherReasons
         return new AnotherReasons($array[self::RECORD_UPDATE], $array[self::PERIODIC_VISIT], $array[self::INTERMENT],
             $array[self::CONTROL_ENVIRONMENTS], $array[self::COLLECTIVE_ACTIVITIES], $array[self::GUIDANCE], $array[self::OTHERS]);
     }
-
 }

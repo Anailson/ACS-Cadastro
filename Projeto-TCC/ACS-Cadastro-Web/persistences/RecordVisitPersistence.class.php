@@ -1,5 +1,6 @@
 <?php
 
+
 class RecordVisitPersistence
 {
     public static function insert(AcsDataBase $db, RecordVisitModel $recordVisit)
@@ -16,6 +17,7 @@ class RecordVisitPersistence
 
     private static function insertRecordDetails()
     {
-        return "INSERT INTO TB_RECORD_DETAILS (RECORD, SHIFT, ID_CITIZEN) VALUES (:RECORD, :SHIFT, :ID_CITIZEN)";
+        return "INSERT INTO TB_RECORD_DETAILS (RECORD, SHIFT, PLACE_CARE, TYPE_CARE, ID_CITIZEN) 
+            VALUES (:RECORD, :SHIFT, :PLACE_CARE, :TYPE_CARE,  :ID_CITIZEN)";
     }
 }
