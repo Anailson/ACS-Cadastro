@@ -23,6 +23,7 @@ public class HealthConditionsPersistence {
         HealthConditionsModel object = realm.copyToRealm(new HealthConditionsModel(pregnant, weight, diseases,
                 heartDisease, kidneyDisease, respiratoryDisease, interment, plants));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -32,6 +33,7 @@ public class HealthConditionsPersistence {
         realm.beginTransaction();
         Pregnant object = realm.copyToRealm(new Pregnant(isPregnant, maternity));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -44,6 +46,7 @@ public class HealthConditionsPersistence {
         Diseases object = realm.copyToRealm(new Diseases(new boolean[]{smoker, alcohol, drugs, hypertension,
         diabetis, avc, heartAttack, leprosy, tuberculosis, cancer, inBed, domiciled, otherPractices, mentalHealth}));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -52,6 +55,7 @@ public class HealthConditionsPersistence {
         realm.beginTransaction();
         HeartDisease object = realm.copyToRealm(new HeartDisease(isHeartDisease, diseases));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -61,6 +65,7 @@ public class HealthConditionsPersistence {
         realm.beginTransaction();
         KidneyDisease object = realm.copyToRealm(new KidneyDisease(kidneyDisease, diseases));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -70,6 +75,7 @@ public class HealthConditionsPersistence {
         realm.beginTransaction();
         RespiratoryDisease object = realm.copyToRealm(new RespiratoryDisease(isRespiratoryDisease, diseases));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -79,6 +85,7 @@ public class HealthConditionsPersistence {
         realm.beginTransaction();
         Interment object = realm.copyToRealm(new Interment(isInterment, interment));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -88,6 +95,7 @@ public class HealthConditionsPersistence {
         realm.beginTransaction();
         Plant object = realm.copyToRealm(new Plant(isPlant, value));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

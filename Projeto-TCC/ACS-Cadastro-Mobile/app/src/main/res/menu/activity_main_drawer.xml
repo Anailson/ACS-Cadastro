@@ -19,7 +19,7 @@
             android:icon="@drawable/ic_visit"
             android:title="@string/menu_visit" />
     </group>
-
+<!--
     <item android:title="Sistema">
         <menu>
             <item
@@ -28,5 +28,5 @@
                 android:title="@string/menu_update_system" />
         </menu>
     </item>
-
+-->
 </menu>

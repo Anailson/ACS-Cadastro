@@ -6,19 +6,19 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 
 public class RealmInt extends RealmObject implements Serializable{
-    private int code;
+    private String code;
 
     public RealmInt() {}
 
-    public RealmInt(int code) {
+    public RealmInt(String code) {
         this.code = code;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 }

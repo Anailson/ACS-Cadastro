@@ -1,7 +1,5 @@
 package tcc.acs_cadastro_mobile.subModels;
 
-import com.google.api.client.json.Json;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

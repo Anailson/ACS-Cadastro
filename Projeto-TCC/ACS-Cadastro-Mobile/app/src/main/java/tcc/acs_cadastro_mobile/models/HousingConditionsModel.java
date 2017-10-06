@@ -111,21 +111,4 @@ public class HousingConditionsModel extends RealmObject implements Serializable 
 
     public int getTotalPets() {return getPet().getnPets();}
 
-    /*
-    HousingSituation , House , boolean ,
-                                  WaterAndSanitation , Pet
-     */
-    public JSONObject asJson() {
-        JSONObject json = new JSONObject();
-        try{
-            json.put(Constants.Residence.HOUSING_SITUATION.name(), housingSituation.asJson());
-            json.put(Constants.Residence.HOUSE.name(), house.asJson());
-            json.put(Constants.Residence.ELECTRICITY.name(), electricEnergy);
-            json.put(Constants.Residence.WATER_SANITATION.name(), waterAndSanitation.asJson());
-            json.put(Constants.Residence.PET.name(), pet.asJson());
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-        return json;
-    }
 }

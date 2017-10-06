@@ -301,12 +301,12 @@
     <string name="txt_vst_others">@string/txt_another</string>
 
     <!-- Menus -->
-    <string name="menu_settings">Settings</string>
     <string name="menu_citizen">Cidadão</string>
     <string name="menu_residence">Residência</string>
     <string name="menu_accompany">Acompanhamento</string>
     <string name="menu_visit">Visita</string>
     <string name="menu_update_system">Atualizar o sistema</string>
+    <string name="menu_logout">Sair</string>
 
     <!-- Buttons -->
     <string name="btn_yes">Sim</string>
@@ -337,6 +337,19 @@
     <string name="msg_edit_citizen">msg_edit_citizen</string>
     <string name="msg_delete_citizen">msg_delete_citizen</string>
     <string name="msg_save_success">Salvo com sucesso!</string>
+    <string name="msg_send_citizen_data_title">Enviando</string>
+    <string name="msg_logout_confirm">Você realmente deseja sair?</string>
+
+    <string name="msg_get_data_title">Baixando</string>
+    <string name="msg_send_data_title">Enviando</string>
+    <string name="msg_get_citizen_data_message">Estamos baixando informações sobre os cidadãos…</string>
+    <string name="msg_send_citizen_data_message">Estamos atualizando o sistema com os dados dos cidadãos…</string>
+    <string name="msg_get_accompany_data_message">Estamos baixando informações sobre os acompanhamentos…</string>
+    <string name="msg_send_accompany_data_message">Estamos atualizando o sistema com os dados dos acompanhamentos…</string>
+    <string name="msg_get_residence_data_message">Estamos baixando informações sobre as residências…</string>
+    <string name="msg_send_residence_data_message">Estamos atualizando o sistema com os dados das residências…</string>
+    <string name="msg_get_visit_data_message">Estamos baixando informações sobre as visitas…</string>
+
     <string name="err_num_sus_not_found_title">Numero do SUS não econtrado</string>
     <string name="err_num_sus_not_found_message">O número do SUS informado não foi encontado.
                 É aconselhável atualizar sua base de dados. Deseja continuar mesmo assim?</string>
@@ -348,6 +361,7 @@
     <string name="err_visit_required_title">Motivo da visita</string>
     <string name="err_visit_required_message">É necessário preencher ao menos um campo relacionado
                 ao motivo da visita (Busca Ativa, Acompanhamento ou Outro)</string>
+
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

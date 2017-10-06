@@ -74,17 +74,4 @@ public class NasfConductModel extends RealmObject implements Serializable {
     public void setForwarding(Forwarding forwarding) {
         this.forwarding = forwarding;
     }
-
-    public JSONObject asJson() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(Constants.Accompany.NASF_CONDUCT.name(), observation);
-            json.put(Constants.Accompany.NASF.name(), nasf.asJson());
-            json.put(Constants.Accompany.CONDUCT.name(), conduct.asJson());
-            json.put(Constants.Accompany.FORWARDING.name(), forwarding.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
 }

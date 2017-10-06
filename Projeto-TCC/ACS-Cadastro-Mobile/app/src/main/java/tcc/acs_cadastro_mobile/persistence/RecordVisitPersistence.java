@@ -1,7 +1,5 @@
 package tcc.acs_cadastro_mobile.persistence;
 
-import android.util.Log;
-
 import io.realm.Realm;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.RecordVisitModel;
@@ -16,6 +14,7 @@ public class RecordVisitPersistence {
         realm.beginTransaction();
         RecordVisitModel object = realm.copyToRealm(new RecordVisitModel(details, shared));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -24,6 +23,7 @@ public class RecordVisitPersistence {
         realm.beginTransaction();
         RecordDetails object = realm.copyToRealm(new RecordDetails(record, "", "", shift, citizen));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

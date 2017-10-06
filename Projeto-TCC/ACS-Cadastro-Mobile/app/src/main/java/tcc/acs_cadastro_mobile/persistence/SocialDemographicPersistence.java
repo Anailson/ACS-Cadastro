@@ -20,6 +20,7 @@ public class SocialDemographicPersistence {
         SocialDemographicModel object = realm.copyToRealm(new SocialDemographicModel(kinship, educationEmployment,
                 healthAndGroup, kids09, communityTraditional, sexualOrientation, deficiency));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -29,6 +30,7 @@ public class SocialDemographicPersistence {
         realm.beginTransaction();
         EducationEmployment object = realm.copyToRealm(new EducationEmployment(school, occupation, education, employment));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -37,6 +39,7 @@ public class SocialDemographicPersistence {
         realm.beginTransaction();
         HealthAndGroup object = realm.copyToRealm(new HealthAndGroup(caregiver, communityGroup, healthPlan));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -45,6 +48,7 @@ public class SocialDemographicPersistence {
         realm.beginTransaction();
         CommunityTraditional object = realm.copyToRealm(new CommunityTraditional(isCommunityTraditional, value));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -54,6 +58,7 @@ public class SocialDemographicPersistence {
         realm.beginTransaction();
         SexualOrientation object = realm.copyToRealm(new SexualOrientation(isOrientation, value));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -62,6 +67,7 @@ public class SocialDemographicPersistence {
         realm.beginTransaction();
         Deficiency object = realm.copyToRealm(new Deficiency(isDeficiency, deficiency));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

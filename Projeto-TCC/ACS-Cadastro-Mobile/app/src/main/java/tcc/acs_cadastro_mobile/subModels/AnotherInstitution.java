@@ -38,7 +38,7 @@ public class AnotherInstitution extends RealmObject implements Serializable {
         this.value = value;
     }
 
-    public JSONObject getAsJson() throws JSONException {
+    public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(Constants.Citizen.ANOTHER_INSTITUTION.name(), isAnotherInstitution);
         json.put(Constants.Citizen.DESCRIPTION.name(), value);

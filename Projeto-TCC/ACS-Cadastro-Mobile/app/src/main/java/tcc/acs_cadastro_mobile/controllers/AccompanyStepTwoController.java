@@ -60,7 +60,7 @@ public class AccompanyStepTwoController extends StepsController {
         for (String line : lines) {
             String cid = line.replaceAll(" ", "");
             if (cid.matches("[0-9]+")) {
-                cids.add(new RealmInt(Integer.parseInt(cid)));
+                cids.add(new RealmInt(cid));
             }
         }
         return cids;

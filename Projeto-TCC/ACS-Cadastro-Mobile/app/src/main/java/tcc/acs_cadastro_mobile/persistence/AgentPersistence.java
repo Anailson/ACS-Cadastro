@@ -15,13 +15,16 @@ public class AgentPersistence {
         realm.delete(AgentModel.class);
         AgentModel object = realm.copyToRealm(agentModel);
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
     public static AgentModel get() {
-        return Realm.getDefaultInstance()
+        AgentModel agent = Realm.getDefaultInstance()
                 .where(AgentModel.class)
                 .findAll()
                 .first(new AgentModel());
+        Realm.getDefaultInstance().close();
+        return agent;
     }
 }

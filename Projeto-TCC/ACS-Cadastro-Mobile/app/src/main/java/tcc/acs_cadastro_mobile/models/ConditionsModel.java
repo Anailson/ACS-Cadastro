@@ -1,13 +1,9 @@
 package tcc.acs_cadastro_mobile.models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.CommunicableDisease;
 import tcc.acs_cadastro_mobile.subModels.ConditionDiseases;
 import tcc.acs_cadastro_mobile.subModels.TrackingDiseases;
@@ -17,7 +13,7 @@ public class ConditionsModel extends RealmObject implements Serializable {
     private ConditionDiseases condition;
     private CommunicableDisease communicable;
     private TrackingDiseases tracking;
-    private RealmList<RealmInt> anothers;
+    private RealmList<RealmInt> anothers; //TODO
 
     public ConditionsModel() {
         this(new ConditionDiseases(), new CommunicableDisease(), new TrackingDiseases(), new RealmList<RealmInt>());
@@ -73,17 +69,5 @@ public class ConditionsModel extends RealmObject implements Serializable {
 
     public void setAnothers(RealmList<RealmInt> anothers) {
         this.anothers = anothers;
-    }
-
-    public JSONObject asJson() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(Constants.Accompany.CONDITIONS_DISEASES.name(), condition.asJson());
-            json.put(Constants.Accompany.COMMUNICABLE_DISEASES.name(), communicable.asJson());
-            json.put(Constants.Accompany.TRACKING_DISEASES.name(), tracking.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
     }
 }

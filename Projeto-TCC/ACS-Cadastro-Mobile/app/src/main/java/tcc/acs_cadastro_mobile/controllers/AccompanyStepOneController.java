@@ -17,6 +17,7 @@ import tcc.acs_cadastro_mobile.customViews.RequiredAutoComplete;
 import tcc.acs_cadastro_mobile.interfaces.IAutoFillListener;
 import tcc.acs_cadastro_mobile.interfaces.ICalendarListener;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
+import tcc.acs_cadastro_mobile.models.AccompanyModel;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.RecordDataModel;
 import tcc.acs_cadastro_mobile.persistence.AccompanyPersistence;
@@ -71,7 +72,8 @@ public class AccompanyStepOneController extends StepsController {
 
     public RecordDetails getDetails(EditText edtRecord, EditText edtNumSus, Spinner spnPlaceCare,
                         Spinner spnTypeCare, Spinner spnShift) {
-        long record = AccompanyPersistence.getRecordIfBlack(getLong(edtRecord));
+
+        long record = AcsRecordPersistence.getMinorValueIfBlank(AccompanyModel.class, AccompanyModel.RECORD, getLong(edtRecord));
         CitizenModel citizen = CitizenPersistence.get(getLong(edtNumSus));
         return RecordDataPersistence.get(record, getFields(spnPlaceCare), getFields(spnTypeCare), getFields(spnShift), citizen);
     }

@@ -24,19 +24,21 @@ public class ResidenceModel extends RealmObject implements Serializable, ISearch
     private String streetName;
     private AddressDataModel addressData;
     private HousingConditionsModel housingConditions;
-    private RealmList<HousingHistoricalModel> housingHistorical;
+    private RealmList<HousingHistoricalModel> housingHistorical; //TODO
+    private int status;
 
+    public ResidenceModel() {
+        this(new AddressDataModel(), new HousingConditionsModel(), new RealmList<HousingHistoricalModel>());
+    }
 
-    public static ResidenceModel newInstance(Realm realm, AddressDataModel addressData,
-                     HousingConditionsModel housingConditions, RealmList<HousingHistoricalModel> housingHistorical){
-        realm.beginTransaction();
-        ResidenceModel object = realm.createObject(ResidenceModel.class, addressData.getCep());
-        object.setStreetName(addressData.getPlaceName());
-        object.setAddressData(addressData);
-        object.setHousingConditions(housingConditions);
-        object.setHousingHistorical(housingHistorical);
-        realm.commitTransaction();
-        return object;
+    public ResidenceModel (AddressDataModel addressData, HousingConditionsModel housingConditions,
+                           RealmList<HousingHistoricalModel> housingHistorical){
+        this.streetName = addressData.getStreet().getName();
+        this.cep = addressData.getCep();
+        this.addressData = addressData;
+        this.housingConditions = housingConditions;
+        this.housingHistorical = housingHistorical;
+        this.status = AcsRecordPersistence.INSERT;
     }
 
     public long getCep() {
@@ -53,6 +55,14 @@ public class ResidenceModel extends RealmObject implements Serializable, ISearch
 
     public void setStreetName(String streetName) {
         this.streetName = streetName;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public AddressDataModel getAddressData() {
@@ -113,14 +123,4 @@ public class ResidenceModel extends RealmObject implements Serializable, ISearch
         return getAddressData().getPhoneReference();
     }
 
-    public JSONObject asJson() {
-        JSONObject json = new JSONObject();
-        try{
-            json.put(Constants.Residence.ADDRESS_DATA.name(), addressData.asJson());
-            json.put(Constants.Residence.HOUSING_CONDITIONS.name(), housingConditions.asJson());
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-        return json;
-    }
 }

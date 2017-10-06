@@ -1,5 +1,7 @@
 package tcc.acs_cadastro_mobile.persistence;
 
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmList;
@@ -16,7 +18,12 @@ public class ResidencePersistence  {
     public static ResidenceModel getInstance(AddressDataModel addressData, HousingConditionsModel housingConditions,
                              RealmList<HousingHistoricalModel> housingHistorical){
         Realm realm = Realm.getDefaultInstance();
-        return ResidenceModel.newInstance(realm, addressData, housingConditions, housingHistorical);
+        realm.beginTransaction();
+        ResidenceModel residence = new ResidenceModel(addressData, housingConditions, housingHistorical);
+        realm.copyToRealmOrUpdate(residence);
+        realm.close();
+        realm.commitTransaction();
+        return residence;
     }
 
     public static ResidenceModel save(AddressDataModel addressData, HousingConditionsModel housingConditions,
@@ -29,12 +36,15 @@ public class ResidencePersistence  {
         realm.beginTransaction();
         ResidenceModel saved = realm.copyToRealmOrUpdate(residence);
         realm.commitTransaction();
+        realm.close();
         return saved;
     }
 
     public static RealmResults<ResidenceModel> getAll(){
         Realm realm = Realm.getDefaultInstance();
-        return realm.where(ResidenceModel.class).findAll();
+        RealmResults<ResidenceModel> results = realm.where(ResidenceModel.class).findAll();
+        realm.close();
+        return results;
     }
 
     public static ResidenceModel get(String name){
@@ -44,4 +54,20 @@ public class ResidencePersistence  {
     public static ResidenceModel get(long cep){
         return getAll().where().equalTo(ResidenceModel.CEP, cep).findFirst();
     }
+
+    public static void update(List<ResidenceModel> list) {
+        for (ResidenceModel residence : list){
+            update(residence);
+        }
+    }
+
+    public static ResidenceModel update(ResidenceModel residence){
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        residence.setStatus(AcsRecordPersistence.OK);
+        ResidenceModel updated = realm.copyToRealmOrUpdate(residence);
+        realm.commitTransaction();
+        return updated;
+    }
+
 }

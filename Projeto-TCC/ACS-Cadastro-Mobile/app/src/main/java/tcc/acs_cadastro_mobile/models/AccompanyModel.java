@@ -1,8 +1,5 @@
 package tcc.acs_cadastro_mobile.models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 import io.realm.RealmObject;
@@ -10,15 +7,11 @@ import io.realm.annotations.PrimaryKey;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
-import static tcc.acs_cadastro_mobile.Constants.Accompany.CONDITIONS;
-import static tcc.acs_cadastro_mobile.Constants.Accompany.EXAMS;
-import static tcc.acs_cadastro_mobile.Constants.Accompany.NASF_CONDUCT;
-import static tcc.acs_cadastro_mobile.Constants.Accompany.RECORD_DATA;
-
 public class AccompanyModel extends RealmObject implements Serializable, ISearcher {
 
     public static final String RECORD = "record";
     public static final String NUM_SUS = "numSus";
+    public static final String STATUS = "status";
 
     @PrimaryKey
     private long record;
@@ -27,12 +20,15 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
     private ConditionsModel conditions;
     private ExamsModel exams;
     private NasfConductModel nasfConduct;
+    private int status;
+
     public AccompanyModel() {
         this.record = this.numSus = AcsRecordPersistence.DEFAULT_INT;
         this.recordData = new RecordDataModel();
         this.conditions = new ConditionsModel();
         this.exams = new ExamsModel();
         this.nasfConduct = new NasfConductModel();
+        this.status = AcsRecordPersistence.INSERT;
     }
 
     public AccompanyModel(RecordDataModel recordData, ConditionsModel conditions, ExamsModel exams,
@@ -43,19 +39,7 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
         this.conditions = conditions;
         this.exams = exams;
         this.nasfConduct = nasfConduct;
-    }
-
-    public JSONObject asJson(){
-        JSONObject json = new JSONObject();
-        try {
-            json.put(RECORD_DATA.name(), recordData.asJson());
-            json.put(CONDITIONS.name(), conditions.asJson());
-            json.put(EXAMS.name(), exams.asJson());
-            json.put(NASF_CONDUCT.name(), nasfConduct.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
+        this.status = AcsRecordPersistence.INSERT;
     }
 
     public String getName() {
@@ -72,6 +56,14 @@ public class AccompanyModel extends RealmObject implements Serializable, ISearch
 
     public void setRecord(long record) {
         this.record = record;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public RecordDataModel getRecordData() {

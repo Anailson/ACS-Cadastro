@@ -30,14 +30,13 @@ public class VisitStepTwoFragment extends Fragment implements IRequiredFields {
     private VisitStepTwoController controller;
 
     private CheckBox chbAppointment, chbExam, chbVaccine, chbConditions,
-
             chbPregnant, chbPuerpera, chbNewborn, chbChild, chbMalnutrition, chbRehabilitationDeficiency,
             chbHypertension, chbDiabetes, chbAsthma, chbCopdEmphysema, chbCancer, chbChronicDiseases,
             chbLeprosy, chbTuberculosis, chbRespiratory, chbSmoker, chbHomeBedding, chbVulnerability,
             chbBolsaFamília, chbMentalHealth, chbAlcohol, chbDrugs,
-
             chbRecordUpdate, chbPeriodicVisit, chbInternment, chbControlEnvironments, chbCollectiveActivities,
             chbGuidance, chbOthers;
+			
     private RequiredSpinner spnResult;
 
     public static Fragment newInstance(ReasonsVisitModel reasons) {

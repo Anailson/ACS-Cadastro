@@ -39,7 +39,7 @@ public class FamilyVisit extends RealmObject implements Serializable {
         this.value = value;
     }
 
-    public JSONObject getAsJson() throws JSONException {
+    public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(Constants.Citizen.FAMILY_VISIT.name(), isFamilyVisit);
         json.put(Constants.Citizen.DESCRIPTION.name(), value);

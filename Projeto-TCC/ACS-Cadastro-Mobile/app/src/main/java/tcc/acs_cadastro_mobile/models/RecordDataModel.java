@@ -76,12 +76,4 @@ public class RecordDataModel extends RealmObject implements Serializable {
     public void setKidsPregnant(KidAndPregnant kidsPregnant) {
         this.kidsPregnant = kidsPregnant;
     }
-
-    public JSONObject asJson() throws JSONException{
-        JSONObject json = new JSONObject();
-        json.put(RECORD_DETAILS.name(), recordDetails.asJson());
-        json.put(ANTHROPOMETRIC.name(), anthropometric.asJson());
-        json.put(KID_PREGNANT.name(), kidsPregnant.asJson());
-        return json;
-    }
 }

@@ -15,19 +15,34 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import io.realm.exceptions.RealmMigrationNeededException;
 import tcc.acs_cadastro_mobile.R;
+import tcc.acs_cadastro_mobile.controllers.MainController;
 import tcc.acs_cadastro_mobile.models.AgentModel;
+import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.AgentPersistence;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private MainController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        AgentModel agent = AgentPersistence.get();
+        controller = new MainController(this);
+        AgentModel agent;
+        try{
+
+            agent = AgentPersistence.get();
+        }catch (RealmMigrationNeededException e){
+            AcsRecordPersistence.migrate(this);
+            agent = AgentPersistence.get();
+        }
+
+        controller.updateData(agent);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.bar_vst);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,6 +82,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
         return true;
     }
 
@@ -74,12 +90,22 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        return id == R.id.menu_settings || super.onOptionsItemSelected(item);
+        switch (id){
+            case R.id.menu_update_system: controller.updateData(AgentPersistence.get()); break;
+            case R.id.menu_logout: controller.logout(); break;
+        }
+        return id == R.id.menu_update_system || super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return selectMenu(item.getItemId());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        controller.dropDatabase();
     }
 
     private boolean selectMenu(int id){
@@ -90,7 +116,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_residence: fragment = new ResidenceListFragment();break;
             case R.id.nav_accompany: fragment = new AccompanyListFragment(); break;
             case R.id.nav_visit: fragment = new VisitListFragment(); break;
-            case R.id.nav_update_system: fragment = new UpdateSystemFragment(); break;
         }
         return replaceFragment(fragment) > 0;
     }

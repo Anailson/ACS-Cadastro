@@ -73,17 +73,4 @@ public class ReasonsVisitModel extends RealmObject implements Serializable{
     public void setResult(String result) {
         this.result = result;
     }
-
-    public JSONObject asJson(){
-        JSONObject json = new JSONObject();
-        try {
-            json.put(Constants.Visit.RESULT.name(),result);
-            json.put(Constants.Visit.ACTIVE_SEARCH.name(), active.asJson());
-            json.put(Constants.Visit.FOLLOWING.name(), following.asJson());
-            json.put(Constants.Visit.ANOTHER_REASONS.name(), another.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
 }

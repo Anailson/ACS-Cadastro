@@ -16,8 +16,7 @@ public class ExamsModel extends RealmObject implements Serializable{
     private String pic;
     private RequestExams request;
     private EvaluatedExams evaluate;
-    private RealmList<RealmInt> anothers;
-
+    private RealmList<RealmInt> anothers;//TODO
 
     public ExamsModel() {
         this("", new RequestExams(), new EvaluatedExams(), new RealmList<RealmInt>());
@@ -68,18 +67,5 @@ public class ExamsModel extends RealmObject implements Serializable{
 
     public void setAnothers(RealmList<RealmInt> anothers) {
         this.anothers = anothers;
-    }
-
-    public JSONObject asJson() {
-
-        JSONObject json = new JSONObject();
-        try {
-            json.put(Constants.Accompany.PIC.name(), pic);
-            json.put(Constants.Accompany.REQUEST_EXAMS.name(), request.asJson());
-            json.put(Constants.Accompany.EVALUATED_EXAMS.name(), evaluate.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
     }
 }

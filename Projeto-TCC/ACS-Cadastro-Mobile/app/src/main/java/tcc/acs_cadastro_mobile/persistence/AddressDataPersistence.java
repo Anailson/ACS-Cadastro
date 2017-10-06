@@ -16,6 +16,7 @@ public class AddressDataPersistence {
         realm.beginTransaction();
         AddressDataModel object = realm.copyToRealm(new AddressDataModel(street, city, phones));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -24,6 +25,7 @@ public class AddressDataPersistence {
         realm.beginTransaction();
         StreetLocation object = realm.copyToRealm(new StreetLocation(place, name, number, complement));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -32,6 +34,7 @@ public class AddressDataPersistence {
         realm.beginTransaction();
         CityLocation object = realm.copyToRealm(new CityLocation(neighborhood, uf, city, cep));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -40,6 +43,7 @@ public class AddressDataPersistence {
         realm.beginTransaction();
         Phones object = realm.copyToRealm(new Phones(home, reference));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

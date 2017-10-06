@@ -19,6 +19,7 @@ public class PersonalDataPersistence {
         PersonalDataModel object = realm.copyToRealm(new PersonalDataModel(particular, mother,
                 responsible, genderAndRace, nationality, contact));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -28,6 +29,7 @@ public class PersonalDataPersistence {
         realm.beginTransaction();
         ParticularData object = realm.copyToRealm(new ParticularData(sus, nis, name, socialName, birth));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -37,6 +39,7 @@ public class PersonalDataPersistence {
         realm.beginTransaction();
         Mother object = realm.copyToRealm(new Mother(isKnown, name));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -45,6 +48,7 @@ public class PersonalDataPersistence {
         realm.beginTransaction();
         Responsible object = realm.copyToRealm(new Responsible(responsible, numSus, birthDate));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -54,6 +58,7 @@ public class PersonalDataPersistence {
         realm.beginTransaction();
         GenderAndRace object = realm.copyToRealm(new GenderAndRace(gender, race));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -63,6 +68,7 @@ public class PersonalDataPersistence {
         realm.beginTransaction();
         Nationality object = realm.copyToRealm(new Nationality(nationality, nationBirth, uf, city));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -72,6 +78,7 @@ public class PersonalDataPersistence {
         realm.beginTransaction();
         Contact object = realm.copyToRealm(new Contact(phone, email));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

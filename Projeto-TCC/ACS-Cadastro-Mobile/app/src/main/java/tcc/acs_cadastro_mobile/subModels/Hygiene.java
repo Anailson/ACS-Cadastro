@@ -84,7 +84,7 @@ public class Hygiene extends RealmObject implements Serializable {
         this.another = another;
     }
 
-    public JSONObject getAsJson() throws JSONException {
+    public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(Constants.Citizen.HYGIENE.name(), isHygiene);
         json.put(Constants.Citizen.BATH.name(), bath);

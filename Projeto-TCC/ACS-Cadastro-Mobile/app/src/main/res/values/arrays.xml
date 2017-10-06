@@ -209,7 +209,7 @@
         <item>Posseiro</item>
         <item>Arrendatário</item>
         <item>Comodatário</item>
-        <item>beneficitário do Banco da Terra</item>
+        <item>Beneficitário do Banco da Terra</item>
         <item>Nao se aplica</item>
     </string-array>
 
@@ -285,7 +285,6 @@
         <item>3 salários mínimos</item>
         <item>4 salários mínimos</item>
         <item>Acima de 4 salários mínimos</item>
-        <item>@string/txt_another</item>
     </string-array>
 
     <string-array name="shift">
@@ -302,11 +301,11 @@
         <item>Rua</item>
         <item>Domicílio</item>
         <item>Escola / Creche</item>
-        <item>@string/txt_another</item>
         <item>Polo (Academia da saúde)</item>
         <item>Instituição / Abrigo</item>
         <item>Unidade prisional ou congêneres</item>
         <item>Unidade socioeducativa</item>
+        <item>@string/txt_another</item>
     </string-array>
 
     <string-array name="type_care">

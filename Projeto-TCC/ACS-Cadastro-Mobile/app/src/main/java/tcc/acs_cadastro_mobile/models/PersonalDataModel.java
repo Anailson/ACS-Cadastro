@@ -169,7 +169,7 @@ public class PersonalDataModel extends RealmObject implements Serializable {
         return getNationBirth().equals("Brasil");
     }
 
-    public JSONObject   asJson() throws JSONException {
+    public JSONObject  asJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(PARTICULAR.name(), particularData.asJson());
         json.put(MOTHER.name(), mother.asJson());

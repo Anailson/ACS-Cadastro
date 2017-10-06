@@ -52,14 +52,4 @@ public class RecordVisitModel extends RealmObject implements Serializable {
         this.details = details;
     }
 
-    public JSONObject asJson() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(Constants.Visit.IS_SHARED.name(), isShared);
-            json.put(Constants.Visit.RECORD_DETAILS.name(), details.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
 }

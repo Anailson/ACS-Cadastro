@@ -16,6 +16,7 @@ public class ReasonsVisitPersistence {
         realm.beginTransaction();
         ReasonsVisitModel object = realm.copyToRealm(new ReasonsVisitModel(search, following, another, result));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -24,6 +25,7 @@ public class ReasonsVisitPersistence {
         realm.beginTransaction();
         ActiveSearch object = realm.copyToRealm(new ActiveSearch(search));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -32,6 +34,7 @@ public class ReasonsVisitPersistence {
         realm.beginTransaction();
         Following object = realm.copyToRealm(new Following(followings));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -40,6 +43,7 @@ public class ReasonsVisitPersistence {
         realm.beginTransaction();
         AnotherReasons object = realm.copyToRealm(new AnotherReasons(reasons));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

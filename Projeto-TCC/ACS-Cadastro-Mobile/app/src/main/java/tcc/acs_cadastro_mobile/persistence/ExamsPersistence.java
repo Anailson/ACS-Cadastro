@@ -16,6 +16,7 @@ public class ExamsPersistence {
         realm.beginTransaction();
         ExamsModel object = realm.copyToRealm(new ExamsModel(pic, request, evaluated, sids));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -24,6 +25,7 @@ public class ExamsPersistence {
         realm.beginTransaction();
         RequestExams object = realm.copyToRealm(new RequestExams(request));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -32,6 +34,7 @@ public class ExamsPersistence {
         realm.beginTransaction();
         EvaluatedExams object = realm.copyToRealm(new EvaluatedExams(evaluated));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

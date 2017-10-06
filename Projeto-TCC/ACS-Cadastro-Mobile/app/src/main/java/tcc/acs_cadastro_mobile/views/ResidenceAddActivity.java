@@ -43,8 +43,6 @@ public class ResidenceAddActivity extends AppCompatActivity implements IResidenc
 
     @Override
     public void send(RealmList<HousingHistoricalModel> housingHistorical) {
-
-        Log.e("activity#send", String.valueOf(housingHistorical == null));
         controller.send(housingHistorical);
     }
 }

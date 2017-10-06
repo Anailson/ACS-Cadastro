@@ -17,27 +17,31 @@ public class DefaultAlert {
         this.context = context;
         this.positiveListener = this.negativeListener = new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which){}
+            public void onClick(DialogInterface dialog, int which){
+                dialog.dismiss();
+            }
         };
         this.alert = new AlertDialog.Builder(context)
                 .setPositiveButton(R.string.btn_ok, positiveListener)
-                .setNegativeButton("", negativeListener);
+                .setNegativeButton(R.string.btn_cancel, negativeListener);
     }
 
-    public void setTitle(String title) {
+    public DefaultAlert setTitle(String title) {
         this.title = title;
+        return this;
     }
 
-    public void setTitle(int resource) {
-        setTitle(context.getString(resource));
+    public DefaultAlert setTitle(int resource) {
+        return setTitle(context.getString(resource));
     }
 
-    public void setMessage(String message) {
+    public DefaultAlert setMessage(String message) {
         this.message = message;
+        return this;
     }
 
-    public void setMessage(int resource) {
-        setMessage(context.getString(resource));
+    public DefaultAlert setMessage(int resource) {
+        return setMessage(context.getString(resource));
     }
 
 

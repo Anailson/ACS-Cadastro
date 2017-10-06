@@ -22,6 +22,7 @@ public class VisitModel extends RealmObject implements Serializable, ISearcher {
     private long numSus;
     private RecordVisitModel details;
     private ReasonsVisitModel reasons;
+    private int status;
 
     public VisitModel() {
         this(new RecordVisitModel(), new ReasonsVisitModel());
@@ -66,6 +67,14 @@ public class VisitModel extends RealmObject implements Serializable, ISearcher {
         this.numSus = numSus;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public RecordVisitModel getDetails() {
         return details;
     }
@@ -96,16 +105,6 @@ public class VisitModel extends RealmObject implements Serializable, ISearcher {
         return containsKey(getName(), key);
     }
 
-    public JSONObject asJson(){
-        JSONObject json = new JSONObject();
-        try {
-            json.put(Constants.Visit.RECORD_VISIT.name(), details.asJson());
-            json.put(Constants.Visit.REASONS_VISIT.name(), reasons.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
 
     private boolean containsKey(String value, String key){
         return value.trim().toUpperCase().contains(key.toUpperCase());

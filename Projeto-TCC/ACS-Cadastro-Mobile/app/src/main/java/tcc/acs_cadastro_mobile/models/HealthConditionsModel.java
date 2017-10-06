@@ -219,19 +219,5 @@ public class HealthConditionsModel extends RealmObject implements Serializable {
     public boolean isOtherPractices() {
         return getDiseases().isOtherPractices();
     }
-
-    public JSONObject asJson() throws JSONException {
-
-        JSONObject json = new JSONObject();
-        json.put(PREGNANT.name(), pregnant.getAsJson());
-        json.put(WEIGHT.name(), weight);
-        json.put(DISEASES.name(), diseases.getAsJson());
-        json.put(HEART_DISEASE.name(), heartDisease.getAsJson());
-        json.put(KIDNEY_DISEASE.name(), kidneyDisease.getAsJson());
-        json.put(RESPIRATORY_DISEASE.name(), respiratoryDisease.getAsJson());
-        json.put(INTERMENT.name(), interment.getAsJson());
-        json.put(PLANT.name(), plant.getAsJson());
-        return json;
-    }
 }
 

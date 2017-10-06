@@ -8,18 +8,18 @@
     android:baselineAligned="false">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:id="@+id/txt_ctz_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_ctz_name"
+            android:gravity="bottom"
             android:text="@string/txt_default"
-            android:gravity="bottom" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
         <TextView
             android:id="@+id/txt_ctz_sus_num"
@@ -35,13 +35,24 @@
 
     </LinearLayout>
 
-    <ImageView
+    <ImageButton
+        android:id="@+id/btn_edit_citizen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ic_edit_citizen"
-        android:src="@android:drawable/ic_menu_edit"
-        android:contentDescription="@string/hint_edit_citizen"
+        android:layout_gravity="center_vertical|right"
         android:layout_weight="0.1"
-        android:layout_gravity="center_vertical|right" />
+        android:contentDescription="@string/hint_edit_citizen"
+        android:src="@android:drawable/ic_menu_edit"
+        android:background="@android:color/transparent"/>
+
+    <ImageButton
+        android:id="@+id/btn_delete_citizen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_weight="0.1"
+        android:contentDescription="@string/hint_edit_citizen"
+        android:src="@android:drawable/ic_menu_delete"
+        android:background="@android:color/transparent"/>
 
 </LinearLayout>

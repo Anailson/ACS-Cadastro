@@ -95,7 +95,7 @@ public class Feeding extends RealmObject implements Serializable{
         this.another = another;
     }
 
-    public JSONObject getAsJson() throws JSONException {
+    public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(Constants.Citizen.FOOD_PER_DAY.name(), foodPerDay);
         json.put(Constants.Citizen.RESTAURANT.name(), restaurant);

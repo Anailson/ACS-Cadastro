@@ -1,9 +1,6 @@
 package tcc.acs_cadastro_mobile.persistence;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -24,6 +21,7 @@ public class ConditionPersistence {
         realm.beginTransaction();
         ConditionsModel object = realm.copyToRealm(new ConditionsModel(diseases, communicable, tracking, cids));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -32,6 +30,7 @@ public class ConditionPersistence {
         realm.beginTransaction();
         ConditionDiseases object = realm.copyToRealm(new ConditionDiseases(conditions));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -40,6 +39,7 @@ public class ConditionPersistence {
         realm.beginTransaction();
         CommunicableDisease object = realm.copyToRealm(new CommunicableDisease(communicables));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -48,6 +48,7 @@ public class ConditionPersistence {
         realm.beginTransaction();
         TrackingDiseases object = realm.copyToRealm(new TrackingDiseases(trackings));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -58,6 +59,7 @@ public class ConditionPersistence {
         Collections.addAll(list, cids);
         realm.copyToRealm(list);
         realm.commitTransaction();
+        realm.close();
         return list;
     }
 }

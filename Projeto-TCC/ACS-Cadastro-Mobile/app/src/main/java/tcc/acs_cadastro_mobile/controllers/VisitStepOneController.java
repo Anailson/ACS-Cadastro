@@ -17,10 +17,10 @@ import tcc.acs_cadastro_mobile.interfaces.IAutoFillListener;
 import tcc.acs_cadastro_mobile.interfaces.IRequiredView;
 import tcc.acs_cadastro_mobile.models.CitizenModel;
 import tcc.acs_cadastro_mobile.models.RecordVisitModel;
+import tcc.acs_cadastro_mobile.models.VisitModel;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 import tcc.acs_cadastro_mobile.persistence.CitizenPersistence;
 import tcc.acs_cadastro_mobile.persistence.RecordVisitPersistence;
-import tcc.acs_cadastro_mobile.persistence.VisitPersistence;
 import tcc.acs_cadastro_mobile.subModels.RecordDetails;
 
 public class VisitStepOneController extends StepsController{
@@ -57,7 +57,7 @@ public class VisitStepOneController extends StepsController{
     }
 
     public RecordDetails get(EditText edtRecord, Spinner spnShift, RequiredAutoComplete edtNumSus) {
-        long record = VisitPersistence.getRecordIfBlanck(getLong(edtRecord));
+        long record = AcsRecordPersistence.getMinorValueIfBlank(VisitModel.class, VisitModel.RECORD, getLong(edtRecord));
         CitizenModel citizen = CitizenPersistence.get(getLong(edtNumSus));
         return RecordVisitPersistence.get(record, getFields(spnShift), citizen);
     }

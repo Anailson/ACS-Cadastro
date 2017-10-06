@@ -23,6 +23,7 @@ public class CitizenPersistence {
         CitizenModel object = realm.copyToRealm(new CitizenModel(personalData, socialDemographicModel,
                 healthConditions, streetSituation));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -37,24 +38,60 @@ public class CitizenPersistence {
         citizen.setStatus(AcsRecordPersistence.INSERT);
         CitizenModel saved = realm.copyToRealmOrUpdate(citizen);
         realm.commitTransaction();
+        realm.close();
         return saved;
     }
 
+    public static void update(List<CitizenModel> list) {
+        updateStatus(list, AcsRecordPersistence.OK);
+    }
+
+    public static CitizenModel update(CitizenModel citizen) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        citizen.setStatus(AcsRecordPersistence.OK);
+        CitizenModel update = realm.copyToRealmOrUpdate(citizen);
+        realm.commitTransaction();
+        realm.close();
+        return update;
+    }
+
     public static RealmResults<CitizenModel> getAll() {
-        return Realm.getDefaultInstance().where(CitizenModel.class).findAll();
+        RealmResults<CitizenModel> list = Realm.getDefaultInstance().where(CitizenModel.class).findAll();
+        Realm.getDefaultInstance().close();
+        return list;
+    }
+
+    public static RealmResults<CitizenModel> getAllByStatus(int status){
+        RealmResults<CitizenModel> list = Realm.getDefaultInstance()
+                .where(CitizenModel.class)
+                .equalTo(CitizenModel.STATUS, status)
+                .findAll();
+        Realm.getDefaultInstance().close();
+        return list;
+    }
+
+    public static List<CitizenModel> getAllPendents(int status){
+        List<CitizenModel> pendents = new ArrayList<>();
+        pendents.addAll(getAllByStatus(status));
+        return pendents;
     }
 
     public static CitizenModel get(String name) {
         Realm realm = Realm.getDefaultInstance();
-        return realm.where(CitizenModel.class)
+        CitizenModel citizen = realm.where(CitizenModel.class)
                 .equalTo(CitizenModel.NAME, name)
                 .findFirst();
+        realm.close();
+        return citizen;
     }
 
     public static CitizenModel get(long numSus) {
-        return Realm.getDefaultInstance().where(CitizenModel.class)
+        CitizenModel citizen = Realm.getDefaultInstance().where(CitizenModel.class)
                 .equalTo(CitizenModel.NUM_SUS, numSus)
                 .findAll().first(null);
+        Realm.getDefaultInstance().close();
+        return citizen;
     }
 
     public static String[] getNumSus() {
@@ -69,6 +106,22 @@ public class CitizenPersistence {
         return numSus;
     }
 
+    public static void updateStatus(CitizenModel citizen, int status){
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        citizen.setStatus(status);
+        realm.copyToRealmOrUpdate(citizen);
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    public static List<CitizenModel> updateStatus(List<CitizenModel> citizens, int status){
+        for(CitizenModel citizen : citizens){
+            updateStatus(citizen, status);
+        }
+        return citizens;
+    }
+
     public static List<Long> getNumSusAsList() {
         List<Long> numSus = new ArrayList<>();
         RealmResults<CitizenModel> list = getAll()
@@ -78,7 +131,6 @@ public class CitizenPersistence {
         for (CitizenModel citizen : list) {
             numSus.add(citizen.getNumSus());
         }
-
         return numSus;
     }
 }

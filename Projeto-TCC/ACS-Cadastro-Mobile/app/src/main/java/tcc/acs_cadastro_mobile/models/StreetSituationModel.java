@@ -103,18 +103,4 @@ public class StreetSituationModel extends RealmObject implements Serializable {
     }
 
     public boolean[] getHygienes() {return getHygiene().getHygienes();}
-
-
-    public JSONObject asJson() throws JSONException {
-
-        JSONObject json = new JSONObject();
-        json.put(STREET.name(), streetSituation.getAsJson());
-        json.put(BENEFIT.name(), benefit);
-        json.put(FAMILY.name(), family);
-        json.put(FEEDING.name(), feeding.getAsJson());
-        json.put(ANOTHER_INSTITUTION.name(), anotherInstitution.getAsJson());
-        json.put(FAMILY_VISIT.name(), familyVisit.getAsJson());
-        json.put(HYGIENE.name(), hygiene.getAsJson());
-        return json;
-    }
 }

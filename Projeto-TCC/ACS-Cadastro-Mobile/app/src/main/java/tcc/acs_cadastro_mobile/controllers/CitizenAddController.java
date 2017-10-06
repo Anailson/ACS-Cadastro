@@ -96,7 +96,10 @@ public class CitizenAddController {
             }
             case FOURTH_STEP: {
                 if (((IRequiredFields) actualStep).isRequiredFieldsFilled()) {
-                    save();
+					
+					actualStep.onDetach();
+					CitizenModel citizen = new CitizenModel(personalData, socialDemographicData, healthConditions, streetSituation);
+                    save(citizen);
                 }
                 break;
             }
@@ -111,9 +114,8 @@ public class CitizenAddController {
         }
     }
 
-    private void save(){
-        actualStep.onDetach();
-        CitizenModel saved = CitizenPersistence.save(personalData, socialDemographicData, healthConditions, streetSituation);
+    private void save(CitizenModel citizen){
+        CitizenModel saved = CitizenPersistence.save(citizen);
         if(saved != null){
             showConfirmDialog(saved.getName(), saved.getNumSus());
         }

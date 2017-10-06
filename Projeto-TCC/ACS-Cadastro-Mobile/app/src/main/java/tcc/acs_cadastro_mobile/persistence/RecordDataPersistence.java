@@ -16,6 +16,7 @@ public class RecordDataPersistence {
         realm.beginTransaction();
         RecordDataModel object = realm.copyToRealm(new RecordDataModel(details, anthropometric, kidAndPregnant));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -24,6 +25,7 @@ public class RecordDataPersistence {
         realm.beginTransaction();
         RecordDetails object = realm.copyToRealm(new RecordDetails(record, placeCare, typeCare, shift, citizen));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -32,6 +34,7 @@ public class RecordDataPersistence {
         realm.beginTransaction();
         Anthropometric object = realm.copyToRealm(new Anthropometric(weight, height, vaccinates));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -42,6 +45,7 @@ public class RecordDataPersistence {
         KidAndPregnant object = realm.copyToRealm(new KidAndPregnant(breastFeeding, dum, plannedPregnancy,
                 weeks, previous, childBirth, homeCare));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

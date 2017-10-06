@@ -11,7 +11,9 @@ public class HousingHistoricalPersistence {
     public static HousingHistoricalModel getHousingHistoricalModel(long numSus, long familyRecord,
                        String birthDate, String familyIncome, int nMembers, String livesSince, boolean moved){
         Realm realm = Realm.getDefaultInstance();
-        return HousingHistoricalModel.getHousingHistoricalModel(realm, numSus, familyRecord, birthDate,
+        HousingHistoricalModel historicalModel =  HousingHistoricalModel.getHousingHistoricalModel(realm, numSus, familyRecord, birthDate,
                 familyIncome, nMembers,livesSince, moved);
+        realm.close();
+        return historicalModel;
     }
 }

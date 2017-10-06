@@ -16,6 +16,7 @@ public class NasfConductPersistence {
         realm.beginTransaction();
         NasfConductModel object = realm.copyToRealm(new NasfConductModel(nasfConduct, nasf, conduct, forwarding));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -24,6 +25,7 @@ public class NasfConductPersistence {
         realm.beginTransaction();
         NASF object = realm.copyToRealm(new NASF(nasf));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -32,6 +34,7 @@ public class NasfConductPersistence {
         realm.beginTransaction();
         Conduct object = realm.copyToRealm(new Conduct(conducts));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -40,6 +43,7 @@ public class NasfConductPersistence {
         realm.beginTransaction();
         Forwarding object = realm.copyToRealm(new Forwarding(forwarding));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

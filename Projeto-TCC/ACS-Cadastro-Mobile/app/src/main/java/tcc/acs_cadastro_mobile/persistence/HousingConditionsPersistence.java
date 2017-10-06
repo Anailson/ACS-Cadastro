@@ -18,6 +18,7 @@ public class HousingConditionsPersistence {
         HousingConditionsModel object = realm.copyToRealm(new HousingConditionsModel(housingSituation,
                 house, electricEnergy, waterAndSanitation, pet));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -27,6 +28,7 @@ public class HousingConditionsPersistence {
         realm.beginTransaction();
         HousingSituation object = realm.copyToRealm(new HousingSituation(situation, location, ownership));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -36,6 +38,7 @@ public class HousingConditionsPersistence {
         realm.beginTransaction();
         House object = realm.copyToRealm(new House(type, nResidents, nRooms, access, construction, constructionType));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -44,6 +47,7 @@ public class HousingConditionsPersistence {
         realm.beginTransaction();
         WaterAndSanitation object = realm.copyToRealm(new WaterAndSanitation(waterSupply, waterTreatment, bathroom));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -52,6 +56,7 @@ public class HousingConditionsPersistence {
         realm.beginTransaction();
         Pet object = realm.copyToRealm(new Pet(hasPet, pets, nPets));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

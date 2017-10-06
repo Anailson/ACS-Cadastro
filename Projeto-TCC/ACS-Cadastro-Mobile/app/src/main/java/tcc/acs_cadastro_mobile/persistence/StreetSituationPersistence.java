@@ -21,6 +21,7 @@ public class StreetSituationPersistence {
         StreetSituationModel object = realm.copyToRealm(new StreetSituationModel(street, benefit, family, feeding, anotherInstitution,
                 familyVisit, hygiene));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -29,6 +30,7 @@ public class StreetSituationPersistence {
         realm.beginTransaction();
         StreetSituation object = realm.copyToRealm(new StreetSituation(isStreetSituation, fields));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -37,6 +39,7 @@ public class StreetSituationPersistence {
         realm.beginTransaction();
         Feeding object = realm.copyToRealm(new Feeding(fields, fields1));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -45,6 +48,7 @@ public class StreetSituationPersistence {
         realm.beginTransaction();
         AnotherInstitution object = realm.copyToRealm(new AnotherInstitution(isAnotherInstitution, fields));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -53,6 +57,7 @@ public class StreetSituationPersistence {
         realm.beginTransaction();
         FamilyVisit object = realm.copyToRealm(new FamilyVisit(isFamilyVisit, fields));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
@@ -61,6 +66,7 @@ public class StreetSituationPersistence {
         realm.beginTransaction();
         Hygiene object = realm.copyToRealm(new Hygiene(isHygiene, fields));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 }

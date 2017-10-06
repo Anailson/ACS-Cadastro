@@ -1,5 +1,7 @@
 package tcc.acs_cadastro_mobile.persistence;
 
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -19,29 +21,37 @@ public class VisitPersistence {
         realm.beginTransaction();
         VisitModel object = realm.copyToRealm(new VisitModel(details, reasons));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
     public static VisitModel getByRecord(long record) {
-        return Realm.getDefaultInstance()
+
+        VisitModel visit = Realm.getDefaultInstance()
                 .where(VisitModel.class)
                 .equalTo(VisitModel.RECORD, record)
                 .findAll()
                 .first(null);
+        Realm.getDefaultInstance().close();
+        return visit;
     }
 
     public static VisitModel getByNumSus(long numSus) {
-        return Realm.getDefaultInstance()
+        VisitModel visit = Realm.getDefaultInstance()
                 .where(VisitModel.class)
                 .equalTo(VisitModel.NUM_SUS, numSus)
                 .findAll()
                 .first(null);
+        Realm.getDefaultInstance().close();
+        return visit;
     }
 
     public static RealmResults<VisitModel> getAll() {
-        return Realm.getDefaultInstance()
+        RealmResults<VisitModel> visit = Realm.getDefaultInstance()
                 .where(VisitModel.class)
                 .findAll();
+        Realm.getDefaultInstance().close();
+        return visit;
     }
 
     public static VisitModel save(RecordVisitModel details, ReasonsVisitModel reasons) {
@@ -53,24 +63,22 @@ public class VisitPersistence {
         realm.beginTransaction();
         VisitModel object = realm.copyToRealmOrUpdate(visit);
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
-    public static long getRecordIfBlanck(long record) {
-        if (record > AcsRecordPersistence.DEFAULT_INT) return record;
-        RealmQuery<VisitModel> query = Realm.getDefaultInstance().where(VisitModel.class);
-
-        VisitModel visit = query.findAllSorted(VisitModel.RECORD, Sort.ASCENDING)
-                .first(null);
-        if (visit == null || visit.getRecord() > AcsRecordPersistence.DEFAULT_INT) {
-
-            return AcsRecordPersistence.DEFAULT_INT;
-
-        } else {
-
-            return query.lessThanOrEqualTo(VisitModel.RECORD, AcsRecordPersistence.DEFAULT_INT)
-                    .findAll()
-                    .size() * -1;
+    public static void update(List<VisitModel> list) {
+        for(VisitModel visit: list){
+            update(visit);
         }
+    }
+
+    public static VisitModel update(VisitModel visit){
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        visit.setStatus(AcsRecordPersistence.OK);
+        VisitModel updated = realm.copyToRealmOrUpdate(visit);
+        realm.commitTransaction();
+        return updated;
     }
 }

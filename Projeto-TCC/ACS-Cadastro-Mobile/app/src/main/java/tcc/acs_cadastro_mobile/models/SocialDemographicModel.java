@@ -1,25 +1,13 @@
 package tcc.acs_cadastro_mobile.models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 import io.realm.RealmObject;
-import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.subModels.CommunityTraditional;
 import tcc.acs_cadastro_mobile.subModels.Deficiency;
 import tcc.acs_cadastro_mobile.subModels.EducationEmployment;
 import tcc.acs_cadastro_mobile.subModels.HealthAndGroup;
 import tcc.acs_cadastro_mobile.subModels.SexualOrientation;
-
-import static tcc.acs_cadastro_mobile.Constants.Citizen.COMMUNITY_TRADITIONAL;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.DEFICIENCY;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.EDUCATION_EMPLOYMENT;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.HEALTH_GROUP;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.KIDS_09;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.KINSHIP;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.SEXUAL_ORIENTATION;
 
 public class SocialDemographicModel extends RealmObject implements Serializable {
 
@@ -158,17 +146,5 @@ public class SocialDemographicModel extends RealmObject implements Serializable 
 
     public boolean[] getDeficiencys(){
         return getDeficiency().getDeficiencys();
-    }
-
-    public JSONObject asJson() throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put(KINSHIP.name(), kinship);
-        json.put(KIDS_09.name(), kids09);
-        json.put(EDUCATION_EMPLOYMENT.name(), educationEmployment.asJson());
-        json.put(HEALTH_GROUP.name(), healthAndGroup.asJson());
-        json.put(COMMUNITY_TRADITIONAL.name(), communityTraditional.asJson());
-        json.put(SEXUAL_ORIENTATION.name(), sexualOrientation.asJson());
-        json.put(DEFICIENCY.name(), deficiency.asJson());
-        return json;
     }
 }

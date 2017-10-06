@@ -37,7 +37,7 @@ public class Pregnant extends RealmObject implements Serializable {
         this.maternity = maternity;
     }
 
-    public JSONObject getAsJson() throws JSONException {
+    public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(Constants.Citizen.PREGNANT.name(), isPregnant);
         json.put(Constants.Citizen.DESCRIPTION.name(), maternity);

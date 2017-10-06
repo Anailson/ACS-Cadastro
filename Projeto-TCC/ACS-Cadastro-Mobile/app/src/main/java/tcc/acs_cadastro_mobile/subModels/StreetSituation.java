@@ -43,7 +43,7 @@ public class StreetSituation extends RealmObject implements Serializable {
         this.value = value;
     }
 
-    public JSONObject getAsJson() throws JSONException {
+    public JSONObject asJson() throws JSONException {
         JSONObject json = new JSONObject();
         json.put(STREET.name(), isStreetSituation);
         json.put(DESCRIPTION.name(), value);

@@ -8,32 +8,30 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import tcc.acs_cadastro_mobile.R;
 import tcc.acs_cadastro_mobile.controllers.LoginController;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
-public class LoginActivity extends AppCompatActivity{
-
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        LoginController controller = new LoginController(this);
 
-        final LoginController controller = new LoginController(this);
-        Button mEmailSignInButton = (Button) findViewById(R.id.btn_sign_in);
-        final EditText edtNumSus = (EditText) findViewById(R.id.edt_agt_sus);
+        if(controller.needsLogin()){
 
-        edtNumSus.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+            Button btnSignIn = (Button) findViewById(R.id.btn_sign_in);
+            EditText edtNumSus = (EditText) findViewById(R.id.edt_agt_sus);
 
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            edtNumSus.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+            btnSignIn.setOnClickListener(controller.getOnClickListener());
 
-                controller.validateData(edtNumSus.getText().toString());
-            }
-        });
+        } else {
+            controller.startApp();
+        }
     }
 }
-

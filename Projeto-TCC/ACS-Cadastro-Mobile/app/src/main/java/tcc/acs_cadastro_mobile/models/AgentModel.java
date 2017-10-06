@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmObject;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
 public class AgentModel extends RealmObject implements Serializable {
@@ -56,10 +57,10 @@ public class AgentModel extends RealmObject implements Serializable {
         JSONObject json = new JSONObject();
 
         try {
-            json.put("NAME", name);
-            json.put("NUM_SUS", numSus);
-            json.put("AREA", area);
-            json.put("EQUIP", equip);
+            json.put(Constants.Agent.NAME.name(), name);
+            json.put(Constants.Agent.NUM_SUS.name(), numSus);
+            json.put(Constants.Agent.AREA.name(), area);
+            json.put(Constants.Agent.EQUIP.name(), equip);
         } catch (JSONException e) {
             e.printStackTrace();
         }

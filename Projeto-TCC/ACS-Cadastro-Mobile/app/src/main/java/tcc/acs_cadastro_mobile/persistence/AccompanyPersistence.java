@@ -1,9 +1,12 @@
 package tcc.acs_cadastro_mobile.persistence;
 
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import tcc.acs_cadastro_mobile.Constants;
 import tcc.acs_cadastro_mobile.models.AccompanyModel;
 import tcc.acs_cadastro_mobile.models.ConditionsModel;
 import tcc.acs_cadastro_mobile.models.ExamsModel;
@@ -20,20 +23,25 @@ public class AccompanyPersistence {
         realm.beginTransaction();
         AccompanyModel object = realm.copyToRealmOrUpdate(new AccompanyModel(recordData, conditions, exams, nasfConduct));
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
     public static AccompanyModel getByNumSus(long numSus){
-        return Realm.getDefaultInstance().where(AccompanyModel.class)
+        AccompanyModel accompany = Realm.getDefaultInstance().where(AccompanyModel.class)
                 .equalTo(AccompanyModel.NUM_SUS, numSus)
                 .findAll().first(null);
+        Realm.getDefaultInstance().close();
+        return accompany;
     }
 
     public static AccompanyModel getByRecord(long record){
-        return Realm.getDefaultInstance()
+        AccompanyModel accompany = Realm.getDefaultInstance()
                 .where(AccompanyModel.class)
                 .equalTo(AccompanyModel.RECORD, record)
                 .findAll().first(null);
+        Realm.getDefaultInstance().close();
+        return accompany;
     }
 
     public static RealmResults<AccompanyModel> getAll(){
@@ -52,21 +60,32 @@ public class AccompanyPersistence {
         realm.beginTransaction();
         AccompanyModel object = realm.copyToRealmOrUpdate(accompany);
         realm.commitTransaction();
+        realm.close();
         return object;
     }
 
-    public static long getRecordIfBlack(long record ){
+    public static List<AccompanyModel> getAllByStatus(int status) {
+        return Realm.getDefaultInstance().where(AccompanyModel.class).equalTo(AccompanyModel.STATUS, status).findAll();
+    }
 
-        if(record > AcsRecordPersistence.DEFAULT_INT) return record;
+    public static AccompanyModel updateStatus(AccompanyModel accompany, int status){
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        accompany.setStatus(status);
+        realm.copyToRealmOrUpdate(accompany);
+        realm.commitTransaction();
+        realm.close();
+        return accompany;
+    }
 
-        RealmQuery<AccompanyModel> query = Realm.getDefaultInstance().where(AccompanyModel.class);
-        AccompanyModel accompany = query.findAllSorted(AccompanyModel.RECORD, Sort.ASCENDING)
-                .first(null);
-        if(accompany == null || accompany.getRecord() > AcsRecordPersistence.DEFAULT_INT){
-            return AcsRecordPersistence.DEFAULT_INT;
-        } else {
-            return query.lessThanOrEqualTo(AccompanyModel.RECORD, AcsRecordPersistence.DEFAULT_INT)
-                    .findAll().size() * -1;
+    public static List<AccompanyModel> updateStatus(List<AccompanyModel> accompanies, int status) {
+        for(AccompanyModel accompany : accompanies){
+            updateStatus(accompany, status);
         }
+        return accompanies;
+    }
+
+    public static void update(List<AccompanyModel> list) {
+        updateStatus(list, AcsRecordPersistence.OK);
     }
 }

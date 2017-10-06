@@ -1,26 +1,18 @@
 package tcc.acs_cadastro_mobile.models;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
-import tcc.acs_cadastro_mobile.interfaces.IJsonParser;
 import tcc.acs_cadastro_mobile.interfaces.ISearcher;
 import tcc.acs_cadastro_mobile.persistence.AcsRecordPersistence;
 
-import static tcc.acs_cadastro_mobile.Constants.Citizen.HEALTH_CONDITIONS;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.PERSONAL_DATA;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.SOCIAL_DEMOGRAPHIC;
-import static tcc.acs_cadastro_mobile.Constants.Citizen.STREET_SITUATION;
-
-public class CitizenModel extends RealmObject implements Serializable, ISearcher, IJsonParser {
+public class CitizenModel extends RealmObject implements Serializable, ISearcher {
 
     public static final String STRING_DEFAULT_VALUE = "No value";
     public static final String NAME = "name";
     public static final String NUM_SUS = "numSus";
+    public static final String STATUS = "status";
 
     @PrimaryKey
     private long numSus;
@@ -54,19 +46,6 @@ public class CitizenModel extends RealmObject implements Serializable, ISearcher
 
     public void setNumSus(long numSus) {
         this.numSus = numSus;
-    }
-
-    public JSONObject asJson() {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(PERSONAL_DATA.name(), personalData.asJson());
-            json.put(SOCIAL_DEMOGRAPHIC.name(), socialDemographicData.asJson());
-            json.put(HEALTH_CONDITIONS.name(), healthConditions.asJson());
-            json.put(STREET_SITUATION.name(), streetSituation.asJson());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
     }
 
     public int getStatus() {
