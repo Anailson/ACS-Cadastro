@@ -12,7 +12,12 @@ if ($method === AcsDataBase::GET) {
         if ($value) {
             get($value);
         } else {
-            getAll();
+            $value = isset($_GET['a']) ? $_GET['a'] : false;
+            if($value){
+                getAll($value);
+            } else {
+                getAll();
+            }
         }
     }
 } else if ($method === AcsDataBase::POST) {
@@ -29,6 +34,18 @@ if ($method === AcsDataBase::GET) {
 function insert($json)
 {
     $citizen = VisitModel::getFromArray(json_decode($json, true));
-    //var_dump(json_decode($json, true));
     echo json_encode(array("id" => VisitPersistence::insert($citizen)));
+}
+
+function get($numSus)
+{
+
+}
+
+function getAll($numSus = false)
+{
+    $visit = VisitPersistence::getAll($numSus);
+    if($visit){
+        echo json_encode($visit);
+    }
 }

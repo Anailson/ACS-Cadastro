@@ -274,7 +274,7 @@
 				case "right":
 					css[this.settings.placement.align] = this.settings.offset.x + 'px';
 					break;
-				case "center":
+				case "myLocation":
 					css.left = 0;
 					css.right = 0;
 					break;

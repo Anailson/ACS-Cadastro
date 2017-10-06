@@ -24,14 +24,18 @@ class PersonalDataPersistence
 
     static function insert(AcsDataBase $db, PersonalDataModel $personalData)
     {
-        $query = array(PersonalDataModel::PERSONAL_DATA => self::queryPersonal(),
-            Particular::PARTICULAR => self::queryParticular(),
-            Mother::MOTHER => self::queryMother(),
-            Responsible::RESPONSIBLE => self::queryResponsible(),
-            GenderAndRace::GENDER_RACE => self::queryGenderAndRace(),
-            Nationality::NATIONALITY => self::queryNationality(),
-            Contact::CONTACT => self::queryContact());
-        return $personalData->save($db, $query);
+        $values = $personalData->getValuesToDB();
+        $ids[":ID_" . Particular::PARTICULAR] = $db->insert(self::queryParticular(), $values[Particular::PARTICULAR]);
+        $ids[":ID_" . Mother::MOTHER] = $db->insert(self::queryMother(), $values[Mother::MOTHER]);
+        $ids[":ID_" . Responsible::RESPONSIBLE] = $db->insert(self::queryResponsible(), $values[Responsible::RESPONSIBLE]);
+        $ids[":ID_" . GenderAndRace::GENDER_RACE] = $db->insert(self::queryGenderAndRace(), $values[GenderAndRace::GENDER_RACE]);
+        $ids[":ID_" . Nationality::NATIONALITY] = $db->insert(self::queryNationality(), $values[Nationality::NATIONALITY]);
+        $ids[":ID_" . Contact::CONTACT] = $db->insert(self::queryContact(), $values[Contact::CONTACT]);
+
+        if(in_array(false, $ids)){
+            return false;
+        }
+        return $db->insert(self::queryPersonal(), $ids);
     }
 
     private static function queryPersonal()

@@ -2,13 +2,25 @@
 
 class ExamsPersistence
 {
+    public static function getById(AcsDataBase $db, $id)
+    {
+        $query = "SELECT 
+                FROM tb_exams AS EX
+                
+                WHERE  = :EXAMS_ID";
+        return $db->select($query, array(":EXAMS_ID" => $id));
+    }
 
     public static function insert(AcsDataBase $db, ExamsModel $exams)
     {
-        $query = array(ExamsModel::EXAMS => self::insertExams(),
-            EvaluatedExams::EVALUATED_EXAMS => self::insertEvaluatedExams(),
-            RequestExams::REQUEST_EXAMS => self::insertRequestExams());
-        return $exams->save($db, $query);
+        $values = $exams->getValuesToDB();
+        $ids[":ID_" . EvaluatedExams::EVALUATED_EXAMS] = $db->insert(self::insertEvaluatedExams(), $values[EvaluatedExams::EVALUATED_EXAMS]);
+        $ids[":ID_" . RequestExams::REQUEST_EXAMS] = $db->insert(self::insertRequestExams(), $values[RequestExams::REQUEST_EXAMS]);
+        if(in_array(false, $ids)){
+            return false;
+        }
+        $ids[":" . ExamsModel::PIC] = $values[ExamsModel::PIC] ;
+        return $db->insert(self::insertExams(), $ids);
     }
 
     private static function insertExams()

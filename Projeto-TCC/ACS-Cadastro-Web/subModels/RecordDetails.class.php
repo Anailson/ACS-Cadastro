@@ -22,17 +22,15 @@ class RecordDetails
         $this->numSusCitizen = $numSusCitizen;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
         $id = CitizenPersistence::getId($this->numSusCitizen)[0][0];
 
-        $params = array(":" . self::RECORD => $this->record,
+        return array(":" . self::RECORD => $this->record,
             ":" . self::PLACE_CARE => $this->placeCare,
             ":" . self::TYPE_CARE => $this->typeCare,
             ":" . self::SHIFT => $this->shift,
             ":ID_CITIZEN" => $id);
-
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

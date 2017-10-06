@@ -4,21 +4,47 @@ class HealthConditionsPersistence
 {
     public static function getById(AcsDataBase $db, $id)
     {
-        return null;
+        $query = "SELECT HC.WEIGHT,
+                P.PREGNANT, P.DESCRIPTION AS PREGNANT_DESCRIPTION,
+                D.SMOKER, D.ALCOHOL, D.DRUGS, D.DIABETES, D.AVC, D.HEART_ATTACK, D.LEPROSY, D.TUBERCULOSIS, D.CANCER, D.IN_BED,
+                D.DOMICILED, D.OTHER_PRACTICES, D.MENTAL_HEALTH, D.HYPERTENSION,
+                H.HEART_DISEASE, H.INSUFFICIENCY AS HEART_DISEASE_INSUFFICIENCY, H.ANOTHER AS HEART_DISEASE_ANOTHER, 
+                H.DONT_KNOWN AS HEART_DISEASE_DONT_KNOWN,
+                K.KIDNEY_DISEASE, K.INSUFFICIENCY AS KIDNEY_DISEASE_INSUFFICIENCY, K.ANOTHER AS KIDNEY_DISEASE_ANOTHER, 
+                K.DONT_KNOWN AS KIDNEY_DISEASE_DONT_KNOWN,
+                R.RESPIRATORY_DISEASE, R.ASTHMA, R.EMPHYSEMA, R.ANOTHER AS RESPIRATORY_DISEASE_ANOTHER, 
+                R.DONT_KNOWN AS RESPIRATORY_DISEASE_DONT_KNOWN,
+                I.INTERMENT, I.DESCRIPTION AS INTERMENT_DESCRIPTION,
+                T.PLANT, T.DESCRIPTION AS PLANT_DESCRIPTION
+            FROM tb_health_conditions AS HC
+            INNER JOIN tb_pregnant AS P ON P.PREGNANT_ID = HC.ID_PREGNANT
+            INNER JOIN tb_diseases AS D ON D.DISEASES_ID = HC.ID_DISEASES
+            INNER JOIN tb_heart_disease AS H ON H.HEART_DISEASE_ID = HC.ID_HEART_DISEASE
+            INNER JOIN tb_kidney_disease AS K ON K.KIDNEY_DISEASE_ID = HC.ID_KIDNEY_DISEASE
+            INNER JOIN tb_respiratory_disease AS R ON R.RESPIRATORY_DISEASE_ID = HC.ID_RESPIRATORY_DISEASE
+            INNER JOIN tb_interment AS I ON I.INTERMENT_ID = HC.ID_INTERMENT
+            INNER JOIN tb_plant AS T ON T.PLANT_ID = HC.ID_PLANT
+            WHERE HC.HEALTH_CONDITIONS_ID = :HEALTH_CONDITIONS_ID";
+        return $db->select($query, array(":HEALTH_CONDITIONS_ID" => $id));
     }
 
     static function insert(AcsDataBase $db, HealthConditionsModel $healthConditions)
     {
-        $query[HealthConditionsModel::HEALTH_CONDITIONS] = self::queryHealthConditions();
-        $query[Pregnant::PREGNANT] = self::queryPregnant();
-        $query[Diseases::DISEASES] = self::queryDiseases();
-        $query[HeartDisease::HEART_DISEASE] = self::queryHearthDisease();
-        $query[KidneyDisease::KIDNEY_DISEASE] = self::queryKidneyDisease();
-        $query[RespiratoryDisease::RESPIRATORY_DISEASE] = self::queryRespiratoryDisease();
-        $query[Interment::INTERMENT] = self::queryInterment();
-        $query[Plant::PLANT] = self::queryPlant();
+        $values = $healthConditions->getValuesToDB();
 
-        return $healthConditions->save($db, $query);
+        $ids[":ID_" . Pregnant::PREGNANT] = $db->insert(self::queryPregnant(), $values[Pregnant::PREGNANT]);
+        $ids[":ID_" . Diseases::DISEASES] = $db->insert(self::queryDiseases(), $values[Diseases::DISEASES]);
+        $ids[":ID_" . HeartDisease::HEART_DISEASE] = $db->insert(self::queryHearthDisease(), $values[HeartDisease::HEART_DISEASE]);
+        $ids[":ID_" . KidneyDisease::KIDNEY_DISEASE] = $db->insert(self::queryKidneyDisease(), $values[KidneyDisease::KIDNEY_DISEASE]);
+        $ids[":ID_" . RespiratoryDisease::RESPIRATORY_DISEASE] = $db->insert(self::queryRespiratoryDisease(), $values[RespiratoryDisease::RESPIRATORY_DISEASE]);
+        $ids[":ID_" . Interment::INTERMENT] = $db->insert(self::queryInterment(), $values[Interment::INTERMENT]);
+        $ids[":ID_" . Plant::PLANT] = $db->insert(self::queryPlant(), $values[Plant::PLANT]);
+
+        if(in_array(false, $ids)){
+            return false;
+        }
+        $ids[":" . HealthConditionsModel::WEIGHT] = $values[HealthConditionsModel::WEIGHT];
+        return $db->insert(self::queryHealthConditions(), $ids);
     }
     private static function queryHealthConditions()
     {

@@ -20,16 +20,21 @@ class SocialDemographicPersistence
 
         return $db->select($query, array(":" . SocialDemographicModel::SOCIAL_DEMOGRAPHIC => $id));
     }
-    static function insert(AcsDataBase $db, SocialDemographicModel $demographicModel)
+    static function insert(AcsDataBase $db, SocialDemographicModel $socialDemographic)
     {
-        $query = array(SocialDemographicModel::SOCIAL_DEMOGRAPHIC => self::querySocialDemographic(),
-            EducationEmployment::EDUCATION_EMPLOYMENT => self::queryEducationEmployment(),
-            HealthGroup::HEALTH_GROUP => self::queryHealthGroup(),
-            CommunityTraditional::COMMUNITY_TRADITIONAL => self::queryCommunityTraditional(),
-            SexualOrientation::SEXUAL_ORIENTATION => self::querySexualOrientation(),
-            Deficiency::DEFICIENCY => self::queryDeficiency());
+        $values = $socialDemographic->getValuesToDB();
+        $ids[":ID_" . EducationEmployment::EDUCATION_EMPLOYMENT] = $db->insert(self::queryEducationEmployment(), $values[EducationEmployment::EDUCATION_EMPLOYMENT]);
+        $ids[":ID_" . HealthGroup::HEALTH_GROUP] = $db->insert(self::queryHealthGroup(), $values[HealthGroup::HEALTH_GROUP]);
+        $ids[":ID_" . CommunityTraditional::COMMUNITY_TRADITIONAL] = $db->insert(self::queryCommunityTraditional(), $values[CommunityTraditional::COMMUNITY_TRADITIONAL]);
+        $ids[":ID_" . SexualOrientation::SEXUAL_ORIENTATION ] = $db->insert(self::querySexualOrientation(), $values[SexualOrientation::SEXUAL_ORIENTATION ]);
+        $ids[":ID_" . Deficiency::DEFICIENCY] = $db->insert(self::queryDeficiency(), $values[Deficiency::DEFICIENCY]);
 
-        return $demographicModel->save($db, $query);
+        if(in_array(false, $ids)){
+            return false;
+        }
+        $ids[":" . SocialDemographicModel::KIDS_09] = $values[SocialDemographicModel::KIDS_09];
+        $ids[":" . SocialDemographicModel::KINSHIP] = $values[SocialDemographicModel::KINSHIP];
+        return $db->insert(self::querySocialDemographic(), $ids);
     }
 
     private static function querySocialDemographic()

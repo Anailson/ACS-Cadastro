@@ -1,5 +1,5 @@
 ﻿<?php
-include "../persistences/AgentsPersistence.php";
+if(!@include_once "controllers/AgentsController.php"){include_once "../controllers/AgentsController.php";}
 
 $method = $_SERVER['REQUEST_METHOD'];
 
@@ -51,8 +51,8 @@ function insert($json)
 function getAgentData($array)
 {
     return array(
-        AgentsPersistence::NAME => $array[AgentsPersistence::NAME],
-        AgentsPersistence::NUM_SUS => $array[AgentsPersistence::NUM_SUS],
-        AgentsPersistence::AREA => $array[AgentsPersistence::AREA],
-        AgentsPersistence::EQUIP => $array[AgentsPersistence::EQUIP]);
+        AgentModel::NAME => $array[AgentModel::NAME],
+        AgentModel::NUM_SUS => $array[AgentModel::NUM_SUS],
+        AgentModel::AREA => $array[AgentModel::AREA],
+        AgentModel::EQUIP => $array[AgentModel::EQUIP]);
 }

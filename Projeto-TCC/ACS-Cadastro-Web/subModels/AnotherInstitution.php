@@ -13,11 +13,9 @@ class AnotherInstitution
         $this->description = $description;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::ANOTHER_INSTITUTION => $this->anotherInstitution,
-            ":" . self::DESCRIPTION => $this->description);
-        return $db->insert($query, $values);
+        return array(":" . self::ANOTHER_INSTITUTION => $this->anotherInstitution, ":" . self::DESCRIPTION => $this->description);
     }
 
     public static function getFromArray(array $array)

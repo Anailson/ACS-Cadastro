@@ -36,19 +36,15 @@ class PersonalDataModel
         $this->contact = $contact;
     }
 
-    public function save(AcsDataBase $db, array $query)
+    public function getValuesToDB()
     {
-        $ids[":ID_" . Particular::PARTICULAR] = $this->particular->save($db, $query[Particular::PARTICULAR]);
-        $ids[":ID_" . Mother::MOTHER] = $this->mother->save($db, $query[Mother::MOTHER]);
-        $ids[":ID_" . Responsible::RESPONSIBLE] = $this->responsible->save($db, $query[Responsible::RESPONSIBLE]);
-        $ids[":ID_" . GenderAndRace::GENDER_RACE] = $this->genderAndRace->save($db, $query[GenderAndRace::GENDER_RACE]);
-        $ids[":ID_" . Nationality::NATIONALITY] = $this->nationality->save($db, $query[Nationality::NATIONALITY]);
-        $ids[":ID_" . Contact::CONTACT] = $this->contact->save($db, $query[Contact::CONTACT]);
-
-        if(in_array(false, $ids)){
-            return false;
-        }
-        return $db->insert($query[self::PERSONAL_DATA], $ids);
+        $values[Particular::PARTICULAR] = $this->particular->getValuesToDB();
+        $values[Mother::MOTHER] = $this->mother->getValuesToDB();
+        $values[Responsible::RESPONSIBLE] = $this->responsible->getValuesToDB();
+        $values[GenderAndRace::GENDER_RACE] = $this->genderAndRace->getValuesToDB();
+        $values[Nationality::NATIONALITY] = $this->nationality->getValuesToDB();
+        $values[Contact::CONTACT] = $this->contact->getValuesToDB();
+        return $values;
     }
 
     public static function getByArray(array $array)

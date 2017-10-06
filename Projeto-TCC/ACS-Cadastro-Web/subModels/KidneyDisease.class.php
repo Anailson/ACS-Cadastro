@@ -17,13 +17,12 @@ class KidneyDisease
         $this->dontKnown = $dontKnown;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::KIDNEY_DISEASE => $this->kidneyDisease,
+        return array(":" . self::KIDNEY_DISEASE => $this->kidneyDisease,
             ":" . self::INSUFFICIENCY => $this->insufficiency,
             ":" . self::ANOTHER => $this->another,
             ":" . self::DONT_KNOWN => $this->dontKnown);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

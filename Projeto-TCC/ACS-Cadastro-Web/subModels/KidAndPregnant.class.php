@@ -24,15 +24,14 @@ class KidAndPregnant
         $this->homeCare = $homeCare;
     }
 
-    public function save(AcsDataBase $db, $query){
-        $params = array(":" . self::BREAST_FEEDING => $this->breastFeeding,
+    public function getValuesToDB(){
+        return array(":" . self::BREAST_FEEDING => $this->breastFeeding,
             ":" . self::DUM => $this->dum,
             ":" . self::PLANNED_PREGNANCY => $this->plannedPregnancy,
             ":" . self::WEEKS => $this->weeks,
             ":" . self::PREVIOUS => $this->previous,
             ":" . self::CHILD_BIRTH => $this->childBirth,
             ":" . self::HOME_CARE => $this->homeCare);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

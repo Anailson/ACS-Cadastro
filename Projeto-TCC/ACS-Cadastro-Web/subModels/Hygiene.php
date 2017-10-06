@@ -19,14 +19,13 @@ class Hygiene
         $this->another = $another;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::HYGIENE => $this->hygiene,
+        return array(":" . self::HYGIENE => $this->hygiene,
             ":" . self::BATH => $this->bath,
             ":" . self::SANITARY => $this->sanitary,
             ":" . self::ORAL => $this->oral,
             ":" . self::ANOTHER => $this->another);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

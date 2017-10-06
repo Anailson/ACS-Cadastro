@@ -15,12 +15,11 @@ class Responsible
         $this->birthDate = $birthDate;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::RESPONSIBLE => $this->responsible,
+        return array(":" . self::RESPONSIBLE => $this->responsible,
             ":" . self::NUM_SUS => $this->numSus,
             ":" . self::BIRTH_DATE => $this->birthDate);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

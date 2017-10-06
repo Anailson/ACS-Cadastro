@@ -20,14 +20,13 @@ class RespiratoryDisease
         $this->dontKnown = $dontKnown;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::RESPIRATORY_DISEASE => $this->respiratoryDisease,
+        return array(":" . self::RESPIRATORY_DISEASE => $this->respiratoryDisease,
             ":" . self::ASTHMA => $this->asthma,
             ":" . self::EMPHYSEMA => $this->emphysema,
             ":" . self::ANOTHER => $this->another,
             ":" . self::DONT_KNOWN => $this->dontKnown);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

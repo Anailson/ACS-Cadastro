@@ -17,35 +17,37 @@ class ResidenceModel
 {
     const RESIDENCE = "RESIDENCE";
     const LAT = "LAT";
-    const LON = "LON";
+    const LNG = "LNG";
 
-    private $lat, $long, $housingConditions, $addressData;
+    private $lat, $lng, $housingConditions, $addressData;
 
     public function __construct(AddressDataModel $addressData, HousingConditionsModel $housingConditions)
     {
         $this->lat = 0;
-        $this->long = 0;
+        $this->lng = 0;
         $this->housingConditions = $housingConditions;
         $this->addressData = $addressData;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function save($id, AcsDataBase $db, $query)
     {
-        $params = array(
-            ":ID_" . HousingConditionsModel::HOUSING_CONDITIONS => HousingPersistence::insert($db, $this->housingConditions),
-            ":ID_" . AddressDataModel::ADDRESS_DATA => AddressDataPersistence::insert($db, $this->addressData)
-        );
-        if(in_array(false, $params)){
+        $ids[":ID_" . HousingConditionsModel::HOUSING_CONDITIONS] = HousingPersistence::insert($db, $this->housingConditions);
+        $ids[":ID_" . AddressDataModel::ADDRESS_DATA] = AddressDataPersistence::insert($db, $this->addressData);
+        if(in_array(false, $ids)){
             return false;
         }
-        $params[":" . self::LAT] = $this->lat;
-        $params[":" . self::LON] = $this->long;
-        return $db->insert($query, $params);
+        $ids[":ID_AGENT"] = $id;
+        $ids[":" . self::LAT] = $this->lat;
+        $ids[":" . self::LNG] = $this->lng;
+        return $db->insert($query, $ids);
     }
 
     public static function getFromArray(array $array)
     {
-        return new ResidenceModel(AddressDataModel::getFromArray($array[AddressDataModel::ADDRESS_DATA]),
+        $residence = new ResidenceModel(AddressDataModel::getFromArray($array[AddressDataModel::ADDRESS_DATA]),
             HousingConditionsModel::getFromArray($array[HousingConditionsModel::HOUSING_CONDITIONS]));
+        $residence->lat = $array[self::LAT];
+        $residence->lng = $array[self::LNG];
+        return $residence;
     }
 }

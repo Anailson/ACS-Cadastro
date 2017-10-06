@@ -13,11 +13,10 @@ class SexualOrientation
         $this->description = $description;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::SEXUAL_ORIENTATION => $this->sexual,
+        return array(":" . self::SEXUAL_ORIENTATION => $this->sexual,
             ":" . self::DESCRIPTION => $this->description);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

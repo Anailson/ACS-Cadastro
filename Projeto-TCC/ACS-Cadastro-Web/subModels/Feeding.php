@@ -22,15 +22,14 @@ class Feeding
         $this->another = $another;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::FOOD_PER_DAY => $this->foodPerDay,
+        return array(":" . self::FOOD_PER_DAY => $this->foodPerDay,
             ":" . self::RESTAURANT => $this->restaurant,
             ":" . self::RESTAURANT_DONATION => $this->restaurantDonation,
             ":" . self::RELIGIOUS_GROUP => $this->religiousGroup,
             ":" . self::POPULAR => $this->popular,
             ":" . self::ANOTHER => $this->another);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

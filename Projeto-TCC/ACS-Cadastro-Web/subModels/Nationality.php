@@ -17,12 +17,11 @@ class Nationality
         $this->city = $city;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::NATIONALITY => $this->nationality,
+        return array(":" . self::NATIONALITY => $this->nationality,
             ":" . self::NATION_BIRTH => $this->nationBirth,
             ":" . self::UF => $this->uf, ":" . self::CITY => $this->city);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

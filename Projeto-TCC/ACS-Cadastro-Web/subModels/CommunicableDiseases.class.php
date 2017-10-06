@@ -18,13 +18,12 @@ class CommunicableDiseases
         $this->dst = $dst;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $params = array(":" . self::TUBERCULOSIS => $this->tuberculosis,
+        return array(":" . self::TUBERCULOSIS => $this->tuberculosis,
             ":" . self::LEPROSY => $this->leprosy,
             ":" . self::DENGUE => $this->dengue,
             ":" . self::DST => $this->dst);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

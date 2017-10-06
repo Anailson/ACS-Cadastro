@@ -37,20 +37,16 @@ class StreetSituationModel
     }
 
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values[":ID_" . StreetSituation::STREET] = $this->streetSituation->save($db, $query[StreetSituation::STREET]);
-        $values[":ID_" . Feeding::FEEDING] = $this->feeding->save($db, $query[Feeding::FEEDING]);
-        $values[":ID_" . AnotherInstitution::ANOTHER_INSTITUTION] = $this->anotherInstitution->save($db, $query[AnotherInstitution::ANOTHER_INSTITUTION]);
-        $values[":ID_" . FamilyVisit::FAMILY_VISIT] = $this->familyVisit->save($db, $query[FamilyVisit::FAMILY_VISIT]);
-        $values[":ID_" . Hygiene::HYGIENE] = $this->hygiene->save($db, $query[Hygiene::HYGIENE]);
-
-        if(in_array(false, $values)){
-            return false;
-        }
-        $values[":" . self::BENEFIT] = $this->benefit;
-        $values[":" . self::FAMILY] = $this->family;
-        return $db->insert($query[StreetSituationModel::STREET_SITUATION], $values);
+        $values[StreetSituation::STREET] = $this->streetSituation->getValuesToDB();
+        $values[Feeding::FEEDING] = $this->feeding->getValuesToDB();
+        $values[AnotherInstitution::ANOTHER_INSTITUTION] = $this->anotherInstitution->getValuesToDB();
+        $values[FamilyVisit::FAMILY_VISIT] = $this->familyVisit->getValuesToDB();
+        $values[Hygiene::HYGIENE] = $this->hygiene->getValuesToDB();
+        $values[self::BENEFIT] = $this->benefit;
+        $values[self::FAMILY] = $this->family;
+        return $values;
     }
 
     public static function getFromArray(array $array)

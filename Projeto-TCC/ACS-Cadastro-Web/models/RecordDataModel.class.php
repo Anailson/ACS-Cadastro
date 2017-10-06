@@ -1,14 +1,13 @@
 <?php
 
-if(!@include "subModels/RecordDetails.class.php") {
-    include "../subModels/RecordDetails.class.php";
+if(!@include_once "subModels/RecordDetails.class.php") {
+    include_once"../subModels/RecordDetails.class.php";
 }
-
-if(!@include "subModels/Anthropometric.class.php") {
-    include "../subModels/Anthropometric.class.php";
+if(!@include_once "subModels/Anthropometric.class.php") {
+    include_once "../subModels/Anthropometric.class.php";
 }
-if(!@include "subModels/KidAndPregnant.class.php") {
-    include "../subModels/KidAndPregnant.class.php";
+if(!@include_once "subModels/KidAndPregnant.class.php") {
+    include_once "../subModels/KidAndPregnant.class.php";
 }
 
 class RecordDataModel
@@ -24,15 +23,12 @@ class RecordDataModel
         $this->kidsPregnant = $kidsPregnant;
     }
 
-    public function save(AcsDataBase $db, $querys)
+    public function getValuesToDB()
     {
-        $params = array(":ID_" . RecordDetails::RECORD_DETAILS => $this->recordDetails->save($db, $querys[RecordDetails::RECORD_DETAILS]),
-            ":ID_" . Anthropometric::ANTHROPOMETRIC => $this->anthropometric->save($db, $querys[Anthropometric::ANTHROPOMETRIC]),
-            ":ID_" . KidAndPregnant::KID_PREGNANT => $this->kidsPregnant->save($db, $querys[KidAndPregnant::KID_PREGNANT]));
-        if(in_array(false, $params)){
-            return false;
-        }
-        return $db->insert($querys[self::RECORD_DATA], $params);
+        $values[RecordDetails::RECORD_DETAILS] = $this->recordDetails->getValuesToDB();
+        $values[Anthropometric::ANTHROPOMETRIC] = $this->anthropometric->getValuesToDB();
+        $values[KidAndPregnant::KID_PREGNANT] = $this->kidsPregnant->getValuesToDB();
+        return $values;
     }
 
 

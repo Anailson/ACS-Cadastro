@@ -42,9 +42,9 @@ class ConditionsDiseases
         $this->rehabilitation = $rehabilitation;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $params = array(":" . self::ASTHMA => $this->asthma,
+        return array(":" . self::ASTHMA => $this->asthma,
             ":" . self::MALNUTRITION => $this->malnutrition,
             ":" . self::DIABETES => $this->diabetes,
             ":" . self::DPOC => $this->dpoc,
@@ -59,7 +59,6 @@ class ConditionsDiseases
             ":" . self::DRUGS => $this->drugs,
             ":" . self::MENTAL_HEALTH => $this->mentalHealth,
             ":" . self::REHABILITATION => $this->rehabilitation);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

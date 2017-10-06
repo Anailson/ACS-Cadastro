@@ -13,11 +13,10 @@ class Interment
         $this->description = $description;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::INTERMENT => $this->interment,
+        return array(":" . self::INTERMENT => $this->interment,
             ":" . self::DESCRIPTION => $this->description);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

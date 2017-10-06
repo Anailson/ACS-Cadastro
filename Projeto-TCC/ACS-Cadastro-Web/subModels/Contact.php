@@ -14,10 +14,9 @@ class Contact
         $this->email = $email;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::PHONE => $this->phone, ":" . self::EMAIL => $this->email);
-        return $db->insert($query, $values);
+        return array(":" . self::PHONE => $this->phone, ":" . self::EMAIL => $this->email);
     }
 
     public static function getFromArray(array $array)

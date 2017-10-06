@@ -1,9 +1,10 @@
 <?php
-
+/*
 if (!@include "models/RecordDataModel.class.php") {
     include "../models/RecordDataModel.class.php";
 }
-if (!@include "models/ConditionsDiseaseModel.class.php") {
+*/
+if (!@include "models/ConditionsModel.class.php") {
     include "../models/ConditionsModel.class.php";
 }
 if (!@include "models/ExamsModel.class.php") {
@@ -40,15 +41,13 @@ class AccompanyModel
         $this->nasfConduct = $nasfConduct;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function save(AcsDataBase $db)
     {
-        $params = array(":ID_" . RecordDataModel::RECORD_DATA => RecordDataPersistence::insert($db, $this->recordData),
+        $ids = array(":ID_" . RecordDataModel::RECORD_DATA => RecordDataPersistence::insert($db, $this->recordData),
             ":ID_" . ConditionsModel::CONDITIONS => ConditionsPersistence::insert($db, $this->conditions),
             ":ID_" . ExamsModel::EXAMS => ExamsPersistence::insert($db, $this->exams),
-            ":ID_" . NasfConductModel::NASF_CONDUCT => NasfConductPersistence::insert($db, $this->nasfConduct)
-        );
-
-        return $db->insert($query, $params);
+            ":ID_" . NasfConductModel::NASF_CONDUCT => NasfConductPersistence::insert($db, $this->nasfConduct));
+        return $ids;
     }
 
     public static function getFromArray(array $array)

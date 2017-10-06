@@ -7,11 +7,11 @@ class AcsDataBase
     const DELETE = "DELETE";
     const POST = "POST";
 
-    const DB_NAME = "acs_bd";
+    const DB_NAME = "acs_bd_backup";
 
     private $host;
     private $dbName;
-    private $connection;
+    //private $connection;
 
     function __construct($dbName)
     {
@@ -25,64 +25,97 @@ class AcsDataBase
             $options = array(
                 PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'
             );
-            $this->connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, "root", "", $options);
-            $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            //mysql:host=localhost;dbname=acs_bd_backup, "root", "", $options
+            $connection = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->dbName, "root", "", $options);
+            $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         } catch (PDOException $e) {
             echo "Falha: " . $e->getMessage() . "\n";
             die();
         }
-    }
-
-    private function closeConnection()
-    {
-        $this->connection = null;
+        return $connection;
     }
 
     public function select($query, $params = false)
     {
-        $this->openConnection();
+        $connection = $this->openConnection();
 
-        $prepare = $this->connection->prepare($query);
+        $prepare = $connection->prepare($query);
         if ($prepare) {
-            $params ? $prepare->execute ($params) : $prepare->execute();
+            $params ? $prepare->execute($params) : $prepare->execute();
 
             $rows = $prepare->fetchAll();
-            $this->closeConnection();
             return $rows;
 
-        } else {
-            $this->closeConnection();
-            return false;
         }
+        return false;
     }
 
     public function insert($query, array $params)
     {
-        $this->openConnection();
+        $connection = $this->openConnection();
         try {
-            $stmt = $this->connection->prepare($query);
+            $stmt = $connection->prepare($query);
 
             //echo "<b>Query </b> -> "; var_dump($query); echo "<br>";
             //echo "<b>Params </b> -> "; var_dump($params);echo "<br>";
 
             if ($stmt) {
 
-                $this->connection->beginTransaction();
+                $connection->beginTransaction();
                 $stmt->execute($params);
-                $id = $this->connection->lastInsertId();
-                $this->connection->commit();
-                $this->closeConnection();
+                $id = $connection->lastInsertId();
+                $connection->commit();
 
                 //echo "<b>ID: </b> -> ";var_dump($id); echo "<br><br>";
                 return $id;
             }
 
         } catch (PDOException $e) {
-            echo "<b>" . $e->getMessage() . "</b><br><br>";
+            echo "<br><br><b>PDOException: " . $e->getMessage() . "<br><br></b>";
         }
-        $this->closeConnection();
+        return false;
+    }
+
+    public function update($query)
+    {
+        $connection = $this->openConnection();
+        try {
+            $stmt = $connection->prepare($query);
+
+            if ($stmt) {
+
+                $connection->beginTransaction();
+                $stmt->execute();
+                $connection->commit();
+
+                //echo "<b>ID: </b> -> ";var_dump($id); echo "<br><br>";
+                return  $stmt->rowCount();
+            }
+
+        }catch (PDOException $e){
+            echo "<br><br><b>PDOException: " . $e->getMessage() . "</b><br><br>";
+        }
+        return false;
+    }
+
+    public function delete($query)
+    {
+        $connection = $this->openConnection();
+        try {
+            $stmt = $connection->prepare($query);
+            if ($stmt) {
+
+                $connection->beginTransaction();
+                $stmt->execute();
+                $connection->commit();
+                return  $stmt->rowCount();
+            }
+        } catch (PDOException $e){
+            echo "<br><br><b>PDOException: " . $e->getMessage() . "<br><br></b>";
+        }
         return false;
     }
 }

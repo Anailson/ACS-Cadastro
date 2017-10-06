@@ -20,15 +20,12 @@ class ExamsModel
         $this->evaluated = $evaluated;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $params = array(":ID_" . RequestExams::REQUEST_EXAMS => $this->request->save($db, $query[RequestExams::REQUEST_EXAMS]),
-            ":ID_" . EvaluatedExams::EVALUATED_EXAMS => $this->evaluated->save($db, $query[EvaluatedExams::EVALUATED_EXAMS]));
-        if(in_array(false, $params)){
-            return false;
-        }
-        $params[":" . self::PIC] = $this->pic;
-        return $db->insert($query[self::EXAMS], $params);
+        $values[RequestExams::REQUEST_EXAMS] = $this->request->getValuesToDB();
+        $values[EvaluatedExams::EVALUATED_EXAMS] = $this->evaluated->getValuesToDB();
+        $values[self::PIC] = $this->pic;
+        return $values;
     }
 
     public static function getFromArray(array $array)

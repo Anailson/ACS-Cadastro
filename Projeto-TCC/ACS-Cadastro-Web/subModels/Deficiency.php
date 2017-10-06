@@ -21,15 +21,14 @@ class Deficiency
         $this->another = $another;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::DEFICIENCY => $this->deficiency,
+        return array(":" . self::DEFICIENCY => $this->deficiency,
             ":" . self::HEARING=> $this->hearing,
             ":" . self::VISUAL => $this->visual,
             ":" . self::INTELLECTUAL => $this->intellectual,
             ":" . self::PHYSICAL => $this->physical,
             ":" . self::ANOTHER => $this->another);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

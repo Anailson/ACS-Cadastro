@@ -2,14 +2,26 @@
 
 class RecordDataPersistence
 {
+    public static function getById(AcsDataBase $db, $id)
+    {
+        $query = "SELECT 
+                FROM TB_RECORD_DATA AS RD
+                
+                WHERE  = :RECORD_DATA_ID";
+
+        return $db->select($query, array(":RECORD_DATA_ID" => $id));
+    }
 
     static function insert(AcsDataBase $db, RecordDataModel $recordData)
     {
-        $query = array(RecordDataModel::RECORD_DATA => self::queryRecordData(),
-            RecordDetails::RECORD_DETAILS => self::queryRecordDetails(),
-            Anthropometric::ANTHROPOMETRIC => self::queryAnthropometric(),
-            KidAndPregnant::KID_PREGNANT => self::queryKidAndPregnant());
-        return $recordData->save($db, $query);
+        $values = $recordData->getValuesToDB();
+        $ids[":ID_" . RecordDetails::RECORD_DETAILS] = $db->insert(self::queryRecordDetails(), $values[RecordDetails::RECORD_DETAILS]);
+        $ids[":ID_" . Anthropometric::ANTHROPOMETRIC] = $db->insert(self::queryAnthropometric(), $values[Anthropometric::ANTHROPOMETRIC]);
+        $ids[":ID_" . KidAndPregnant::KID_PREGNANT] = $db->insert(self::queryKidAndPregnant(), $values[KidAndPregnant::KID_PREGNANT]);
+        if(in_array(false, $ids)){
+            return false;
+        }
+        return $db->insert(self::queryRecordData(), $ids);
     }
 
     private static function queryRecordData()

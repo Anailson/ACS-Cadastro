@@ -16,12 +16,11 @@ class TrackingDiseases
         $this->cardiovascular = $cardiovascular;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $params = array(":" . self::CERVICAL_CANCER => $this->cervicalCancer,
+        return array(":" . self::CERVICAL_CANCER => $this->cervicalCancer,
             ":" . self::BREAST_CANCER => $this->breastCancer,
             ":" . self::CARDIOVASCULAR => $this->cardiovascular);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

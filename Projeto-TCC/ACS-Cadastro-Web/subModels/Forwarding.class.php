@@ -24,16 +24,15 @@ class Forwarding
         $this->interSectoral = $interSectoral;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToBD()
     {
-        $params = array(self::IN_DAY => $this->inDay,
+        return array(self::IN_DAY => $this->inDay,
             self::SPECIALIZED_SERVICE => $this->specializedService,
             self::CAPS => $this->caps,
             self::HOSPITALIZATION => $this->hospitalization,
             self::URGENCY => $this->urgency,
             self::HOME_CARE_SERVICE => $this->homeCareService,
             self::INTER_SECTORAL => $this->interSectoral);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

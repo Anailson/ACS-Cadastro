@@ -43,20 +43,17 @@ class HealthConditionsModel
         $this->plant = $plant;
     }
 
-    public function save(AcsDataBase $db, array $query)
+    public function getValuesToDB()
     {
-        $values[":ID_" . Pregnant::PREGNANT] = $this->pregnant->save($db, $query[Pregnant::PREGNANT]);
-        $values[":ID_" . Diseases::DISEASES] = $this->diseases->save($db, $query[Diseases::DISEASES]);
-        $values[":ID_" . HeartDisease::HEART_DISEASE] = $this->heartDisease->save($db, $query[HeartDisease::HEART_DISEASE]);
-        $values[":ID_" . KidneyDisease::KIDNEY_DISEASE] = $this->kidneyDisease->save($db, $query[KidneyDisease::KIDNEY_DISEASE]);
-        $values[":ID_" . RespiratoryDisease::RESPIRATORY_DISEASE] = $this->respiratoryDisease->save($db, $query[RespiratoryDisease::RESPIRATORY_DISEASE]);
-        $values[":ID_" . Interment::INTERMENT] = $this->interment->save($db, $query[Interment::INTERMENT]);
-        $values[":ID_" . Plant::PLANT] = $this->plant->save($db, $query[Plant::PLANT]);
-        if(in_array(false, $values)){
-            return false;
-        }
-        $values[":" . self::WEIGHT] = $this->weight;
-        return $db->insert($query[self::HEALTH_CONDITIONS], $values);
+        $values[Pregnant::PREGNANT] = $this->pregnant->getValuesToDB();
+        $values[Diseases::DISEASES] = $this->diseases->getValuesToDB();
+        $values[HeartDisease::HEART_DISEASE] = $this->heartDisease->getValuesToDB();
+        $values[KidneyDisease::KIDNEY_DISEASE] = $this->kidneyDisease->getValuesToDB();
+        $values[RespiratoryDisease::RESPIRATORY_DISEASE] = $this->respiratoryDisease->getValuesToDB();
+        $values[Interment::INTERMENT] = $this->interment->getValuesToDB();
+        $values[Plant::PLANT] = $this->plant->getValuesToDB();
+        $values[self::WEIGHT] = $this->weight;
+        return $values;
     }
 
     public static function getFromArray(array $array)

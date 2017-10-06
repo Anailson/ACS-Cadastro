@@ -36,20 +36,16 @@ class SocialDemographicModel
         $this->deficiency = $deficiency;
     }
 
-    public function save(AcsDataBase $db, array $query)
+    public function getValuesToDB()
     {
-        $values[":ID_" . EducationEmployment::EDUCATION_EMPLOYMENT] = $this->educationEmployment->save($db, $query[EducationEmployment::EDUCATION_EMPLOYMENT]);
-        $values[":ID_" . HealthGroup::HEALTH_GROUP] = $this->healthGroup->save($db, $query[HealthGroup::HEALTH_GROUP]);
-        $values[":ID_" . CommunityTraditional::COMMUNITY_TRADITIONAL] = $this->community->save($db, $query[CommunityTraditional::COMMUNITY_TRADITIONAL]);
-        $values[":ID_" . SexualOrientation::SEXUAL_ORIENTATION] = $this->orientation->save($db, $query[SexualOrientation::SEXUAL_ORIENTATION]);
-        $values[":ID_" . Deficiency::DEFICIENCY] = $this->deficiency->save($db, $query[Deficiency::DEFICIENCY]);
-
-        if(in_array(false, $values)){
-            return false;
-        }
-        $values[":" . self::KINSHIP] = $this->kinship;
-        $values[":" . self::KIDS_09] = $this->kids09;
-        return $db->insert($query[self::SOCIAL_DEMOGRAPHIC], $values);
+        $values[EducationEmployment::EDUCATION_EMPLOYMENT] = $this->educationEmployment->getValuesToDB();
+        $values[HealthGroup::HEALTH_GROUP] = $this->healthGroup->getValuesToDB();
+        $values[CommunityTraditional::COMMUNITY_TRADITIONAL] = $this->community->getValuesToDB();
+        $values[SexualOrientation::SEXUAL_ORIENTATION] = $this->orientation->getValuesToDB();
+        $values[Deficiency::DEFICIENCY] = $this->deficiency->getValuesToDB();
+        $values[self::KINSHIP] = $this->kinship;
+        $values[self::KIDS_09] = $this->kids09;
+        return $values;
     }
 
     public static function getFromArray(array $array)

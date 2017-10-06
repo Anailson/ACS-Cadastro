@@ -13,11 +13,10 @@ class CommunityTraditional
         $this->description = $description;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::COMMUNITY_TRADITIONAL => $this->community,
+        return array(":" . self::COMMUNITY_TRADITIONAL => $this->community,
             ":" . self::DESCRIPTION => $this->description);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

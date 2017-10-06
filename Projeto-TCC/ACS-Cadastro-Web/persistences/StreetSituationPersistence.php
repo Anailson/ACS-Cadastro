@@ -2,17 +2,37 @@
 
 class StreetSituationPersistence
 {
-
+    public static function getById(AcsDataBase $db, $id)
+    {
+        $query = "SELECT SS.BENEFIT, SS.FAMILY,
+                    ST.STREET, ST.DESCRIPTION AS 'DESCRIPTION_STREET', 
+                    FD.FOOD_PER_DAY, FD.RESTAURANT, FD.RESTAURANT_DONATION, FD.RELIGIOUS_GROUP, FD.POPULAR, FD.ANOTHER AS 'ANOTHER_FEEDING',
+                    AI.ANOTHER_INSTITUTION, AI.DESCRIPTION AS 'DESCRIPTION_INSTITUTION',
+                    FV.FAMILY_VISIT, FV.DESCRIPTION AS 'DESCRIPTION_FAMILY_VISIT',
+                    HG.HYGIENE, HG.BATH, HG.SANITARY, HG.ORAL, HG.ANOTHER AS 'ANOTHER_HYGIENE'
+                FROM tb_street_situation AS SS
+                INNER JOIN tb_street AS ST ON ST.STREET_ID = SS.ID_STREET
+                INNER JOIN tb_feeding AS FD ON FD.FEEDING_ID = SS.ID_FEEDING
+                INNER JOIN tb_another_instituation AS AI ON AI.ANOTHER_INSTITUTION_ID =  SS.ID_ANOTHER_INSTITUTION
+                INNER JOIN tb_family_visit AS FV ON FV.FAMILY_VISIT_ID = SS.ID_FAMILY_VISIT
+                INNER JOIN tb_hygiene AS HG ON HG.HYGIENE_ID = SS.ID_HYGIENE
+                WHERE SS.STREET_SITUATION_ID = :STREET_SITUATION_ID";
+        return $db->select($query, array(":STREET_SITUATION_ID" => $id));
+    }
     public static function insert(AcsDataBase $db, StreetSituationModel $streetSituation)
     {
-        $query = array(
-            StreetSituationModel::STREET_SITUATION => self::queryStreetSituation(),
-            StreetSituation::STREET => self::queryStreet(),
-            Feeding::FEEDING => self::queryFeeding(),
-            AnotherInstitution::ANOTHER_INSTITUTION => self::queryAnotherInstitution(),
-            FamilyVisit::FAMILY_VISIT => self::queryFamilyVisit(),
-            Hygiene::HYGIENE => self::queryHygiene());
-        return $streetSituation->save($db, $query);
+        $values = $streetSituation->getValuesToDB();
+        $ids[":ID_" . StreetSituation::STREET ] = $db->insert(self::queryStreet(), $values[StreetSituation::STREET] );
+        $ids[":ID_" . Feeding::FEEDING ] = $db->insert(self::queryFeeding(), $values[Feeding::FEEDING]);
+        $ids[":ID_" . AnotherInstitution::ANOTHER_INSTITUTION] = $db->insert(self::queryAnotherInstitution(), $values[AnotherInstitution::ANOTHER_INSTITUTION]);
+        $ids[":ID_" . FamilyVisit::FAMILY_VISIT] = $db->insert(self::queryFamilyVisit(), $values[FamilyVisit::FAMILY_VISIT]);
+        $ids[":ID_" . Hygiene::HYGIENE] = $db->insert(self::queryHygiene(), $values[Hygiene::HYGIENE]);
+        if(in_array(false, $ids)){
+            return false;
+        }
+        $ids[":" . StreetSituationModel::BENEFIT] = $values[StreetSituationModel::BENEFIT];
+        $ids[":" . StreetSituationModel::FAMILY] = $values[StreetSituationModel::FAMILY];
+        return $db->insert(self::queryStreetSituation(), $ids);
     }
 
     private static function queryStreetSituation()

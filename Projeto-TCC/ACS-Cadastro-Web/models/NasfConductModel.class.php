@@ -32,16 +32,12 @@ class NasfConductModel
             Forwarding::getFromArray($array[Forwarding::FORWARDING]));
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToBD()
     {
-        $params = array(":ID_" . Nasf::NASF => $this->nasf->save($db, $query[Nasf::NASF]),
-            ":ID_" . Conduct::CONDUCT => $this->conduct->save($db, $query[Conduct::CONDUCT]),
-            ":ID_" . Forwarding::FORWARDING => $this->forwarding->save($db, $query[Forwarding::FORWARDING]));
-        if (in_array(false, $params)) {
-            return false;
-        }
-        $params[":" . self::NASF_CONDUCT] = $this->nasfConduct;
-        return $db->insert($query[self::NASF_CONDUCT], $params);
+        $values[Nasf::NASF] = $this->nasf->getValuesToBD();
+        $values[Conduct::CONDUCT] = $this->conduct->getValuesToBD();
+        $values[Forwarding::FORWARDING] = $this->forwarding->getValuesToBD();
+        $values[self::NASF_CONDUCT] = $this->nasfConduct;
+        return $values;
     }
-
 }

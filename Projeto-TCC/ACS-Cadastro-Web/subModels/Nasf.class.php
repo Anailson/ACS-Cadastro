@@ -16,12 +16,11 @@ class Nasf
         $this->prescription = $prescription;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToBD()
     {
-        $params = array(self::EVALUATION => $this->evaluation,
+        return array(self::EVALUATION => $this->evaluation,
             self::PROCEDURES => $this->procedures,
             self::PRESCRIPTION => $this->prescription);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

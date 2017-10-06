@@ -12,6 +12,7 @@ if(!@include "subModels/ConditionsDiseases.class.php") {
 class ConditionsModel
 {
     const CONDITIONS = "CONDITIONS";
+    const CID_CIAP = "CID_CIAP";
 
     private $conditions, $communicable, $tracking;
 
@@ -22,15 +23,12 @@ class ConditionsModel
         $this->tracking = $tracking;
     }
 
-    public function save(AcsDataBase $db, array $query)
+    public function getValuesToDB()
     {
-        $params = array(":ID_" . ConditionsDiseases::CONDITIONS_DISEASES => $this->conditions->save($db, $query[ConditionsDiseases::CONDITIONS_DISEASES]),
-            ":ID_" . CommunicableDiseases::COMMUNICABLE_DISEASES => $this->communicable->save($db, $query[CommunicableDiseases::COMMUNICABLE_DISEASES]),
-            ":ID_" . TrackingDiseases::TRACKING_DISEASES => $this->tracking->save($db, $query[TrackingDiseases::TRACKING_DISEASES]));
-        if(in_array(false, $params)){
-            return false;
-        }
-        return $db->insert($query[self::CONDITIONS], $params);
+        $values[ConditionsDiseases::CONDITIONS_DISEASES] = $this->conditions->getValuesToDB();
+        $values[CommunicableDiseases::COMMUNICABLE_DISEASES] = $this->communicable->getValuesToDB();
+        $values[TrackingDiseases::TRACKING_DISEASES] = $this->tracking->getValuesToDB();
+        return $values;
     }
 
 

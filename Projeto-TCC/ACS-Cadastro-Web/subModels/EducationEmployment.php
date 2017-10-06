@@ -18,13 +18,12 @@ class EducationEmployment
         $this->employment = $employment;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $array = array(":" . self::SCHOOL => $this->school,
+        return array(":" . self::SCHOOL => $this->school,
             ":" . self::OCCUPATION => $this->occupation,
             ":" . self::EDUCATION => $this->education,
             ":" . self::EMPLOYMENT => $this->employment);
-        return $db->insert($query, $array);
     }
 
     public static function getFromArray(array $array)

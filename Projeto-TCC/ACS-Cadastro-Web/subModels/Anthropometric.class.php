@@ -16,12 +16,11 @@ class Anthropometric
         $this->vaccinates = $vaccinates;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $params = array(":" . self::WEIGHT => $this->weight,
+        return array(":" . self::WEIGHT => $this->weight,
             ":" . self::HEIGHT => $this->height,
             ":" . self::VACCINATES => $this->vaccinates);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

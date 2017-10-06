@@ -18,7 +18,7 @@ class RecordVisitModel
 
     public function save(AcsDataBase $db, $query)
     {
-        $params = array(":ID_" . RecordDetails::RECORD_DETAILS => $this->recordDetails->save($db, $query[RecordDetails::RECORD_DETAILS]));
+        $params = array(":ID_" . RecordDetails::RECORD_DETAILS => $this->recordDetails->getValuesToDB($db, $query[RecordDetails::RECORD_DETAILS]));
 
         if(in_array(false, $params)){
             return false;

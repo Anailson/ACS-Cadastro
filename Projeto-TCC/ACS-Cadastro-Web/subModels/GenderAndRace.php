@@ -14,10 +14,9 @@ class GenderAndRace
         $this->race = $race;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::GENDER => $this->gender, ":" . self::RACE => $this->race);
-        return $db->insert($query, $values);
+        return array(":" . self::GENDER => $this->gender, ":" . self::RACE => $this->race);
     }
 
     public static function getFromArray(array $array)

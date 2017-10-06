@@ -32,11 +32,13 @@ class VisitController
 
     public function crudButtons()
     {
+
+
         return array(
-            self::ADD => "<button type='button' class='btn btn-primary btn-fill'><i class='fa fa-plus-circle'></i>&nbsp;" . self::ADD . "</button>",
-            self::DETAILS => "<button type='button' class='btn btn-info btn-fill'><i class='fa fa-search-plus'></i>&nbsp;" . self::DETAILS . "</button>",
-            self::EDIT => "<button type='button' class='btn btn-warning btn-fill'><i class='fa fa-pencil-square-o'></i>&nbsp;" . self::EDIT . "</button>",
-            self::DELETE => "<button type='button' class='btn btn-danger btn-fill'><i class='fa fa-trash-o'></i>&nbsp;" . self::DELETE . "</button>",
+            self::ADD => "<button class='btn btn-primary btn-fill' onclick='redirect(\"nova-visita\")'><i class='fa fa-plus-circle'></i>&nbsp;" . self::ADD . "</button>",
+            self::DETAILS => "<button name='details' id='details' class='btn btn-block btn-info btn-fill'><i class='fa fa-search-plus'></i></button>",
+            //self::EDIT => "<button class='btn btn-warning btn-fill'><i class='fa fa-pencil-square-o'></i></button>",
+            //self::DELETE => "<button class='btn btn-danger btn-fill'><i class='fa fa-trash-o'></i></button>",
         );
     }
 

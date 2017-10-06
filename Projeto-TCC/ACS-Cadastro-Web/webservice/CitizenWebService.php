@@ -1,46 +1,72 @@
 <?php
-
-if (!@include "persistences/CitizenPersistence.php") {
-    include "../persistences/CitizenPersistence.php";
-}
+if (!@include "controllers/AgentsController.php") {include "../controllers/AgentsController.php";}
+if (!@include "controllers/CitizenController.class.php") {include "../controllers/CitizenController.class.php";}
 
 $method = $_SERVER['REQUEST_METHOD'];
+
 if ($method === AcsDataBase::GET) {
+
     if (isset($_GET['f']) && function_exists($_GET['f']) && $_GET['f'] == "get") {
 
-        $value = isset($_GET['d']) ? $_GET['d'] : 0;
+        $value = isset($_GET['d']) ? $_GET['d'] : false;
         if ($value) {
             get($value);
         } else {
-            getAll();
+            $value = isset($_GET['a']) ? $_GET['a'] : false;
+            if($value){
+                getAll($value);
+            } else {
+                getAll();
+            }
         }
     }
 } else if ($method === AcsDataBase::POST) {
 
     $option = isset($_GET['o']) ? $_GET['o'] : false;
     $json = $_POST['JSON'];
-    if($option){
+    if ($option) {
         insertAll($json);
     } else {
         insert($json);
     }
 }
 
-function insert($json)
+function get($json)
 {
-    $citizen = CitizenModel::getFromArray(json_decode($json, true));
-    echo json_encode(array("id" => CitizenPersistence::insert($citizen)));
+    echo $json;
 }
 
-function insertAll($array)
+function getAll($numSus = false)
 {
-    $array = json_decode($array, true);
-    $rows = 0;
-    foreach ($array as $value){
-        $citizen = CitizenModel::getFromArray($value);
-        if (($id = CitizenPersistence::insert($citizen)) > 0){
-            $rows++;
-        }
+    $citizens = CitizenPersistence::getAll($numSus);
+    if($citizens){
+        echo json_encode($citizens);
     }
-    echo json_encode(array("rows" => $rows));
+}
+
+function insert($json)
+{
+    $array = json_decode($json, true);
+    $citizen = CitizenModel::getFromArray($array);
+    $numSus = $array["AGENT"]['NUM_SUS'];
+    echo json_encode(array("id" => CitizenPersistence::insert($numSus, $citizen)));
+}
+
+function insertAll($json)
+{
+    $values = json_decode($json, true);
+    $agent = $values[0];
+    unset($values[0]);
+
+    $i = 0;
+    $indexes = array();
+    foreach ($values as $value) {
+        $citizen = CitizenModel::getFromArray($value);
+        $id = CitizenPersistence::insert($agent['NUM_SUS'], $citizen);
+        if($id > 0){
+            $indexes[] = array ("index" => $i);
+        }
+        $i++;
+    }
+    echo json_encode($indexes);
 }

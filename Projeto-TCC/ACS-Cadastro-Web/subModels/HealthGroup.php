@@ -16,12 +16,11 @@ class HealthGroup
         $this->healthPlan = $healthPlan;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::CAREGIVER => $this->caregiver,
+        return array(":" . self::CAREGIVER => $this->caregiver,
             ":" . self::COMMUNITY_GROUP => $this->communityGroup,
             ":" . self::HEALTH_PLAN=>$this->healthPlan);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)

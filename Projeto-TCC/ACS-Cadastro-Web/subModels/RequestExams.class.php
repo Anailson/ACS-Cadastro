@@ -60,9 +60,9 @@ class RequestExams
         $this->uroculture = $uroculture;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $params = array(":" . self::TOTAL_CHOLESTEROL => $this->totalCholesterol,
+        return array(":" . self::TOTAL_CHOLESTEROL => $this->totalCholesterol,
             ":" . self::CREATINE => $this->creatine,
             ":" . self::EAS_EQU => $this->easEqu,
             ":" . self::ELECTROCARDIOGRAM => $this->electrocardiogram,
@@ -85,7 +85,6 @@ class RequestExams
             ":" . self::FOOT_TEST => $this->footTest,
             ":" . self::ULTRASONOGRAPHY => $this->ultrasonography,
             ":" . self::UROCULTURE => $this->uroculture);
-        return $db->insert($query, $params);
     }
 
     public static function getFromArray(array $array)

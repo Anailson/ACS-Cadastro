@@ -24,11 +24,11 @@ if(!@include "persistences/HealthConditionsPersistence.php"){
 
 if(!@include "persistences/StreetSituationPersistence.php"){
     include "../persistences/StreetSituationPersistence.php";
-}   
-
-
+}
 class CitizenModel
 {
+    const CITIZEN = "CITIZEN";
+
     private $personal, $socialDemographic, $healthConditions, $streetSituation;
 
     public function __construct(PersonalDataModel $personal, SocialDemographicModel $socialDemographic,
@@ -40,17 +40,13 @@ class CitizenModel
         $this->streetSituation = $streetSituation;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function save(AcsDataBase $db)
     {
         $ids[":ID_" . PersonalDataModel::PERSONAL_DATA] = PersonalDataPersistence::insert($db, $this->personal);
         $ids[":ID_" . SocialDemographicModel::SOCIAL_DEMOGRAPHIC] = SocialDemographicPersistence::insert($db, $this->socialDemographic);
         $ids[":ID_" . HealthConditionsModel::HEALTH_CONDITIONS] = HealthConditionsPersistence::insert($db, $this->healthConditions);
         $ids[":ID_" . StreetSituationModel::STREET_SITUATION] = StreetSituationPersistence::insert($db, $this->streetSituation);
-
-        if (in_array(false, $ids)) {
-            return false;
-        }
-        return $db->insert($query, $ids);
+        return $ids;
     }
 
     public static function getFromArray(array $array)
@@ -59,5 +55,10 @@ class CitizenModel
             SocialDemographicModel::getFromArray($array[SocialDemographicModel::SOCIAL_DEMOGRAPHIC]),
             HealthConditionsModel::getFromArray($array[HealthConditionsModel::HEALTH_CONDITIONS]),
             StreetSituationModel::getFromArray($array[StreetSituationModel::STREET_SITUATION]));
+    }
+
+    public function getValuesAsArray()
+    {
+        return array();
     }
 }

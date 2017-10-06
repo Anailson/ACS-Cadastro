@@ -3,16 +3,19 @@ include "controllers/ResidenceController.class.php";
 $controller = new ResidenceController();
 $buttons = $controller->crudButtons();
 ?>
+
+<script src="assets/js/script-general.js" type="text/javascript"></script>
+<script src="assets/js/script-residence.js" type="text/javascript"></script>
+
+
 <div id="content" class="card">
-    <div class="row header" style="padding:20px 20px 50px 20px">
+    <div class="row header" style="padding:40px 20px 20px 20px">
         <div class="col-md-8">
-            <h4 class="title">Residências cadastrados</h4>
+            <h4 class="title"><i class='fa fa-home'></i>&emsp;Residências cadastrados</h4>
         </div>
         <div class="col-md-4">
-            <a href="#" style="float: right;">
-                <?php
-                echo $buttons[ResidenceController::ADD];
-                ?>
+            <a style="float: right;">
+                <?php echo $buttons[ResidenceController::ADD]; ?>
             </a>
         </div>
     </div>
@@ -28,15 +31,18 @@ $buttons = $controller->crudButtons();
             <th class="tdPers col-md-1"></th>
             <th class="tdPers col-md-1"></th>
             </thead>
-            <tbody>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td> <?php echo $buttons[ResidenceController::DETAILS] ?> </td>
-            <td> <?php echo $buttons[ResidenceController::EDIT] ?> </td>
-            <td> <?php echo $buttons[ResidenceController::DELETE] ?> </td>
+            <?php
+            $records = $controller->getAllSimpleInfoResidence();
+            foreach ($records as $record) {
+                echo "<tr><td>" . $record[AddressDataModel::ADDRESS_DATA] . "</td>"
+                    . "<td>" . $record[CityLocation::CEP] . "</td>"
+                    . "<td>" . $record[Phones::PHONES] . "</td>"
+                    . "<td>" . $buttons[ResidenceController::DETAILS] . "</td>"
+                    . "<td>" . $buttons[ResidenceController::EDIT] . "</td>"
+                    . "<td>" . $buttons[ResidenceController::DELETE] . "</td></tr>";
+            }
+            ?>
             </tbody>
         </table>
     </div>
 </div>
-

@@ -41,9 +41,9 @@ class Diseases
         $this->mentalHealth = $mentalHealth;
     }
 
-    public function save(AcsDataBase $db, $query)
+    public function getValuesToDB()
     {
-        $values = array(":" . self::SMOKER=>$this->smoker,
+        return array(":" . self::SMOKER=>$this->smoker,
             ":" . self::ALCOHOL => $this->alcohol,
             ":" . self::DRUGS => $this->drugs,
             ":" . self::HYPERTENSION => $this->hypertension,
@@ -57,7 +57,6 @@ class Diseases
             ":" . self::DOMICILED => $this->domiciled,
             ":" . self::OTHER_PRACTICES => $this->otherPractices,
             ":" . self::MENTAL_HEALTH => $this->mentalHealth);
-        return $db->insert($query, $values);
     }
 
     public static function getFromArray(array $array)
