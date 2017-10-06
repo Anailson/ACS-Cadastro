@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteBase /ACS-Cadastro-Web/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+Options -Indexes
+
+#RewriteRule ^(.*)$ novo.php?r=$1 [QSA,L]
+RewriteRule ^([a-z-]*)$ index.php?section=$1 [QSA,L]
+RewriteRule ^([a-z-]*)/([a-z-]*)/?$ index.php?section=$1&action=$2 [QSA,L]
+RewriteRule ^([a-z-]*)/([a-z-]*)/([0-9]*)/?$ index.php?section=$1&action=$2&id=$3 [QSA,L]
